@@ -361,6 +361,7 @@ func (e *ContainerBuilder) ContainerBuildFromImage() (err error) {
 
 	//network overload - início
 	go func(over *iotmakerOverload.NetworkOverload) {
+		log.Printf("ligando o overload!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
 		err = over.Listen()
 		if err != nil {
 			log.Printf("overload.error: %v", err.Error())
