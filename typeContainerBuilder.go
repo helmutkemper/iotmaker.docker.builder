@@ -1,6 +1,7 @@
 package iotmaker_docker_builder
 
 import (
+	"bytes"
 	"errors"
 	"github.com/docker/docker/api/types/container"
 	"github.com/docker/docker/api/types/network"
@@ -343,6 +344,17 @@ func (e *ContainerBuilder) GetContainerLog() (log []byte, err error) {
 	}
 
 	log, err = e.dockerSys.ContainerLogs(e.containerID)
+	return
+}
+
+func (e *ContainerBuilder) FindTextInsideContainerLog(value string) (contains bool, err error) {
+	var logs []byte
+	logs, err = e.GetContainerLog()
+	if err != nil {
+		return
+	}
+
+	contains = bytes.Contains(logs, []byte(value))
 	return
 }
 
