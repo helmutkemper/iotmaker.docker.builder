@@ -194,7 +194,7 @@ func (e *ContainerBuilder) WaitFortextInContainerLog(value string) (dockerLogs s
 	return string(logs), err
 }
 
-func (e *ContainerBuilder) BuildFromFolder() (err error) {
+func (e *ContainerBuilder) ImageBuildFromFolder() (err error) {
 	err = e.verifyImageName()
 	if err != nil {
 		return
@@ -230,7 +230,7 @@ func (e *ContainerBuilder) BuildFromFolder() (err error) {
 	return
 }
 
-func (e *ContainerBuilder) BuildFromImage() (err error) {
+func (e *ContainerBuilder) ContainerBuildFromImage() (err error) {
 	err = e.verifyImageName()
 	if err != nil {
 		return
