@@ -287,7 +287,7 @@ func (e *ContainerBuilder) ContainerBuildFromImage() (err error) {
 			if err != nil {
 				return
 			}
-			portMap[imagePort] = []nat.PortBinding{{HostPort: newPort.Port()}}
+			portMap[newPort] = []nat.PortBinding{{HostPort: imagePort.Port()}}
 		}
 
 	} else {
