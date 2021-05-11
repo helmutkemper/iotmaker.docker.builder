@@ -8,10 +8,8 @@ import (
 	"github.com/docker/go-connections/nat"
 	isolatedNetwork "github.com/helmutkemper/iotmaker.docker.builder.network.interface"
 	iotmakerdocker "github.com/helmutkemper/iotmaker.docker/v1.0.1"
-	iotmakerOverload "github.com/helmutkemper/iotmaker.network.util.overload"
 	"log"
 	"path/filepath"
-	"runtime/debug"
 	"strings"
 	"time"
 )
@@ -23,7 +21,6 @@ type changePort struct {
 
 type ContainerBuilder struct {
 	network            isolatedNetwork.ContainerBuilderNetworkInterface
-	networkOverload    *iotmakerOverload.NetworkOverload
 	dockerSys          iotmakerdocker.DockerSystem
 	changePointer      *chan iotmakerdocker.ContainerPullStatusSendToChannel
 	onContainerReady   *chan bool
@@ -153,32 +150,6 @@ func (e *ContainerBuilder) Init() (err error) {
 
 		}(e)
 	}
-
-	return
-}
-
-func (e *ContainerBuilder) EnableNetworkOverload(inAddress, outAddress string, min, max time.Duration) (err error) {
-
-	// (English): Prepare the driver for TCP network
-	// (Português): Prepara o driver para rede TCP
-	e.networkOverload = &iotmakerOverload.NetworkOverload{
-		ProtocolInterface: &iotmakerOverload.TCPConnection{},
-	}
-
-	// (English): Enables the TCP protocol and the input and output addresses
-	// (Português): Habilita o protocolo TCP e os endereços de entrada e saída
-	err = e.networkOverload.SetAddress(iotmakerOverload.KTypeNetworkTcp, inAddress, outAddress)
-	if err != nil {
-		return
-	}
-
-	// (English): [optional] Points to the custom function for data processing
-	// (Português): [opcional] Aponta a função personalizada para tratamento dos dados
-	//over.ParserAppendTo(binaryDump)
-
-	// (English): Determines the maximum and minimum times between packages
-	// (Português): Determina os tempos máximo e mínimos entre os pacotes
-	e.networkOverload.SetDelay(min, max)
 
 	return
 }
@@ -359,21 +330,7 @@ func (e *ContainerBuilder) ContainerBuildFromImage() (err error) {
 		}
 	}
 
-	//network overload - início
-	if e.networkOverload != nil {
-		go func(over *iotmakerOverload.NetworkOverload) {
-			log.Printf("ligando o overload!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-			err = over.Listen()
-			if err != nil {
-				log.Printf("overload.error: %v", err.Error())
-				panic(string(debug.Stack()))
-			}
-		}(e.networkOverload)
-	}
-	//network overload - fim
-
 	*e.onContainerReady <- true
-
 	return
 }
 
