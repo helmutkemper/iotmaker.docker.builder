@@ -53,6 +53,11 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/../iotmaker.docker.builder.interface/typeContainerBuilderInterface.go">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/go.mod">
           <value>
             <set />
@@ -64,6 +69,11 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/typeContainerBuilder_test.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../iotmaker.docker/v1.0.1/containerInspectParsed.go">
           <value>
             <set />
           </value>
