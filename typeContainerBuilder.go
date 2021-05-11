@@ -35,14 +35,13 @@ type ContainerBuilder struct {
 	waitString         string
 	containerID        string
 	ticker             *time.Ticker
-	//inspect            iotmakerdocker.ContainerInspect
-	logs            string
-	inspectInterval time.Duration
+	inspect            iotmakerdocker.ContainerInspect
+	logs               string
+	inspectInterval    time.Duration
 }
 
 func (e *ContainerBuilder) GetLastInspect() (inspect iotmakerdocker.ContainerInspect) {
-	return iotmakerdocker.ContainerInspect{}
-	//return e.inspect
+	return e.inspect
 }
 
 func (e *ContainerBuilder) GetLastLogs() (logs string) {
@@ -141,8 +140,7 @@ func (e *ContainerBuilder) Init() (err error) {
 						}
 					}
 
-					//fixme
-					//e.inspect, _ = e.dockerSys.ContainerInspectParsed(e.containerID)
+					e.inspect, _ = e.dockerSys.ContainerInspectParsed(e.containerID)
 					logs, _ = e.dockerSys.ContainerLogs(e.containerID)
 					e.logs = string(logs)
 					*e.onContainerInspect <- true
