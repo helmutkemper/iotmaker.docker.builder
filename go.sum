@@ -55,6 +55,8 @@ github.com/helmutkemper/iotmaker.docker.builder.network v0.0.0-20210511023329-60
 github.com/helmutkemper/iotmaker.docker.builder.network v0.0.0-20210511023329-60c0997e5db5/go.mod h1:ATQhH9SogxRWw7esALHo7WvzJ9JhxjeXjnlXnNkbKeE=
 github.com/helmutkemper/iotmaker.docker.builder.network.interface v0.0.0-20210511025142-a65b878f1e40 h1:tV2TajmceBWHtClBF0frcnnfY0x2Jn8Gxa7PbQufXIo=
 github.com/helmutkemper/iotmaker.docker.builder.network.interface v0.0.0-20210511025142-a65b878f1e40/go.mod h1:LC0epRqhWDl68V1sSngitCyeAhlQjpYHwKGFRimUris=
+github.com/helmutkemper/iotmaker.network.util.overload v0.0.1-rc001 h1:rRuy1cOvGe6D3EMbAl9Y1xBkpg1TnMKZPeDaCFpAs8M=
+github.com/helmutkemper/iotmaker.network.util.overload v0.0.1-rc001/go.mod h1:5f42FHojHzJV4eRt6NhsTMwNtB2k45TMjZNenjQBnu4=
 github.com/helmutkemper/util v0.0.0-20210420213725-d4fad0e09c93 h1:PRAF11ghIE1y0e8Pff1ip8DpZkfPUrbJJEfGPrIWV4s=
 github.com/helmutkemper/util v0.0.0-20210420213725-d4fad0e09c93/go.mod h1:UkJvkrH5lOUrsdbx8Bl8Q1dTzIbEbZKu6sN0TS5vul8=
 github.com/kisielk/errcheck v1.5.0/go.mod h1:pFxgyoBC7bSaBwPgfKdkLd5X25qrDl4LWUI2bnpBCr8=

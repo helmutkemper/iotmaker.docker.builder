@@ -43,6 +43,11 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/../cacheComplexTest/go.mod">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/../cacheComplexTest/interfaces/network.go">
           <value>
             <set />
@@ -59,6 +64,11 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/../cacheComplexTest/simple/main.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../cacheComplexTest/simple/simpleIntegration_test.go">
           <value>
             <set />
           </value>
@@ -94,6 +104,21 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/../iotmaker.docker/v1.0.1/containerStart.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../iotmaker.docker/v1.0.1/imageBuildFromFolder.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../iotmaker.network.util.overload/go.mod">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../queue/natStatus/typeNatsStatusTest.go">
           <value>
             <set />
           </value>

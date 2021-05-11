@@ -8,8 +8,10 @@ import (
 	"github.com/docker/go-connections/nat"
 	isolatedNetwork "github.com/helmutkemper/iotmaker.docker.builder.network.interface"
 	iotmakerdocker "github.com/helmutkemper/iotmaker.docker/v1.0.1"
+	iotmakerOverload "github.com/helmutkemper/iotmaker.network.util.overload"
 	"log"
 	"path/filepath"
+	"runtime/debug"
 	"strings"
 	"time"
 )
@@ -150,6 +152,41 @@ func (e *ContainerBuilder) Init() (err error) {
 
 		}(e)
 	}
+
+	return
+}
+
+func (e *ContainerBuilder) EnableNetworkOverload(inAddress, outAddress string, min, max time.Duration) (err error) {
+
+	// (English): Prepare the driver for TCP network
+	// (Português): Prepara o driver para rede TCP
+	var over = &iotmakerOverload.NetworkOverload{
+		ProtocolInterface: &iotmakerOverload.TCPConnection{},
+	}
+
+	// (English): Enables the TCP protocol and the input and output addresses
+	// (Português): Habilita o protocolo TCP e os endereços de entrada e saída
+	err = over.SetAddress(iotmakerOverload.KTypeNetworkTcp, inAddress, outAddress)
+	if err != nil {
+		return
+	}
+
+	// (English): [optional] Points to the custom function for data processing
+	// (Português): [opcional] Aponta a função personalizada para tratamento dos dados
+	//over.ParserAppendTo(binaryDump)
+
+	// (English): Determines the maximum and minimum times between packages
+	// (Português): Determina os tempos máximo e mínimos entre os pacotes
+	over.SetDelay(min, max)
+
+	// (English): Listen to port 27016 without blocking the code
+	// (Português): Escuta a porta 27016 sem bloquear o código
+	go func(over *iotmakerOverload.NetworkOverload) {
+		err = over.Listen()
+		if err != nil {
+			panic(string(debug.Stack()))
+		}
+	}(over)
 
 	return
 }
