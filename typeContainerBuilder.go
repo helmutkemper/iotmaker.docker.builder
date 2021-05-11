@@ -23,6 +23,7 @@ type changePort struct {
 
 type ContainerBuilder struct {
 	network            isolatedNetwork.ContainerBuilderNetworkInterface
+	networkOverload    *iotmakerOverload.NetworkOverload
 	dockerSys          iotmakerdocker.DockerSystem
 	changePointer      *chan iotmakerdocker.ContainerPullStatusSendToChannel
 	onContainerReady   *chan bool
@@ -160,13 +161,13 @@ func (e *ContainerBuilder) EnableNetworkOverload(inAddress, outAddress string, m
 
 	// (English): Prepare the driver for TCP network
 	// (Português): Prepara o driver para rede TCP
-	var over = &iotmakerOverload.NetworkOverload{
+	e.networkOverload = &iotmakerOverload.NetworkOverload{
 		ProtocolInterface: &iotmakerOverload.TCPConnection{},
 	}
 
 	// (English): Enables the TCP protocol and the input and output addresses
 	// (Português): Habilita o protocolo TCP e os endereços de entrada e saída
-	err = over.SetAddress(iotmakerOverload.KTypeNetworkTcp, inAddress, outAddress)
+	err = e.networkOverload.SetAddress(iotmakerOverload.KTypeNetworkTcp, inAddress, outAddress)
 	if err != nil {
 		return
 	}
@@ -177,16 +178,7 @@ func (e *ContainerBuilder) EnableNetworkOverload(inAddress, outAddress string, m
 
 	// (English): Determines the maximum and minimum times between packages
 	// (Português): Determina os tempos máximo e mínimos entre os pacotes
-	over.SetDelay(min, max)
-
-	// (English): Listen to port 27016 without blocking the code
-	// (Português): Escuta a porta 27016 sem bloquear o código
-	go func(over *iotmakerOverload.NetworkOverload) {
-		err = over.Listen()
-		if err != nil {
-			panic(string(debug.Stack()))
-		}
-	}(over)
+	e.networkOverload.SetDelay(min, max)
 
 	return
 }
@@ -366,6 +358,16 @@ func (e *ContainerBuilder) ContainerBuildFromImage() (err error) {
 			return
 		}
 	}
+
+	//network overload - início
+	go func(over *iotmakerOverload.NetworkOverload) {
+		err = over.Listen()
+		if err != nil {
+			log.Printf("overload.error: %v", err.Error())
+			panic(string(debug.Stack()))
+		}
+	}(e.networkOverload)
+	//network overload - fim
 
 	*e.onContainerReady <- true
 
