@@ -8,12 +8,52 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/../../Libraries/pkg/mod/github.com/helmutkemper/iotmaker.docker.builder.network.interface@v0.0.0-20210511025142-a65b878f1e40/typeContainerBuilderNetworkInterface.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../Libraries/pkg/mod/github.com/helmutkemper/iotmaker.docker.builder.network@v0.0.0-20210511023329-60c0997e5db5/typeContainerBuilderNetwork.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../Libraries/pkg/mod/github.com/helmutkemper/iotmaker.docker@v1.0.7/v1.0.1/containerInspectParsed.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../Libraries/pkg/mod/github.com/helmutkemper/iotmaker.docker@v1.0.8-0.20210509190857-5715e272d6ec/v1.0.1/containerFindIdByName.go">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/../cacheComplexTest/dockerNetwork/typeDockerNetwork.go">
           <value>
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/../cacheComplexTest/interfaces/network.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../cacheComplexTest/natsContainer/typeNatsContainer.go">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/../cacheComplexTest/natsContainer/typeNatsContainer_test.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../cacheComplexTest/simple/main.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/go.mod">
           <value>
             <set />
           </value>
@@ -24,6 +64,16 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/typeContainerBuilder_test.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../iotmaker.docker/v1.0.1/containerPause.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../iotmaker.docker/v1.0.1/containerStart.go">
           <value>
             <set />
           </value>

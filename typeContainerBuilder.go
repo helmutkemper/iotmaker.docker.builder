@@ -5,8 +5,8 @@ import (
 	"github.com/docker/docker/api/types/container"
 	"github.com/docker/docker/api/types/network"
 	"github.com/docker/go-connections/nat"
+	isolatedNetwork "github.com/helmutkemper/iotmaker.docker.builder.network.interface"
 	iotmakerdocker "github.com/helmutkemper/iotmaker.docker/v1.0.1"
-	"github.com/kempertrasdesclub/cacheComplexTest/interfaces"
 	"log"
 	"path/filepath"
 	"strings"
@@ -19,7 +19,7 @@ type changePort struct {
 }
 
 type ContainerBuilder struct {
-	network            interfaces.Network
+	network            isolatedNetwork.ContainerBuilderNetworkInterface
 	dockerSys          iotmakerdocker.DockerSystem
 	changePointer      *chan iotmakerdocker.ContainerPullStatusSendToChannel
 	onContainerReady   *chan bool
@@ -35,13 +35,14 @@ type ContainerBuilder struct {
 	waitString         string
 	containerID        string
 	ticker             *time.Ticker
-	inspect            iotmakerdocker.ContainerInspect
-	logs               string
-	inspectInterval    time.Duration
+	//inspect            iotmakerdocker.ContainerInspect
+	logs            string
+	inspectInterval time.Duration
 }
 
 func (e *ContainerBuilder) GetLastInspect() (inspect iotmakerdocker.ContainerInspect) {
-	return e.inspect
+	return iotmakerdocker.ContainerInspect{}
+	//return e.inspect
 }
 
 func (e *ContainerBuilder) GetLastLogs() (logs string) {
@@ -65,7 +66,7 @@ func (e *ContainerBuilder) SetWaitString(value string) {
 	e.waitString = value
 }
 
-func (e *ContainerBuilder) SetNetworkDocker(network interfaces.Network) {
+func (e *ContainerBuilder) SetNetworkDocker(network isolatedNetwork.ContainerBuilderNetworkInterface) {
 	e.network = network
 }
 
@@ -140,7 +141,8 @@ func (e *ContainerBuilder) Init() (err error) {
 						}
 					}
 
-					e.inspect, _ = e.dockerSys.ContainerInspectParsed(e.containerID)
+					//fixme
+					//e.inspect, _ = e.dockerSys.ContainerInspectParsed(e.containerID)
 					logs, _ = e.dockerSys.ContainerLogs(e.containerID)
 					e.logs = string(logs)
 					*e.onContainerInspect <- true

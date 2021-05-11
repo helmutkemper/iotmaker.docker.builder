@@ -1,9 +1,9 @@
 package iotmaker_docker_builder
 
 import (
+	dockerNetwork "github.com/helmutkemper/iotmaker.docker.builder.network"
 	iotmakerdocker "github.com/helmutkemper/iotmaker.docker/v1.0.1"
 	"github.com/helmutkemper/util"
-	"github.com/kempertrasdesclub/cacheComplexTest/dockerNetwork"
 	"testing"
 )
 
@@ -23,7 +23,7 @@ func TestContainer_1(t *testing.T) {
 		t.FailNow()
 	}
 
-	var netDocker = dockerNetwork.DockerNetwork{}
+	var netDocker = dockerNetwork.ContainerBuilderNetwork{}
 	err = netDocker.Init()
 	if err != nil {
 		util.TraceToLog()
@@ -60,6 +60,12 @@ func TestContainer_1(t *testing.T) {
 		util.TraceToLog()
 		t.FailNow()
 	}
+
+	err = dockerSys.RemoveAllByNameContains("delete")
+	if err != nil {
+		util.TraceToLog()
+		t.FailNow()
+	}
 }
 
 func TestContainer_2(t *testing.T) {
@@ -78,7 +84,7 @@ func TestContainer_2(t *testing.T) {
 		t.FailNow()
 	}
 
-	var netDocker = dockerNetwork.DockerNetwork{}
+	var netDocker = dockerNetwork.ContainerBuilderNetwork{}
 	err = netDocker.Init()
 	if err != nil {
 		util.TraceToLog()
@@ -116,6 +122,12 @@ func TestContainer_2(t *testing.T) {
 		util.TraceToLog()
 		t.FailNow()
 	}
+
+	err = dockerSys.RemoveAllByNameContains("delete")
+	if err != nil {
+		util.TraceToLog()
+		t.FailNow()
+	}
 }
 
 func TestContainer_3(t *testing.T) {
@@ -134,7 +146,7 @@ func TestContainer_3(t *testing.T) {
 		t.FailNow()
 	}
 
-	var netDocker = dockerNetwork.DockerNetwork{}
+	var netDocker = dockerNetwork.ContainerBuilderNetwork{}
 	err = netDocker.Init()
 	if err != nil {
 		util.TraceToLog()
@@ -172,6 +184,12 @@ func TestContainer_3(t *testing.T) {
 		util.TraceToLog()
 		t.FailNow()
 	}
+
+	err = dockerSys.RemoveAllByNameContains("delete")
+	if err != nil {
+		util.TraceToLog()
+		t.FailNow()
+	}
 }
 
 func TestContainer_4(t *testing.T) {
@@ -190,7 +208,7 @@ func TestContainer_4(t *testing.T) {
 		t.FailNow()
 	}
 
-	var netDocker = dockerNetwork.DockerNetwork{}
+	var netDocker = dockerNetwork.ContainerBuilderNetwork{}
 	err = netDocker.Init()
 	if err != nil {
 		util.TraceToLog()
@@ -224,6 +242,12 @@ func TestContainer_4(t *testing.T) {
 
 	err = container.ImageInstall()
 	err = container.ImagePull()
+	if err != nil {
+		util.TraceToLog()
+		t.FailNow()
+	}
+
+	err = dockerSys.RemoveAllByNameContains("delete")
 	if err != nil {
 		util.TraceToLog()
 		t.FailNow()
