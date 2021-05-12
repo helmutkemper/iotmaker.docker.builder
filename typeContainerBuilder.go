@@ -92,6 +92,7 @@ func (e *ContainerBuilder) SetImageName(value string) {
 // SetContainerName (english):
 //
 // SetContainerName (português): Define o nome do container
+//   value: nome do container
 func (e *ContainerBuilder) SetContainerName(value string) {
 	e.containerName = value
 }
@@ -100,6 +101,7 @@ func (e *ContainerBuilder) SetContainerName(value string) {
 //
 // SetWaitString (português): Define um texto a ser procurado dentro da saída padrão do container e força a espera do
 // mesmo para se considerar o container como pronto para uso
+//   value: texto emitido na saída padrão informando por um evento esperado
 func (e *ContainerBuilder) SetWaitString(value string) {
 	e.waitString = value
 }
@@ -107,6 +109,9 @@ func (e *ContainerBuilder) SetWaitString(value string) {
 // SetNetworkDocker (english):
 //
 // SetNetworkDocker (português): Define o ponteiro do gerenciador de rede docker
+//   network: ponteiro para o objeto gerenciador de rede.
+//
+//     Nota: compatível com o objeto dockerBuilderNetwork.ContainerBuilderNetwork{}
 func (e *ContainerBuilder) SetNetworkDocker(network isolatedNetwork.ContainerBuilderNetworkInterface) {
 	e.network = network
 }
@@ -114,6 +119,7 @@ func (e *ContainerBuilder) SetNetworkDocker(network isolatedNetwork.ContainerBui
 // SetEnvironmentVar (english):
 //
 // SetEnvironmentVar (português): Define as variáveis de ambiente
+//   value: array de string contendo um variável de ambiente por chave
 func (e *ContainerBuilder) SetEnvironmentVar(value []string) {
 	e.environmentVar = value
 }
@@ -121,7 +127,7 @@ func (e *ContainerBuilder) SetEnvironmentVar(value []string) {
 // AddPortToOpen (english):
 //
 // AddPortToOpen (português): Define as portas a serem expostas na rede
-// value: porta na forma de string numérica
+//   value: porta na forma de string numérica
 //
 //     Nota: A omissão de definição das portas a serem expostas define automaticamente todas as portas contidas na
 //     imagem como portas a serem expostas.
@@ -175,9 +181,10 @@ func (e *ContainerBuilder) SetDoNotOpenContainersPorts() {
 // SetInspectInterval (english):
 //
 // SetInspectInterval (português): Define o intervalo de monitoramento do container [opcional]
+//   value: intervalo de tempo entre os eventos de inspeção do container
 //
-//   Nota: Esta função tem um custo computacional elevado e deve ser usada com moderação.
-//   Os valores capturados são apresentados por GetLastInspect() e GetChannelOnContainerInspect()
+//     Nota: Esta função tem um custo computacional elevado e deve ser usada com moderação.
+//     Os valores capturados são apresentados por GetLastInspect() e GetChannelOnContainerInspect()
 func (e *ContainerBuilder) SetInspectInterval(value time.Duration) {
 	e.inspectInterval = value
 }
@@ -314,6 +321,7 @@ func (e *ContainerBuilder) verifyImageName() (err error) {
 //
 // WaitForTextInContainerLog (português): Para a execução do objeto até o texto ser encontrado na saída padrão do
 // container
+//   value: texto indicativo de evento apresentado na saída padrão do container
 func (e *ContainerBuilder) WaitForTextInContainerLog(value string) (dockerLogs string, err error) {
 	var logs []byte
 	logs, err = e.dockerSys.ContainerLogsWaitText(e.containerID, value, log.Writer())
