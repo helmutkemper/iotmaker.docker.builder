@@ -448,10 +448,10 @@ func (e *ContainerBuilder) ContainerBuildFromImage() (err error) {
 
 // GetContainerLog (english):
 //
-// GetContainerLog (português):
+// GetContainerLog (português): baixa a saída padrão do container
 func (e *ContainerBuilder) GetContainerLog() (log []byte, err error) {
 	if e.containerID == "" {
-		err = e.GetFindIdByContainerName()
+		err = e.GetIdByContainerName()
 		if err != nil {
 			return
 		}
@@ -463,7 +463,7 @@ func (e *ContainerBuilder) GetContainerLog() (log []byte, err error) {
 
 // FindTextInsideContainerLog (english):
 //
-// FindTextInsideContainerLog (português):
+// FindTextInsideContainerLog (português): procura por um texto na saída padrão do container
 func (e *ContainerBuilder) FindTextInsideContainerLog(value string) (contains bool, err error) {
 	var logs []byte
 	logs, err = e.GetContainerLog()
@@ -477,10 +477,10 @@ func (e *ContainerBuilder) FindTextInsideContainerLog(value string) (contains bo
 
 // ContainerStart (english):
 //
-// ContainerStart (português):
+// ContainerStart (português): inicializa o container
 func (e *ContainerBuilder) ContainerStart() (err error) {
 	if e.containerID == "" {
-		err = e.GetFindIdByContainerName()
+		err = e.GetIdByContainerName()
 		if err != nil {
 			return
 		}
@@ -490,12 +490,27 @@ func (e *ContainerBuilder) ContainerStart() (err error) {
 	return
 }
 
+// ContainerPause (english):
+//
+// ContainerPause (português): pausa o container
+func (e *ContainerBuilder) ContainerPause() (err error) {
+	if e.containerID == "" {
+		err = e.GetIdByContainerName()
+		if err != nil {
+			return
+		}
+	}
+
+	err = e.dockerSys.ContainerPause(e.containerID)
+	return
+}
+
 // ContainerStop (english):
 //
-// ContainerStop (português):
+// ContainerStop (português): para o container
 func (e *ContainerBuilder) ContainerStop() (err error) {
 	if e.containerID == "" {
-		err = e.GetFindIdByContainerName()
+		err = e.GetIdByContainerName()
 		if err != nil {
 			return
 		}
@@ -507,38 +522,34 @@ func (e *ContainerBuilder) ContainerStop() (err error) {
 
 // ContainerRemove (english):
 //
-// ContainerRemove (português):
-func (e *ContainerBuilder) ContainerRemove() (err error) {
+// ContainerRemove (português): para e remove o container
+func (e *ContainerBuilder) ContainerRemove(removeVolumes bool) (err error) {
 	if e.containerID == "" {
-		err = e.GetFindIdByContainerName()
+		err = e.GetIdByContainerName()
 		if err != nil {
 			return
 		}
 	}
 
-	err = e.dockerSys.ContainerStopAndRemove(e.containerID, true, false, false)
+	err = e.dockerSys.ContainerStopAndRemove(e.containerID, removeVolumes, false, false)
 	return
 }
 
 // ImageRemove (english):
 //
-// ImageRemove (português):
+// ImageRemove (português): remove a imagem se não houver containers usando a imagem (remova todos os containers antes
+// do uso, mesmo os parados)
 func (e *ContainerBuilder) ImageRemove() (err error) {
-	err = e.ContainerRemove()
-	if err != nil {
-		return
-	}
-
 	err = e.dockerSys.ImageRemoveByName(e.imageName, false, false)
 	return
 }
 
 // ContainerInspect (english):
 //
-// ContainerInspect (português):
+// ContainerInspect (português): inspeciona o container
 func (e *ContainerBuilder) ContainerInspect() (inspect iotmakerdocker.ContainerInspect, err error) {
 	if e.containerID == "" {
-		err = e.GetFindIdByContainerName()
+		err = e.GetIdByContainerName()
 		if err != nil {
 			return
 		}
@@ -548,19 +559,20 @@ func (e *ContainerBuilder) ContainerInspect() (inspect iotmakerdocker.ContainerI
 	return
 }
 
-// GetFindIdByContainerName (english):
+// GetIdByContainerName (english):
 //
-// GetFindIdByContainerName (português):
-func (e *ContainerBuilder) GetFindIdByContainerName() (err error) {
+// GetIdByContainerName (português): retorna o ID do container definido em SetContainerName()
+func (e *ContainerBuilder) GetIdByContainerName() (err error) {
 	e.containerID, err = e.dockerSys.ContainerFindIdByName(e.containerName)
 	return
 }
 
 // RemoveAllByNameContains (english):
 //
-// RemoveAllByNameContains (português):
-func (e *ContainerBuilder) RemoveAllByNameContains(name string) (err error) {
+// RemoveAllByNameContains (português): procuta por redes, volumes, container e imagens que contenham o termo definido
+// em "value" no nome e tenta remover os mesmos
+func (e *ContainerBuilder) RemoveAllByNameContains(value string) (err error) {
 	e.containerID = ""
-	err = e.dockerSys.RemoveAllByNameContains(name)
+	err = e.dockerSys.RemoveAllByNameContains(value)
 	return
 }
