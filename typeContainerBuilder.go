@@ -307,7 +307,7 @@ func (e *ContainerBuilder) WaitForTextInContainerLog(value string) (dockerLogs s
 
 // ImageBuildFromFolder (english):
 //
-// ImageBuildFromFolder (português):
+// ImageBuildFromFolder (português): transforma o conteúdo da pasta definida em SetBuildFolderPath() em uma imagem
 func (e *ContainerBuilder) ImageBuildFromFolder() (err error) {
 	err = e.verifyImageName()
 	if err != nil {
@@ -346,17 +346,13 @@ func (e *ContainerBuilder) ImageBuildFromFolder() (err error) {
 
 // ContainerBuildFromImage (english):
 //
-// ContainerBuildFromImage (português):
+// ContainerBuildFromImage (português): transforma uma imagem baixada por ImagePull() ou criada por
+// ImageBuildFromFolder() em container
 func (e *ContainerBuilder) ContainerBuildFromImage() (err error) {
 	err = e.verifyImageName()
 	if err != nil {
 		return
 	}
-
-	//if e.network == nil {
-	//  err = errors.New("network interface is't set")
-	//  return
-	//}
 
 	_, err = e.dockerSys.ImageFindIdByName(e.imageName)
 	if err != nil {
