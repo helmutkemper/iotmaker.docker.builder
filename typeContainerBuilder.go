@@ -51,14 +51,22 @@ type ContainerBuilder struct {
 
 // GetLastInspect (english):
 //
-// GetLastInspect (português): Retorna os dados do container baseado no último ciclo do ticker
+// GetLastInspect (português): Retorna os dados do container baseado no último ciclo do ticker definido em
+// SetInspectInterval()
+//
+//   Nota: a função GetChannelOnContainerInspect() retorna o canal disparado pelo ticker quando as informações estão
+//   prontas para uso
 func (e *ContainerBuilder) GetLastInspect() (inspect iotmakerdocker.ContainerInspect) {
 	return e.inspect
 }
 
 // GetLastLogs (english):
 //
-// GetLastLogs (português): Retorna a saída padrão do container baseado no último ciclo do ticker
+// GetLastLogs (português): Retorna a saída padrão do container baseado no último ciclo do ticker definido em
+// SetInspectInterval()
+//
+//   Nota: a função GetChannelOnContainerInspect() retorna o canal disparado pelo ticker quando as informações estão
+//   prontas para uso
 func (e *ContainerBuilder) GetLastLogs() (logs string) {
 	return e.logs
 }
@@ -66,6 +74,7 @@ func (e *ContainerBuilder) GetLastLogs() (logs string) {
 // SetBuildFolderPath (english):
 //
 // SetBuildFolderPath (português): Define o caminho da pasta a ser transformada em imagem
+//   value: caminho da pasta a ser transformada em imagem
 func (e *ContainerBuilder) SetBuildFolderPath(value string) {
 	e.buildPath = value
 }
@@ -73,6 +82,9 @@ func (e *ContainerBuilder) SetBuildFolderPath(value string) {
 // SetImageName (english):
 //
 // SetImageName (português): Define o nome da imagem a ser usada ou criada
+//   value: noma da imagem a ser baixada ou criada
+//
+//     Nota: o nome da imagem deve ter a tag de versão
 func (e *ContainerBuilder) SetImageName(value string) {
 	e.imageName = value
 }
@@ -163,6 +175,9 @@ func (e *ContainerBuilder) SetDoNotOpenContainersPorts() {
 // SetInspectInterval (english):
 //
 // SetInspectInterval (português): Define o intervalo de monitoramento do container [opcional]
+//
+//   Nota: Esta função tem um custo computacional elevado e deve ser usada com moderação.
+//   Os valores capturados são apresentados por GetLastInspect() e GetChannelOnContainerInspect()
 func (e *ContainerBuilder) SetInspectInterval(value time.Duration) {
 	e.inspectInterval = value
 }
