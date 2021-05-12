@@ -222,21 +222,25 @@ func (e *ContainerBuilder) Init() (err error) {
 
 // GetChannelOnContainerReady (english):
 //
-// GetChannelOnContainerReady (português):
+// GetChannelOnContainerReady (português): Canal disparado quando o container está pronto para uso
+//
+//   Nota: Este canal espera o container sinalizar que está pronto, caso SetWaitString() não seja definido, ou espera
+//   pelo texto definido em SetWaitString() aparecer na saída padrão
 func (e *ContainerBuilder) GetChannelOnContainerReady() (channel *chan bool) {
 	return e.onContainerReady
 }
 
 // GetChannelOnContainerInspect (english):
 //
-// GetChannelOnContainerInspect (português):
+// GetChannelOnContainerInspect (português): Canas disparado a cada ciclo do ticker definido em SetInspectInterval()
 func (e *ContainerBuilder) GetChannelOnContainerInspect() (channel *chan bool) {
 	return e.onContainerInspect
 }
 
 // GetChannelEvent (english):
 //
-// GetChannelEvent (português):
+// GetChannelEvent (português): Canal disparado durante o processo de image build ou container build e retorna
+// informações como andamento do download da imagem, processo de extração da mesma entre outras informações
 func (e *ContainerBuilder) GetChannelEvent() (channel *chan iotmakerdocker.ContainerPullStatusSendToChannel) {
 	return e.changePointer
 }
