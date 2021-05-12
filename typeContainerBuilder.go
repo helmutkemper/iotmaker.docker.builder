@@ -16,7 +16,9 @@ import (
 
 // changePort (english):
 //
-// changePort (português):
+// changePort (português): Recebe a relação entre portas a serem trocadas
+//   oldPort: porta original da imagem
+//   newPort: porta a exporta na rede
 type changePort struct {
 	oldPort string
 	newPort string
@@ -24,7 +26,7 @@ type changePort struct {
 
 // ContainerBuilder (english):
 //
-// ContainerBuilder (português):
+// ContainerBuilder (português): Gerenciador de containers e imagens docker
 type ContainerBuilder struct {
 	network            isolatedNetwork.ContainerBuilderNetworkInterface
 	dockerSys          iotmakerdocker.DockerSystem
@@ -49,63 +51,70 @@ type ContainerBuilder struct {
 
 // GetLastInspect (english):
 //
-// GetLastInspect (português):
+// GetLastInspect (português): Retorna os dados do container baseado no último ciclo do ticker
 func (e *ContainerBuilder) GetLastInspect() (inspect iotmakerdocker.ContainerInspect) {
 	return e.inspect
 }
 
 // GetLastLogs (english):
 //
-// GetLastLogs (português):
+// GetLastLogs (português): Retorna a saída padrão do container baseado no último ciclo do ticker
 func (e *ContainerBuilder) GetLastLogs() (logs string) {
 	return e.logs
 }
 
 // SetBuildFolderPath (english):
 //
-// SetBuildFolderPath (português):
+// SetBuildFolderPath (português): Define o caminho da pasta a ser transformada em imagem
 func (e *ContainerBuilder) SetBuildFolderPath(value string) {
 	e.buildPath = value
 }
 
 // SetImageName (english):
 //
-// SetImageName (português):
+// SetImageName (português): Define o nome da imagem a ser usada ou criada
 func (e *ContainerBuilder) SetImageName(value string) {
 	e.imageName = value
 }
 
 // SetContainerName (english):
 //
-// SetContainerName (português):
+// SetContainerName (português): Define o nome do container
 func (e *ContainerBuilder) SetContainerName(value string) {
 	e.containerName = value
 }
 
 // SetWaitString (english):
 //
-// SetWaitString (português):
+// SetWaitString (português): Define um texto a ser procurado dentro da saída padrão do container e força a espera do
+// mesmo para se considerar o container como pronto para uso
 func (e *ContainerBuilder) SetWaitString(value string) {
 	e.waitString = value
 }
 
 // SetNetworkDocker (english):
 //
-// SetNetworkDocker (português):
+// SetNetworkDocker (português): Define o ponteiro do gerenciador de rede docker
 func (e *ContainerBuilder) SetNetworkDocker(network isolatedNetwork.ContainerBuilderNetworkInterface) {
 	e.network = network
 }
 
 // SetEnvironmentVar (english):
 //
-// SetEnvironmentVar (português):
+// SetEnvironmentVar (português): Define as variáveis de ambiente
 func (e *ContainerBuilder) SetEnvironmentVar(value []string) {
 	e.environmentVar = value
 }
 
 // AddPortToOpen (english):
 //
-// AddPortToOpen (português):
+// AddPortToOpen (português): Define as portas a serem expostas na rede
+// value: porta na forma de string numérica
+//
+//     Nota: A omissão de definição das portas a serem expostas define automaticamente todas as portas contidas na
+//     imagem como portas a serem expostas.
+//     AddPortToOpen() e AddPortToChange() limitam as portas abertas as portas listadas.
+//     SetDoNotOpenContainersPorts() impede a exposição automática de portas.
 func (e *ContainerBuilder) AddPortToOpen(value string) {
 	if e.openPorts == nil {
 		e.openPorts = make([]string, 0)
@@ -116,7 +125,15 @@ func (e *ContainerBuilder) AddPortToOpen(value string) {
 
 // AddPortToChange (english):
 //
-// AddPortToChange (português):
+// AddPortToChange (português): Define as portas a serem expostas na rede alterando o valor da porta definida na imagem
+// e o valor exposto na rede
+//   imagePort: porta definida na imagem, na forma de string numérica
+//   newPort: novo valor da porta a se exposta na rede
+//
+//     Nota: A omissão de definição das portas a serem expostas define automaticamente todas as portas contidas na
+//     imagem como portas a serem expostas.
+//     AddPortToOpen() e AddPortToChange() limitam as portas abertas as portas listadas.
+//     SetDoNotOpenContainersPorts() impede a exposição automática de portas.
 func (e *ContainerBuilder) AddPortToChange(imagePort string, newPort string) {
 	if e.changePorts == nil {
 		e.changePorts = make([]changePort, 0)
@@ -133,21 +150,26 @@ func (e *ContainerBuilder) AddPortToChange(imagePort string, newPort string) {
 
 // SetDoNotOpenContainersPorts (english):
 //
-// SetDoNotOpenContainersPorts (português):
+// SetDoNotOpenContainersPorts (português): Impede a publicação de portas expostas na rede de forma automática
+//
+//     Nota: A omissão de definição das portas a serem expostas define automaticamente todas as portas contidas na
+//     imagem como portas a serem expostas.
+//     AddPortToOpen() e AddPortToChange() limitam as portas abertas as portas listadas.
+//     SetDoNotOpenContainersPorts() impede a exposição automática de portas.
 func (e *ContainerBuilder) SetDoNotOpenContainersPorts() {
 	e.doNotOpenPorts = true
 }
 
 // SetInspectInterval (english):
 //
-// SetInspectInterval (português):
+// SetInspectInterval (português): Define o intervalo de monitoramento do container [opcional]
 func (e *ContainerBuilder) SetInspectInterval(value time.Duration) {
 	e.inspectInterval = value
 }
 
 // Init (english):
 //
-// Init (português):
+// Init (português): Inicializa o objeto e deve ser chamado apenas depois de toas as configurações serem definidas
 func (e *ContainerBuilder) Init() (err error) {
 	if e.environmentVar == nil {
 		e.environmentVar = make([]string, 0)
