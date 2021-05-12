@@ -14,11 +14,17 @@ import (
 	"time"
 )
 
+// changePort (english):
+//
+// changePort (português):
 type changePort struct {
 	oldPort string
 	newPort string
 }
 
+// ContainerBuilder (english):
+//
+// ContainerBuilder (português):
 type ContainerBuilder struct {
 	network            isolatedNetwork.ContainerBuilderNetworkInterface
 	dockerSys          iotmakerdocker.DockerSystem
@@ -41,39 +47,65 @@ type ContainerBuilder struct {
 	inspectInterval    time.Duration
 }
 
+// GetLastInspect (english):
+//
+// GetLastInspect (português):
 func (e *ContainerBuilder) GetLastInspect() (inspect iotmakerdocker.ContainerInspect) {
 	return e.inspect
 }
 
+// GetLastLogs (english):
+//
+// GetLastLogs (português):
 func (e *ContainerBuilder) GetLastLogs() (logs string) {
 	return e.logs
 }
 
+// SetBuildFolderPath (english):
+//
+// SetBuildFolderPath (português):
 func (e *ContainerBuilder) SetBuildFolderPath(value string) {
 	e.buildPath = value
 }
 
+// SetImageName (english):
+//
+// SetImageName (português):
 func (e *ContainerBuilder) SetImageName(value string) {
 	e.imageName = value
 }
 
+// SetContainerName (english):
+//
+// SetContainerName (português):
 func (e *ContainerBuilder) SetContainerName(value string) {
 	e.containerName = value
 }
 
-// "Listening for route connections on 0.0.0.0:6222"
+// SetWaitString (english):
+//
+// SetWaitString (português):
 func (e *ContainerBuilder) SetWaitString(value string) {
 	e.waitString = value
 }
 
+// SetNetworkDocker (english):
+//
+// SetNetworkDocker (português):
 func (e *ContainerBuilder) SetNetworkDocker(network isolatedNetwork.ContainerBuilderNetworkInterface) {
 	e.network = network
 }
 
+// SetEnvironmentVar (english):
+//
+// SetEnvironmentVar (português):
 func (e *ContainerBuilder) SetEnvironmentVar(value []string) {
 	e.environmentVar = value
 }
 
+// AddPortToOpen (english):
+//
+// AddPortToOpen (português):
 func (e *ContainerBuilder) AddPortToOpen(value string) {
 	if e.openPorts == nil {
 		e.openPorts = make([]string, 0)
@@ -82,6 +114,9 @@ func (e *ContainerBuilder) AddPortToOpen(value string) {
 	e.openPorts = append(e.openPorts, value)
 }
 
+// AddPortToChange (english):
+//
+// AddPortToChange (português):
 func (e *ContainerBuilder) AddPortToChange(imagePort string, newPort string) {
 	if e.changePorts == nil {
 		e.changePorts = make([]changePort, 0)
@@ -96,14 +131,23 @@ func (e *ContainerBuilder) AddPortToChange(imagePort string, newPort string) {
 	)
 }
 
+// SetDoNotOpenContainersPorts (english):
+//
+// SetDoNotOpenContainersPorts (português):
 func (e *ContainerBuilder) SetDoNotOpenContainersPorts() {
 	e.doNotOpenPorts = true
 }
 
+// SetInspectInterval (english):
+//
+// SetInspectInterval (português):
 func (e *ContainerBuilder) SetInspectInterval(value time.Duration) {
 	e.inspectInterval = value
 }
 
+// Init (english):
+//
+// Init (português):
 func (e *ContainerBuilder) Init() (err error) {
 	if e.environmentVar == nil {
 		e.environmentVar = make([]string, 0)
@@ -154,18 +198,30 @@ func (e *ContainerBuilder) Init() (err error) {
 	return
 }
 
+// GetChannelOnContainerReady (english):
+//
+// GetChannelOnContainerReady (português):
 func (e *ContainerBuilder) GetChannelOnContainerReady() (channel *chan bool) {
 	return e.onContainerReady
 }
 
+// GetChannelOnContainerInspect (english):
+//
+// GetChannelOnContainerInspect (português):
 func (e *ContainerBuilder) GetChannelOnContainerInspect() (channel *chan bool) {
 	return e.onContainerInspect
 }
 
+// GetChannelEvent (english):
+//
+// GetChannelEvent (português):
 func (e *ContainerBuilder) GetChannelEvent() (channel *chan iotmakerdocker.ContainerPullStatusSendToChannel) {
 	return e.changePointer
 }
 
+// ImagePull (english):
+//
+// ImagePull (português):
 func (e *ContainerBuilder) ImagePull() (err error) {
 	e.imageID, e.imageName, err = e.dockerSys.ImagePull(e.imageName, e.changePointer)
 	if err != nil {
@@ -175,6 +231,9 @@ func (e *ContainerBuilder) ImagePull() (err error) {
 	return
 }
 
+// verifyImageName (english):
+//
+// verifyImageName (português):
 func (e *ContainerBuilder) verifyImageName() (err error) {
 	if e.imageName == "" {
 		err = errors.New("image name is't set")
@@ -189,12 +248,18 @@ func (e *ContainerBuilder) verifyImageName() (err error) {
 	return
 }
 
+// WaitFortextInContainerLog (english):
+//
+// WaitFortextInContainerLog (português):
 func (e *ContainerBuilder) WaitFortextInContainerLog(value string) (dockerLogs string, err error) {
 	var logs []byte
 	logs, err = e.dockerSys.ContainerLogsWaitText(e.containerID, value, log.Writer())
 	return string(logs), err
 }
 
+// ImageBuildFromFolder (english):
+//
+// ImageBuildFromFolder (português):
 func (e *ContainerBuilder) ImageBuildFromFolder() (err error) {
 	err = e.verifyImageName()
 	if err != nil {
@@ -231,6 +296,9 @@ func (e *ContainerBuilder) ImageBuildFromFolder() (err error) {
 	return
 }
 
+// ContainerBuildFromImage (english):
+//
+// ContainerBuildFromImage (português):
 func (e *ContainerBuilder) ContainerBuildFromImage() (err error) {
 	err = e.verifyImageName()
 	if err != nil {
@@ -334,6 +402,9 @@ func (e *ContainerBuilder) ContainerBuildFromImage() (err error) {
 	return
 }
 
+// GetContainerLog (english):
+//
+// GetContainerLog (português):
 func (e *ContainerBuilder) GetContainerLog() (log []byte, err error) {
 	if e.containerID == "" {
 		err = e.GetFindIdByContainerName()
@@ -346,6 +417,9 @@ func (e *ContainerBuilder) GetContainerLog() (log []byte, err error) {
 	return
 }
 
+// FindTextInsideContainerLog (english):
+//
+// FindTextInsideContainerLog (português):
 func (e *ContainerBuilder) FindTextInsideContainerLog(value string) (contains bool, err error) {
 	var logs []byte
 	logs, err = e.GetContainerLog()
@@ -357,6 +431,9 @@ func (e *ContainerBuilder) FindTextInsideContainerLog(value string) (contains bo
 	return
 }
 
+// ContainerStart (english):
+//
+// ContainerStart (português):
 func (e *ContainerBuilder) ContainerStart() (err error) {
 	if e.containerID == "" {
 		err = e.GetFindIdByContainerName()
@@ -369,6 +446,9 @@ func (e *ContainerBuilder) ContainerStart() (err error) {
 	return
 }
 
+// ContainerStop (english):
+//
+// ContainerStop (português):
 func (e *ContainerBuilder) ContainerStop() (err error) {
 	if e.containerID == "" {
 		err = e.GetFindIdByContainerName()
@@ -381,6 +461,9 @@ func (e *ContainerBuilder) ContainerStop() (err error) {
 	return
 }
 
+// ContainerRemove (english):
+//
+// ContainerRemove (português):
 func (e *ContainerBuilder) ContainerRemove() (err error) {
 	if e.containerID == "" {
 		err = e.GetFindIdByContainerName()
@@ -393,6 +476,9 @@ func (e *ContainerBuilder) ContainerRemove() (err error) {
 	return
 }
 
+// ImageRemove (english):
+//
+// ImageRemove (português):
 func (e *ContainerBuilder) ImageRemove() (err error) {
 	err = e.ContainerRemove()
 	if err != nil {
@@ -403,6 +489,9 @@ func (e *ContainerBuilder) ImageRemove() (err error) {
 	return
 }
 
+// ContainerInspect (english):
+//
+// ContainerInspect (português):
 func (e *ContainerBuilder) ContainerInspect() (inspect iotmakerdocker.ContainerInspect, err error) {
 	if e.containerID == "" {
 		err = e.GetFindIdByContainerName()
@@ -415,11 +504,17 @@ func (e *ContainerBuilder) ContainerInspect() (inspect iotmakerdocker.ContainerI
 	return
 }
 
+// GetFindIdByContainerName (english):
+//
+// GetFindIdByContainerName (português):
 func (e *ContainerBuilder) GetFindIdByContainerName() (err error) {
 	e.containerID, err = e.dockerSys.ContainerFindIdByName(e.containerName)
 	return
 }
 
+// RemoveAllByNameContains (english):
+//
+// RemoveAllByNameContains (português):
 func (e *ContainerBuilder) RemoveAllByNameContains(name string) (err error) {
 	e.containerID = ""
 	err = e.dockerSys.RemoveAllByNameContains(name)

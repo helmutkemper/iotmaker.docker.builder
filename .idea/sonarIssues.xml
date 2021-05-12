@@ -118,6 +118,21 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/../overload/Dockerfile">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../overload/go.mod">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../overload/main.go">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/../queue/dockerfile">
           <value>
             <set />
