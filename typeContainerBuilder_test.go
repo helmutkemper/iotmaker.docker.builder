@@ -56,7 +56,6 @@ func TestContainer_1(t *testing.T) {
 	}
 
 	err = container.ContainerBuildFromImage()
-	err = container.ImagePull()
 	if err != nil {
 		util.TraceToLog()
 		t.FailNow()
@@ -118,7 +117,6 @@ func TestContainer_2(t *testing.T) {
 	}
 
 	err = container.ContainerBuildFromImage()
-	err = container.ImagePull()
 	if err != nil {
 		util.TraceToLog()
 		t.FailNow()
@@ -180,7 +178,6 @@ func TestContainer_3(t *testing.T) {
 	}
 
 	err = container.ContainerBuildFromImage()
-	err = container.ImagePull()
 	if err != nil {
 		util.TraceToLog()
 		t.FailNow()
