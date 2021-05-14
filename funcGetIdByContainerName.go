@@ -1,0 +1,9 @@
+package iotmaker_docker_builder
+
+// GetIdByContainerName (english):
+//
+// GetIdByContainerName (português): retorna o ID do container definido em SetContainerName()
+func (e *ContainerBuilder) GetIdByContainerName() (err error) {
+	e.containerID, err = e.dockerSys.ContainerFindIdByName(e.containerName)
+	return
+}
