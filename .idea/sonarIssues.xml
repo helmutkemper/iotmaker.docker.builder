@@ -73,6 +73,11 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/../go-git/main.go">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/../iotmaker.docker.builder.interface/typeContainerBuilderInterface.go">
           <value>
             <set />
@@ -223,7 +228,32 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/funcSetGitCloneToBuild.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/funcSetGitCloneToBuildWithPrivateSshKey.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/funcSetGitCloneToBuildWithPrivateToken.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/funcSetGitCloneToBuildWithUserPassworh.go">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/funcSetInspectInterval.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/funcSetServerBuildPath.go">
           <value>
             <set />
           </value>
@@ -259,6 +289,11 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/typeContainerBuilder_test.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../iotmaker.docker.util.whaleAquarium.sample/main.go">
           <value>
             <set />
           </value>

@@ -18,16 +18,25 @@ type ContainerBuilder struct {
 	imageName          string
 	imageID            string
 	containerName      string
-	buildPath          string
-	serverBuildPath    string
-	environmentVar     []string
-	changePorts        []changePort
-	openPorts          []string
-	doNotOpenPorts     bool
-	waitString         string
-	containerID        string
-	ticker             *time.Ticker
-	inspect            iotmakerdocker.ContainerInspect
-	logs               string
-	inspectInterval    time.Duration
+	//buildPath          string
+	environmentVar  []string
+	changePorts     []changePort
+	openPorts       []string
+	doNotOpenPorts  bool
+	waitString      string
+	containerID     string
+	ticker          *time.Ticker
+	inspect         iotmakerdocker.ContainerInspect
+	logs            string
+	inspectInterval time.Duration
+	gitData         gitData
+}
+
+// gitData (Português): Estrutura de dados baseada no framework go-git
+type gitData struct {
+	url               string
+	sshPrivateKeyPath string
+	privateToke       string
+	user              string
+	password          string
 }

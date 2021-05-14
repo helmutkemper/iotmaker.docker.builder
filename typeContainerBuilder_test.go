@@ -225,8 +225,8 @@ func TestContainer_4(t *testing.T) {
 	container.SetNetworkDocker(&netDocker)
 	container.SetImageName("delete:latest")
 	container.SetContainerName("container_delete_nats_after_test")
-	container.SetBuildFolderPath("/Users/kemper/go/projetos/queue")
-	container.SetWaitString("Listening for route connections on 0.0.0.0:6222")
+	container.SetGitCloneToBuild("git@github.com:helmutkemper/iotmaker.docker.util.whaleAquarium.sample.git")
+	container.SetWaitString("Stating server on port 3000")
 
 	err = container.Init()
 	if err != nil {
