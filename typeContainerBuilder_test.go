@@ -4,6 +4,7 @@ import (
 	dockerNetwork "github.com/helmutkemper/iotmaker.docker.builder.network"
 	iotmakerdocker "github.com/helmutkemper/iotmaker.docker/v1.0.1"
 	"github.com/helmutkemper/util"
+	"log"
 	"testing"
 )
 
@@ -225,7 +226,7 @@ func TestContainer_4(t *testing.T) {
 	container.SetNetworkDocker(&netDocker)
 	container.SetImageName("delete:latest")
 	container.SetContainerName("container_delete_nats_after_test")
-	container.SetGitCloneToBuild("git@github.com:helmutkemper/iotmaker.docker.util.whaleAquarium.sample.git")
+	container.SetGitCloneToBuild("https://github.com/helmutkemper/iotmaker.docker.util.whaleAquarium.sample.git")
 	container.SetWaitString("Stating server on port 3000")
 
 	err = container.Init()
@@ -234,22 +235,24 @@ func TestContainer_4(t *testing.T) {
 		t.FailNow()
 	}
 
-	err = container.ImageBuildFromFolder()
+	err = container.ImageBuildFromServer()
 	if err != nil {
 		util.TraceToLog()
+		log.Printf("container.ImageBuildFromServer().error: %v", err.Error())
 		t.FailNow()
 	}
 
 	err = container.ContainerBuildFromImage()
-	err = container.ImagePull()
 	if err != nil {
 		util.TraceToLog()
+		log.Printf("container.ContainerBuildFromImage().error: %v", err.Error())
 		t.FailNow()
 	}
 
 	err = dockerSys.RemoveAllByNameContains("delete")
 	if err != nil {
 		util.TraceToLog()
+		log.Printf("container.RemoveAllByNameContains().error: %v", err.Error())
 		t.FailNow()
 	}
 }
