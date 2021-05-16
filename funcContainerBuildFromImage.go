@@ -99,8 +99,13 @@ func (e *ContainerBuilder) ContainerBuildFromImage() (err error) {
 		return
 	}
 
-	if e.waitString != "" {
+	if e.waitString != "" && e.waitStringTimeout == 0 {
 		_, err = e.dockerSys.ContainerLogsWaitText(e.containerID, e.waitString, log.Writer())
+		if err != nil {
+			return
+		}
+	} else if e.waitString != "" {
+		_, err = e.dockerSys.ContainerLogsWaitTextWithTimeout(e.containerID, e.waitString, e.waitStringTimeout, log.Writer())
 		if err != nil {
 			return
 		}

@@ -25,6 +25,7 @@ type ContainerBuilder struct {
 	openPorts          []string
 	doNotOpenPorts     bool
 	waitString         string
+	waitStringTimeout  time.Duration
 	containerID        string
 	ticker             *time.Ticker
 	inspect            iotmakerdocker.ContainerInspect
