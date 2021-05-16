@@ -25,7 +25,7 @@ func (e *ContainerBuilder) ContainerBuildFromImage() (err error) {
 
 	var netConfig *network.NetworkingConfig
 	if e.network != nil {
-		netConfig, err = e.network.GetConfiguration()
+		_, netConfig, err = e.network.GetConfiguration()
 		if err != nil {
 			return
 		}

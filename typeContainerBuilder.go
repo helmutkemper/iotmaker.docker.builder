@@ -2,6 +2,7 @@ package iotmaker_docker_builder
 
 import (
 	"errors"
+	"github.com/docker/docker/api/types/mount"
 	isolatedNetwork "github.com/helmutkemper/iotmaker.docker.builder.network.interface"
 	iotmakerdocker "github.com/helmutkemper/iotmaker.docker/v1.0.1"
 	"time"
@@ -32,6 +33,7 @@ type ContainerBuilder struct {
 	logs               string
 	inspectInterval    time.Duration
 	gitData            gitData
+	volumes            []mount.Mount
 }
 
 type Overloading struct {
