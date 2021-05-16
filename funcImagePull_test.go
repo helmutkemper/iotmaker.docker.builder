@@ -8,20 +8,7 @@ import (
 func ExampleContainerBuilder_ImagePull() {
 	var err error
 
-	// garbage collector delete all containers, images, volumes and networks whose name contains the term "delete"
-	var garbageCollector = ContainerBuilder{}
-	err = garbageCollector.Init()
-	if err != nil {
-		util.TraceToLog()
-		panic(err)
-	}
-
-	// set the term "delete" to garbage collector
-	err = garbageCollector.RemoveAllByNameContains("delete")
-	if err != nil {
-		util.TraceToLog()
-		panic(err)
-	}
+	GarbageCollector()
 
 	// create a network [optional]
 	var netDocker = dockerNetwork.ContainerBuilderNetwork{}
@@ -79,17 +66,15 @@ func ExampleContainerBuilder_ImagePull() {
 	// 1111;
 	// you can use SetDoNotOpenContainersPorts() to not open containers ports
 
-	// remove container and network after test
-	err = garbageCollector.RemoveAllByNameContains("delete")
+	GarbageCollector()
+
+	// use this function to remove image, ONLY before container stoped and deleted
+	err = container.ImageRemoveByName("nats:latest")
 	if err != nil {
 		util.TraceToLog()
 		panic(err)
 	}
 
-	// use this function to remove image, ONLY before container stoped and deleted
-	err = garbageCollector.ImageRemoveByName("nats:latest")
-	if err != nil {
-		util.TraceToLog()
-		panic(err)
-	}
+	// Output:
+	//
 }

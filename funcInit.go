@@ -1,7 +1,6 @@
 package iotmaker_docker_builder
 
 import (
-	"github.com/docker/docker/api/types/mount"
 	iotmakerdocker "github.com/helmutkemper/iotmaker.docker/v1.0.1"
 	"time"
 )
@@ -13,8 +12,6 @@ func (e *ContainerBuilder) Init() (err error) {
 	if e.environmentVar == nil {
 		e.environmentVar = make([]string, 0)
 	}
-
-	e.volumes = make([]mount.Mount, 0)
 
 	onStart := make(chan bool, 1)
 	e.onContainerReady = &onStart

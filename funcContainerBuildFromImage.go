@@ -87,7 +87,7 @@ func (e *ContainerBuilder) ContainerBuildFromImage() (err error) {
 		e.containerName,
 		iotmakerdocker.KRestartPolicyNo,
 		portMap,
-		nil,
+		e.volumes,
 		netConfig,
 	)
 	if err != nil {

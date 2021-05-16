@@ -14,6 +14,10 @@ import (
 //   insideContainerPath: Caminho dentro do container
 func (e *ContainerBuilder) AddFiileOrFolderToLinkBetweenConputerHostAndContainer(computerHostPath, insideContainerPath string) (err error) {
 
+	if e.volumes == nil {
+		e.volumes = make([]mount.Mount, 0)
+	}
+
 	computerHostPath, err = filepath.Abs(computerHostPath)
 	if err != nil {
 		return
