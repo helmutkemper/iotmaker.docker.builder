@@ -14,7 +14,7 @@ func ExampleContainerBuilder_AddPortToOpen() {
 
 	GarbageCollector()
 
-	var container = &ContainerBuilder{}
+	var container = ContainerBuilder{}
 	// new image name delete:latest
 	container.SetImageName("delete:latest")
 	// container name container_delete_server_after_test
