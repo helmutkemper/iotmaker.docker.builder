@@ -25,7 +25,7 @@ func (e *ContainerBuilder) ContainerBuildFromImage() (err error) {
 
 	var netConfig *network.NetworkingConfig
 	if e.network != nil {
-		_, netConfig, err = e.network.GetConfiguration()
+		e.ipAddress, netConfig, err = e.network.GetConfiguration()
 		if err != nil {
 			return
 		}
@@ -78,7 +78,7 @@ func (e *ContainerBuilder) ContainerBuildFromImage() (err error) {
 		AttachStderr: true,
 		AttachStdin:  true,
 		AttachStdout: true,
-		Env:          []string{},
+		Env:          e.environmentVar,
 		Image:        e.imageName,
 	}
 
@@ -109,6 +109,10 @@ func (e *ContainerBuilder) ContainerBuildFromImage() (err error) {
 		if err != nil {
 			return
 		}
+	}
+
+	if e.network == nil {
+		e.ipAddress, err = e.FindCurrentIpAddress()
 	}
 
 	*e.onContainerReady <- true

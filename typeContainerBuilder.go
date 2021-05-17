@@ -1,7 +1,6 @@
 package iotmaker_docker_builder
 
 import (
-	"errors"
 	"github.com/docker/docker/api/types/mount"
 	isolatedNetwork "github.com/helmutkemper/iotmaker.docker.builder.network.interface"
 	iotmakerdocker "github.com/helmutkemper/iotmaker.docker/v1.0.1"
@@ -34,57 +33,5 @@ type ContainerBuilder struct {
 	inspectInterval    time.Duration
 	gitData            gitData
 	volumes            []mount.Mount
-}
-
-type Overloading struct {
-	builder  *ContainerBuilder
-	overload *ContainerBuilder
-}
-
-func (e Overloading) Init() (err error) {
-	if e.builder == nil {
-		err = errors.New("set container builder pointer first")
-		return
-	}
-
-	e.overload = &ContainerBuilder{}
-	e.overload.network = e.builder.network
-	e.overload.SetImageName("overload:latest")
-	e.overload.SetContainerName(e.builder.containerName + "_overload")
-	e.overload.SetGitCloneToBuild("https://github.com/helmutkemper/iotmaker.network.util.overload.image.git")
-	e.overload.SetWaitString("overloading...")
-	e.overload.SetEnvironmentVar(
-		[]string{
-			`IN_ADDRESS=10.0.0.6:8080`,
-			`OUT_ADDRESS=10.0.0.3:8080`,
-			`MIN_DELAY=100`,
-			`MAX_DELAY=1500`,
-		},
-	)
-
-	err = e.overload.Init()
-	if err != nil {
-		return
-	}
-
-	if e.imageExists() == false {
-		err = e.overload.ImageBuildFromServer()
-		if err != nil {
-			return
-		}
-	}
-
-	err = e.overload.ContainerBuildFromImage()
-	if err != nil {
-		return
-	}
-
-	return
-}
-
-func (e *Overloading) imageExists() (exists bool) {
-	var ID string
-	ID, _ = e.overload.dockerSys.ImageFindIdByName("overload:latest")
-	exists = ID != ""
-	return
+	ipAddress          string
 }
