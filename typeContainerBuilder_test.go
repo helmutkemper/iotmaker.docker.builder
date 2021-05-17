@@ -5,6 +5,7 @@ import (
 	iotmakerdocker "github.com/helmutkemper/iotmaker.docker/v1.0.1"
 	"github.com/helmutkemper/util"
 	"testing"
+	"time"
 )
 
 func TestContainer_2(t *testing.T) {
@@ -102,7 +103,7 @@ func TestContainer_3(t *testing.T) {
 	container.SetImageName("nats:latest")
 	container.SetContainerName("container_delete_nats_after_test")
 	container.AddPortToChange("4222", "4200")
-	container.SetWaitString("Listening for route connections on 0.0.0.0:6222")
+	container.SetWaitStringWithTimeout("Listening for route connections on 0.0.0.0:6222", 10*time.Second)
 
 	err = container.Init()
 	if err != nil {

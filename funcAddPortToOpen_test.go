@@ -9,12 +9,12 @@ import (
 	"time"
 )
 
-func ExampleContainerBuilder_AddFiileOrFolderToLinkBetweenConputerHostAndContainer() {
+func ExampleContainerBuilder_AddPortToOpen() {
 	var err error
 
 	GarbageCollector()
 
-	var container = ContainerBuilder{}
+	var container = &ContainerBuilder{}
 	// new image name delete:latest
 	container.SetImageName("delete:latest")
 	// container name container_delete_server_after_test
@@ -26,9 +26,9 @@ func ExampleContainerBuilder_AddFiileOrFolderToLinkBetweenConputerHostAndContain
 	// SetGitCloneToBuildWithPrivateToken()
 
 	// set a waits for the text to appear in the standard container output to proceed [optional]
-	container.SetWaitStringWithTimeout("Stating server on port 3000", 10*time.Second)
-	// change and open port 3000 to 3030
-	container.AddPortToChange("3000", "3030")
+	container.SetWaitStringWithTimeout("Stating server on port 3000", 20*time.Second)
+	// open port 3000 [optional in this case: default code open all ports]
+	container.AddPortToOpen("3000")
 	// replace container folder /static to host folder ./test/static
 	err = container.AddFiileOrFolderToLinkBetweenConputerHostAndContainer("./test/static", "/static")
 	if err != nil {
@@ -62,9 +62,9 @@ func ExampleContainerBuilder_AddFiileOrFolderToLinkBetweenConputerHostAndContain
 
 	// container "container_delete_server_after_test" running and ready for use on this code point on port 3030
 
-	// read server inside a container on address http://localhost:3030/
+	// read server inside a container on address http://localhost:3000/
 	var resp *http.Response
-	resp, err = http.Get("http://localhost:3030/")
+	resp, err = http.Get("http://localhost:3000/")
 	if err != nil {
 		util.TraceToLog()
 		log.Printf("http.Get().error: %v", err.Error())

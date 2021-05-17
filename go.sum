@@ -71,8 +71,8 @@ github.com/google/go-cmp v0.5.4/go.mod h1:v8dTdLbMG2kIc/vJvl+f65V22dbkXbowE6jgT/
 github.com/google/uuid v1.1.2/go.mod h1:TIyPZe4MgqvfeYDBFedMoGGpEw/LqOeaOT+nhxU+yHo=
 github.com/gorilla/mux v1.8.0 h1:i40aqfkR1h2SlN9hojwV5ZA91wcXFOvkdNIeFDP5koI=
 github.com/gorilla/mux v1.8.0/go.mod h1:DVbg23sWSpFRCP0SfiEN6jmj59UnW/n46BH5rLB71So=
-github.com/helmutkemper/iotmaker.docker v1.0.12 h1:w019ZH7HbDnwn5NWGTk4AkTBNboz/5EjbaIEVGRFRi0=
-github.com/helmutkemper/iotmaker.docker v1.0.12/go.mod h1:oIzVSczNdE8wGvCEM7L6FxqEIR7b6MvqUA1qfR61g/4=
+github.com/helmutkemper/iotmaker.docker v1.0.19 h1:kpqbW0NXNLXLuK6T/C49+y8Xnglnjht3kwoL2+FI0ZQ=
+github.com/helmutkemper/iotmaker.docker v1.0.19/go.mod h1:oIzVSczNdE8wGvCEM7L6FxqEIR7b6MvqUA1qfR61g/4=
 github.com/helmutkemper/iotmaker.docker.builder.network v0.0.0-20210516200932-4682352c8ef7 h1:zsetbW7V0YsMWQpmXFOre3Cvy5BfNMceEFGgr1NN2ns=
 github.com/helmutkemper/iotmaker.docker.builder.network v0.0.0-20210516200932-4682352c8ef7/go.mod h1:ATQhH9SogxRWw7esALHo7WvzJ9JhxjeXjnlXnNkbKeE=
 github.com/helmutkemper/iotmaker.docker.builder.network.interface v0.0.0-20210516144554-6ed1b8b77976 h1:uOpCgMgwp9RrC6o1EJC7OMqFEJxd/x4IJXso0R5Ix1M=

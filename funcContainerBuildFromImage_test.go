@@ -9,7 +9,7 @@ import (
 	"time"
 )
 
-func ExampleContainerBuilder_AddFiileOrFolderToLinkBetweenConputerHostAndContainer() {
+func ExampleContainerBuilder_ContainerBuildFromImage() {
 	var err error
 
 	GarbageCollector()

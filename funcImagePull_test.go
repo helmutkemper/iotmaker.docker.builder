@@ -3,6 +3,7 @@ package iotmaker_docker_builder
 import (
 	dockerNetwork "github.com/helmutkemper/iotmaker.docker.builder.network"
 	"github.com/helmutkemper/util"
+	"time"
 )
 
 func ExampleContainerBuilder_ImagePull() {
@@ -34,7 +35,7 @@ func ExampleContainerBuilder_ImagePull() {
 	// set a container name
 	container.SetContainerName("container_delete_nats_after_test")
 	// set a waits for the text to appear in the standard container output to proceed [optional]
-	container.SetWaitString("Listening for route connections on 0.0.0.0:6222")
+	container.SetWaitStringWithTimeout("Listening for route connections on 0.0.0.0:6222", 10*time.Second)
 
 	// inialize the container object
 	err = container.Init()

@@ -2,7 +2,6 @@ package iotmaker_docker_builder
 
 import (
 	"log"
-	"time"
 )
 
 // WaitForTextInContainerLog (english):
@@ -13,11 +12,5 @@ import (
 func (e *ContainerBuilder) WaitForTextInContainerLog(value string) (dockerLogs string, err error) {
 	var logs []byte
 	logs, err = e.dockerSys.ContainerLogsWaitText(e.containerID, value, log.Writer())
-	return string(logs), err
-}
-
-func (e *ContainerBuilder) WaitForTextInContainerLogWithTimeout(value string, timeout time.Duration) (dockerLogs string, err error) {
-	var logs []byte
-	logs, err = e.dockerSys.ContainerLogsWaitTextWithTimeout(e.containerID, value, timeout, log.Writer())
 	return string(logs), err
 }
