@@ -2,13 +2,17 @@
 
 ### English
 
+This project creates a simple way to manipulate containers with the moby docker project
+
+> Status: Starting to document in English
+
 ### Português
 
-> Status: Documentando
+> Status: Documentando em ingles 
 
 Este projeto cria uma API Golang simples para criar e manipular o docker.
 
-Exemplo: Criar uma rede dentro do docker
+### Create a docker network / Cria uma rede docker
 
 ```golang
   var err error
@@ -21,9 +25,11 @@ Exemplo: Criar uma rede dentro do docker
   if err != nil { panic(err) }
 ```
 
-Para vincular um container a rede, use o comando `container.SetNetworkDocker(&netDocker)`, como no exemplo abaixo
+English: use the `container.SetNetworkDocker(&netDocker)` command to link the container to the network
 
-Exemplo: Criar um container com a imagem nats:latest
+Português: use o comando `container.SetNetworkDocker(&netDocker)` para ligar um container com o docker
+
+### Container nats
 
 ```golang
   var err error
@@ -54,8 +60,7 @@ Exemplo: Criar um container com a imagem nats:latest
   if err != nil { panic(err) }
 ```
 
-Exemplo: Usar o projeto de um servidor feito para funcionar na porta 3000, contido no github, e fazer ele funcionar na 
-porta 3030, vinculando a pasta /static contida no container com a pasta ./test/static do computador. 
+### Container from github project
 
 ```golang
   var err error
@@ -90,7 +95,7 @@ porta 3030, vinculando a pasta /static contida no container com a pasta ./test/s
   if err != nil { panic(err) }
 ```
 
-Exemplo: Montar um banco de dados MongoDB efêmero na porta 27017.
+### MongoDB ephemeral
 
 ```golang
   var err error
@@ -111,7 +116,7 @@ Exemplo: Montar um banco de dados MongoDB efêmero na porta 27017.
   if err != nil { panic(err) }
 ```
 
-Exemplo: Montar um banco de dados MongoDB na porta 27017 e preservar os dados na pasta local ./test/data
+### MongoDB
 
 ```golang
   var err error
@@ -128,4 +133,38 @@ Exemplo: Montar um banco de dados MongoDB na porta 27017 e preservar os dados na
   mongoDocker.SetWaitStringWithTimeout(`"msg":"Waiting for connections","attr":{"port":27017`, 20*time.Second)
   err = mongoDocker.Init()
   err = mongoDocker.ContainerBuildFromImage()
+```
+
+### Container from folder
+
+```golang
+  var err error
+
+  GarbageCollector()
+  var container = ContainerBuilder{}
+  // new image name delete:latest
+  container.SetImageName("delete:latest")
+  // set a folder path to make a new image
+  container.SetBuildFolderPath("./test/server")
+  // container name container_delete_server_after_test
+  container.SetContainerName("container_delete_server_after_test")
+  // set a waits for the text to appear in the standard container output to proceed [optional]
+  container.SetWaitStringWithTimeout("starting server at port 3000", 10*time.Second)
+  // change and open port 3000 to 3030
+  container.AddPortToOpen("3000")
+  // replace container folder /static to host folder ./test/static
+  err = container.AddFiileOrFolderToLinkBetweenConputerHostAndContainer("./test/static", "/static")
+  if err != nil { panic(err) }
+
+  // inicialize container object
+  err = container.Init()
+  if err != nil { panic(err) }
+
+  // builder new image from folder
+  err = container.ImageBuildFromFolder()
+  if err != nil { panic(err) }
+
+  // build a new container from image
+  err = container.ContainerBuildFromImage()
+  if err != nil { panic(err) }
 ```
