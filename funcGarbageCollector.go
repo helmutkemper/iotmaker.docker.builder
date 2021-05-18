@@ -1,4 +1,4 @@
-package iotmaker_docker_builder
+package iotmakerdockerbuilder
 
 import (
 	"github.com/helmutkemper/util"

@@ -1,4 +1,4 @@
-package iotmaker_docker_builder
+package iotmakerdockerbuilder
 
 // gitData (Português): Estrutura de dados baseada no framework go-git
 type gitData struct {
