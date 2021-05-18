@@ -4,7 +4,7 @@ import (
 	"github.com/helmutkemper/util"
 )
 
-// GarbageCollector (englis): All tests use networks, containers and images with the term "delete" contained in the
+// GarbageCollector (english): All tests use networks, containers and images with the term "delete" contained in the
 // name.
 //
 // This function considers that the test is over and that these elements must be removed at the end of each test, and as

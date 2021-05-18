@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-func ExampleContainerBuilder_FindCurrentIpAddress() {
+func ExampleContainerBuilder_FindCurrentIPV4Address() {
 	var err error
 
 	GarbageCollector()
@@ -44,13 +44,13 @@ func ExampleContainerBuilder_FindCurrentIpAddress() {
 	}
 
 	var IP string
-	IP, err = container.FindCurrentIpAddress()
+	IP, err = container.FindCurrentIPV4Address()
 	if err != nil {
 		util.TraceToLog()
 		panic(err)
 	}
 
-	if IP != container.GetIpAddress() {
+	if IP != container.GetIPV4Address() {
 		err = errors.New("all ip address must be a samer IP")
 		util.TraceToLog()
 		panic(err)

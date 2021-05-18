@@ -11,6 +11,7 @@ import (
 //
 //   Nota: a função GetChannelOnContainerInspect() retorna o canal disparado pelo ticker quando as informações estão
 //   prontas para uso
+//
 func (e *ContainerBuilder) GetLastInspect() (inspect iotmakerdocker.ContainerInspect) {
 	return e.inspect
 }

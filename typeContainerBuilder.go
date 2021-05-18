@@ -33,5 +33,5 @@ type ContainerBuilder struct {
 	inspectInterval    time.Duration
 	gitData            gitData
 	volumes            []mount.Mount
-	ipAddress          string
+	IPV4Address        string
 }

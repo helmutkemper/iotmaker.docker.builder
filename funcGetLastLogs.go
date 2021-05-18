@@ -7,6 +7,7 @@ package iotmaker_docker_builder
 //
 //   Nota: a função GetChannelOnContainerInspect() retorna o canal disparado pelo ticker quando as informações estão
 //   prontas para uso
+//
 func (e *ContainerBuilder) GetLastLogs() (logs string) {
 	return e.logs
 }

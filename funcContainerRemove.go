@@ -2,7 +2,8 @@ package iotmaker_docker_builder
 
 // ContainerRemove (english):
 //
-// ContainerRemove (português): para e remove o container
+// ContainerRemove (português): parar e remover o container
+//   removeVolumes: remove os volumes docker vinculados ao container
 func (e *ContainerBuilder) ContainerRemove(removeVolumes bool) (err error) {
 	if e.containerID == "" {
 		err = e.GetIdByContainerName()

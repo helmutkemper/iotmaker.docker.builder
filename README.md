@@ -85,6 +85,9 @@ porta 3030, vinculando a pasta /static contida no container com a pasta ./test/s
   // builder new image from git project
   err = container.ImageBuildFromServer()
   if err != nil { panic(err) }
+
+  err = container.ContainerBuildFromImage()
+  if err != nil { panic(err) }
 ```
 
 Exemplo: Montar um banco de dados MongoDB efêmero na porta 27017.

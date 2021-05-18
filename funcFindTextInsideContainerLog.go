@@ -6,7 +6,8 @@ import (
 
 // FindTextInsideContainerLog (english):
 //
-// FindTextInsideContainerLog (português): procura por um texto na saída padrão do container
+// FindTextInsideContainerLog (português): procurar por um texto na saída padrão do container.
+//   value: texto procurado
 func (e *ContainerBuilder) FindTextInsideContainerLog(value string) (contains bool, err error) {
 	var logs []byte
 	logs, err = e.GetContainerLog()

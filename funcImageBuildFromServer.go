@@ -9,20 +9,13 @@ import (
 	"os"
 )
 
-func (e *ContainerBuilder) gitMakePublicSshKey() (publicKeys *ssh.PublicKeys, err error) {
-	_, err = os.Stat(e.gitData.sshPrivateKeyPath)
-	if err != nil {
-		return
-	}
-
-	publicKeys, err = ssh.NewPublicKeysFromFile("git", e.gitData.sshPrivateKeyPath, e.gitData.password)
-	if err != nil {
-		return
-	}
-
-	return
-}
-
+// ImageBuildFromServer (english):
+//
+// ImageBuildFromServer (português): Monta uma imagem docker a partir de um projeto contido em um repositório git.
+//
+//   Nota: O repositório pode ser definido pelos métodos SetGitCloneToBuild(), SetGitCloneToBuildWithPrivateSshKey(),
+//   SetGitCloneToBuildWithPrivateToken() e SetGitCloneToBuildWithUserPassworh()
+//
 func (e *ContainerBuilder) ImageBuildFromServer() (err error) {
 	err = e.verifyImageName()
 	if err != nil {

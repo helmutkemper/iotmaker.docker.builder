@@ -26,7 +26,7 @@ func (e *ContainerBuilder) ContainerBuildFromImage() (err error) {
 
 	var netConfig *network.NetworkingConfig
 	if e.network != nil {
-		e.ipAddress, netConfig, err = e.network.GetConfiguration()
+		e.IPV4Address, netConfig, err = e.network.GetConfiguration()
 		if err != nil {
 			return
 		}
@@ -145,7 +145,7 @@ func (e *ContainerBuilder) ContainerBuildFromImage() (err error) {
 	}
 
 	if e.network == nil {
-		e.ipAddress, err = e.FindCurrentIpAddress()
+		e.IPV4Address, err = e.FindCurrentIPV4Address()
 	}
 
 	*e.onContainerReady <- true

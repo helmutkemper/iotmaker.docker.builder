@@ -2,7 +2,7 @@ package iotmaker_docker_builder
 
 // GetContainerLog (english):
 //
-// GetContainerLog (português): baixa a saída padrão do container
+// GetContainerLog (português): Retorna a saída padrão atual do container.
 func (e *ContainerBuilder) GetContainerLog() (log []byte, err error) {
 	if e.containerID == "" {
 		err = e.GetIdByContainerName()

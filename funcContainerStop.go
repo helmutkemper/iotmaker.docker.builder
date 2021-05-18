@@ -2,7 +2,7 @@ package iotmaker_docker_builder
 
 // ContainerStop (english):
 //
-// ContainerStop (português): para o container
+// ContainerStop (português): parar o container
 func (e *ContainerBuilder) ContainerStop() (err error) {
 	if e.containerID == "" {
 		err = e.GetIdByContainerName()

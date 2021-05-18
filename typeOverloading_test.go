@@ -102,7 +102,7 @@ func ExampleOverloading_Init() {
 		panic(err)
 	}
 
-	log.Printf("ip address: %v", serverContainer.GetIpAddress())
+	log.Printf("ip address: %v", serverContainer.GetIPV4Address())
 	return
 	var overload = Overloading{}
 	overload.SetNetworkDocker(&netDocker)

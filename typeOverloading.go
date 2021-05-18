@@ -34,7 +34,7 @@ func (e *Overloading) Init(listenPort string, invert bool) (err error) {
 		return
 	}
 
-	var builderIP = e.builder.GetIpAddress()
+	var builderIP = e.builder.GetIPV4Address()
 	var nextIP, _ = e.builder.incIpV4Address(builderIP, 1)
 
 	e.overload = &ContainerBuilder{}
