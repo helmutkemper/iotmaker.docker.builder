@@ -4,7 +4,7 @@ import (
 	"time"
 )
 
-func ExampleContainerBuilder_SetGitCloneToBuild() {
+func ExampleContainerBuilder_ImageBuildFromFolder() {
 	var err error
 
 	GarbageCollector()
@@ -12,14 +12,14 @@ func ExampleContainerBuilder_SetGitCloneToBuild() {
 	var container = ContainerBuilder{}
 	// new image name delete:latest
 	container.SetImageName("delete:latest")
+	// set a folder path to make a new image
+	container.SetBuildFolderPath("./test/server")
 	// container name container_delete_server_after_test
 	container.SetContainerName("container_delete_server_after_test")
-	// git project to clone https://github.com/helmutkemper/iotmaker.docker.util.whaleAquarium.sample.git
-	container.SetGitCloneToBuild("https://github.com/helmutkemper/iotmaker.docker.util.whaleAquarium.sample.git")
 	// set a waits for the text to appear in the standard container output to proceed [optional]
-	container.SetWaitStringWithTimeout("Stating server on port 3000", 10*time.Second)
+	container.SetWaitStringWithTimeout("starting server at port 3000", 10*time.Second)
 	// change and open port 3000 to 3030
-	container.AddPortToChange("3000", "3030")
+	container.AddPortToOpen("3000")
 	// replace container folder /static to host folder ./test/static
 	err = container.AddFiileOrFolderToLinkBetweenConputerHostAndContainer("./test/static", "/static")
 	if err != nil {
@@ -32,8 +32,8 @@ func ExampleContainerBuilder_SetGitCloneToBuild() {
 		panic(err)
 	}
 
-	// builder new image from git project
-	err = container.ImageBuildFromServer()
+	// builder new image from folder
+	err = container.ImageBuildFromFolder()
 	if err != nil {
 		panic(err)
 	}
@@ -44,11 +44,11 @@ func ExampleContainerBuilder_SetGitCloneToBuild() {
 		panic(err)
 	}
 
-	// At this point, the container is ready for use on port 3030
+	// Server is ready for use o port 3000
 
-	// Stop and delete the container
+	// stop and delete container and image
 	GarbageCollector()
 
-	// Output:
+	//output:
 	//
 }

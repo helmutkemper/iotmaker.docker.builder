@@ -4,7 +4,7 @@
 
 ### Português
 
-> Status: em fase teste
+> Status: Documentando
 
 Este projeto cria uma API Golang simples para criar e manipular o docker.
 

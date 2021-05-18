@@ -61,4 +61,7 @@ func ExampleContainerBuilder_SetNetworkDocker() {
 
 	// Stop and delete the container
 	GarbageCollector()
+
+	// Output:
+	//
 }
