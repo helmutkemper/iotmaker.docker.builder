@@ -11,6 +11,7 @@ Este projeto cria uma API Golang simples para criar e manipular o docker.
 Exemplo: Criar uma rede dentro do docker
 
 ```golang
+  var err error
   var netDocker = dockerNetwork.ContainerBuilderNetwork{}
   err = netDocker.Init()
   if err != nil { panic(err) }
@@ -25,6 +26,8 @@ Para vincular um container a rede, use o comando `container.SetNetworkDocker(&ne
 Exemplo: Criar um container com a imagem nats:latest
 
 ```golang
+  var err error
+
   // create a container
   var container = ContainerBuilder{}
   // set image name for docker pull
@@ -55,6 +58,7 @@ Exemplo: Usar o projeto de um servidor feito para funcionar na porta 3000, conti
 porta 3030, vinculando a pasta /static contida no container com a pasta ./test/static do computador. 
 
 ```golang
+  var err error
   var container = ContainerBuilder{}
   // new image name delete:latest
   container.SetImageName("delete:latest")
@@ -83,3 +87,42 @@ porta 3030, vinculando a pasta /static contida no container com a pasta ./test/s
   if err != nil { panic(err) }
 ```
 
+Exemplo: Montar um banco de dados MongoDB efêmero na porta 27017.
+
+```golang
+  var err error
+  var mongoDocker = &ContainerBuilder{}
+  mongoDocker.SetImageName("mongo:latest")
+  mongoDocker.SetContainerName("container_delete_mongo_after_test")
+  mongoDocker.AddPortToOpen("27017")
+  mongoDocker.SetEnvironmentVar(
+    []string{
+      "--host 0.0.0.0",
+    },
+  )
+  mongoDocker.SetWaitStringWithTimeout(`"msg":"Waiting for connections","attr":{"port":27017`, 20*time.Second)
+  err = mongoDocker.Init()
+  if err != nil { panic(err) }
+
+  err = mongoDocker.ContainerBuildFromImage()
+  if err != nil { panic(err) }
+```
+
+Exemplo: Montar um banco de dados MongoDB na porta 27017 e preservar os dados na pasta local ./test/data
+
+```golang
+  var err error
+  var mongoDocker = &ContainerBuilder{}
+  mongoDocker.SetImageName("mongo:latest")
+  mongoDocker.SetContainerName("container_delete_mongo_after_test")
+  mongoDocker.AddPortToOpen("27017")
+  mongoDocker.SetEnvironmentVar(
+    []string{
+      "--host 0.0.0.0",
+    },
+  )
+  err = mongoDocker.AddFiileOrFolderToLinkBetweenConputerHostAndContainer("./test/data", "/data")
+  mongoDocker.SetWaitStringWithTimeout(`"msg":"Waiting for connections","attr":{"port":27017`, 20*time.Second)
+  err = mongoDocker.Init()
+  err = mongoDocker.ContainerBuildFromImage()
+```

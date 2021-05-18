@@ -54,7 +54,6 @@ func (e *ContainerBuilder) ImageBuildFromServer() (err error) {
 	}
 
 	defer os.RemoveAll(tmpDirPath)
-
 	if e.gitData.sshPrivateKeyPath != "" {
 		gitCloneConfig = &git.CloneOptions{
 			URL:      e.gitData.url,

@@ -1,6 +1,7 @@
 package iotmaker_docker_builder
 
 import (
+	"errors"
 	"github.com/docker/docker/api/types/container"
 	"github.com/docker/docker/api/types/network"
 	"github.com/docker/go-connections/nat"
@@ -32,17 +33,41 @@ func (e *ContainerBuilder) ContainerBuildFromImage() (err error) {
 	}
 
 	var portMap = nat.PortMap{}
-	var list []nat.Port
-	list, err = e.dockerSys.ImageListExposedPortsByName(e.imageName)
+	var originalImagePortlist []nat.Port
+	var originalImagePortlistAsString string
+	originalImagePortlist, err = e.dockerSys.ImageListExposedPortsByName(e.imageName)
+
 	if err != nil {
 		return
 	}
 
-	if e.doNotOpenPorts == true {
-		portMap = nil
+	for k, v := range originalImagePortlist {
+		if k != 0 {
+			originalImagePortlistAsString += ", "
+		}
+		originalImagePortlistAsString += v.Port()
+	}
+
+	if e.openAllPorts == true {
+		for _, port := range originalImagePortlist {
+			portMap[port] = []nat.PortBinding{{HostPort: port.Port()}}
+		}
 	} else if e.openPorts != nil {
 		var port nat.Port
 		for _, portToOpen := range e.openPorts {
+			var pass = false
+			for _, portToVerify := range originalImagePortlist {
+				if portToVerify.Port() == portToOpen {
+					pass = true
+					break
+				}
+			}
+
+			if pass == false {
+				err = errors.New("port " + portToOpen + " not found in image port list. port list: " + originalImagePortlistAsString)
+				return
+			}
+
 			port, err = nat.NewPort("tcp", portToOpen)
 			if err != nil {
 				return
@@ -60,16 +85,24 @@ func (e *ContainerBuilder) ContainerBuildFromImage() (err error) {
 				return
 			}
 
+			var pass = false
+			for _, portToVerify := range originalImagePortlist {
+				if portToVerify.Port() == newPortLinkMap.oldPort {
+					pass = true
+					break
+				}
+			}
+
+			if pass == false {
+				err = errors.New("port " + newPortLinkMap.oldPort + " not found in image port list. port list: " + originalImagePortlistAsString)
+				return
+			}
+
 			newPort, err = nat.NewPort("tcp", newPortLinkMap.newPort)
 			if err != nil {
 				return
 			}
 			portMap[imagePort] = []nat.PortBinding{{HostPort: newPort.Port()}}
-		}
-
-	} else {
-		for _, port := range list {
-			portMap[port] = []nat.PortBinding{{HostPort: port.Port()}}
 		}
 	}
 

@@ -23,7 +23,7 @@ type ContainerBuilder struct {
 	environmentVar     []string
 	changePorts        []changePort
 	openPorts          []string
-	doNotOpenPorts     bool
+	openAllPorts       bool
 	waitString         string
 	waitStringTimeout  time.Duration
 	containerID        string
