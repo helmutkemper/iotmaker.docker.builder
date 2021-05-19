@@ -15,17 +15,13 @@ func ExampleOverloading_Init() {
 	var mongoDocker = &ContainerBuilder{}
 	mongoDocker.SetImageName("mongo:latest")
 	mongoDocker.SetContainerName("container_delete_mongo_after_test")
+	//mongoDocker.AddPortToChange("27017", "27016")
 	mongoDocker.AddPortToOpen("27017")
 	mongoDocker.SetEnvironmentVar(
 		[]string{
 			"--host 0.0.0.0",
 		},
 	)
-	err = mongoDocker.AddFiileOrFolderToLinkBetweenConputerHostAndContainer("./test/data", "/data")
-	if err != nil {
-		util.TraceToLog()
-		panic(err)
-	}
 	mongoDocker.SetWaitStringWithTimeout(`"msg":"Waiting for connections","attr":{"port":27017`, 20*time.Second)
 	err = mongoDocker.Init()
 	if err != nil {
