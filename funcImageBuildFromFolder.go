@@ -37,6 +37,7 @@ func (e *ContainerBuilder) ImageBuildFromFolder() (err error) {
 		e.changePointer,
 	)
 	if err != nil {
+		err = errors.New(err.Error() + "\nfolder path: " + e.buildPath)
 		return
 	}
 
