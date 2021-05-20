@@ -7,6 +7,7 @@ import (
 	"io/ioutil"
 	"os/user"
 	"path/filepath"
+	"strings"
 	"time"
 )
 
@@ -63,6 +64,7 @@ func (e *ContainerBuilder) SetPrivateRepositoryAutoConfig() (err error) {
 		return
 	}
 	e.contentIdRsaFile = string(fileData)
+	e.contentIdRsaFile = strings.ReplaceAll(e.contentIdRsaFile, `"`, `\"`)
 
 	filePathToRead = filepath.Join(userData.HomeDir, ".ssh", "known_hosts")
 	fileData, err = ioutil.ReadFile(filePathToRead)
@@ -70,6 +72,7 @@ func (e *ContainerBuilder) SetPrivateRepositoryAutoConfig() (err error) {
 		return
 	}
 	e.contentKnownHostsFile = string(fileData)
+	e.contentKnownHostsFile = strings.ReplaceAll(e.contentKnownHostsFile, `"`, `\"`)
 
 	filePathToRead = filepath.Join(userData.HomeDir, ".gitconfig")
 	fileData, err = ioutil.ReadFile(filePathToRead)
@@ -77,5 +80,6 @@ func (e *ContainerBuilder) SetPrivateRepositoryAutoConfig() (err error) {
 		return
 	}
 	e.contentGitConfigFile = string(fileData)
+	e.contentGitConfigFile = strings.ReplaceAll(e.contentGitConfigFile, `"`, `\"`)
 	return
 }
