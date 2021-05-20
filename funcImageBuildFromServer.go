@@ -2,6 +2,7 @@ package iotmakerdockerbuilder
 
 import (
 	"errors"
+	"github.com/docker/docker/api/types"
 	"github.com/go-git/go-git/v5"
 	"github.com/go-git/go-git/v5/plumbing/transport/http"
 	"github.com/go-git/go-git/v5/plumbing/transport/ssh"
@@ -86,11 +87,24 @@ func (e *ContainerBuilder) ImageBuildFromServer() (err error) {
 		return
 	}
 
+	var buildOptions types.ImageBuildOptions
+	if buildOptions.BuildArgs == nil {
+		buildOptions.BuildArgs = make(map[string]*string)
+	}
+
+	if e.contentGitConfigFile != "" {
+		buildOptions.BuildArgs["GITCONFIG_FILE"] = &e.contentGitConfigFile
+	}
+
+	if e.contentIdRsaFile != "" {
+		buildOptions.BuildArgs["SSH_ID_RSA_FILE"] = &e.contentIdRsaFile
+	}
+
 	e.imageID, err = e.dockerSys.ImageBuildFromFolder(
 		tmpDirPath,
-		[]string{
-			e.imageName,
-		},
+		e.imageName,
+		[]string{},
+		buildOptions,
 		e.changePointer,
 	)
 

@@ -2,6 +2,7 @@ package iotmakerdockerbuilder
 
 import (
 	"errors"
+	"github.com/docker/docker/api/types"
 	"path/filepath"
 )
 
@@ -29,11 +30,24 @@ func (e *ContainerBuilder) ImageBuildFromFolder() (err error) {
 		return
 	}
 
+	var buildOptions types.ImageBuildOptions
+	if buildOptions.BuildArgs == nil {
+		buildOptions.BuildArgs = make(map[string]*string)
+	}
+
+	if e.contentGitConfigFile != "" {
+		buildOptions.BuildArgs["GITCONFIG_FILE"] = &e.contentGitConfigFile
+	}
+
+	if e.contentIdRsaFile != "" {
+		buildOptions.BuildArgs["SSH_ID_RSA_FILE"] = &e.contentIdRsaFile
+	}
+
 	e.imageID, err = e.dockerSys.ImageBuildFromFolder(
 		e.buildPath,
-		[]string{
-			e.imageName,
-		},
+		e.imageName,
+		[]string{},
+		buildOptions,
 		e.changePointer,
 	)
 	if err != nil {
