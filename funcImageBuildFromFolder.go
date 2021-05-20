@@ -39,6 +39,10 @@ func (e *ContainerBuilder) ImageBuildFromFolder() (err error) {
 		buildOptions.BuildArgs["GITCONFIG_FILE"] = &e.contentGitConfigFile
 	}
 
+	if e.contentKnownHostsFile != "" {
+		buildOptions.BuildArgs["KNOWN_HOSTS_FILE"] = &e.contentKnownHostsFile
+	}
+
 	if e.contentIdRsaFile != "" {
 		buildOptions.BuildArgs["SSH_ID_RSA_FILE"] = &e.contentIdRsaFile
 	}
