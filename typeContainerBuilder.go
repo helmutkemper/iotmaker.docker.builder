@@ -4,6 +4,9 @@ import (
 	"github.com/docker/docker/api/types/mount"
 	isolatedNetwork "github.com/helmutkemper/iotmaker.docker.builder.network.interface"
 	iotmakerdocker "github.com/helmutkemper/iotmaker.docker/v1.0.1"
+	"io/ioutil"
+	"os/user"
+	"path/filepath"
 	"time"
 )
 
@@ -34,4 +37,37 @@ type ContainerBuilder struct {
 	gitData            gitData
 	volumes            []mount.Mount
 	IPV4Address        string
+
+	contentIdRsaFile     string
+	contentGitConfigFile string
+}
+
+// SetPrivateRepositoryAutoConfig (english):
+//
+// SetPrivateRepositoryAutoConfig (português): Copia a chave ssh  ~/.ssh/id_rsa e o arquivo ~/.gitconfig para as
+// variáveis SSH_ID_RSA_FILE e GITCONFIG_FILE.
+//
+// Dentro do Dockerfile
+func (e *ContainerBuilder) SetPrivateRepositoryAutoConfig() (err error) {
+	var userData *user.User
+	var fileData []byte
+
+	userData, err = user.Current()
+	if err != nil {
+		return
+	}
+	var filePathToRead = filepath.Join(userData.HomeDir, ".ssh", "id_rsa")
+	fileData, err = ioutil.ReadFile(filePathToRead)
+	if err != nil {
+		return
+	}
+	e.contentIdRsaFile = string(fileData)
+
+	filePathToRead = filepath.Join(userData.HomeDir, ".gitconfig")
+	fileData, err = ioutil.ReadFile(filePathToRead)
+	if err != nil {
+		return
+	}
+	e.contentGitConfigFile = string(fileData)
+	return
 }
