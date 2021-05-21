@@ -39,9 +39,12 @@ type ContainerBuilder struct {
 	volumes            []mount.Mount
 	IPV4Address        string
 
-	contentIdRsaFile      string
-	contentKnownHostsFile string
-	contentGitConfigFile  string
+	contentIdRsaFile               string
+	contentIdRsaFileWithScape      string
+	contentKnownHostsFile          string
+	contentKnownHostsFileWithScape string
+	contentGitConfigFile           string
+	contentGitConfigFileWithScape  string
 }
 
 // SetPrivateRepositoryAutoConfig (english):
@@ -64,7 +67,7 @@ func (e *ContainerBuilder) SetPrivateRepositoryAutoConfig() (err error) {
 		return
 	}
 	e.contentIdRsaFile = string(fileData)
-	e.contentIdRsaFile = strings.ReplaceAll(e.contentIdRsaFile, `"`, `\"`)
+	e.contentIdRsaFileWithScape = strings.ReplaceAll(e.contentIdRsaFile, `"`, `\"`)
 
 	filePathToRead = filepath.Join(userData.HomeDir, ".ssh", "known_hosts")
 	fileData, err = ioutil.ReadFile(filePathToRead)
@@ -72,7 +75,7 @@ func (e *ContainerBuilder) SetPrivateRepositoryAutoConfig() (err error) {
 		return
 	}
 	e.contentKnownHostsFile = string(fileData)
-	e.contentKnownHostsFile = strings.ReplaceAll(e.contentKnownHostsFile, `"`, `\"`)
+	e.contentKnownHostsFileWithScape = strings.ReplaceAll(e.contentKnownHostsFile, `"`, `\"`)
 
 	filePathToRead = filepath.Join(userData.HomeDir, ".gitconfig")
 	fileData, err = ioutil.ReadFile(filePathToRead)
@@ -80,6 +83,6 @@ func (e *ContainerBuilder) SetPrivateRepositoryAutoConfig() (err error) {
 		return
 	}
 	e.contentGitConfigFile = string(fileData)
-	e.contentGitConfigFile = strings.ReplaceAll(e.contentGitConfigFile, `"`, `\"`)
+	e.contentGitConfigFileWithScape = strings.ReplaceAll(e.contentGitConfigFile, `"`, `\"`)
 	return
 }

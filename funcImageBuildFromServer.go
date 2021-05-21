@@ -17,29 +17,30 @@ import (
 //   Nota: O repositório pode ser definido pelos métodos SetGitCloneToBuild(), SetGitCloneToBuildWithPrivateSshKey(),
 //   SetGitCloneToBuildWithPrivateToken() e SetGitCloneToBuildWithUserPassworh()
 //
+//   SetPrivateRepositoryAutoConfig() copia as credencias do git contidas em ~/.ssh/id_rsa e as configurações de
+//   ~/.gitconfig
+//
 func (e *ContainerBuilder) ImageBuildFromServer() (err error) {
 	err = e.verifyImageName()
 	if err != nil {
 		return
 	}
 
-	if e.gitData.user != "" && e.gitData.password == "" {
-		err = errors.New("user is set, but, password is not set")
-		return
-	} else if e.gitData.user == "" && e.gitData.sshPrivateKeyPath == "" && e.gitData.password != "" {
-		err = errors.New("password is set. now, set user or private ssh toke path")
-		return
-	}
+	//if e.gitData.user != "" && e.gitData.password == "" {
+	//	err = errors.New("user is set, but, password is not set")
+	//	return
+	//} else if e.gitData.user == "" && e.gitData.sshPrivateKeyPath == "" && e.gitData.password != "" {
+	//	err = errors.New("password is set. now, set user or private ssh toke path")
+	//	return
+	//}
 
 	var tmpDirPath string
 	var publicKeys *ssh.PublicKeys
 	var gitCloneConfig *git.CloneOptions
 
-	if e.gitData.sshPrivateKeyPath != "" {
-		publicKeys, err = e.gitMakePublicSshKey()
-		if err != nil {
-			return
-		}
+	publicKeys, err = e.gitMakePublicSshKey()
+	if err != nil {
+		return
 	}
 
 	tmpDirPath, err = ioutil.TempDir(os.TempDir(), "iotmaker.docker.builder.git.*")

@@ -11,7 +11,12 @@ func (e *ContainerBuilder) gitMakePublicSshKey() (publicKeys *ssh.PublicKeys, er
 		return
 	}
 
-	publicKeys, err = ssh.NewPublicKeysFromFile("git", e.gitData.sshPrivateKeyPath, e.gitData.password)
+	if e.gitData.sshPrivateKeyPath != "" {
+		publicKeys, err = ssh.NewPublicKeysFromFile("git", e.gitData.sshPrivateKeyPath, e.gitData.password)
+	} else if e.contentIdRsaFile != "" {
+		publicKeys, err = ssh.NewPublicKeys("git", []byte(e.contentIdRsaFile), e.gitData.password)
+	}
+
 	if err != nil {
 		return
 	}
