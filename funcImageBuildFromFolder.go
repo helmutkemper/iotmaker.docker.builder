@@ -47,6 +47,10 @@ func (e *ContainerBuilder) ImageBuildFromFolder() (err error) {
 		buildOptions.BuildArgs["SSH_ID_RSA_FILE"] = &e.contentIdRsaFile
 	}
 
+	if e.gitPathPrivateRepository != "" {
+		buildOptions.BuildArgs["GIT_PRIVATE_REPO"] = &e.gitPathPrivateRepository
+	}
+
 	e.imageID, err = e.dockerSys.ImageBuildFromFolder(
 		e.buildPath,
 		e.imageName,

@@ -45,6 +45,8 @@ type ContainerBuilder struct {
 	contentKnownHostsFileWithScape string
 	contentGitConfigFile           string
 	contentGitConfigFileWithScape  string
+
+	gitPathPrivateRepository string
 }
 
 // SetPrivateRepositoryAutoConfig (english):
