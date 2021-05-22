@@ -45,9 +45,14 @@ RUN mkdir -p /root/.ssh/ && \
     # (en) prepares the OS for installation
     # (pt) prepara o OS para instalação
     apk update && \
-    # (en) install git and openssh
-    # (pt) instala o git e o opnssh
-    apk add --no-cache build-base git openssh && \
+    # (en) install binutils, file, gcc, g++, make, libc-dev, fortify-headers and patch
+    # (pt) instala binutils, file, gcc, g++, make, libc-dev, fortify-headers e patch
+    apk add --no-cache build-base && \
+    # (en) install git, fakeroot, scanelf, openssl, apk-tools, libc-utils, attr, tar, pkgconf, patch, lzip, curl,
+    #      /bin/sh, so:libc.musl-x86_64.so.1, so:libcrypto.so.1.1 and so:libz.so.1
+    # (pt) instala git, fakeroot, scanelf, openssl, apk-tools, libc-utils, attr, tar, pkgconf, patch, lzip, curl,
+    #      /bin/sh, so:libc.musl-x86_64.so.1, so:libcrypto.so.1.1 e so:libz.so.1
+    apk add --no-cache alpine-sdk && \
     # (en) clear the cache
     # (pt) limpa a cache
     rm -rf /var/cache/apk/*

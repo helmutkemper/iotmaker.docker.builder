@@ -11,25 +11,30 @@ import (
 	"time"
 )
 
-func ExampleContainerBuilder_ImageBuildFromFolder() {
+func ExampleContainerBuilder_SetGitPathPrivateRepository() {
 	var err error
 
 	GarbageCollector()
 
 	var container = ContainerBuilder{}
+	container.SetGitPathPrivateRepository("github.com/helmutkemper")
 	// new image name delete:latest
 	container.SetImageName("delete:latest")
-	// set a folder path to make a new image
-	container.SetBuildFolderPath("./test/server")
-	container.MakeDefaultGolangDockerfileForMe()
 	// container name container_delete_server_after_test
 	container.SetContainerName("container_delete_server_after_test")
+	// git project to clone git@github.com:helmutkemper/iotmaker.docker.builder.private.example.git
+	container.SetGitCloneToBuild("git@github.com:helmutkemper/iotmaker.docker.builder.private.example.git")
+	container.MakeDefaultGolangDockerfileForMe()
+	err = container.SetPrivateRepositoryAutoConfig()
+	if err != nil {
+		panic(err)
+	}
 	// set a waits for the text to appear in the standard container output to proceed [optional]
-	container.SetWaitStringWithTimeout("starting server at port 3000", 10*time.Second)
+	container.SetWaitStringWithTimeout("Stating server on port 3000", 10*time.Second)
 	// change and open port 3000 to 3030
-	container.AddPortToOpen("3000")
+	container.AddPortToChange("3000", "3030")
 	// replace container folder /static to host folder ./test/static
-	err = container.AddFiileOrFolderToLinkBetweenConputerHostAndContainer("./test/static", "/static")
+	err = container.AddFiileOrFolderToLinkBetweenConputerHostAndContainer("./test/static/index.html", "/static/index.html")
 	if err != nil {
 		panic(err)
 	}
@@ -63,8 +68,8 @@ func ExampleContainerBuilder_ImageBuildFromFolder() {
 		}
 	}(container.GetChannelEvent())
 
-	// builder new image from folder
-	err = container.ImageBuildFromFolder()
+	// builder new image from git project
+	err = container.ImageBuildFromServer()
 	if err != nil {
 		panic(err)
 	}
@@ -75,11 +80,11 @@ func ExampleContainerBuilder_ImageBuildFromFolder() {
 		panic(err)
 	}
 
-	// Server is ready for use o port 3000
+	// At this point, the container is ready for use on port 3030
 
-	// read server inside a container on address http://localhost:3000/
+	// read server inside a container on address http://localhost:3030/
 	var resp *http.Response
-	resp, err = http.Get("http://localhost:3000/")
+	resp, err = http.Get("http://localhost:3030/")
 	if err != nil {
 		util.TraceToLog()
 		log.Printf("http.Get().error: %v", err.Error())

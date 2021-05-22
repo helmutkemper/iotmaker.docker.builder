@@ -2,7 +2,8 @@ package iotmakerdockerbuilder
 
 import (
 	"errors"
-	"github.com/docker/docker/api/types"
+	"io/ioutil"
+	"os"
 	"path/filepath"
 )
 
@@ -30,32 +31,24 @@ func (e *ContainerBuilder) ImageBuildFromFolder() (err error) {
 		return
 	}
 
-	var buildOptions types.ImageBuildOptions
-	if buildOptions.BuildArgs == nil {
-		buildOptions.BuildArgs = make(map[string]*string)
-	}
-
-	if e.contentGitConfigFile != "" {
-		buildOptions.BuildArgs["GITCONFIG_FILE"] = &e.contentGitConfigFile
-	}
-
-	if e.contentKnownHostsFile != "" {
-		buildOptions.BuildArgs["KNOWN_HOSTS_FILE"] = &e.contentKnownHostsFile
-	}
-
-	if e.contentIdRsaFile != "" {
-		buildOptions.BuildArgs["SSH_ID_RSA_FILE"] = &e.contentIdRsaFile
-	}
-
-	if e.gitPathPrivateRepository != "" {
-		buildOptions.BuildArgs["GIT_PRIVATE_REPO"] = &e.gitPathPrivateRepository
+	if e.makeDefaultDockerfile == true {
+		var dockerfile string
+		dockerfile, err = e.mountDefaultDockerfile()
+		if err != nil {
+			return
+		}
+		var dockerfilePath = filepath.Join(e.buildPath, "Dockerfile-iotmaker")
+		err = ioutil.WriteFile(dockerfilePath, []byte(dockerfile), os.ModePerm)
+		if err != nil {
+			return
+		}
 	}
 
 	e.imageID, err = e.dockerSys.ImageBuildFromFolder(
 		e.buildPath,
 		e.imageName,
 		[]string{},
-		buildOptions,
+		e.buildOptions,
 		e.changePointer,
 	)
 	if err != nil {

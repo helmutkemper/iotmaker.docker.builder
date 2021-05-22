@@ -2,12 +2,12 @@ package iotmakerdockerbuilder
 
 import (
 	"errors"
-	"github.com/docker/docker/api/types"
 	"github.com/go-git/go-git/v5"
 	"github.com/go-git/go-git/v5/plumbing/transport/http"
 	"github.com/go-git/go-git/v5/plumbing/transport/ssh"
 	"io/ioutil"
 	"os"
+	"path/filepath"
 )
 
 // ImageBuildFromServer (english):
@@ -49,7 +49,7 @@ func (e *ContainerBuilder) ImageBuildFromServer() (err error) {
 	}
 
 	defer os.RemoveAll(tmpDirPath)
-	if e.gitData.sshPrivateKeyPath != "" {
+	if e.gitData.sshPrivateKeyPath != "" || e.contentIdRsaFile != "" {
 		gitCloneConfig = &git.CloneOptions{
 			URL:      e.gitData.url,
 			Auth:     publicKeys,
@@ -88,28 +88,24 @@ func (e *ContainerBuilder) ImageBuildFromServer() (err error) {
 		return
 	}
 
-	var buildOptions types.ImageBuildOptions
-	if buildOptions.BuildArgs == nil {
-		buildOptions.BuildArgs = make(map[string]*string)
-	}
-
-	if e.contentGitConfigFile != "" {
-		buildOptions.BuildArgs["GITCONFIG_FILE"] = &e.contentGitConfigFile
-	}
-
-	if e.contentKnownHostsFile != "" {
-		buildOptions.BuildArgs["KNOWN_HOSTS_FILE"] = &e.contentKnownHostsFile
-	}
-
-	if e.contentIdRsaFile != "" {
-		buildOptions.BuildArgs["SSH_ID_RSA_FILE"] = &e.contentIdRsaFile
+	if e.makeDefaultDockerfile == true {
+		var dockerfile string
+		dockerfile, err = e.mountDefaultDockerfile()
+		if err != nil {
+			return
+		}
+		var dockerfilePath = filepath.Join(tmpDirPath, "Dockerfile-iotmaker")
+		err = ioutil.WriteFile(dockerfilePath, []byte(dockerfile), os.ModePerm)
+		if err != nil {
+			return
+		}
 	}
 
 	e.imageID, err = e.dockerSys.ImageBuildFromFolder(
 		tmpDirPath,
 		e.imageName,
 		[]string{},
-		buildOptions,
+		e.buildOptions,
 		e.changePointer,
 	)
 
