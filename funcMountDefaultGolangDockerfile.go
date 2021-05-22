@@ -156,33 +156,79 @@ COPY --from=builder /app/main .
 # (pt) executa o seu projeto
 `
 
+	var exposeList = make([]string, 0)
 	for _, v := range e.changePorts {
+		var pass = true
+		for _, expose := range exposeList {
+			if expose == v.oldPort {
+				pass = false
+				break
+			}
+		}
+
+		if pass == false {
+			continue
+		}
+		exposeList = append(exposeList, v.oldPort)
+
 		dockerfile += `EXPOSE ` + v.oldPort + `
 `
 	}
 
 	for _, v := range e.openPorts {
+		var pass = true
+		for _, expose := range exposeList {
+			if expose == v {
+				pass = false
+				break
+			}
+		}
+
+		if pass == false {
+			continue
+		}
+		exposeList = append(exposeList, v)
+
 		dockerfile += `EXPOSE ` + v + `
 `
 	}
 
+	var volumeList = make([]string, 0)
 	for _, v := range e.volumes {
-		if v.Type == iotmakerdocker.KVolumeMountTypeBindString {
-			info, err = os.Stat(v.Source)
-			if err != nil {
-				return
-			}
-			if info.IsDir() == true {
-				dockerfile += `VOLUME ` + v.Target + `
-`
-			} else {
-				var dir string
-				dir, _ = filepath.Split(v.Target)
-				dockerfile += `VOLUME ` + dir + `
-`
+
+		var newPath string
+		if v.Type != iotmakerdocker.KVolumeMountTypeBindString {
+			continue
+		}
+		info, err = os.Stat(v.Source)
+		if err != nil {
+			return
+		}
+		if info.IsDir() == true {
+			newPath = v.Target
+		} else {
+			var dir string
+			dir, _ = filepath.Split(v.Target)
+			newPath = dir
+		}
+
+		if strings.HasSuffix(newPath, "/") == true {
+			newPath = strings.TrimSuffix(newPath, "/")
+		}
+
+		var pass = false
+		for _, volume := range volumeList {
+			if volume == newPath {
+				pass = true
+				break
 			}
 		}
 
+		if pass == false {
+			dockerfile += `VOLUME ` + newPath + `
+`
+			volumeList = append(volumeList, newPath)
+		}
 	}
 
 	dockerfile += `
