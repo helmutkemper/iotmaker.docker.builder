@@ -53,7 +53,7 @@ func (e *ContainerBuilder) ImageBuildFromFolder() (err error) {
 			return
 		}
 
-		dockerfile, err = e.mountDefaultDockerfile()
+		dockerfile, err = e.mountDefaultGolangDockerfile()
 		if err != nil {
 			return
 		}

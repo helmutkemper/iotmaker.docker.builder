@@ -18,7 +18,7 @@ import (
 //   Nota: O repositório pode ser definido pelos métodos SetGitCloneToBuild(), SetGitCloneToBuildWithPrivateSshKey(),
 //   SetGitCloneToBuildWithPrivateToken() e SetGitCloneToBuildWithUserPassworh()
 //
-//   SetPrivateRepositoryAutoConfig() copia as credencias do git contidas em ~/.ssh/id_rsa e as configurações de
+//   SetPrivateRepositoryAutoConfig() copia as credências do git contidas em ~/.ssh/id_rsa e as configurações de
 //   ~/.gitconfig
 //
 func (e *ContainerBuilder) ImageBuildFromServer() (err error) {
@@ -26,14 +26,6 @@ func (e *ContainerBuilder) ImageBuildFromServer() (err error) {
 	if err != nil {
 		return
 	}
-
-	//if e.gitData.user != "" && e.gitData.password == "" {
-	//	err = errors.New("user is set, but, password is not set")
-	//	return
-	//} else if e.gitData.user == "" && e.gitData.sshPrivateKeyPath == "" && e.gitData.password != "" {
-	//	err = errors.New("password is set. now, set user or private ssh toke path")
-	//	return
-	//}
 
 	var tmpDirPath string
 	var publicKeys *ssh.PublicKeys
@@ -110,7 +102,7 @@ func (e *ContainerBuilder) ImageBuildFromServer() (err error) {
 			return
 		}
 
-		dockerfile, err = e.mountDefaultDockerfile()
+		dockerfile, err = e.mountDefaultGolangDockerfile()
 		if err != nil {
 			return
 		}
