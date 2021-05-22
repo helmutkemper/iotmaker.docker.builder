@@ -24,7 +24,7 @@ func ExampleContainerBuilder_SetGitPathPrivateRepository() {
 	container.SetContainerName("container_delete_server_after_test")
 	// git project to clone git@github.com:helmutkemper/iotmaker.docker.builder.private.example.git
 	container.SetGitCloneToBuild("git@github.com:helmutkemper/iotmaker.docker.builder.private.example.git")
-	container.MakeDefaultGolangDockerfileForMe()
+	container.MakeDefaultDockerfileForMe()
 	err = container.SetPrivateRepositoryAutoConfig()
 	if err != nil {
 		panic(err)
@@ -34,7 +34,7 @@ func ExampleContainerBuilder_SetGitPathPrivateRepository() {
 	// change and open port 3000 to 3030
 	container.AddPortToChange("3000", "3030")
 	// replace container folder /static to host folder ./test/static
-	err = container.AddFiileOrFolderToLinkBetweenConputerHostAndContainer("./test/static/index.html", "/static/index.html")
+	err = container.AddFiileOrFolderToLinkBetweenConputerHostAndContainer("./test/static", "/static")
 	if err != nil {
 		panic(err)
 	}

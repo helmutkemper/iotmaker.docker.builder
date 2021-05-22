@@ -1,8 +1,8 @@
 package iotmakerdockerbuilder
 
-// MakeDefaultGolangDockerfileForMe (english):
+// MakeDefaultDockerfileForMe (english):
 //
-// MakeDefaultGolangDockerfileForMe (português): Monta o arquivo Dockerfile-iotmaker dentro da pasta alvo de forma
+// MakeDefaultDockerfileForMe (português): Monta o arquivo Dockerfile-iotmaker dentro da pasta alvo de forma
 // automática.
 //
 // Caso haja portas expostas nas configurações, as mesmas definidas automaticamente e o mesmo vale para volumes, onde
@@ -10,6 +10,6 @@ package iotmakerdockerbuilder
 //
 //   Cuidado: o arquivo Dockerfile-iotmaker pode ser sobrescrito.
 //
-func (e *ContainerBuilder) MakeDefaultGolangDockerfileForMe() {
+func (e *ContainerBuilder) MakeDefaultDockerfileForMe() {
 	e.makeDefaultDockerfile = true
 }

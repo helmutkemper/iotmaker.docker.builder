@@ -8,7 +8,7 @@ import (
 	"strings"
 )
 
-func (e *ContainerBuilder) mountDefaultGolangDockerfile() (dockerfile string, err error) {
+func (e *ContainerBuilder) mountDefaultDockerfile() (dockerfile string, err error) {
 
 	var info fs.FileInfo
 	var found bool

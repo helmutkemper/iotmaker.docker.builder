@@ -7,6 +7,7 @@ import (
 	"github.com/go-git/go-git/v5/plumbing/transport/ssh"
 	"io/fs"
 	"io/ioutil"
+	"log"
 	"os"
 	"path/filepath"
 )
@@ -85,7 +86,8 @@ func (e *ContainerBuilder) ImageBuildFromServer() (err error) {
 		var dockerfile string
 		var fileList []fs.FileInfo
 
-		fileList, err = ioutil.ReadDir(e.buildPath)
+		fileList, err = ioutil.ReadDir(tmpDirPath)
+		log.Printf("6 %v", err)
 		if err != nil {
 			return
 		}
@@ -98,16 +100,19 @@ func (e *ContainerBuilder) ImageBuildFromServer() (err error) {
 			}
 		}
 		if pass == false {
+			log.Printf("7 %v", err)
 			err = errors.New("go.mod file not found")
 			return
 		}
 
-		dockerfile, err = e.mountDefaultGolangDockerfile()
+		dockerfile, err = e.mountDefaultDockerfile()
+		log.Printf("8 %v", err)
 		if err != nil {
 			return
 		}
 
 		var dockerfilePath = filepath.Join(tmpDirPath, "Dockerfile-iotmaker")
+		log.Printf("9 %v", err)
 		err = ioutil.WriteFile(dockerfilePath, []byte(dockerfile), os.ModePerm)
 		if err != nil {
 			return
