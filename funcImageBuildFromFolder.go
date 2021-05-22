@@ -2,6 +2,7 @@ package iotmakerdockerbuilder
 
 import (
 	"errors"
+	"io/fs"
 	"io/ioutil"
 	"os"
 	"path/filepath"
@@ -33,10 +34,30 @@ func (e *ContainerBuilder) ImageBuildFromFolder() (err error) {
 
 	if e.makeDefaultDockerfile == true {
 		var dockerfile string
+		var fileList []fs.FileInfo
+
+		fileList, err = ioutil.ReadDir(e.buildPath)
+		if err != nil {
+			return
+		}
+
+		var pass = false
+		for _, file := range fileList {
+			if file.Name() == "go.mod" {
+				pass = true
+				break
+			}
+		}
+		if pass == false {
+			err = errors.New("go.mod file not found")
+			return
+		}
+
 		dockerfile, err = e.mountDefaultDockerfile()
 		if err != nil {
 			return
 		}
+
 		var dockerfilePath = filepath.Join(e.buildPath, "Dockerfile-iotmaker")
 		err = ioutil.WriteFile(dockerfilePath, []byte(dockerfile), os.ModePerm)
 		if err != nil {

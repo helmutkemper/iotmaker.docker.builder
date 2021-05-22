@@ -5,6 +5,7 @@ import (
 	"github.com/go-git/go-git/v5"
 	"github.com/go-git/go-git/v5/plumbing/transport/http"
 	"github.com/go-git/go-git/v5/plumbing/transport/ssh"
+	"io/fs"
 	"io/ioutil"
 	"os"
 	"path/filepath"
@@ -90,10 +91,30 @@ func (e *ContainerBuilder) ImageBuildFromServer() (err error) {
 
 	if e.makeDefaultDockerfile == true {
 		var dockerfile string
+		var fileList []fs.FileInfo
+
+		fileList, err = ioutil.ReadDir(e.buildPath)
+		if err != nil {
+			return
+		}
+
+		var pass = false
+		for _, file := range fileList {
+			if file.Name() == "go.mod" {
+				pass = true
+				break
+			}
+		}
+		if pass == false {
+			err = errors.New("go.mod file not found")
+			return
+		}
+
 		dockerfile, err = e.mountDefaultDockerfile()
 		if err != nil {
 			return
 		}
+
 		var dockerfilePath = filepath.Join(tmpDirPath, "Dockerfile-iotmaker")
 		err = ioutil.WriteFile(dockerfilePath, []byte(dockerfile), os.ModePerm)
 		if err != nil {
