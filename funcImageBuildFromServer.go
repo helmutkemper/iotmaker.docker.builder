@@ -105,7 +105,7 @@ func (e *ContainerBuilder) ImageBuildFromServer() (err error) {
 			return
 		}
 
-		dockerfile, err = e.mountDefaultDockerfile()
+		dockerfile, err = e.MountDefaultDockerfile()
 		log.Printf("8 %v", err)
 		if err != nil {
 			return

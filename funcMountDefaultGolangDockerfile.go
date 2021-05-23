@@ -8,7 +8,7 @@ import (
 	"strings"
 )
 
-func (e *ContainerBuilder) mountDefaultDockerfile() (dockerfile string, err error) {
+func (e *ContainerBuilder) MountDefaultDockerfile() (dockerfile string, err error) {
 
 	var info fs.FileInfo
 	var found bool
