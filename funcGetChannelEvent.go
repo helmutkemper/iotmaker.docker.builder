@@ -30,5 +30,5 @@ import (
 //   SuccessfullyBuildImage: sucesso ao fim do processo de build da imagem
 //   IdAuxiliaryImages: usado pelo coletor de lixo para apagar as imagens axiliares ao fim do processo de build
 func (e *ContainerBuilder) GetChannelEvent() (channel *chan iotmakerdocker.ContainerPullStatusSendToChannel) {
-	return e.changePointer
+	return &e.changePointer
 }

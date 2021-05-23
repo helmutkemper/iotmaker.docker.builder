@@ -1,6 +1,7 @@
 package iotmakerdockerbuilder
 
 import (
+	dockerfileGolang "github.com/helmutkemper/iotmaker.docker.builder.golang.dockerfile"
 	iotmakerdocker "github.com/helmutkemper/iotmaker.docker/v1.0.1"
 	"time"
 )
@@ -9,6 +10,11 @@ import (
 //
 // Init (português): Inicializa o objeto e deve ser chamado apenas depois de toas as configurações serem definidas
 func (e *ContainerBuilder) Init() (err error) {
+
+	if e.autoDockerfile == nil {
+		e.autoDockerfile = &dockerfileGolang.DockerfileGolang{}
+	}
+
 	if e.environmentVar == nil {
 		e.environmentVar = make([]string, 0)
 	}
@@ -19,7 +25,7 @@ func (e *ContainerBuilder) Init() (err error) {
 	onInspect := make(chan bool, 1)
 	e.onContainerInspect = &onInspect
 
-	e.changePointer = iotmakerdocker.NewImagePullStatusChannel()
+	e.changePointer = *iotmakerdocker.NewImagePullStatusChannel()
 
 	e.dockerSys = iotmakerdocker.DockerSystem{}
 	err = e.dockerSys.Init()

@@ -1,14 +1,17 @@
 package iotmakerdockerbuilder
 
 import (
-	iotmakerdocker "github.com/helmutkemper/iotmaker.docker/v1.0.1"
+  "github.com/docker/docker/api/types/mount"
+  iotmakerdocker "github.com/helmutkemper/iotmaker.docker/v1.0.1"
 	"io/fs"
 	"os"
 	"path/filepath"
 	"strings"
 )
 
-func (e *ContainerBuilder) MountDefaultDockerfile() (dockerfile string, err error) {
+type DockerfileGolang struct {}
+
+func (e *DockerfileGolang) MountDefaultDockerfile(args map[string]*string, changePorts []changePort, openPorts []string, volumes []mount.Mount) (dockerfile string, err error) {
 
 	var info fs.FileInfo
 	var found bool
@@ -19,7 +22,8 @@ func (e *ContainerBuilder) MountDefaultDockerfile() (dockerfile string, err erro
 FROM golang:1.16-alpine as builder
 #
 `
-	for k := range e.buildOptions.BuildArgs {
+	//for k := range e.buildOptions.BuildArgs {
+	for k := range args {
 		switch k {
 		case "SSH_ID_RSA_FILE":
 			dockerfile += `
@@ -58,7 +62,7 @@ ARG ` + k + `
 # (pt) cria o diretório .ssh dentro do diretório root
 RUN mkdir -p /root/.ssh/ && \
 `
-	_, found = e.buildOptions.BuildArgs["SSH_ID_RSA_FILE"]
+	_, found = args["SSH_ID_RSA_FILE"]
 	if found == true {
 		dockerfile += `
     # (en) creates the id_esa file inside the .ssh directory
@@ -70,7 +74,7 @@ RUN mkdir -p /root/.ssh/ && \
 `
 	}
 
-	_, found = e.buildOptions.BuildArgs["KNOWN_HOSTS_FILE"]
+	_, found = args["KNOWN_HOSTS_FILE"]
 	if found == true {
 		dockerfile += `
     # (en) creates the known_hosts file inside the .ssh directory
@@ -82,7 +86,7 @@ RUN mkdir -p /root/.ssh/ && \
 `
 	}
 
-	_, found = e.buildOptions.BuildArgs["GITCONFIG_FILE"]
+	_, found = args["GITCONFIG_FILE"]
 	if found == true {
 		dockerfile += `
     # (en) creates the .gitconfig file at the root of the root directory
@@ -124,7 +128,7 @@ ARG CGO_ENABLED=0
 RUN git config --global url.ssh://git@github.com/.insteadOf https://github.com/
 `
 
-	_, found = e.buildOptions.BuildArgs["GIT_PRIVATE_REPO"]
+	_, found = args["GIT_PRIVATE_REPO"]
 	if found == true {
 		dockerfile += `
 # (en) defines the path of the private repository
@@ -157,7 +161,8 @@ COPY --from=builder /app/main .
 `
 
 	var exposeList = make([]string, 0)
-	for _, v := range e.changePorts {
+	//for _, v := range e.changePorts {
+	for _, v := range changePorts {
 		var pass = true
 		for _, expose := range exposeList {
 			if expose == v.oldPort {
@@ -175,7 +180,8 @@ COPY --from=builder /app/main .
 `
 	}
 
-	for _, v := range e.openPorts {
+	//for _, v := range e.openPorts {
+	for _, v := range openPorts {
 		var pass = true
 		for _, expose := range exposeList {
 			if expose == v {
@@ -194,7 +200,8 @@ COPY --from=builder /app/main .
 	}
 
 	var volumeList = make([]string, 0)
-	for _, v := range e.volumes {
+	//for _, v := range e.volumes {
+	for _, v := range volumes {
 
 		var newPath string
 		if v.Type != iotmakerdocker.KVolumeMountTypeBindString {

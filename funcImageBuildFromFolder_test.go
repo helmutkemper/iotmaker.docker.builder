@@ -11,6 +11,31 @@ import (
 	"time"
 )
 
+func ImageBuildViewer(ch *chan iotmakerdocker.ContainerPullStatusSendToChannel) {
+	go func(ch *chan iotmakerdocker.ContainerPullStatusSendToChannel) {
+		for {
+
+			select {
+			case event := <-*ch:
+				var stream = event.Stream
+				stream = strings.ReplaceAll(stream, "\n", "")
+				stream = strings.ReplaceAll(stream, "\r", "")
+				stream = strings.Trim(stream, " ")
+
+				if stream == "" {
+					continue
+				}
+
+				log.Printf("%v", stream)
+
+				if event.Closed == true {
+					return
+				}
+			}
+		}
+	}(ch)
+}
+
 func ExampleContainerBuilder_ImageBuildFromFolder() {
 	var err error
 
@@ -34,34 +59,14 @@ func ExampleContainerBuilder_ImageBuildFromFolder() {
 		panic(err)
 	}
 
+	// show image build stram on std out
+	ImageBuildViewer(container.GetChannelEvent())
+
 	// inicialize container object
 	err = container.Init()
 	if err != nil {
 		panic(err)
 	}
-
-	go func(ch *chan iotmakerdocker.ContainerPullStatusSendToChannel) {
-		for {
-
-			select {
-			case event := <-*ch:
-				var stream = event.Stream
-				stream = strings.ReplaceAll(stream, "\n", "")
-				stream = strings.ReplaceAll(stream, "\r", "")
-				stream = strings.Trim(stream, " ")
-
-				if stream == "" {
-					continue
-				}
-
-				log.Printf("%v", stream)
-
-				if event.Closed == true {
-					return
-				}
-			}
-		}
-	}(container.GetChannelEvent())
 
 	// builder new image from folder
 	err = container.ImageBuildFromFolder()

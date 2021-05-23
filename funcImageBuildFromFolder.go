@@ -53,7 +53,7 @@ func (e *ContainerBuilder) ImageBuildFromFolder() (err error) {
 			return
 		}
 
-		dockerfile, err = e.MountDefaultDockerfile()
+		dockerfile, err = e.autoDockerfile.MountDefaultDockerfile(e.buildOptions.BuildArgs, e.changePorts, e.openPorts, e.volumes)
 		if err != nil {
 			return
 		}
@@ -70,7 +70,7 @@ func (e *ContainerBuilder) ImageBuildFromFolder() (err error) {
 		e.imageName,
 		[]string{},
 		e.buildOptions,
-		e.changePointer,
+		&e.changePointer,
 	)
 	if err != nil {
 		err = errors.New(err.Error() + "\nfolder path: " + e.buildPath)

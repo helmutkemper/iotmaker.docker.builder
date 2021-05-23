@@ -3,6 +3,7 @@ package iotmakerdockerbuilder
 import (
 	"github.com/docker/docker/api/types"
 	"github.com/docker/docker/api/types/mount"
+	dockerfileGolang "github.com/helmutkemper/iotmaker.docker.builder.golang.dockerfile"
 	isolatedNetwork "github.com/helmutkemper/iotmaker.docker.builder.network.interface"
 	iotmakerdocker "github.com/helmutkemper/iotmaker.docker/v1.0.1"
 	"time"
@@ -14,7 +15,7 @@ import (
 type ContainerBuilder struct {
 	network            isolatedNetwork.ContainerBuilderNetworkInterface
 	dockerSys          iotmakerdocker.DockerSystem
-	changePointer      *chan iotmakerdocker.ContainerPullStatusSendToChannel
+	changePointer      chan iotmakerdocker.ContainerPullStatusSendToChannel
 	onContainerReady   *chan bool
 	onContainerInspect *chan bool
 	imageName          string
@@ -22,7 +23,7 @@ type ContainerBuilder struct {
 	containerName      string
 	buildPath          string
 	environmentVar     []string
-	changePorts        []changePort
+	changePorts        []dockerfileGolang.ChangePort
 	openPorts          []string
 	openAllPorts       bool
 	waitString         string
@@ -35,6 +36,7 @@ type ContainerBuilder struct {
 	gitData            gitData
 	volumes            []mount.Mount
 	IPV4Address        string
+	autoDockerfile     DockerfileAuto
 
 	makeDefaultDockerfile bool
 

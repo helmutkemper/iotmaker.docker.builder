@@ -1,5 +1,9 @@
 package iotmakerdockerbuilder
 
+import (
+	dockerfileGolang "github.com/helmutkemper/iotmaker.docker.builder.golang.dockerfile"
+)
+
 // AddPortToChange (english):
 //
 // AddPortToChange (português): Define as portas a serem expostas na rede alterando o valor da porta definida na imagem
@@ -14,14 +18,14 @@ package iotmakerdockerbuilder
 //
 func (e *ContainerBuilder) AddPortToChange(imagePort string, newPort string) {
 	if e.changePorts == nil {
-		e.changePorts = make([]changePort, 0)
+		e.changePorts = make([]dockerfileGolang.ChangePort, 0)
 	}
 
 	e.changePorts = append(
 		e.changePorts,
-		changePort{
-			oldPort: imagePort,
-			newPort: newPort,
+		dockerfileGolang.ChangePort{
+			OldPort: imagePort,
+			NewPort: newPort,
 		},
 	)
 }

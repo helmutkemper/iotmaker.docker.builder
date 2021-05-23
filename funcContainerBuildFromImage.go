@@ -80,25 +80,25 @@ func (e *ContainerBuilder) ContainerBuildFromImage() (err error) {
 		var newPort nat.Port
 
 		for _, newPortLinkMap := range e.changePorts {
-			imagePort, err = nat.NewPort("tcp", newPortLinkMap.oldPort)
+			imagePort, err = nat.NewPort("tcp", newPortLinkMap.OldPort)
 			if err != nil {
 				return
 			}
 
 			var pass = false
 			for _, portToVerify := range originalImagePortlist {
-				if portToVerify.Port() == newPortLinkMap.oldPort {
+				if portToVerify.Port() == newPortLinkMap.OldPort {
 					pass = true
 					break
 				}
 			}
 
 			if pass == false {
-				err = errors.New("port " + newPortLinkMap.oldPort + " not found in image port list. port list: " + originalImagePortlistAsString)
+				err = errors.New("port " + newPortLinkMap.OldPort + " not found in image port list. port list: " + originalImagePortlistAsString)
 				return
 			}
 
-			newPort, err = nat.NewPort("tcp", newPortLinkMap.newPort)
+			newPort, err = nat.NewPort("tcp", newPortLinkMap.NewPort)
 			if err != nil {
 				return
 			}
