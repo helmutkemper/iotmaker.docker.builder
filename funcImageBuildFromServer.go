@@ -114,6 +114,7 @@ func (e *ContainerBuilder) ImageBuildFromServer() (err error) {
 		}
 	}
 
+	e.Prayer()
 	e.imageID, err = e.dockerSys.ImageBuildFromFolder(
 		tmpDirPath,
 		e.imageName,

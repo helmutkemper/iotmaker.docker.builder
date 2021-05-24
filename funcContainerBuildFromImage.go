@@ -2,7 +2,6 @@ package iotmakerdockerbuilder
 
 import (
 	"errors"
-	"github.com/docker/docker/api/types/container"
 	"github.com/docker/docker/api/types/network"
 	"github.com/docker/go-connections/nat"
 	iotmakerdocker "github.com/helmutkemper/iotmaker.docker/v1.0.1"
@@ -106,17 +105,15 @@ func (e *ContainerBuilder) ContainerBuildFromImage() (err error) {
 		}
 	}
 
-	var config = container.Config{
-		OpenStdin:    true,
-		AttachStderr: true,
-		AttachStdin:  true,
-		AttachStdout: true,
-		Env:          e.environmentVar,
-		Image:        e.imageName,
-	}
+	e.containerConfig.OpenStdin = true
+	e.containerConfig.AttachStderr = true
+	e.containerConfig.AttachStdin = true
+	e.containerConfig.AttachStdout = true
+	e.containerConfig.Env = e.environmentVar
+	e.containerConfig.Image = e.imageName
 
 	e.containerID, err = e.dockerSys.ContainerCreateWithConfig(
-		&config,
+		&e.containerConfig,
 		e.containerName,
 		iotmakerdocker.KRestartPolicyNo,
 		portMap,

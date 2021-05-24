@@ -10,7 +10,7 @@ This project creates a simple way to manipulate containers with the moby docker 
 
 > Status: Documentando em ingles 
 
-Este projeto cria uma API Golang simples para criar e manipular o docker.
+Este projeto cria uma API Golang simples para criar e manipular o docker, baseado no projeto moby.
 
 ### Create a docker network / Cria uma rede docker
 

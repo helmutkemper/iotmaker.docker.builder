@@ -5,6 +5,9 @@ import (
 	"os"
 )
 
+// gitMakePublicSshKey (english):
+//
+// gitMakePublicSshKey (português):
 func (e *ContainerBuilder) gitMakePublicSshKey() (publicKeys *ssh.PublicKeys, err error) {
 	if e.gitData.sshPrivateKeyPath != "" {
 		_, err = os.Stat(e.gitData.sshPrivateKeyPath)

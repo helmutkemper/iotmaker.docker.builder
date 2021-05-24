@@ -2,6 +2,7 @@ package iotmakerdockerbuilder
 
 import (
 	"github.com/docker/docker/api/types"
+	"github.com/docker/docker/api/types/container"
 	"github.com/docker/docker/api/types/mount"
 	dockerfileGolang "github.com/helmutkemper/iotmaker.docker.builder.golang.dockerfile"
 	isolatedNetwork "github.com/helmutkemper/iotmaker.docker.builder.network.interface"
@@ -37,6 +38,7 @@ type ContainerBuilder struct {
 	volumes            []mount.Mount
 	IPV4Address        string
 	autoDockerfile     DockerfileAuto
+	containerConfig    container.Config
 
 	makeDefaultDockerfile bool
 
