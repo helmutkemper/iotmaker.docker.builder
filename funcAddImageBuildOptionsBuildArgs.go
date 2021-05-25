@@ -12,7 +12,7 @@ package iotmakerdockerbuilder
 //
 //     code:
 //       var key = "GIT_PRIVATE_REPO"
-//       var value = "github.com/yougit"
+//       var value = "github.com/yourgit"
 //
 //       var container = ContainerBuilder{}
 //       container.AddImageBuildOptionsBuildArgs(key, &value)
@@ -32,7 +32,7 @@ package iotmakerdockerbuilder
 //
 //     code:
 //       var key = "GIT_PRIVATE_REPO"
-//       var value = "github.com/yougit"
+//       var value = "github.com/yourgit"
 //
 //       var container = ContainerBuilder{}
 //       container.AddImageBuildOptionsBuildArgs(key, &value)
