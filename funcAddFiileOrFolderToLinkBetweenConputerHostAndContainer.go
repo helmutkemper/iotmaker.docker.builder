@@ -6,8 +6,11 @@ import (
 	"path/filepath"
 )
 
-// AddFiileOrFolderToLinkBetweenConputerHostAndContainer (english):
+// AddFiileOrFolderToLinkBetweenConputerHostAndContainer (english): Mounts a file or folder between the computer
+// host and the container.
 //
+//   computerHostPath:    Path of the file or folder inside the host computer
+//   insideContainerPath: Path inside the container
 // AddFiileOrFolderToLinkBetweenConputerHostAndContainer (português): Monta um arquivo ou pasta entre o computador e
 // o container.
 //
