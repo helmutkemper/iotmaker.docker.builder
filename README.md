@@ -16,6 +16,10 @@ Este projeto cria uma API Golang simples para criar e manipular o docker, basead
 
 ### Create a docker network / Cria uma rede docker
 
+English: Creates a docker network with subnet 10.0.0.0/16 and gateway 10.0.0.1
+
+Português: Cria uma rede docker com subnet 10.0.0.0/16 e gateway 10.0.0.1
+
 ```golang
   var err error
   var netDocker = dockerNetwork.ContainerBuilderNetwork{}
@@ -32,6 +36,12 @@ English: use the `container.SetNetworkDocker(&netDocker)` command to link the co
 Português: use o comando `container.SetNetworkDocker(&netDocker)` para ligar um container com o docker
 
 ### Container nats
+
+English: Creates a nats container, from the https://nats.io/ project and expects it to be ready, monitoring standard 
+output and looking for the text "Listening for route connections on 0.0.0.0:6222"
+
+Português: Cria um container nats, do projeto https://nats.io/ e espera o mesmo ficar pronto, monitorando a saída 
+padrão e procurando pelo texto "Listening for route connections on 0.0.0.0:6222"
 
 ```golang
   var err error
@@ -56,8 +66,8 @@ Português: use o comando `container.SetNetworkDocker(&netDocker)` para ligar um
   if err != nil { panic(err) }
 
   // container build and start from image nats:latest
-  // waits for the text "Listening for route connections on 0.0.0.0:6222" to appear  in the standard container output
-  // to proceed
+  // waits for the text "Listening for route connections on 0.0.0.0:6222" to appear  in the standard container 
+  // output to proceed
   err = container.ContainerBuildFromImage()
   if err != nil { panic(err) }
 ```
