@@ -6,14 +6,14 @@ import (
 	"path/filepath"
 )
 
-// AddFiileOrFolderToLinkBetweenConputerHostAndContainer
+// AddFiileOrFolderToLinkBetweenConputerHostAndContainer (computerHostPath, insideContainerPath string) (err error)
 //
-// English: Mounts a file or folder between the computer host and the container.
+// English: Links a file or folder between the computer host and the container.
 //
 //   computerHostPath:    Path of the file or folder inside the host computer
 //   insideContainerPath: Path inside the container
 //
-// Português: Monta um arquivo ou pasta entre o computador e o container.
+// Português: Vincula um arquivo ou pasta entre o computador e o container.
 //
 //   computerHostPath:    Caminho do arquivo ou pasta no computador hospedeiro
 //   insideContainerPath: Caminho dentro do container
