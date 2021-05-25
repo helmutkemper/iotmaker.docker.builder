@@ -1,8 +1,10 @@
 package iotmakerdockerbuilder
 
-// GetImageID (english):
+// GetImageID
 //
-// GetImageID (português): Retorna o ID da imagem.
+// English: Returns the image ID.
+//
+// Português: Retorna o ID da imagem.
 func (e *ContainerBuilder) GetImageID() (ID string) {
 	return e.imageID
 }

@@ -1,8 +1,10 @@
 package iotmakerdockerbuilder
 
-// GetContainerID (english):
+// GetContainerID
 //
-// GetContainerID (português): Retorna o ID do container criado
+// English: Returns the ID of the created container
+//
+// Português: Retorna o ID do container criado
 func (e *ContainerBuilder) GetContainerID() (ID string) {
 	return e.containerID
 }
