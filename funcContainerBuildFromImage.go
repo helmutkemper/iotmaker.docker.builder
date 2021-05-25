@@ -7,10 +7,11 @@ import (
 	"log"
 )
 
-// ContainerBuildFromImage (english):
+// ContainerBuildFromImage
 //
-// ContainerBuildFromImage (português): transforma uma imagem baixada por ImagePull() ou criada por
-// ImageBuildFromFolder() em container
+// English: transforms an image downloaded by ImagePull() or created by ImageBuildFromFolder() into a container
+//
+// Português: transforma uma imagem baixada por ImagePull() ou criada por ImageBuildFromFolder() em container
 func (e *ContainerBuilder) ContainerBuildFromImage() (err error) {
 	err = e.verifyImageName()
 	if err != nil {

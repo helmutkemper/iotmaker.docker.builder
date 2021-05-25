@@ -6,9 +6,15 @@ import (
 	"strings"
 )
 
-// findCurrentIPV4AddressSupport (english):
+// findCurrentIPV4AddressSupport
 //
-// findCurrentIPV4AddressSupport (português): função de apoio a FindCurrentIpAddress
+// English: support function for FindCurrentIpAddress()
+//
+//   networkID: Docker's network ID
+//
+// Português: função de apoio a FindCurrentIpAddress()
+//
+//   networkID: ID da rede docker
 func (e *ContainerBuilder) findCurrentIPV4AddressSupport(networkID string) (IP string, err error) {
 	var res types.NetworkResource
 	res, err = e.dockerSys.NetworkInspect(networkID)

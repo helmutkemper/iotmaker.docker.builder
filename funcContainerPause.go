@@ -1,8 +1,10 @@
 package iotmakerdockerbuilder
 
-// ContainerPause (english):
+// ContainerPause
 //
-// ContainerPause (português): pausa o container
+// English: pause the container
+//
+// Português: pausa o container
 func (e *ContainerBuilder) ContainerPause() (err error) {
 	if e.containerID == "" {
 		err = e.GetIdByContainerName()

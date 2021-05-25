@@ -11,12 +11,14 @@ func ExampleContainerBuilder_FindCurrentIPV4Address() {
 
 	GarbageCollector()
 
-	// create a container
 	var container = ContainerBuilder{}
+
 	// set image name for docker pull
 	container.SetImageName("nats:latest")
+
 	// set a container name
 	container.SetContainerName("container_delete_nats_after_test")
+
 	// set a waits for the text to appear in the standard container output to proceed [optional]
 	container.SetWaitStringWithTimeout("Listening for route connections on 0.0.0.0:6222", 10*time.Second)
 

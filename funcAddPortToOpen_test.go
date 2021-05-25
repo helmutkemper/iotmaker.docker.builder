@@ -15,10 +15,13 @@ func ExampleContainerBuilder_AddPortToOpen() {
 	GarbageCollector()
 
 	var container = ContainerBuilder{}
+
 	// new image name delete:latest
 	container.SetImageName("delete:latest")
+
 	// container name container_delete_server_after_test
 	container.SetContainerName("container_delete_server_after_test")
+
 	// git project to clone https://github.com/helmutkemper/iotmaker.docker.util.whaleAquarium.sample.git
 	container.SetGitCloneToBuild("https://github.com/helmutkemper/iotmaker.docker.util.whaleAquarium.sample.git")
 
@@ -27,8 +30,10 @@ func ExampleContainerBuilder_AddPortToOpen() {
 
 	// set a waits for the text to appear in the standard container output to proceed [optional]
 	container.SetWaitStringWithTimeout("Stating server on port 3000", 20*time.Second)
+
 	// open port 3000 [optional in this case: default code open all ports]
 	container.AddPortToOpen("3000")
+
 	// replace container folder /static to host folder ./test/static
 	err = container.AddFiileOrFolderToLinkBetweenConputerHostAndContainer("./test/static", "/static")
 	if err != nil {

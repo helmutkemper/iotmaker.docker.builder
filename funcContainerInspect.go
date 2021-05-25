@@ -4,9 +4,11 @@ import (
 	iotmakerdocker "github.com/helmutkemper/iotmaker.docker/v1.0.1"
 )
 
-// ContainerInspect (english):
+// ContainerInspect
 //
-// ContainerInspect (português): inspeciona o container
+// English: inspects the container
+//
+// Português: inspeciona o container
 func (e *ContainerBuilder) ContainerInspect() (inspect iotmakerdocker.ContainerInspect, err error) {
 	if e.containerID == "" {
 		err = e.GetIdByContainerName()

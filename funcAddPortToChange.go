@@ -6,10 +6,18 @@ import (
 
 // AddPortToChange
 //
-// English:
+// English: Defines a new port to be exposed on the network and links with the port defined in the image
 //
-// Português: Define as portas a serem expostas na rede alterando o valor da porta definida na imagem e o valor
-// exposto na rede
+//   imagePort: port defined in the image, in the form of a numeric string
+//   newPort: new port value to be exposed on the network
+//
+//     Nota: The ports exposed in the creation of the container can be defined by SetOpenAllContainersPorts(),
+//     AddPortToChange() e AddPortToOpen();
+//     By default, all doors are closed;
+//
+//     The ImageListExposedPorts() function returns all ports defined in the image to be exposed.
+//
+// Português: Define uma nova porta a ser exposta na rede e vincula com a porta definida na imagem
 //
 //   imagePort: porta definida na imagem, na forma de string numérica
 //   newPort: novo valor da porta a se exposta na rede
@@ -17,6 +25,7 @@ import (
 //     Nota: As portas expostas na criação do container pode ser definidas por SetOpenAllContainersPorts(),
 //     AddPortToChange() e AddPortToOpen();
 //     Por padrão, todas as portas ficam fechadas;
+//
 //     A função ImageListExposedPorts() retorna todas as portas definidas na imagem para serem expostas.
 func (e *ContainerBuilder) AddPortToChange(imagePort string, newPort string) {
 	if e.changePorts == nil {
