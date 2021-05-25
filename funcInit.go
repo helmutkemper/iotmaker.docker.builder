@@ -11,9 +11,7 @@ import (
 // Init (português): Inicializa o objeto e deve ser chamado apenas depois de toas as configurações serem definidas
 func (e *ContainerBuilder) Init() (err error) {
 
-	if e.onContainerReady != nil {
-		return
-	}
+	e.restartPolicy = iotmakerdocker.KRestartPolicyNo
 
 	if e.autoDockerfile == nil {
 		e.autoDockerfile = &dockerfileGolang.DockerfileGolang{}

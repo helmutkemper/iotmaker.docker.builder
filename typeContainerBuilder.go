@@ -39,6 +39,7 @@ type ContainerBuilder struct {
 	IPV4Address        string
 	autoDockerfile     DockerfileAuto
 	containerConfig    container.Config
+	restartPolicy      iotmakerdocker.RestartPolicy
 
 	makeDefaultDockerfile bool
 
