@@ -71,7 +71,7 @@ ARG CGO_ENABLED=0
 RUN git config --global url.ssh://git@github.com/.insteadOf https://github.com/
 # (en) defines the path of the private repository
 # (pt) define o caminho do repositório privado
-RUN echo "go env -w GOPRIVATE=$GIT_PRIVATE_REPO"
+RUN go env -w GOPRIVATE=$GIT_PRIVATE_REPO
 # (en) install the dependencies in the go.mod file
 # (pt) instala as dependências no arquivo go.mod
 RUN go mod tidy
