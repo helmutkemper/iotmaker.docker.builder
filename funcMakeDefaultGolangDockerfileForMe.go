@@ -9,6 +9,7 @@ package iotmakerdockerbuilder
 // arquivos compartilhados entre o host e o container irá expor o volume contendo o arquivo dentro do container.
 //
 //   Cuidado: o arquivo Dockerfile-iotmaker pode ser sobrescrito.
+//   Para projetos Golang, o arquivo go.mod é obrigatório
 //
 func (e *ContainerBuilder) MakeDefaultDockerfileForMe() {
 	e.makeDefaultDockerfile = true

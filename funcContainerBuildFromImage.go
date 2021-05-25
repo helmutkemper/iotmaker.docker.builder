@@ -4,7 +4,6 @@ import (
 	"errors"
 	"github.com/docker/docker/api/types/network"
 	"github.com/docker/go-connections/nat"
-	iotmakerdocker "github.com/helmutkemper/iotmaker.docker/v1.0.1"
 	"log"
 )
 
@@ -148,33 +147,3 @@ func (e *ContainerBuilder) ContainerBuildFromImage() (err error) {
 	*e.onContainerReady <- true
 	return
 }
-
-// SetContainerRestartPolicy (english):
-//
-// SetContainerRestartPolicy (português): Define a política de reinício do container.
-//   value: KRestartPolicyNo            - não reiniciar o container (padrão).
-//          KRestartPolicyOnFailure     - reinicia o container se houver um erro (com o manifesto informando um código de erro diferente de zero).
-//          KRestartPolicyAlways        - sempre reinicia o container quando ele para, mesmo quando ele é parado manualmente.
-//          KRestartPolicyUnlessStopped - sempre reinicia o container, caso ele não tenha sido parado manualmente.
-func (e *ContainerBuilder) SetContainerRestartPolicy(value RestartPolicy) {
-	e.restartPolicy = iotmakerdocker.RestartPolicy(value)
-}
-
-type RestartPolicy int
-
-const (
-	//KRestartPolicyNo (english): Do not automatically restart the container. (the default)
-	KRestartPolicyNo RestartPolicy = iota
-
-	//KRestartPolicyOnFailure (english): Restart the container if it exits due to an error, which manifests as a non-zero exit
-	//code.
-	KRestartPolicyOnFailure
-
-	//KRestartPolicyAlways (english): Always restart the container if it stops. If it is manually stopped, it is restarted
-	//only when Docker daemon restarts or the container itself is manually restarted. (See the second bullet listed in restart policy details)
-	KRestartPolicyAlways
-
-	//KRestartPolicyUnlessStopped (english): Similar to always, except that when the container is stopped (manually or otherwise),
-	//it is not restarted even after Docker daemon restarts.
-	KRestartPolicyUnlessStopped
-)

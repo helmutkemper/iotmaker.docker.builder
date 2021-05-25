@@ -18,6 +18,21 @@ package iotmakerdockerbuilder
 //           './Dockerfile-iotmaker', './Dockerfile', './dockerfile', 'Dockerfile.*', 'dockerfile.*', '.*Dockerfile.*' e
 //           '.*dockerfile.*'
 //
+//
+//     var err error
+//     var usr *user.User
+//     var privateSSHKeyPath string
+//     var file []byte
+//     usr, err = user.Current()
+//     if err != nil {
+//       panic(err)
+//     }
+//
+//     privateSSHKeyPath = filepath.Join(usr.HomeDir, ".shh", "id_rsa")
+//
+//     var container = ContainerBuilder{}
+//     container.SetGitCloneToBuildWithPrivateSSHKey(url, privateSSHKeyPath, password)
+//     container.SetGitConfigFile(string(file))
 func (e *ContainerBuilder) SetGitCloneToBuildWithPrivateSSHKey(url, privateSSHKeyPath, password string) {
 	e.gitData.url = url
 	e.gitData.sshPrivateKeyPath = privateSSHKeyPath

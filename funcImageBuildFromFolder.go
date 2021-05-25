@@ -41,6 +41,8 @@ func (e *ContainerBuilder) ImageBuildFromFolder() (err error) {
 			return
 		}
 
+		// fixme: modificar isto
+		// deve ir para a interface{} fazer a verificação
 		var pass = false
 		for _, file := range fileList {
 			if file.Name() == "go.mod" {

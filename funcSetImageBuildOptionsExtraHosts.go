@@ -12,7 +12,7 @@ package iotmakerdockerbuilder
 //     162.242.195.82 somehost
 //     50.31.209.229 otherhost
 //
-//SetImageBuildOptionsExtraHosts (português): Adiciona itens ao mapa de hostname durante o processo de construção da
+// SetImageBuildOptionsExtraHosts (português): Adiciona itens ao mapa de hostname durante o processo de construção da
 // imagem. Use os mesmos valores que em docker client --add-host parameter.
 //
 //   values:
