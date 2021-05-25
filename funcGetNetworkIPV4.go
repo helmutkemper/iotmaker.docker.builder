@@ -4,9 +4,11 @@ import (
 	iotmakerdocker "github.com/helmutkemper/iotmaker.docker/v1.0.1"
 )
 
-// GetNetworkIPV4 (english):
+// GetNetworkIPV4
 //
-// GetNetworkIPV4 (português):
+// English: Return the IPV4 from the docker network
+//
+// Português: Retorno o IPV4 da rede do docker
 func (e *ContainerBuilder) GetNetworkIPV4() (IPV4 string) {
 	var err error
 	var inspect iotmakerdocker.ContainerInspect
