@@ -8,10 +8,10 @@ import (
 
 // AddFiileOrFolderToLinkBetweenConputerHostAndContainer (english):
 //
-// AddFiileOrFolderToLinkBetweenConputerHostAndContainer (português): Monta um arquivo ou pasta entre o computador e o
-// container.
-//   computerHostPath:    Caminho do arquivo ou pasta dentro do computador hospedeiro
-//   insideContainerPath: Caminho dentro do container
+// AddFiileOrFolderToLinkBetweenConputerHostAndContainer (português): Monta um arquivo ou pasta entre o computador e
+// o container.
+// computerHostPath:    Caminho do arquivo ou pasta dentro do computador hospedeiro
+// insideContainerPath: Caminho dentro do container
 func (e *ContainerBuilder) AddFiileOrFolderToLinkBetweenConputerHostAndContainer(computerHostPath, insideContainerPath string) (err error) {
 
 	if e.volumes == nil {
