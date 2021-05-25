@@ -4,9 +4,11 @@ import (
 	"github.com/docker/docker/api/types"
 )
 
-// addImageBuildOptionsGitCredentials (english): call from SetPrivateRepositoryAutoConfig()
+// addImageBuildOptionsGitCredentials
 //
-// addImageBuildOptionsGitCredentials (português): chamada por SetPrivateRepositoryAutoConfig()
+// English: call from SetPrivateRepositoryAutoConfig()
+//
+// Português: chamada por SetPrivateRepositoryAutoConfig()
 func (e *ContainerBuilder) addImageBuildOptionsGitCredentials() (buildOptions types.ImageBuildOptions) {
 
 	if buildOptions.BuildArgs == nil {

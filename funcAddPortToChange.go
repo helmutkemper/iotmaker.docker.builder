@@ -4,10 +4,13 @@ import (
 	dockerfileGolang "github.com/helmutkemper/iotmaker.docker.builder.golang.dockerfile"
 )
 
-// AddPortToChange (english):
+// AddPortToChange
 //
-// AddPortToChange (português): Define as portas a serem expostas na rede alterando o valor da porta definida na imagem
-// e o valor exposto na rede
+// English:
+//
+// Português: Define as portas a serem expostas na rede alterando o valor da porta definida na imagem e o valor
+// exposto na rede
+//
 //   imagePort: porta definida na imagem, na forma de string numérica
 //   newPort: novo valor da porta a se exposta na rede
 //
@@ -15,7 +18,6 @@ import (
 //     AddPortToChange() e AddPortToOpen();
 //     Por padrão, todas as portas ficam fechadas;
 //     A função ImageListExposedPorts() retorna todas as portas definidas na imagem para serem expostas.
-//
 func (e *ContainerBuilder) AddPortToChange(imagePort string, newPort string) {
 	if e.changePorts == nil {
 		e.changePorts = make([]dockerfileGolang.ChangePort, 0)

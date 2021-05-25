@@ -6,7 +6,7 @@ import (
 	"path/filepath"
 )
 
-// AddFiileOrFolderToLinkBetweenConputerHostAndContainer (computerHostPath, insideContainerPath string) (err error)
+// AddFiileOrFolderToLinkBetweenConputerHostAndContainer
 //
 // English: Links a file or folder between the computer host and the container.
 //
