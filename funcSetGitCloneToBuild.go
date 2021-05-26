@@ -6,7 +6,9 @@ package iotmakerdockerbuilder
 //
 //   url: Address of the repository containing the project
 //
-//     Note: If the repository is private and the host computer has access to the git server, use
+//     Note:
+//
+//     If the repository is private and the host computer has access to the git server, use
 //     SetPrivateRepositoryAutoConfig() to copy the git credentials contained in ~/.ssh and the settings of
 //     ~/.gitconfig automatically;
 //
@@ -35,7 +37,9 @@ package iotmakerdockerbuilder
 //
 //   url: Endereço do repositório contendo o projeto
 //
-//     Nota: Caso o repositório seja privado e o computador hospedeiro tenha acesso ao servidor git, use
+//     Nota:
+//
+//     Caso o repositório seja privado e o computador hospedeiro tenha acesso ao servidor git, use
 //     SetPrivateRepositoryAutoConfig() para copiar as credências do git contidas em ~/.ssh e as configurações de
 //     ~/.gitconfig de forma automática;
 //
