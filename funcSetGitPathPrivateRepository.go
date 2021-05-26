@@ -1,10 +1,12 @@
 package iotmakerdockerbuilder
 
-// SetGitPathPrivateRepository (english):
+// SetGitPathPrivateRepository
+//
+// English: path do private repository defined in "go env -w GOPRIVATE=$GIT_PRIVATE_REPO"
 //
 //   Example: github.com/helmutkemper
 //
-// SetGitPathPrivateRepository (português):
+// Português: caminho do repositório privado definido em "go env -w GOPRIVATE=$GIT_PRIVATE_REPO"
 //
 //   Exemplo: github.com/helmutkemper
 //
