@@ -12,8 +12,10 @@ package iotmakerdockerbuilder
 //                {"CMD-SHELL", command}: run command with system's default shell
 //   Interval:    Interval is the time to wait between checks (Zero means inherit).
 //   Timeout:     Timeout is the time to wait before considering the check to have hung (Zero means inherit).
-//   StartPeriod: The start period for the container to initialize before the retries starts to count down (Zero means inherit).
-//   Retries:     Retries is the number of consecutive failures needed to consider a container as unhealthy (Zero means inherit).
+//   StartPeriod: The start period for the container to initialize before the retries starts to count down
+//                (Zero means inherit).
+//   Retries:     Retries is the number of consecutive failures needed to consider a container as unhealthy
+//                (Zero means inherit).
 //
 // Português: define definições de configuração para o recurso HEALTHCHECK.
 //    Test:       Test é o teste a ser executado para testar a saúde do container
@@ -25,8 +27,10 @@ package iotmakerdockerbuilder
 //                {"CMD-SHELL", command} : executa o comando com shell padrão do sistema
 //   Interval:    intervalo entre testes (zero herda o valor padrão).
 //   Timeout:     intervalo de espera antes de considerar o teste com problemas (zero herda o valor padrão).
-//   StartPeriod: tempo de espera pela incialização do container antes dos testes começarem (zero herda o valor padrão).
-//   Retries:     número de testes consecutivos antes de considerar o teste com problemas (zero herda o valor padrão).
+//   StartPeriod: tempo de espera pela incialização do container antes dos testes começarem
+//                (zero herda o valor padrão).
+//   Retries:     número de testes consecutivos antes de considerar o teste com problemas
+//                (zero herda o valor padrão).
 func (e *ContainerBuilder) SetContainerHealthcheck(value *HealthConfig) {
 	e.containerConfig.Healthcheck.Test = value.Test
 	e.containerConfig.Healthcheck.Interval = value.Interval
