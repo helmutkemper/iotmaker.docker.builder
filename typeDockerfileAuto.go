@@ -109,4 +109,5 @@ import (
 //
 type DockerfileAuto interface {
 	MountDefaultDockerfile(args map[string]*string, changePorts []dockerfileGolang.ChangePort, openPorts []string, volumes []mount.Mount) (dockerfile string, err error)
+	Prayer()
 }

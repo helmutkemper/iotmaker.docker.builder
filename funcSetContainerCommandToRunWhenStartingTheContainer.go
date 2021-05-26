@@ -1,8 +1,10 @@
 package iotmakerdockerbuilder
 
-// SetContainerCommandToRunWhenStartingTheContainer (english): command to run when stating the container
+// SetContainerCommandToRunWhenStartingTheContainer
 //
-// SetContainerCommandToRunWhenStartingTheContainer (português): comando a ser executado quando o container inicia
+// English: command to run when stating the container (style Dockerfile CMD)
+//
+// Português: comando a ser executado quando o container inicia (estilo Dockerfile CMD)
 func (e *ContainerBuilder) SetContainerCommandToRunWhenStartingTheContainer(values []string) {
 	e.containerConfig.Cmd = values
 }

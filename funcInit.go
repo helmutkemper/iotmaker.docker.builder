@@ -6,9 +6,11 @@ import (
 	"time"
 )
 
-// Init (english):
+// Init
 //
-// Init (português): Inicializa o objeto e deve ser chamado apenas depois de toas as configurações serem definidas
+// English: Initializes the object and should be called only after all settings have been configured
+//
+// Português: Inicializa o objeto e deve ser chamado apenas depois de toas as configurações serem definidas
 func (e *ContainerBuilder) Init() (err error) {
 
 	e.restartPolicy = iotmakerdocker.KRestartPolicyNo

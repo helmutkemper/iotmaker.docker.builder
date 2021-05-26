@@ -84,7 +84,7 @@ func (e *ContainerBuilder) ImageBuildFromFolder() (err error) {
 	}
 
 	if e.printBuildOutput == true {
-		e.Prayer()
+		e.autoDockerfile.Prayer()
 
 		go func(ch *chan iotmakerdocker.ContainerPullStatusSendToChannel) {
 			for {

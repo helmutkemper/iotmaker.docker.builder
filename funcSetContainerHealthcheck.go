@@ -1,6 +1,8 @@
 package iotmakerdockerbuilder
 
-// SetContainerHealthcheck (english): holds configuration settings for the HEALTHCHECK feature.
+// SetContainerHealthcheck
+//
+// English: holds configuration settings for the HEALTHCHECK feature.
 //    Test:       Test is the test to perform to check that the container is healthy.
 //                An empty slice means to inherit the default.
 //                The options are:
@@ -13,7 +15,7 @@ package iotmakerdockerbuilder
 //   StartPeriod: The start period for the container to initialize before the retries starts to count down (Zero means inherit).
 //   Retries:     Retries is the number of consecutive failures needed to consider a container as unhealthy (Zero means inherit).
 //
-// SetContainerHealthcheck (português): define definições de configuração para o recurso HEALTHCHECK.
+// Português: define definições de configuração para o recurso HEALTHCHECK.
 //    Test:       Test é o teste a ser executado para testar a saúde do container
 //                se não for definido, herda o teste padrão
 //                As opções são:

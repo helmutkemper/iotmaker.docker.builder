@@ -7,9 +7,17 @@ import (
 	"strings"
 )
 
-// nextIpV4Address (english):
+// nextIpV4Address
 //
-// nextIpV4Address (português): recebe um endereço IP na forma de string e incrementa o mesmo.
+// English: receives an IP address in the form of a string and increments it.
+//
+//   ip:  only the ip address. e.g.: 10.0.0.1
+//   inc: number of increments
+//
+//     Note: this function does not take into account the network configuration, use it with care!
+//
+// Português: recebe um endereço IP na forma de string e incrementa o mesmo.
+//
 //   ip:  apenas o endereço ip. ex.: 10.0.0.1
 //   inc: quantidade de incrementos
 //
