@@ -5,22 +5,35 @@ import (
 	"github.com/go-git/go-git/v5"
 	"github.com/go-git/go-git/v5/plumbing/transport/http"
 	"github.com/go-git/go-git/v5/plumbing/transport/ssh"
+	iotmakerdocker "github.com/helmutkemper/iotmaker.docker/v1.0.1"
 	"io/fs"
 	"io/ioutil"
+	"log"
 	"os"
 	"path/filepath"
+	"strings"
 )
 
-// ImageBuildFromServer (english):
+// ImageBuildFromServer
 //
-// ImageBuildFromServer (português): Monta uma imagem docker a partir de um projeto contido em um repositório git.
+// English: Build a docker image from a project contained in a git repository.
 //
-//   Nota: O repositório pode ser definido pelos métodos SetGitCloneToBuild(), SetGitCloneToBuildWithPrivateSshKey(),
-//   SetGitCloneToBuildWithPrivateToken() e SetGitCloneToBuildWithUserPassworh()
+//   Note: The repository can be defined by the methods SetGitCloneToBuild(), SetGitCloneToBuildWithPrivateSshKey(),
+//   SetGitCloneToBuildWithPrivateToken() and SetGitCloneToBuildWithUserPassworh();
+//   SetPrivateRepositoryAutoConfig() copies the git credentials contained in ~/.ssh and the settings of
+//   ~/.gitconfig;
+//   The SetGitConfigFile(), SetSshIdRsaFile() and SetSshKnownHostsFile() functions can be used to set git security
+//   and configuration files manually.
 //
-//   SetPrivateRepositoryAutoConfig() copia as credências do git contidas em ~/.ssh/id_rsa e as configurações de
-//   ~/.gitconfig
+// Português: Monta uma imagem docker a partir de um projeto contido em um repositório git.
 //
+//   Nota: O repositório pode ser definido pelos métodos SetGitCloneToBuild(),
+//   SetGitCloneToBuildWithPrivateSshKey(), SetGitCloneToBuildWithPrivateToken() e
+//   SetGitCloneToBuildWithUserPassworh();
+//   SetPrivateRepositoryAutoConfig() copia as credências do git contidas em ~/.ssh e as configurações de
+//   ~/.gitconfig;
+//   As funções SetGitConfigFile(), SetSshIdRsaFile() e SetSshKnownHostsFile() podem ser usadas para definir os
+//   arquivos de configurações se segurança do git manualmente.
 func (e *ContainerBuilder) ImageBuildFromServer() (err error) {
 	err = e.verifyImageName()
 	if err != nil {
@@ -114,7 +127,33 @@ func (e *ContainerBuilder) ImageBuildFromServer() (err error) {
 		}
 	}
 
-	e.Prayer()
+	if e.printBuildOutput == true {
+		e.Prayer()
+
+		go func(ch *chan iotmakerdocker.ContainerPullStatusSendToChannel) {
+			for {
+
+				select {
+				case event := <-*ch:
+					var stream = event.Stream
+					stream = strings.ReplaceAll(stream, "\n", "")
+					stream = strings.ReplaceAll(stream, "\r", "")
+					stream = strings.Trim(stream, " ")
+
+					if stream == "" {
+						continue
+					}
+
+					log.Printf("%v", stream)
+
+					if event.Closed == true {
+						return
+					}
+				}
+			}
+		}(&e.changePointer)
+	}
+
 	e.imageID, err = e.dockerSys.ImageBuildFromFolder(
 		tmpDirPath,
 		e.imageName,

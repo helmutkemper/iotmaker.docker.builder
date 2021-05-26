@@ -42,6 +42,7 @@ type ContainerBuilder struct {
 	restartPolicy      iotmakerdocker.RestartPolicy
 
 	makeDefaultDockerfile bool
+	printBuildOutput      bool
 
 	contentIdRsaFile               string
 	contentIdRsaFileWithScape      string

@@ -2,12 +2,10 @@ package iotmakerdockerbuilder
 
 import (
 	"fmt"
-	iotmakerdocker "github.com/helmutkemper/iotmaker.docker/v1.0.1"
 	"github.com/helmutkemper/util"
 	"io/ioutil"
 	"log"
 	"net/http"
-	"strings"
 	"time"
 )
 
@@ -17,6 +15,7 @@ func ExampleContainerBuilder_SetGitPathPrivateRepository() {
 	GarbageCollector()
 
 	var container = ContainerBuilder{}
+	container.SetPrintBuildOnStrOut()
 	container.SetGitPathPrivateRepository("github.com/helmutkemper")
 	// new image name delete:latest
 	container.SetImageName("delete:latest")
@@ -44,29 +43,6 @@ func ExampleContainerBuilder_SetGitPathPrivateRepository() {
 	if err != nil {
 		panic(err)
 	}
-
-	go func(ch *chan iotmakerdocker.ContainerPullStatusSendToChannel) {
-		for {
-
-			select {
-			case event := <-*ch:
-				var stream = event.Stream
-				stream = strings.ReplaceAll(stream, "\n", "")
-				stream = strings.ReplaceAll(stream, "\r", "")
-				stream = strings.Trim(stream, " ")
-
-				if stream == "" {
-					continue
-				}
-
-				log.Printf("%v", stream)
-
-				if event.Closed == true {
-					return
-				}
-			}
-		}
-	}(container.GetChannelEvent())
 
 	// builder new image from git project
 	err = container.ImageBuildFromServer()

@@ -4,7 +4,9 @@ import (
 	"errors"
 	"github.com/docker/docker/api/types/network"
 	"github.com/docker/go-connections/nat"
+	iotmakerdocker "github.com/helmutkemper/iotmaker.docker/v1.0.1"
 	"log"
+	"strings"
 )
 
 // ContainerBuildFromImage
@@ -103,6 +105,31 @@ func (e *ContainerBuilder) ContainerBuildFromImage() (err error) {
 			}
 			portMap[imagePort] = []nat.PortBinding{{HostPort: newPort.Port()}}
 		}
+	}
+
+	if e.printBuildOutput == true {
+		go func(ch *chan iotmakerdocker.ContainerPullStatusSendToChannel) {
+			for {
+
+				select {
+				case event := <-*ch:
+					var stream = event.Stream
+					stream = strings.ReplaceAll(stream, "\n", "")
+					stream = strings.ReplaceAll(stream, "\r", "")
+					stream = strings.Trim(stream, " ")
+
+					if stream == "" {
+						continue
+					}
+
+					log.Printf("%v", stream)
+
+					if event.Closed == true {
+						return
+					}
+				}
+			}
+		}(&e.changePointer)
 	}
 
 	e.containerConfig.OpenStdin = true

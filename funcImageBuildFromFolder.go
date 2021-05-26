@@ -2,20 +2,36 @@ package iotmakerdockerbuilder
 
 import (
 	"errors"
+	iotmakerdocker "github.com/helmutkemper/iotmaker.docker/v1.0.1"
 	"io/fs"
 	"io/ioutil"
+	"log"
 	"os"
 	"path/filepath"
+	"strings"
 )
 
-// ImageBuildFromFolder (english):
+// ImageBuildFromFolder
 //
-// ImageBuildFromFolder (português): transforma o conteúdo da pasta definida em SetBuildFolderPath() em uma imagem
+// English: transforms the contents of the folder defined in SetBuildFolderPath() into a docker image
+//
+//     Note: The folder must contain a dockerfile file, but since different uses can have different dockerfiles, the
+//     following order will be given when searching for the file: "Dockerfile-iotmaker", "Dockerfile", "dockerfile"
+//     in the root folder;
+//     If not found, a recursive search will be done for "Dockerfile" and "dockerfile";
+//     If the project is in golang and the main.go file, containing the package main, is contained in the root
+//     folder, with the go.mod file, the MakeDefaultDockerfileForMe() function can be used to use a standard
+//     Dockerfile file
+//
+// Português: transforma o conteúdo da pasta definida em SetBuildFolderPath() em uma imagem docker
 //
 //     Nota: A pasta deve conter um arquivo dockerfile, mas, como diferentes usos podem ter diferentes dockerfiles,
-//     será dada a seguinte ordem na busca pelo arquivo: "Dockerfile-iotmaker", "Dockerfile", "dockerfile" na pasta raiz.
-//     Se não houver encontrado, será feita uma busca recusiva por "Dockerfile" e "dockerfile"
-//
+//     será dada a seguinte ordem na busca pelo arquivo: "Dockerfile-iotmaker", "Dockerfile", "dockerfile" na pasta
+//     raiz.
+//     Se não houver encontrado, será feita uma busca recursiva por "Dockerfile" e "dockerfile"
+//     Caso o projeto seja em golang e o arquivo main.go, contendo o pacote main, esteja contido na pasta raiz,
+//     com o arquivo go.mod, pode ser usada a função MakeDefaultDockerfileForMe() para ser usado um arquivo
+//     Dockerfile padrão
 func (e *ContainerBuilder) ImageBuildFromFolder() (err error) {
 	err = e.verifyImageName()
 	if err != nil {
@@ -67,7 +83,33 @@ func (e *ContainerBuilder) ImageBuildFromFolder() (err error) {
 		}
 	}
 
-	e.Prayer()
+	if e.printBuildOutput == true {
+		e.Prayer()
+
+		go func(ch *chan iotmakerdocker.ContainerPullStatusSendToChannel) {
+			for {
+
+				select {
+				case event := <-*ch:
+					var stream = event.Stream
+					stream = strings.ReplaceAll(stream, "\n", "")
+					stream = strings.ReplaceAll(stream, "\r", "")
+					stream = strings.Trim(stream, " ")
+
+					if stream == "" {
+						continue
+					}
+
+					log.Printf("%v", stream)
+
+					if event.Closed == true {
+						return
+					}
+				}
+			}
+		}(&e.changePointer)
+	}
+
 	e.imageID, err = e.dockerSys.ImageBuildFromFolder(
 		e.buildPath,
 		e.imageName,

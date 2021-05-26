@@ -62,6 +62,5 @@ func (e *ContainerBuilder) Init() (err error) {
 
 		}(e)
 	}
-
 	return
 }

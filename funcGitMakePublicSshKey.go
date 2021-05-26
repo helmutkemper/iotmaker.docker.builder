@@ -5,9 +5,11 @@ import (
 	"os"
 )
 
-// gitMakePublicSshKey (english):
+// gitMakePublicSshKey
 //
-// gitMakePublicSshKey (português):
+// English: Mount the ssl certificate for the git clone function
+//
+// Português: Monta o certificado ssl para a função de git clone
 func (e *ContainerBuilder) gitMakePublicSshKey() (publicKeys *ssh.PublicKeys, err error) {
 	if e.gitData.sshPrivateKeyPath != "" {
 		_, err = os.Stat(e.gitData.sshPrivateKeyPath)
