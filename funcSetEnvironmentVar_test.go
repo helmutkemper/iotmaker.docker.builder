@@ -8,6 +8,8 @@ import (
 func ExampleContainerBuilder_SetEnvironmentVar() {
 	var err error
 
+	GarbageCollector()
+
 	var netDocker = dockerNetwork.ContainerBuilderNetwork{}
 	err = netDocker.Init()
 	if err != nil {
@@ -24,7 +26,7 @@ func ExampleContainerBuilder_SetEnvironmentVar() {
 
 	var mongoDocker = &ContainerBuilder{}
 	// set a docker network
-	mongoDocker.SetNetworkDocker(&netDocker)
+	//mongoDocker.SetNetworkDocker(&netDocker)
 	// set an image name
 	mongoDocker.SetImageName("mongo:latest")
 	// set a container name
@@ -38,7 +40,7 @@ func ExampleContainerBuilder_SetEnvironmentVar() {
 		},
 	)
 	// set a MongoDB data dir to ./test/data
-	err = mongoDocker.AddFiileOrFolderToLinkBetweenConputerHostAndContainer("./test/data", "/data")
+	//err = mongoDocker.AddFiileOrFolderToLinkBetweenConputerHostAndContainer("./test/data", "/data")
 	if err != nil {
 		panic(err)
 	}
@@ -57,10 +59,13 @@ func ExampleContainerBuilder_SetEnvironmentVar() {
 		panic(err)
 	}
 
+	// Output:
+	//
+
 	// At this point, the MongoDB is ready for use on port 27017
 
 	// Stop and delete the container
-	GarbageCollector()
+	// GarbageCollector()
 
 	// Output:
 	//

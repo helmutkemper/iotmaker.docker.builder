@@ -4,11 +4,15 @@ import (
 	"log"
 )
 
-// WaitForTextInContainerLog (english):
+// WaitForTextInContainerLog
 //
-// WaitForTextInContainerLog (português): Para a execução do objeto até o texto ser encontrado na saída padrão do
-// container
-//   value: texto indicativo de evento apresentado na saída padrão do container
+// English: Wait for the text to appear in the container's default output
+//
+//   value: searched text
+//
+// Português: Espera pelo texto aparecer na saída padrão do container
+//
+//   value: texto procurado
 func (e *ContainerBuilder) WaitForTextInContainerLog(value string) (dockerLogs string, err error) {
 	var logs []byte
 	logs, err = e.dockerSys.ContainerLogsWaitText(e.containerID, value, log.Writer())

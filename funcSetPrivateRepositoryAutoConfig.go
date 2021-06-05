@@ -7,12 +7,13 @@ import (
 	"strings"
 )
 
-// SetPrivateRepositoryAutoConfig (english):
+// SetPrivateRepositoryAutoConfig
 //
-// SetPrivateRepositoryAutoConfig (português): Copia a chave ssh  ~/.ssh/id_rsa e o arquivo ~/.gitconfig para as
-// variáveis SSH_ID_RSA_FILE e GITCONFIG_FILE.
+// English: Copies the ssh ~/.ssh/id_rsa file and the ~/.gitconfig file to the SSH_ID_RSA_FILE and GITCONFIG_FILE
+// variables.
 //
-// Dentro do Dockerfile
+// Português: Copia o arquivo ssh ~/.ssh/id_rsa e o arquivo ~/.gitconfig para as variáveis SSH_ID_RSA_FILE e
+// GITCONFIG_FILE.
 func (e *ContainerBuilder) SetPrivateRepositoryAutoConfig() (err error) {
 	var userData *user.User
 	var fileData []byte

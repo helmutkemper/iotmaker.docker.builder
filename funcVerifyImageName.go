@@ -5,9 +5,11 @@ import (
 	"strings"
 )
 
-// verifyImageName (english):
+// verifyImageName
 //
-// verifyImageName (português): verifica se o nome da imagem tem a tag de versão
+// English: check if the image name has the version tag
+//
+// Português: verifica se o nome da imagem tem a tag de versão
 func (e *ContainerBuilder) verifyImageName() (err error) {
 	if e.imageName == "" {
 		err = errors.New("image name is't set")
