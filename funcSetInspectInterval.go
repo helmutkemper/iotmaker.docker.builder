@@ -4,9 +4,17 @@ import (
 	"time"
 )
 
-// SetInspectInterval (english):
+// SetInspectInterval
 //
-// SetInspectInterval (português): Define o intervalo de monitoramento do container [opcional]
+// English: Defines the container's monitoring interval [optional]
+//
+//   value: time interval between container inspection events
+//
+//     Note: This function has a high computational cost and should be used sparingly.
+//     The captured values are presented by GetLastInspect() and GetChannelOnContainerInspect()
+//
+// Português: Define o intervalo de monitoramento do container [opcional]
+//
 //   value: intervalo de tempo entre os eventos de inspeção do container
 //
 //     Nota: Esta função tem um custo computacional elevado e deve ser usada com moderação.

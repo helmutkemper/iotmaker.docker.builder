@@ -4,9 +4,16 @@ import (
 	isolatedNetwork "github.com/helmutkemper/iotmaker.docker.builder.network.interface"
 )
 
-// SetNetworkDocker (english):
+// SetNetworkDocker
 //
-// SetNetworkDocker (português): Define o ponteiro do gerenciador de rede docker
+// English: Sets the docker network manager pointer
+//
+//   network: pointer to the network manager object.
+//
+//     Note: compatible with dockerBuilderNetwork.ContainerBuilderNetwork{} object
+//
+// Português: Define o ponteiro do gerenciador de rede docker
+//
 //   network: ponteiro para o objeto gerenciador de rede.
 //
 //     Nota: compatível com o objeto dockerBuilderNetwork.ContainerBuilderNetwork{}
