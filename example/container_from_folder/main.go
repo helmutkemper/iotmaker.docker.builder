@@ -18,7 +18,7 @@ func main() {
 	// set a waits for the text to appear in the standard container output to proceed [optional]
 	container.SetWaitStringWithTimeout("starting server at port 3000", 10*time.Second)
 	// change and open port 3000 to 3030
-	container.AddPortToOpen("3000")
+	container.AddPortToExpose("3000")
 	// replace container folder /static to host folder ./test/static
 	err = container.AddFiileOrFolderToLinkBetweenConputerHostAndContainer("../../test/static", "/static")
 	if err != nil {

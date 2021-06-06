@@ -9,7 +9,7 @@ import (
 	"time"
 )
 
-func ExampleContainerBuilder_AddPortToOpen() {
+func ExampleContainerBuilder_AddPortToExpose() {
 	var err error
 
 	GarbageCollector()
@@ -32,7 +32,7 @@ func ExampleContainerBuilder_AddPortToOpen() {
 	container.SetWaitStringWithTimeout("Stating server on port 3000", 20*time.Second)
 
 	// open port 3000 [optional in this case: default code open all ports]
-	container.AddPortToOpen("3000")
+	container.AddPortToExpose("3000")
 
 	// replace container folder /static to host folder ./test/static
 	err = container.AddFiileOrFolderToLinkBetweenConputerHostAndContainer("./test/static", "/static")

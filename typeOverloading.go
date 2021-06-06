@@ -43,8 +43,8 @@ func (e *Overloading) Init(listenPort string, invert bool) (err error) {
 	e.overload.SetContainerName(e.builder.containerName + "_overload")
 	e.overload.SetGitCloneToBuild("https://github.com/helmutkemper/iotmaker.network.util.overload.image.git")
 	e.overload.SetWaitStringWithTimeout("overloading...", 10*time.Second)
-	e.overload.AddPortToOpen("8000")
-	e.overload.AddPortToOpen("8080")
+	e.overload.AddPortToExpose("8000")
+	e.overload.AddPortToExpose("8080")
 	if invert == false {
 		log.Printf(`1.IN_ADDRESS=` + nextIP + `:8000`)
 		log.Printf(`1.OUT_ADDRESS=` + builderIP + `:` + listenPort)

@@ -16,7 +16,7 @@ func ExampleOverloading_Init() {
 	mongoDocker.SetImageName("mongo:latest")
 	mongoDocker.SetContainerName("container_delete_mongo_after_test")
 	//mongoDocker.AddPortToChange("27017", "27016")
-	mongoDocker.AddPortToOpen("27017")
+	mongoDocker.AddPortToExpose("27017")
 	mongoDocker.SetEnvironmentVar(
 		[]string{
 			"--host 0.0.0.0",
@@ -66,7 +66,7 @@ func ExampleOverloading_Init() {
 	// change and open port 3000 to 3030
 	//serverContainer.SetDoNotOpenContainersPorts()
 	//serverContainer.AddPortToChange("3000", "3030")
-	serverContainer.AddPortToOpen("3000")
+	serverContainer.AddPortToExpose("3000")
 	// replace container folder /static to host folder ./test/static
 	err = serverContainer.AddFiileOrFolderToLinkBetweenConputerHostAndContainer("./test/static", "/static")
 	if err != nil {

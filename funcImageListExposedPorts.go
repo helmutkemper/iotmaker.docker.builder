@@ -9,13 +9,13 @@ import (
 // English: Lists all the ports defined in the image to be exposed.
 //
 //     Note: The ports exposed in the creation of the container can be defined by SetOpenAllContainersPorts(),
-//     AddPortToChange() and AddPortToOpen();
+//     AddPortToChange() and AddPortToExpose();
 //     By default, all doors are closed.
 //
 // Português: Lista todas as portas definidas na imagem para serem expostas.
 //
 //     Nota: As portas expostas na criação do container podem ser definidas por SetOpenAllContainersPorts(),
-//     AddPortToChange() e AddPortToOpen();
+//     AddPortToChange() e AddPortToExpose();
 //     Por padrão, todas as portas ficam fechadas.
 func (e *ContainerBuilder) ImageListExposedPorts() (portList []nat.Port, err error) {
 

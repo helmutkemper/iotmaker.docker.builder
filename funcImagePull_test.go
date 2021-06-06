@@ -62,7 +62,7 @@ func ExampleContainerBuilder_ImagePull() {
 
 	// container "container_delete_nats_after_test" running and ready for use on this code point on IP 10.0.0.2
 	// all nats ports are open
-	// you can use AddPortToOpen("4222"), to open only ports defineds inside code;
+	// you can use AddPortToExpose("4222"), to open only ports defineds inside code;
 	// you can use AddPortToChange("4222", "1111") to open only ports defineds inside code and change port 4222 to port
 	// 1111;
 	// you can use SetDoNotOpenContainersPorts() to not open containers ports

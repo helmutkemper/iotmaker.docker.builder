@@ -41,7 +41,7 @@ func TestContainer_2(t *testing.T) {
 	container.SetNetworkDocker(&netDocker)
 	container.SetImageName("nats:latest")
 	container.SetContainerName("container_delete_nats_after_test")
-	container.AddPortToOpen("4222")
+	container.AddPortToExpose("4222")
 	container.SetWaitString("Listening for route connections on 0.0.0.0:6222")
 
 	err = container.Init()

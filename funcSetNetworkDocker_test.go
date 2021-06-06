@@ -30,7 +30,7 @@ func ExampleContainerBuilder_SetNetworkDocker() {
 	// set a container name
 	mongoDocker.SetContainerName("container_delete_mongo_after_test")
 	// set a port to expose
-	mongoDocker.AddPortToOpen("27017")
+	mongoDocker.AddPortToExpose("27017")
 	// se a environment var list
 	mongoDocker.SetEnvironmentVar(
 		[]string{
