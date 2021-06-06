@@ -10,9 +10,11 @@ import (
 	"time"
 )
 
-// ContainerBuilder (english):
+// ContainerBuilder
 //
-// ContainerBuilder (português): Gerenciador de containers e imagens docker
+// English: Docker manager
+//
+// Português: Gerenciador de containers e imagens docker
 type ContainerBuilder struct {
 	network            isolatedNetwork.ContainerBuilderNetworkInterface
 	dockerSys          iotmakerdocker.DockerSystem

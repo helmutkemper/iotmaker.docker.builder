@@ -4,9 +4,11 @@ import (
 	"time"
 )
 
-// HealthConfig (english): holds configuration settings for the HEALTHCHECK feature.
+// HealthConfig
 //
-// HealthConfig (português):
+// English: holds configuration settings for the HEALTHCHECK feature.
+//
+// Português: contém as configurações para o HEALTHCHECK
 type HealthConfig struct {
 	// Test is the test to perform to check that the container is healthy.
 	// An empty slice means to inherit the default.

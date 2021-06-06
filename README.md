@@ -2,7 +2,7 @@
 
 ### English
 
-This project creates a simple way to manipulate containers with the moby docker project
+This project creates a simple way to manipulate containers from Golang code
 
 > Status: Starting to document in English
 
@@ -10,7 +10,7 @@ This project creates a simple way to manipulate containers with the moby docker 
 
 > Status: Documentando em ingles
 
-Este projeto cria uma API Golang simples para criar e manipular o docker, baseado no projeto moby.
+Este projeto cria uma API Golang simples para criar e manipular o docker a partir de um código Golang
 
 ## Examples / Exemplos
 
