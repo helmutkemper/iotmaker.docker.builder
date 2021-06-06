@@ -4,9 +4,11 @@ import (
 	"github.com/docker/docker/api/types/container"
 )
 
-// SetImageBuildOptionsIsolationDefault (english): Set default isolation mode on current daemon
+// SetImageBuildOptionsIsolationDefault
 //
-// SetImageBuildOptionsIsolationDefault (português):
+// English: Set default isolation mode on current daemon
+//
+// Português: Define o método de isolamento do processo como sendo o mesmo do deamon
 func (e *ContainerBuilder) SetImageBuildOptionsIsolationDefault() {
 	e.buildOptions.Isolation = container.IsolationDefault
 }

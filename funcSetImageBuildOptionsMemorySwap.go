@@ -1,13 +1,15 @@
 package iotmakerdockerbuilder
 
-// SetImageBuildOptionsMemorySwap (english): Set memory swar (--memory-swap)
+// SetImageBuildOptionsMemorySwap
+//
+// English: Set memory swap (--memory-swap)
 //
 //   Use value * KKiloByte, value * KMegaByte and value * KGigaByte
 //   See https://docs.docker.com/engine/reference/run/#user-memory-constraints
 //
-// SetImageBuildOptionsMemorySwap (português):
+// Português: habilita a opção memory swp
 //
-//   Use value * KKiloByte, value * KMegaByte and value * KGigaByte
+//   Use value * KKiloByte, value * KMegaByte e value * KGigaByte
 //   See https://docs.docker.com/engine/reference/run/#user-memory-constraints
 //
 func (e *ContainerBuilder) SetImageBuildOptionsMemorySwap(value int64) {

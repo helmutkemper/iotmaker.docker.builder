@@ -4,9 +4,11 @@ import (
 	"github.com/docker/docker/api/types/container"
 )
 
-// SetImageBuildOptionsIsolationProcess (english): Set process isolation mode
+// SetImageBuildOptionsIsolationProcess
 //
-// SetImageBuildOptionsIsolationProcess (português):
+// English: Set process isolation mode
+//
+// Português: Determina o método de isolamento do processo
 func (e *ContainerBuilder) SetImageBuildOptionsIsolationProcess() {
 	e.buildOptions.Isolation = container.IsolationProcess
 }
