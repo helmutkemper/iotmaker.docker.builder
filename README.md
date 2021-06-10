@@ -76,6 +76,35 @@ padrão e procurando pelo texto "Listening for route connections on 0.0.0.0:6222
 
 ### Container from github project
 
+English: Creates a container based on a golang project contained in a remote git repository.
+
+If you don't want to make the Dockerfile, use the `container.MakeDefaultDockerfileForMe()` command if the `go.mod` 
+file is present and the `main.go` file is in the root directory.
+
+If the repository is private, use the `container.SetPrivateRepositoryAutoConfig()` command to automatically copy 
+the credentials contained in `~/.ssh` and the `~/.gitconfig` file into the image.
+
+If the repository is private, use the `container.SetPrivateRepositoryAutoConfig()` command to automatically copy 
+the credentials contained in `~/.ssh` and the `~/.gitconfig` file into the image.
+
+Note that the image is built in two steps and credentials will be lost.
+
+If the image needs to access a private repository, use the `container.SetGitPathPrivateRepository()` function to 
+enter the repository.
+
+Português: Cria um container baseado em um projeto golang contido em um repositório git remoto.
+
+Caso você não queira fazer o Dockerfile, use o comando `container.MakeDefaultDockerfileForMe()` se o arquivo 
+`go.mod` estiver presente e o arquivo `main.go` estiver na raiz do repositório.
+
+Se o repositório for privado, use o comando `container.SetPrivateRepositoryAutoConfig()` para copiar as credenciais
+contidas em `~/.ssh/` e o arquivo `~/.gitconfig` de forma automática para dentro da imagem.
+
+Perceba que a imagem é construída em duas etapas e as credenciais serão perdidas.
+
+Se a imagem necessitar acessar um repositório privado, use a função `container.SetGitPathPrivateRepository()` para
+informar o repositório.
+
 ```golang
   var err error
   var container = ContainerBuilder{}
@@ -109,28 +138,18 @@ padrão e procurando pelo texto "Listening for route connections on 0.0.0.0:6222
   if err != nil { panic(err) }
 ```
 
-### MongoDB ephemeral
-
-```golang
-  var err error
-  var mongoDocker = &ContainerBuilder{}
-  mongoDocker.SetImageName("mongo:latest")
-  mongoDocker.SetContainerName("container_delete_mongo_after_test")
-  mongoDocker.AddPortToExpose("27017")
-  mongoDocker.SetEnvironmentVar(
-    []string{
-      "--host 0.0.0.0",
-    },
-  )
-  mongoDocker.SetWaitStringWithTimeout(`"msg":"Waiting for connections","attr":{"port":27017`, 20*time.Second)
-  err = mongoDocker.Init()
-  if err != nil { panic(err) }
-
-  err = mongoDocker.ContainerBuildFromImage()
-  if err != nil { panic(err) }
-```
-
 ### MongoDB
+
+English: Create a MongoDB container.
+
+To archive data non-ephemerally, use the `mongoDocker.AddFiileOrFolderToLinkBetweenConputerHostAndContainer()` 
+command to define where to archive the data on the host computer.
+
+Português: Cria um container MongoDB. 
+
+Para arquivar dados de forma não efêmera, use o comando 
+`mongoDocker.AddFiileOrFolderToLinkBetweenConputerHostAndContainer()` para definir onde arquivar os dados no 
+computador hospedeiro.
 
 ```golang
   var err error
@@ -150,6 +169,35 @@ padrão e procurando pelo texto "Listening for route connections on 0.0.0.0:6222
 ```
 
 ### Container from folder
+
+English: Mount a container from a folder on the host computer.
+
+If you don't want to make the Dockerfile, use the `container.MakeDefaultDockerfileForMe()` command if the `go.mod`
+file is present and the `main.go` file is in the root directory.
+
+If the repository is private, use the `container.SetPrivateRepositoryAutoConfig()` command to automatically copy
+the credentials contained in `~/.ssh` and the `~/.gitconfig` file into the image.
+
+If the repository is private, use the `container.SetPrivateRepositoryAutoConfig()` command to automatically copy
+the credentials contained in `~/.ssh` and the `~/.gitconfig` file into the image.
+
+Note that the image is built in two steps and credentials will be lost.
+
+If the image needs to access a private repository, use the `container.SetGitPathPrivateRepository()` function to
+enter the repository.
+
+Português: Monta um container a partir de uma pasta no computador hospedeiro.
+
+Caso você não queira fazer o Dockerfile, use o comando `container.MakeDefaultDockerfileForMe()` se o arquivo
+`go.mod` estiver presente e o arquivo `main.go` estiver na raiz do repositório.
+
+Se o repositório for privado, use o comando `container.SetPrivateRepositoryAutoConfig()` para copiar as credenciais
+contidas em `~/.ssh/` e o arquivo `~/.gitconfig` de forma automática para dentro da imagem.
+
+Perceba que a imagem é construída em duas etapas e as credenciais serão perdidas.
+
+Se a imagem necessitar acessar um repositório privado, use a função `container.SetGitPathPrivateRepository()` para
+informar o repositório.
 
 ```golang
   var err error
