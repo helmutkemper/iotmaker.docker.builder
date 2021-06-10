@@ -16,7 +16,7 @@ Este projeto cria uma API Golang simples para criar e manipular o docker a parti
 
 ## Examples / Exemplos
 
-### Create a docker network / Cria uma rede docker
+# Create a docker network / Cria uma rede docker
 
 English: Creates a docker network with subnet 10.0.0.0/16 and gateway 10.0.0.1
 
@@ -37,7 +37,7 @@ English: use the `container.SetNetworkDocker(&netDocker)` command to link the co
 
 Português: use o comando `container.SetNetworkDocker(&netDocker)` para ligar um container com o docker
 
-### Container nats
+# Container nats
 
 English: Creates a nats container, from the https://nats.io/ project and expects it to be ready, monitoring standard 
 output and looking for the text "Listening for route connections on 0.0.0.0:6222"
@@ -74,7 +74,7 @@ padrão e procurando pelo texto "Listening for route connections on 0.0.0.0:6222
   if err != nil { panic(err) }
 ```
 
-### Container from github project
+# Container from github project
 
 English: Creates a container based on a golang project contained in a remote git repository.
 
@@ -138,7 +138,7 @@ informar o repositório.
   if err != nil { panic(err) }
 ```
 
-### MongoDB
+# MongoDB
 
 English: Create a MongoDB container.
 
@@ -168,7 +168,7 @@ computador hospedeiro.
   err = mongoDocker.ContainerBuildFromImage()
 ```
 
-### Container from folder
+# Container from folder
 
 English: Mount a container from a folder on the host computer.
 
