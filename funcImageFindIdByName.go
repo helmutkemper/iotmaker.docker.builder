@@ -1,12 +1,14 @@
 package iotmakerdockerbuilder
 
 import (
-	dockerfileGolang "github.com/helmutkemper/iotmaker.docker.builder.golang.dockerfile"
+	iotmakerdocker "github.com/helmutkemper/iotmaker.docker/v1.0.1"
 )
 
 func (e *ContainerBuilder) ImageFindIdByName(name string) (id string, err error) {
-	if e.autoDockerfile == nil {
-		e.autoDockerfile = &dockerfileGolang.DockerfileGolang{}
+	e.dockerSys = iotmakerdocker.DockerSystem{}
+	err = e.dockerSys.Init()
+	if err != nil {
+		return
 	}
 
 	return e.dockerSys.ImageFindIdByName(name)
