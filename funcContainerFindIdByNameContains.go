@@ -1,21 +1,26 @@
 package iotmakerdockerbuilder
 
 import (
-  iotmakerdocker "github.com/helmutkemper/iotmaker.docker/v1.0.1"
+	dockerfileGolang "github.com/helmutkemper/iotmaker.docker.builder.golang.dockerfile"
+	iotmakerdocker "github.com/helmutkemper/iotmaker.docker/v1.0.1"
 )
 
 func (e *ContainerBuilder) ContainerFindIdByNameContains(containsName string) (list []NameAndId, err error) {
-  list = make([]NameAndId, 0)
+	list = make([]NameAndId, 0)
 
-  var recevedLis []iotmakerdocker.NameAndId
-  recevedLis, err = e.dockerSys.ContainerFindIdByNameContains(containsName)
-  if err != nil {
-    return
-  }
+	if e.autoDockerfile == nil {
+		e.autoDockerfile = &dockerfileGolang.DockerfileGolang{}
+	}
 
-  for _, elementInList := range recevedLis {
-    list = append(list, NameAndId(elementInList))
-  }
+	var recevedLis []iotmakerdocker.NameAndId
+	recevedLis, err = e.dockerSys.ContainerFindIdByNameContains(containsName)
+	if err != nil {
+		return
+	}
 
-  return
+	for _, elementInList := range recevedLis {
+		list = append(list, NameAndId(elementInList))
+	}
+
+	return
 }
