@@ -16,7 +16,7 @@ func main() {
 			"--host 0.0.0.0",
 		},
 	)
-	err = mongoDocker.AddFiileOrFolderToLinkBetweenConputerHostAndContainer("./test/data", "/data")
+	err = mongoDocker.AddFileOrFolderToLinkBetweenConputerHostAndContainer("./test/data", "/data")
 	if err != nil {
 		panic(err)
 	}

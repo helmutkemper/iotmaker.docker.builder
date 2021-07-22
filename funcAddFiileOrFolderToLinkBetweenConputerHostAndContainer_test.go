@@ -9,7 +9,7 @@ import (
 	"time"
 )
 
-func ExampleContainerBuilder_AddFiileOrFolderToLinkBetweenConputerHostAndContainer() {
+func ExampleContainerBuilder_AddFileOrFolderToLinkBetweenConputerHostAndContainer() {
 	var err error
 
 	GarbageCollector()
@@ -41,12 +41,12 @@ func ExampleContainerBuilder_AddFiileOrFolderToLinkBetweenConputerHostAndContain
 	)
 
 	// replace container folder /static to host folder ./test/static
-	err = container.AddFiileOrFolderToLinkBetweenConputerHostAndContainer(
+	err = container.AddFileOrFolderToLinkBetweenConputerHostAndContainer(
 		"./test/static",
 		"/static",
 	)
 	if err != nil {
-		log.Printf("container.AddFiileOrFolderToLinkBetweenConputerHostAndContainer().error: %v", err.Error())
+		log.Printf("container.AddFileOrFolderToLinkBetweenConputerHostAndContainer().error: %v", err.Error())
 		util.TraceToLog()
 		panic(err)
 	}

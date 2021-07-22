@@ -21,7 +21,7 @@ func ExampleContainerBuilder_SetGitCloneToBuild() {
 	// change and open port 3000 to 3030
 	container.AddPortToChange("3000", "3030")
 	// replace container folder /static to host folder ./test/static
-	err = container.AddFiileOrFolderToLinkBetweenConputerHostAndContainer("./test/static", "/static")
+	err = container.AddFileOrFolderToLinkBetweenConputerHostAndContainer("./test/static", "/static")
 	if err != nil {
 		panic(err)
 	}

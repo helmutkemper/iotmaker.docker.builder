@@ -123,7 +123,7 @@ informar o repositório.
   // change and open port 3000 to 3030
   container.AddPortToChange("3000", "3030")
   // replace container folder /static to host folder ./test/static
-  err = container.AddFiileOrFolderToLinkBetweenConputerHostAndContainer("./test/static", "/static")
+  err = container.AddFileOrFolderToLinkBetweenConputerHostAndContainer("./test/static", "/static")
   if err != nil { panic(err) }
     
   // inicialize container object
@@ -142,13 +142,13 @@ informar o repositório.
 
 English: Create a MongoDB container.
 
-To archive data non-ephemerally, use the `mongoDocker.AddFiileOrFolderToLinkBetweenConputerHostAndContainer()` 
+To archive data non-ephemerally, use the `mongoDocker.AddFileOrFolderToLinkBetweenConputerHostAndContainer()` 
 command to define where to archive the data on the host computer.
 
 Português: Cria um container MongoDB. 
 
 Para arquivar dados de forma não efêmera, use o comando 
-`mongoDocker.AddFiileOrFolderToLinkBetweenConputerHostAndContainer()` para definir onde arquivar os dados no 
+`mongoDocker.AddFileOrFolderToLinkBetweenConputerHostAndContainer()` para definir onde arquivar os dados no 
 computador hospedeiro.
 
 ```golang
@@ -162,7 +162,7 @@ computador hospedeiro.
       "--host 0.0.0.0",
     },
   )
-  err = mongoDocker.AddFiileOrFolderToLinkBetweenConputerHostAndContainer("./test/data", "/data")
+  err = mongoDocker.AddFileOrFolderToLinkBetweenConputerHostAndContainer("./test/data", "/data")
   mongoDocker.SetWaitStringWithTimeout(`"msg":"Waiting for connections","attr":{"port":27017`, 20*time.Second)
   err = mongoDocker.Init()
   err = mongoDocker.ContainerBuildFromImage()
@@ -215,7 +215,7 @@ informar o repositório.
   // change and open port 3000 to 3030
   container.AddPortToExpose("3000")
   // replace container folder /static to host folder ./test/static
-  err = container.AddFiileOrFolderToLinkBetweenConputerHostAndContainer("./test/static", "/static")
+  err = container.AddFileOrFolderToLinkBetweenConputerHostAndContainer("./test/static", "/static")
   if err != nil { panic(err) }
 
   // inicialize container object

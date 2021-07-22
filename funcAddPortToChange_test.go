@@ -35,9 +35,9 @@ func ExampleContainerBuilder_AddPortToChange() {
 	container.AddPortToChange("3000", "3030")
 
 	// replace container folder /static to host folder ./test/static
-	err = container.AddFiileOrFolderToLinkBetweenConputerHostAndContainer("./test/static", "/static")
+	err = container.AddFileOrFolderToLinkBetweenConputerHostAndContainer("./test/static", "/static")
 	if err != nil {
-		log.Printf("container.AddFiileOrFolderToLinkBetweenConputerHostAndContainer().error: %v", err.Error())
+		log.Printf("container.AddFileOrFolderToLinkBetweenConputerHostAndContainer().error: %v", err.Error())
 		util.TraceToLog()
 		panic(err)
 	}

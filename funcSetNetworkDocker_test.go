@@ -38,7 +38,7 @@ func ExampleContainerBuilder_SetNetworkDocker() {
 		},
 	)
 	// set a MongoDB data dir to ./test/data
-	err = mongoDocker.AddFiileOrFolderToLinkBetweenConputerHostAndContainer("./test/data", "/data")
+	err = mongoDocker.AddFileOrFolderToLinkBetweenConputerHostAndContainer("./test/data", "/data")
 	if err != nil {
 		panic(err)
 	}

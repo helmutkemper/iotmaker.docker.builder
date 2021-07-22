@@ -6,7 +6,7 @@ import (
 	"path/filepath"
 )
 
-// AddFiileOrFolderToLinkBetweenConputerHostAndContainer
+// AddFileOrFolderToLinkBetweenConputerHostAndContainer
 //
 // English: Links a file or folder between the computer host and the container.
 //
@@ -17,7 +17,7 @@ import (
 //
 //   computerHostPath:    Caminho do arquivo ou pasta no computador hospedeiro
 //   insideContainerPath: Caminho dentro do container
-func (e *ContainerBuilder) AddFiileOrFolderToLinkBetweenConputerHostAndContainer(computerHostPath, insideContainerPath string) (err error) {
+func (e *ContainerBuilder) AddFileOrFolderToLinkBetweenConputerHostAndContainer(computerHostPath, insideContainerPath string) (err error) {
 
 	if e.volumes == nil {
 		e.volumes = make([]mount.Mount, 0)

@@ -68,9 +68,9 @@ func ExampleOverloading_Init() {
 	//serverContainer.AddPortToChange("3000", "3030")
 	serverContainer.AddPortToExpose("3000")
 	// replace container folder /static to host folder ./test/static
-	err = serverContainer.AddFiileOrFolderToLinkBetweenConputerHostAndContainer("./test/static", "/static")
+	err = serverContainer.AddFileOrFolderToLinkBetweenConputerHostAndContainer("./test/static", "/static")
 	if err != nil {
-		log.Printf("container.AddFiileOrFolderToLinkBetweenConputerHostAndContainer().error: %v", err.Error())
+		log.Printf("container.AddFileOrFolderToLinkBetweenConputerHostAndContainer().error: %v", err.Error())
 		util.TraceToLog()
 		panic(err)
 	}
