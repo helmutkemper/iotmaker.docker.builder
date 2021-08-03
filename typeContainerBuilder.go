@@ -16,32 +16,33 @@ import (
 //
 // Português: Gerenciador de containers e imagens docker
 type ContainerBuilder struct {
-	network            isolatedNetwork.ContainerBuilderNetworkInterface
-	dockerSys          iotmakerdocker.DockerSystem
-	changePointer      chan iotmakerdocker.ContainerPullStatusSendToChannel
-	onContainerReady   *chan bool
-	onContainerInspect *chan bool
-	imageName          string
-	imageID            string
-	containerName      string
-	buildPath          string
-	environmentVar     []string
-	changePorts        []dockerfileGolang.ChangePort
-	openPorts          []string
-	openAllPorts       bool
-	waitString         string
-	waitStringTimeout  time.Duration
-	containerID        string
-	ticker             *time.Ticker
-	inspect            iotmakerdocker.ContainerInspect
-	logs               string
-	inspectInterval    time.Duration
-	gitData            gitData
-	volumes            []mount.Mount
-	IPV4Address        string
-	autoDockerfile     DockerfileAuto
-	containerConfig    container.Config
-	restartPolicy      iotmakerdocker.RestartPolicy
+	network                 isolatedNetwork.ContainerBuilderNetworkInterface
+	dockerSys               iotmakerdocker.DockerSystem
+	changePointer           chan iotmakerdocker.ContainerPullStatusSendToChannel
+	onContainerReady        *chan bool
+	onContainerInspect      *chan bool
+	imageName               string
+	imageID                 string
+	containerName           string
+	buildPath               string
+	environmentVar          []string
+	changePorts             []dockerfileGolang.ChangePort
+	openPorts               []string
+	exposePortsOnDockerfile []string
+	openAllPorts            bool
+	waitString              string
+	waitStringTimeout       time.Duration
+	containerID             string
+	ticker                  *time.Ticker
+	inspect                 iotmakerdocker.ContainerInspect
+	logs                    string
+	inspectInterval         time.Duration
+	gitData                 gitData
+	volumes                 []mount.Mount
+	IPV4Address             string
+	autoDockerfile          DockerfileAuto
+	containerConfig         container.Config
+	restartPolicy           iotmakerdocker.RestartPolicy
 
 	makeDefaultDockerfile bool
 	printBuildOutput      bool
@@ -57,9 +58,3 @@ type ContainerBuilder struct {
 
 	buildOptions types.ImageBuildOptions
 }
-
-
-
-
-
-

@@ -71,7 +71,7 @@ func (e *ContainerBuilder) ImageBuildFromFolder() (err error) {
 			return
 		}
 
-		dockerfile, err = e.autoDockerfile.MountDefaultDockerfile(e.buildOptions.BuildArgs, e.changePorts, e.openPorts, e.volumes)
+		dockerfile, err = e.autoDockerfile.MountDefaultDockerfile(e.buildOptions.BuildArgs, e.changePorts, e.openPorts, e.exposePortsOnDockerfile, e.volumes)
 		if err != nil {
 			return
 		}
