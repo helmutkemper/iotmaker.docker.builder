@@ -11,4 +11,5 @@ require (
 	github.com/helmutkemper/iotmaker.docker.builder.network v0.0.0-20210517125645-e0b15cc3b594
 	github.com/helmutkemper/iotmaker.docker.builder.network.interface v0.0.0-20210517125728-08218ab31975
 	github.com/helmutkemper/util v0.0.0-20210420213725-d4fad0e09c93
+	go.mongodb.org/mongo-driver v1.7.1
 )

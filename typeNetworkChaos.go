@@ -67,8 +67,9 @@ func (e *NetworkChaos) Init() (err error) {
 		return
 	}
 
-	var builderIP = e.builder.GetIPV4Address()
-	var nextIP, _ = e.builder.incIpV4Address(builderIP, 1)
+	//var builderIP = e.builder.GetIPV4Address()
+	var builderIP, _ = e.builder.incIpV4Address(e.builder.GetIPV4Address(), 0)
+	var nextIP = "0.0.0.0"
 
 	e.imageName = "overload."
 
@@ -88,18 +89,26 @@ func (e *NetworkChaos) Init() (err error) {
 
 	}
 
+	min := strconv.Itoa(int(10 * time.Millisecond))
+	max := strconv.Itoa(int(1000 * time.Millisecond))
+
 	e.imageName += ":latest"
 
 	e.overload = &ContainerBuilder{}
 	e.overload.network = e.builder.network
 	e.overload.SetImageName(e.imageName)
-	e.overload.MakeDefaultDockerfileForMe()
+	//e.overload.MakeDefaultDockerfileForMe()
 	log.Printf("container name: %v", e.builder.containerName+"_overload")
 	e.overload.SetContainerName(e.builder.containerName + "_overload")
-	e.overload.SetGitCloneToBuild("https://github.com/helmutkemper/iotmaker.network.util.overload.image.git")
-	e.overload.SetWaitStringWithTimeout("overloading...", 10*time.Second)
+	e.overload.SetBuildFolderPath("./apagar")
+	//e.overload.SetGitCloneToBuild("https://github.com/helmutkemper/iotmaker.network.util.overload.image.git")
+	e.overload.SetWaitStringWithTimeout("overloading...", 30*time.Second)
+	e.overload.AddPortToDockerfileExpose("27016")
+	e.overload.AddPortToDockerfileExpose("27017")
 	e.overload.AddPortToExpose("27016")
-	e.overload.AddPortToExpose("8080")
+	//e.overload.AddPortToExpose("27017")
+	//e.overload.AddPortToExpose("27017")
+	//e.overload.AddPortToExpose("8080")
 	//e.overload.AddPortToExpose("8080")
 	if e.invert == false {
 		log.Printf(`1.IN_ADDRESS=` + nextIP + `:` + strconv.FormatInt(int64(e.outputPort), 10))
@@ -108,8 +117,8 @@ func (e *NetworkChaos) Init() (err error) {
 			[]string{
 				`IN_ADDRESS=` + nextIP + `:` + strconv.FormatInt(int64(e.outputPort), 10),
 				`OUT_ADDRESS=` + builderIP + `:` + strconv.FormatInt(int64(e.listenPort), 10),
-				`MIN_DELAY=10`,
-				`MAX_DELAY=11`,
+				`MIN_DELAY=` + min,
+				`MAX_DELAY=` + max,
 			},
 		)
 
@@ -120,8 +129,8 @@ func (e *NetworkChaos) Init() (err error) {
 			[]string{
 				`OUT_ADDRESS=` + nextIP + `:` + strconv.FormatInt(int64(e.outputPort), 10),
 				`IN_ADDRESS=` + builderIP + `:` + strconv.FormatInt(int64(e.listenPort), 10),
-				`MIN_DELAY=10`,
-				`MAX_DELAY=11`,
+				`MIN_DELAY=` + min,
+				`MAX_DELAY=` + max,
 			},
 		)
 	}
@@ -132,13 +141,14 @@ func (e *NetworkChaos) Init() (err error) {
 		return
 	}
 
-	if e.imageExists() == false {
-		err = e.overload.ImageBuildFromServer()
-		if err != nil {
-			util.TraceToLog()
-			return
-		}
+	//if e.imageExists() == false {
+	err = e.overload.ImageBuildFromFolder()
+
+	if err != nil {
+		util.TraceToLog()
+		return
 	}
+	//}
 
 	err = e.overload.ContainerBuildFromImage()
 	if err != nil {
