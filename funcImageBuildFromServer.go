@@ -116,9 +116,11 @@ func (e *ContainerBuilder) ImageBuildFromServer() (err error) {
 		}
 
 		var cacheID string
-		cacheID, err = e.dockerSys.ImageFindIdByName("cache:latest")
-		if err != nil {
-			return
+		if e.enableCache == true {
+			cacheID, err = e.dockerSys.ImageFindIdByName("cache:latest")
+			if err != nil {
+				return
+			}
 		}
 
 		dockerfile, err = e.autoDockerfile.MountDefaultDockerfile(e.buildOptions.BuildArgs, e.changePorts, e.openPorts, e.exposePortsOnDockerfile, e.volumes, cacheID != "")
