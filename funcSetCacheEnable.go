@@ -12,10 +12,10 @@ package iotmakerdockerbuilder
 //
 // Example:
 //
-// Folder: cache
-// File: Dockerfile-iotmaker
-// Need: Image with nats.io drive installed
-// Content:
+//    Folder: cache
+//    File: Dockerfile-iotmaker
+//    Need: Image with nats.io drive installed
+//    Content:
 //
 //    FROM golang:1.16-alpine as builder
 //    RUN mkdir -p /root/.ssh/ && \
@@ -69,10 +69,10 @@ package iotmakerdockerbuilder
 //
 // Exemplo:
 //
-// Pasta: cache
-// Arquivo: Dockerfile-iotmaker
-// Necessidade: Imagem com o drive do nats.io instalada
-// Conteúdo:
+//    Pasta: cache
+//    Arquivo: Dockerfile-iotmaker
+//    Necessidade: Imagem com o drive do nats.io instalada
+//    Conteúdo:
 //
 //    FROM golang:1.16-alpine as builder
 //    RUN mkdir -p /root/.ssh/ && \
