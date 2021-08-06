@@ -16,6 +16,7 @@ import (
 //
 // Português: Gerenciador de containers e imagens docker
 type ContainerBuilder struct {
+	enableCache             bool
 	network                 isolatedNetwork.ContainerBuilderNetworkInterface
 	dockerSys               iotmakerdocker.DockerSystem
 	changePointer           chan iotmakerdocker.ContainerPullStatusSendToChannel
