@@ -9,11 +9,37 @@ import (
 	"strings"
 )
 
-// ContainerBuildFromImage
+// ContainerBuildAndStartFromImage
 //
-// English: transforms an image downloaded by ImagePull() or created by ImageBuildFromFolder() into a container
+// English: transforms an image downloaded by ImagePull() or created by ImageBuildFromFolder() into a container and start it
 //
-// Português: transforma uma imagem baixada por ImagePull() ou criada por ImageBuildFromFolder() em container
+// Português: transforma uma imagem baixada por ImagePull() ou criada por ImageBuildFromFolder() em container e o inicializa
+func (e *ContainerBuilder) ContainerBuildAndStartFromImage() (err error) {
+	err = e.dockerSys.ContainerStart(e.containerID)
+	if err != nil {
+		return
+	}
+
+	if e.waitString != "" && e.waitStringTimeout == 0 {
+		_, err = e.dockerSys.ContainerLogsWaitText(e.containerID, e.waitString, log.Writer())
+		if err != nil {
+			return
+		}
+	} else if e.waitString != "" {
+		_, err = e.dockerSys.ContainerLogsWaitTextWithTimeout(e.containerID, e.waitString, e.waitStringTimeout, log.Writer())
+		if err != nil {
+			return
+		}
+	}
+
+	if e.network == nil {
+		e.IPV4Address, err = e.FindCurrentIPV4Address()
+	}
+
+	*e.onContainerReady <- true
+	return
+}
+
 func (e *ContainerBuilder) ContainerBuildFromImage() (err error) {
 	err = e.verifyImageName()
 	if err != nil {
@@ -151,27 +177,6 @@ func (e *ContainerBuilder) ContainerBuildFromImage() (err error) {
 		return
 	}
 
-	err = e.dockerSys.ContainerStart(e.containerID)
-	if err != nil {
-		return
-	}
-
-	if e.waitString != "" && e.waitStringTimeout == 0 {
-		_, err = e.dockerSys.ContainerLogsWaitText(e.containerID, e.waitString, log.Writer())
-		if err != nil {
-			return
-		}
-	} else if e.waitString != "" {
-		_, err = e.dockerSys.ContainerLogsWaitTextWithTimeout(e.containerID, e.waitString, e.waitStringTimeout, log.Writer())
-		if err != nil {
-			return
-		}
-	}
-
-	if e.network == nil {
-		e.IPV4Address, err = e.FindCurrentIPV4Address()
-	}
-
-	*e.onContainerReady <- true
+	*e.onContainerReady <- false
 	return
 }

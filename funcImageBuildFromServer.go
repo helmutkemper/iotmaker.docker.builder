@@ -180,10 +180,10 @@ func (e *ContainerBuilder) ImageBuildFromServer() (err error) {
 	}
 
 	// Construir uma imagem de múltiplas etapas deixa imagens grandes e sem serventia, ocupando espaço no HD.
-	err = e.dockerSys.ImageGarbageCollector()
-	if err != nil {
-		return
-	}
+	_ = e.dockerSys.ImageGarbageCollector()
+	//if err != nil {
+	//	return
+	//}
 
 	return
 }
