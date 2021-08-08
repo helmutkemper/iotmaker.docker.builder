@@ -11,11 +11,36 @@ import (
 )
 
 func (e *ContainerBuilder) ContainerStartAfterBuild() (err error) {
-	err = e.ContainerBuildAndStartFromImage()
+	err = e.dockerSys.ContainerStart(e.containerID)
 	if err != nil {
 		util.TraceToLog()
 		return
 	}
+
+	if e.waitString != "" && e.waitStringTimeout == 0 {
+		_, err = e.dockerSys.ContainerLogsWaitText(e.containerID, e.waitString, log.Writer())
+		if err != nil {
+			util.TraceToLog()
+			return
+		}
+
+	} else if e.waitString != "" {
+		_, err = e.dockerSys.ContainerLogsWaitTextWithTimeout(e.containerID, e.waitString, e.waitStringTimeout, log.Writer())
+		if err != nil {
+			util.TraceToLog()
+			return
+		}
+	}
+
+	if e.network == nil {
+		e.IPV4Address, err = e.FindCurrentIPV4Address()
+		if err != nil {
+			util.TraceToLog()
+			return
+		}
+	}
+
+	*e.onContainerReady <- true
 	return
 }
 
