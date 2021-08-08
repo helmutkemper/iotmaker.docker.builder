@@ -15,6 +15,11 @@ import (
 //
 // Português: transforma uma imagem baixada por ImagePull() ou criada por ImageBuildFromFolder() em container e o inicializa
 func (e *ContainerBuilder) ContainerBuildAndStartFromImage() (err error) {
+	err = e.ContainerBuildFromImage()
+	if err != nil {
+		return
+	}
+
 	err = e.dockerSys.ContainerStart(e.containerID)
 	if err != nil {
 		return
