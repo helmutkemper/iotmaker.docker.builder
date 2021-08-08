@@ -3,6 +3,7 @@ package iotmakerdockerbuilder
 import (
 	"errors"
 	iotmakerdocker "github.com/helmutkemper/iotmaker.docker/v1.0.1"
+	"github.com/helmutkemper/util"
 	"io/fs"
 	"io/ioutil"
 	"log"
@@ -35,16 +36,19 @@ import (
 func (e *ContainerBuilder) ImageBuildFromFolder() (err error) {
 	err = e.verifyImageName()
 	if err != nil {
+		util.TraceToLog()
 		return
 	}
 
 	if e.buildPath == "" {
+		util.TraceToLog()
 		err = errors.New("set build folder path first")
 		return
 	}
 
 	e.buildPath, err = filepath.Abs(e.buildPath)
 	if err != nil {
+		util.TraceToLog()
 		return
 	}
 
@@ -54,6 +58,7 @@ func (e *ContainerBuilder) ImageBuildFromFolder() (err error) {
 
 		fileList, err = ioutil.ReadDir(e.buildPath)
 		if err != nil {
+			util.TraceToLog()
 			return
 		}
 
@@ -67,6 +72,7 @@ func (e *ContainerBuilder) ImageBuildFromFolder() (err error) {
 			}
 		}
 		if pass == false {
+			util.TraceToLog()
 			err = errors.New("go.mod file not found")
 			return
 		}
@@ -75,18 +81,21 @@ func (e *ContainerBuilder) ImageBuildFromFolder() (err error) {
 		if e.enableCache == true {
 			cacheID, err = e.dockerSys.ImageFindIdByName("cache:latest")
 			if err != nil {
+				util.TraceToLog()
 				return
 			}
 		}
 
 		dockerfile, err = e.autoDockerfile.MountDefaultDockerfile(e.buildOptions.BuildArgs, e.changePorts, e.openPorts, e.exposePortsOnDockerfile, e.volumes, cacheID != "")
 		if err != nil {
+			util.TraceToLog()
 			return
 		}
 
 		var dockerfilePath = filepath.Join(e.buildPath, "Dockerfile-iotmaker")
 		err = ioutil.WriteFile(dockerfilePath, []byte(dockerfile), os.ModePerm)
 		if err != nil {
+			util.TraceToLog()
 			return
 		}
 	}
@@ -126,11 +135,13 @@ func (e *ContainerBuilder) ImageBuildFromFolder() (err error) {
 		&e.changePointer,
 	)
 	if err != nil {
+		util.TraceToLog()
 		err = errors.New(err.Error() + "\nfolder path: " + e.buildPath)
 		return
 	}
 
 	if e.imageID == "" {
+		util.TraceToLog()
 		err = errors.New("image ID was not generated")
 		return
 	}

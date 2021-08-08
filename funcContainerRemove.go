@@ -1,5 +1,9 @@
 package iotmakerdockerbuilder
 
+import (
+	"github.com/helmutkemper/util"
+)
+
 // ContainerRemove
 //
 // English: stop and remove the container
@@ -13,10 +17,14 @@ func (e *ContainerBuilder) ContainerRemove(removeVolumes bool) (err error) {
 	if e.containerID == "" {
 		err = e.GetIdByContainerName()
 		if err != nil {
+			util.TraceToLog()
 			return
 		}
 	}
 
 	err = e.dockerSys.ContainerStopAndRemove(e.containerID, removeVolumes, false, false)
+	if err != nil {
+		util.TraceToLog()
+	}
 	return
 }

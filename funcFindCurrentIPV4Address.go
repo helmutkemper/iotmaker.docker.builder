@@ -1,5 +1,9 @@
 package iotmakerdockerbuilder
 
+import (
+	"github.com/helmutkemper/util"
+)
+
 // FindCurrentIPV4Address
 //
 // English: Inspects the docker's network and returns the current IP of the container
@@ -10,11 +14,18 @@ func (e *ContainerBuilder) FindCurrentIPV4Address() (IP string, err error) {
 	if e.network == nil {
 		id, err = e.dockerSys.NetworkFindIdByName("bridge")
 		if err != nil {
+			util.TraceToLog()
 			return
 		}
 		IP, err = e.findCurrentIPV4AddressSupport(id)
+		if err != nil {
+			util.TraceToLog()
+		}
 	} else {
 		IP, err = e.findCurrentIPV4AddressSupport(e.network.GetNetworkID())
+		if err != nil {
+			util.TraceToLog()
+		}
 	}
 
 	return

@@ -1,6 +1,7 @@
 package iotmakerdockerbuilder
 
 import (
+	"github.com/helmutkemper/util"
 	"io/ioutil"
 	"os/user"
 	"path/filepath"
@@ -20,12 +21,14 @@ func (e *ContainerBuilder) SetPrivateRepositoryAutoConfig() (err error) {
 
 	userData, err = user.Current()
 	if err != nil {
+		util.TraceToLog()
 		return
 	}
 
 	var filePathToRead = filepath.Join(userData.HomeDir, ".ssh", "id_rsa")
 	fileData, err = ioutil.ReadFile(filePathToRead)
 	if err != nil {
+		util.TraceToLog()
 		return
 	}
 
@@ -35,6 +38,7 @@ func (e *ContainerBuilder) SetPrivateRepositoryAutoConfig() (err error) {
 	filePathToRead = filepath.Join(userData.HomeDir, ".ssh", "known_hosts")
 	fileData, err = ioutil.ReadFile(filePathToRead)
 	if err != nil {
+		util.TraceToLog()
 		return
 	}
 
@@ -44,6 +48,7 @@ func (e *ContainerBuilder) SetPrivateRepositoryAutoConfig() (err error) {
 	filePathToRead = filepath.Join(userData.HomeDir, ".gitconfig")
 	fileData, err = ioutil.ReadFile(filePathToRead)
 	if err != nil {
+		util.TraceToLog()
 		return
 	}
 

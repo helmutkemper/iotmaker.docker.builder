@@ -3,6 +3,7 @@ package iotmakerdockerbuilder
 import (
 	"errors"
 	"github.com/docker/docker/api/types"
+	"github.com/helmutkemper/util"
 	"strings"
 )
 
@@ -19,7 +20,8 @@ func (e *ContainerBuilder) findCurrentIPV4AddressSupport(networkID string) (IP s
 	var res types.NetworkResource
 	res, err = e.dockerSys.NetworkInspect(networkID)
 	if err != nil {
-		panic(err)
+		util.TraceToLog()
+		return
 	}
 
 	var pass = false
@@ -33,6 +35,7 @@ func (e *ContainerBuilder) findCurrentIPV4AddressSupport(networkID string) (IP s
 	}
 
 	if pass == false {
+		util.TraceToLog()
 		err = errors.New("container not found on bridge network")
 		return
 	}

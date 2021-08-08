@@ -2,6 +2,7 @@ package iotmakerdockerbuilder
 
 import (
 	iotmakerdocker "github.com/helmutkemper/iotmaker.docker/v1.0.1"
+	"github.com/helmutkemper/util"
 	"log"
 	"strings"
 )
@@ -39,6 +40,7 @@ func (e *ContainerBuilder) ImagePull() (err error) {
 
 	e.imageID, e.imageName, err = e.dockerSys.ImagePull(e.imageName, &e.changePointer)
 	if err != nil {
+		util.TraceToLog()
 		return
 	}
 

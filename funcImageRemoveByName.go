@@ -1,5 +1,9 @@
 package iotmakerdockerbuilder
 
+import (
+	"github.com/helmutkemper/util"
+)
+
 // ImageRemoveByName
 //
 // English: remove the image if there are no containers using the image (remove all containers before use, including
@@ -14,6 +18,7 @@ package iotmakerdockerbuilder
 func (e *ContainerBuilder) ImageRemoveByName(name string) (err error) {
 	err = e.dockerSys.ImageRemoveByName(name, false, false)
 	if err != nil {
+		util.TraceToLog()
 		return
 	}
 

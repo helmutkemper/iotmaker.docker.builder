@@ -3,6 +3,7 @@ package iotmakerdockerbuilder
 import (
 	dockerfileGolang "github.com/helmutkemper/iotmaker.docker.builder.golang.dockerfile"
 	iotmakerdocker "github.com/helmutkemper/iotmaker.docker/v1.0.1"
+	"github.com/helmutkemper/util"
 	"time"
 )
 
@@ -34,6 +35,7 @@ func (e *ContainerBuilder) Init() (err error) {
 	e.dockerSys = iotmakerdocker.DockerSystem{}
 	err = e.dockerSys.Init()
 	if err != nil {
+		util.TraceToLog()
 		return
 	}
 

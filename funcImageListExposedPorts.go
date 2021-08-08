@@ -2,6 +2,7 @@ package iotmakerdockerbuilder
 
 import (
 	"github.com/docker/go-connections/nat"
+	"github.com/helmutkemper/util"
 )
 
 // ImageListExposedPorts
@@ -20,5 +21,8 @@ import (
 func (e *ContainerBuilder) ImageListExposedPorts() (portList []nat.Port, err error) {
 
 	portList, err = e.dockerSys.ImageListExposedPortsByName(e.imageName)
+	if err != nil {
+		util.TraceToLog()
+	}
 	return
 }

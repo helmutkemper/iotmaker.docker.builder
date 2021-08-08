@@ -2,6 +2,7 @@ package iotmakerdockerbuilder
 
 import (
 	"github.com/go-git/go-git/v5/plumbing/transport/ssh"
+	"github.com/helmutkemper/util"
 	"os"
 )
 
@@ -14,6 +15,7 @@ func (e *ContainerBuilder) gitMakePublicSshKey() (publicKeys *ssh.PublicKeys, er
 	if e.gitData.sshPrivateKeyPath != "" {
 		_, err = os.Stat(e.gitData.sshPrivateKeyPath)
 		if err != nil {
+			util.TraceToLog()
 			return
 		}
 		publicKeys, err = ssh.NewPublicKeysFromFile("git", e.gitData.sshPrivateKeyPath, e.gitData.password)
@@ -22,6 +24,7 @@ func (e *ContainerBuilder) gitMakePublicSshKey() (publicKeys *ssh.PublicKeys, er
 	}
 
 	if err != nil {
+		util.TraceToLog()
 		return
 	}
 

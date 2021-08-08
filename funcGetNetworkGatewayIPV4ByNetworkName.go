@@ -3,6 +3,7 @@ package iotmakerdockerbuilder
 import (
 	"errors"
 	iotmakerdocker "github.com/helmutkemper/iotmaker.docker/v1.0.1"
+	"github.com/helmutkemper/util"
 )
 
 // GetNetworkGatewayIPV4ByNetworkName
@@ -21,11 +22,13 @@ func (e *ContainerBuilder) GetNetworkGatewayIPV4ByNetworkName(networkName string
 
 	inspect, err = e.ContainerInspect()
 	if err != nil {
+		util.TraceToLog()
 		return
 	}
 
 	_, found = inspect.Network.Networks[networkName]
 	if found == false {
+		util.TraceToLog()
 		err = errors.New("network name not found")
 		return
 	}

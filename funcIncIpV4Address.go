@@ -3,6 +3,7 @@ package iotmakerdockerbuilder
 import (
 	"errors"
 	"fmt"
+	"github.com/helmutkemper/util"
 	"strconv"
 	"strings"
 )
@@ -37,21 +38,25 @@ func (e *ContainerBuilder) incIpV4Address(ip string, inc int64) (next string, er
 	var digitA, digitB, digitC, digitD, overflow int64
 	digitA, err = strconv.ParseInt(digitList[0], 10, 64)
 	if err != nil {
+		util.TraceToLog()
 		return
 	}
 
 	digitB, err = strconv.ParseInt(digitList[1], 10, 64)
 	if err != nil {
+		util.TraceToLog()
 		return
 	}
 
 	digitC, err = strconv.ParseInt(digitList[2], 10, 64)
 	if err != nil {
+		util.TraceToLog()
 		return
 	}
 
 	digitD, err = strconv.ParseInt(digitList[3], 10, 64)
 	if err != nil {
+		util.TraceToLog()
 		return
 	}
 
@@ -88,6 +93,7 @@ func (e *ContainerBuilder) incIpV4Address(ip string, inc int64) (next string, er
 	}
 
 	if overflow != 0 {
+		util.TraceToLog()
 		err = errors.New("ip overflow")
 		return
 	}

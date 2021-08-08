@@ -3,6 +3,7 @@ package iotmakerdockerbuilder
 import (
 	"github.com/docker/docker/api/types/mount"
 	iotmakerdocker "github.com/helmutkemper/iotmaker.docker/v1.0.1"
+	"github.com/helmutkemper/util"
 	"path/filepath"
 )
 
@@ -25,6 +26,7 @@ func (e *ContainerBuilder) AddFileOrFolderToLinkBetweenConputerHostAndContainer(
 
 	computerHostPath, err = filepath.Abs(computerHostPath)
 	if err != nil {
+		util.TraceToLog()
 		return
 	}
 

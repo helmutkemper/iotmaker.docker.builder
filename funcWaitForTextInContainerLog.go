@@ -1,6 +1,7 @@
 package iotmakerdockerbuilder
 
 import (
+	"github.com/helmutkemper/util"
 	"log"
 )
 
@@ -16,5 +17,8 @@ import (
 func (e *ContainerBuilder) WaitForTextInContainerLog(value string) (dockerLogs string, err error) {
 	var logs []byte
 	logs, err = e.dockerSys.ContainerLogsWaitText(e.containerID, value, log.Writer())
+	if err != nil {
+		util.TraceToLog()
+	}
 	return string(logs), err
 }

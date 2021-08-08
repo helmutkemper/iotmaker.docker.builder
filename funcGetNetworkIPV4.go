@@ -2,6 +2,7 @@ package iotmakerdockerbuilder
 
 import (
 	iotmakerdocker "github.com/helmutkemper/iotmaker.docker/v1.0.1"
+	"github.com/helmutkemper/util"
 )
 
 // GetNetworkIPV4
@@ -15,6 +16,7 @@ func (e *ContainerBuilder) GetNetworkIPV4() (IPV4 string) {
 
 	inspect, err = e.ContainerInspect()
 	if err != nil {
+		util.TraceToLog()
 		return
 	}
 

@@ -48,6 +48,7 @@ func (e *NetworkChaos) SetPorts(listenPort, outputPort int, invert bool) {
 
 func (e *NetworkChaos) Init() (err error) {
 	if e.builder == nil {
+		util.TraceToLog()
 		err = errors.New("father container must be set")
 		return
 	}
@@ -58,11 +59,13 @@ func (e *NetworkChaos) Init() (err error) {
 	}
 
 	if e.listenPort == 0 {
+		util.TraceToLog()
 		err = errors.New("listen port must be set")
 		return
 	}
 
 	if e.outputPort == 0 {
+		util.TraceToLog()
 		err = errors.New("output port must be set")
 		return
 	}

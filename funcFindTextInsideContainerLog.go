@@ -2,6 +2,7 @@ package iotmakerdockerbuilder
 
 import (
 	"bytes"
+	"github.com/helmutkemper/util"
 )
 
 // FindTextInsideContainerLog
@@ -17,6 +18,7 @@ func (e *ContainerBuilder) FindTextInsideContainerLog(value string) (contains bo
 	var logs []byte
 	logs, err = e.GetContainerLog()
 	if err != nil {
+		util.TraceToLog()
 		return
 	}
 

@@ -5,12 +5,17 @@ import (
 	"github.com/docker/docker/api/types/network"
 	"github.com/docker/go-connections/nat"
 	iotmakerdocker "github.com/helmutkemper/iotmaker.docker/v1.0.1"
+	"github.com/helmutkemper/util"
 	"log"
 	"strings"
 )
 
 func (e *ContainerBuilder) ContainerStartAfterBuild() (err error) {
 	err = e.ContainerBuildAndStartFromImage()
+	if err != nil {
+		util.TraceToLog()
+		return
+	}
 	return
 }
 
@@ -22,28 +27,37 @@ func (e *ContainerBuilder) ContainerStartAfterBuild() (err error) {
 func (e *ContainerBuilder) ContainerBuildAndStartFromImage() (err error) {
 	err = e.ContainerBuildFromImage()
 	if err != nil {
+		util.TraceToLog()
 		return
 	}
 
 	err = e.dockerSys.ContainerStart(e.containerID)
 	if err != nil {
+		util.TraceToLog()
 		return
 	}
 
 	if e.waitString != "" && e.waitStringTimeout == 0 {
 		_, err = e.dockerSys.ContainerLogsWaitText(e.containerID, e.waitString, log.Writer())
 		if err != nil {
+			util.TraceToLog()
 			return
 		}
+
 	} else if e.waitString != "" {
 		_, err = e.dockerSys.ContainerLogsWaitTextWithTimeout(e.containerID, e.waitString, e.waitStringTimeout, log.Writer())
 		if err != nil {
+			util.TraceToLog()
 			return
 		}
 	}
 
 	if e.network == nil {
 		e.IPV4Address, err = e.FindCurrentIPV4Address()
+		if err != nil {
+			util.TraceToLog()
+			return
+		}
 	}
 
 	*e.onContainerReady <- true
@@ -53,11 +67,13 @@ func (e *ContainerBuilder) ContainerBuildAndStartFromImage() (err error) {
 func (e *ContainerBuilder) ContainerBuildFromImage() (err error) {
 	err = e.verifyImageName()
 	if err != nil {
+		util.TraceToLog()
 		return
 	}
 
 	_, err = e.dockerSys.ImageFindIdByName(e.imageName)
 	if err != nil {
+		util.TraceToLog()
 		return
 	}
 
@@ -65,6 +81,7 @@ func (e *ContainerBuilder) ContainerBuildFromImage() (err error) {
 	if e.network != nil {
 		e.IPV4Address, netConfig, err = e.network.GetConfiguration()
 		if err != nil {
+			util.TraceToLog()
 			return
 		}
 	}
@@ -75,6 +92,7 @@ func (e *ContainerBuilder) ContainerBuildFromImage() (err error) {
 	originalImagePortlist, err = e.dockerSys.ImageListExposedPortsByName(e.imageName)
 
 	if err != nil {
+		util.TraceToLog()
 		return
 	}
 
@@ -102,11 +120,13 @@ func (e *ContainerBuilder) ContainerBuildFromImage() (err error) {
 
 			if pass == false {
 				err = errors.New("port " + portToOpen + " not found in image port list. port list: " + originalImagePortlistAsString)
+				util.TraceToLog()
 				return
 			}
 
 			port, err = nat.NewPort("tcp", portToOpen)
 			if err != nil {
+				util.TraceToLog()
 				return
 			}
 
@@ -119,6 +139,7 @@ func (e *ContainerBuilder) ContainerBuildFromImage() (err error) {
 		for _, newPortLinkMap := range e.changePorts {
 			imagePort, err = nat.NewPort("tcp", newPortLinkMap.OldPort)
 			if err != nil {
+				util.TraceToLog()
 				return
 			}
 
@@ -132,11 +153,13 @@ func (e *ContainerBuilder) ContainerBuildFromImage() (err error) {
 
 			if pass == false {
 				err = errors.New("port " + newPortLinkMap.OldPort + " not found in image port list. port list: " + originalImagePortlistAsString)
+				util.TraceToLog()
 				return
 			}
 
 			newPort, err = nat.NewPort("tcp", newPortLinkMap.NewPort)
 			if err != nil {
+				util.TraceToLog()
 				return
 			}
 			portMap[imagePort] = []nat.PortBinding{{HostPort: newPort.Port()}}
@@ -184,6 +207,7 @@ func (e *ContainerBuilder) ContainerBuildFromImage() (err error) {
 		netConfig,
 	)
 	if err != nil {
+		util.TraceToLog()
 		return
 	}
 

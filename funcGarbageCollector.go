@@ -22,13 +22,13 @@ func GarbageCollector() {
 	err = garbageCollector.Init()
 	if err != nil {
 		util.TraceToLog()
-		panic(err)
+		return
 	}
 
 	// set the term "delete" to garbage collector
 	err = garbageCollector.RemoveAllByNameContains("delete")
 	if err != nil {
 		util.TraceToLog()
-		panic(err)
+		return
 	}
 }

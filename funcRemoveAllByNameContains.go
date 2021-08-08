@@ -1,5 +1,9 @@
 package iotmakerdockerbuilder
 
+import (
+	"github.com/helmutkemper/util"
+)
+
 // RemoveAllByNameContains
 //
 // English: searches for networks, volumes, containers and images that contain the term defined in "value" in the
@@ -10,5 +14,8 @@ package iotmakerdockerbuilder
 func (e *ContainerBuilder) RemoveAllByNameContains(value string) (err error) {
 	e.containerID = ""
 	err = e.dockerSys.RemoveAllByNameContains(value)
+	if err != nil {
+		util.TraceToLog()
+	}
 	return
 }

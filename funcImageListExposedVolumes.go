@@ -1,5 +1,9 @@
 package iotmakerdockerbuilder
 
+import (
+	"github.com/helmutkemper/util"
+)
+
 // ImageListExposedVolumes
 //
 // English: Lists all volumes defined in the image.
@@ -14,5 +18,8 @@ package iotmakerdockerbuilder
 func (e *ContainerBuilder) ImageListExposedVolumes() (list []string, err error) {
 
 	list, err = e.dockerSys.ImageListExposedVolumes(e.imageID)
+	if err != nil {
+		util.TraceToLog()
+	}
 	return
 }

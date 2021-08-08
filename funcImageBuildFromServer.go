@@ -6,6 +6,7 @@ import (
 	"github.com/go-git/go-git/v5/plumbing/transport/http"
 	"github.com/go-git/go-git/v5/plumbing/transport/ssh"
 	iotmakerdocker "github.com/helmutkemper/iotmaker.docker/v1.0.1"
+	"github.com/helmutkemper/util"
 	"io/fs"
 	"io/ioutil"
 	"log"
@@ -37,6 +38,7 @@ import (
 func (e *ContainerBuilder) ImageBuildFromServer() (err error) {
 	err = e.verifyImageName()
 	if err != nil {
+		util.TraceToLog()
 		return
 	}
 
@@ -46,11 +48,13 @@ func (e *ContainerBuilder) ImageBuildFromServer() (err error) {
 
 	publicKeys, err = e.gitMakePublicSshKey()
 	if err != nil {
+		util.TraceToLog()
 		return
 	}
 
 	tmpDirPath, err = ioutil.TempDir(os.TempDir(), "iotmaker.docker.builder.git.*")
 	if err != nil {
+		util.TraceToLog()
 		return
 	}
 
@@ -91,6 +95,7 @@ func (e *ContainerBuilder) ImageBuildFromServer() (err error) {
 
 	_, err = git.PlainClone(tmpDirPath, false, gitCloneConfig)
 	if err != nil {
+		util.TraceToLog()
 		return
 	}
 
@@ -100,6 +105,7 @@ func (e *ContainerBuilder) ImageBuildFromServer() (err error) {
 
 		fileList, err = ioutil.ReadDir(tmpDirPath)
 		if err != nil {
+			util.TraceToLog()
 			return
 		}
 
@@ -111,6 +117,7 @@ func (e *ContainerBuilder) ImageBuildFromServer() (err error) {
 			}
 		}
 		if pass == false {
+			util.TraceToLog()
 			err = errors.New("go.mod file not found")
 			return
 		}
@@ -119,18 +126,21 @@ func (e *ContainerBuilder) ImageBuildFromServer() (err error) {
 		if e.enableCache == true {
 			cacheID, err = e.dockerSys.ImageFindIdByName("cache:latest")
 			if err != nil {
+				util.TraceToLog()
 				return
 			}
 		}
 
 		dockerfile, err = e.autoDockerfile.MountDefaultDockerfile(e.buildOptions.BuildArgs, e.changePorts, e.openPorts, e.exposePortsOnDockerfile, e.volumes, cacheID != "")
 		if err != nil {
+			util.TraceToLog()
 			return
 		}
 
 		var dockerfilePath = filepath.Join(tmpDirPath, "Dockerfile-iotmaker")
 		err = ioutil.WriteFile(dockerfilePath, []byte(dockerfile), os.ModePerm)
 		if err != nil {
+			util.TraceToLog()
 			return
 		}
 	}
@@ -171,10 +181,12 @@ func (e *ContainerBuilder) ImageBuildFromServer() (err error) {
 	)
 
 	if err != nil {
+		util.TraceToLog()
 		return
 	}
 
 	if e.imageID == "" {
+		util.TraceToLog()
 		err = errors.New("image ID was not generated")
 		return
 	}
