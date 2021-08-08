@@ -9,6 +9,11 @@ import (
 	"strings"
 )
 
+func (e *ContainerBuilder) ContainerStartAfterBuild() (err error) {
+	err = e.ContainerBuildAndStartFromImage()
+	return
+}
+
 // ContainerBuildAndStartFromImage
 //
 // English: transforms an image downloaded by ImagePull() or created by ImageBuildFromFolder() into a container and start it
@@ -182,6 +187,5 @@ func (e *ContainerBuilder) ContainerBuildFromImage() (err error) {
 		return
 	}
 
-	*e.onContainerReady <- false
 	return
 }
