@@ -153,7 +153,7 @@ func (e *NetworkChaos) Init() (err error) {
 	}
 	//}
 
-	err = e.overload.ContainerBuildFromImage()
+	err = e.overload.ContainerBuildAndStartFromImage()
 	if err != nil {
 		util.TraceToLog()
 		return
