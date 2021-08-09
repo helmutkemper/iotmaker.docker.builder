@@ -40,7 +40,7 @@ func main() {
 		panic(err)
 	}
 
-	err = container.ContainerBuildFromImage()
+	err = container.ContainerBuildAndStartFromImage()
 	if err != nil {
 		panic(err)
 	}

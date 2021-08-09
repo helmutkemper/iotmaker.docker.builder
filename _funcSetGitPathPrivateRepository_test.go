@@ -52,7 +52,7 @@ func ExampleContainerBuilder_SetGitPathPrivateRepository() {
 	}
 
 	// build a new container from image
-	err = container.ContainerBuildFromImage()
+	err = container.ContainerBuildAndStartFromImage()
 	if err != nil {
 		panic(err)
 	}

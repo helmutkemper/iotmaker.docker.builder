@@ -56,7 +56,7 @@ func TestContainer_2(t *testing.T) {
 		t.FailNow()
 	}
 
-	err = container.ContainerBuildFromImage()
+	err = container.ContainerBuildAndStartFromImage()
 	if err != nil {
 		util.TraceToLog()
 		t.FailNow()
@@ -117,7 +117,7 @@ func TestContainer_3(t *testing.T) {
 		t.FailNow()
 	}
 
-	err = container.ContainerBuildFromImage()
+	err = container.ContainerBuildAndStartFromImage()
 	if err != nil {
 		util.TraceToLog()
 		t.FailNow()

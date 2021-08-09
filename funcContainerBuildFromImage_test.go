@@ -9,7 +9,7 @@ import (
 	"time"
 )
 
-func ExampleContainerBuilder_ContainerBuildFromImage() {
+func ExampleContainerBuilder_ContainerBuildAndStartFromImage() {
 	var err error
 
 	GarbageCollector()
@@ -58,10 +58,10 @@ func ExampleContainerBuilder_ContainerBuildFromImage() {
 	}
 
 	// container build from image delete:latest
-	err = container.ContainerBuildFromImage()
+	err = container.ContainerBuildAndStartFromImage()
 	if err != nil {
 		util.TraceToLog()
-		log.Printf("container.ContainerBuildFromImage().error: %v", err.Error())
+		log.Printf("container.ContainerBuildAndStartFromImage().error: %v", err.Error())
 		panic(err)
 	}
 

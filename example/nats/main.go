@@ -47,7 +47,7 @@ func main() {
 	// container build and start from image nats:latest
 	// waits for the text "Listening for route connections on 0.0.0.0:6222" to appear  in the standard container
 	// output to proceed
-	err = container.ContainerBuildFromImage()
+	err = container.ContainerBuildAndStartFromImage()
 	if err != nil {
 		panic(err)
 	}

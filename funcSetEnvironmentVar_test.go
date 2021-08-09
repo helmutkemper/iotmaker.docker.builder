@@ -54,7 +54,7 @@ func ExampleContainerBuilder_SetEnvironmentVar() {
 	}
 
 	// build a container
-	err = mongoDocker.ContainerBuildFromImage()
+	err = mongoDocker.ContainerBuildAndStartFromImage()
 	if err != nil {
 		panic(err)
 	}

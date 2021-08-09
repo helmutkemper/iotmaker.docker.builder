@@ -52,7 +52,7 @@ func ExampleContainerBuilder_SetNetworkDocker() {
 	}
 
 	// build a container
-	err = mongoDocker.ContainerBuildFromImage()
+	err = mongoDocker.ContainerBuildAndStartFromImage()
 	if err != nil {
 		panic(err)
 	}

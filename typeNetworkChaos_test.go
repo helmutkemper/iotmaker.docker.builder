@@ -50,7 +50,7 @@ func ExampleNetworkChaos_Init() {
 		panic(err)
 	}
 
-	err = mongoDocker.ContainerBuildFromImage()
+	err = mongoDocker.ContainerBuildAndStartFromImage()
 	if err != nil {
 		util.TraceToLog()
 		panic(err)
@@ -69,7 +69,7 @@ func ExampleNetworkChaos_Init() {
 		panic(err)
 	}
 
-	err = redis.ContainerBuildFromImage()
+	err = redis.ContainerBuildAndStartFromImage()
 	if err != nil {
 		util.TraceToLog()
 		panic(err)
