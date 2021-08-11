@@ -25,7 +25,7 @@ func main() {
 	container.SetGitCloneToBuild("git@github.com:__YOUR_GUTHUB__/__PROJECT__.git")
 
 	// plase note, the main.go file must be at root folder
-	container.MakeDefaultDockerfileForMe()
+	container.MakeDefaultDockerfileForMeWithInstallExtras()
 
 	// copy you ssh and git data to the container
 	err = container.SetPrivateRepositoryAutoConfig()

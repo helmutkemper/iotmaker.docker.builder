@@ -46,7 +46,7 @@ func ExampleContainerBuilder_ImageBuildFromFolder() {
 	container.SetImageName("delete:latest")
 	// set a folder path to make a new image
 	container.SetBuildFolderPath("./test/server")
-	container.MakeDefaultDockerfileForMe()
+	container.MakeDefaultDockerfileForMeWithInstallExtras()
 	// container name container_delete_server_after_test
 	container.SetContainerName("container_delete_server_after_test")
 	// set a waits for the text to appear in the standard container output to proceed [optional]

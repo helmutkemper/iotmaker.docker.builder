@@ -24,7 +24,7 @@ func ExampleContainerBuilder_SetGitPathPrivateRepository() {
 	container.SetContainerName("container_delete_server_after_test")
 	// git project to clone git@github.com:helmutkemper/iotmaker.docker.builder.private.example.git
 	container.SetGitCloneToBuild("git@github.com:helmutkemper/iotmaker.docker.builder.private.example.git")
-	container.MakeDefaultDockerfileForMe()
+	container.MakeDefaultDockerfileForMeWithInstallExtras()
 	err = container.SetPrivateRepositoryAutoConfig()
 	if err != nil {
 		panic(err)

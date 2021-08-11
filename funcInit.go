@@ -14,6 +14,10 @@ import (
 // Português: Inicializa o objeto e deve ser chamado apenas depois de toas as configurações serem definidas
 func (e *ContainerBuilder) Init() (err error) {
 
+	if e.imageCacheName == "" {
+		e.imageCacheName = "cache:latest"
+	}
+
 	e.restartPolicy = iotmakerdocker.KRestartPolicyNo
 
 	if e.autoDockerfile == nil {
