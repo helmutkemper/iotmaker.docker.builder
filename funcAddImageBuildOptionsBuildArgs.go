@@ -3,7 +3,11 @@ package iotmakerdockerbuilder
 // AddImageBuildOptionsBuildArgs
 //
 // English: Set build-time variables (--build-arg)
+//   Input:
+//     key: Argument name
+//     value: Argument value
 //
+// Example:
 //   key:   argument key (e.g. Dockerfile: ARG key)
 //   value: argument value
 //
@@ -23,7 +27,11 @@ package iotmakerdockerbuilder
 //       RUN go env -w GOPRIVATE=$GIT_PRIVATE_REPO
 //
 // Português: Adiciona uma variável durante a construção (--build-arg)
+//   Input:
+//     key: Nome do argumento.
+//     value: Valor do argumento.
 //
+// Exemplo:
 //   key:   chave do argumento (ex. Dockerfile: ARG key)
 //   value: valor do argumento
 //

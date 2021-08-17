@@ -6,9 +6,11 @@ import (
 
 // addImageBuildOptionsGitCredentials
 //
-// English: call from SetPrivateRepositoryAutoConfig()
+// English: Prepare the git credentials.
+//   Called from SetPrivateRepositoryAutoConfig()
 //
-// Português: chamada por SetPrivateRepositoryAutoConfig()
+// Português: Prepara as credenciais do git.
+//   Chamada por SetPrivateRepositoryAutoConfig()
 func (e *ContainerBuilder) addImageBuildOptionsGitCredentials() (buildOptions types.ImageBuildOptions) {
 
 	if buildOptions.BuildArgs == nil {
