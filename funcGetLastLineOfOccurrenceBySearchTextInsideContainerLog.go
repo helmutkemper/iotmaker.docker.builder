@@ -5,7 +5,7 @@ import (
 	"github.com/helmutkemper/util"
 )
 
-func (e *ContainerBuilder) GetLastLineOccurrenceBySearchTextInsideContainerLog(value string) (text string, contains bool, err error) {
+func (e *ContainerBuilder) GetLastLineOfOccurrenceBySearchTextInsideContainerLog(value string) (text string, contains bool, err error) {
 	var logs []byte
 	var lineList [][]byte
 	logs, err = e.GetContainerLog()
