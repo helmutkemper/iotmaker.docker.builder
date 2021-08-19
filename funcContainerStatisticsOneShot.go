@@ -4,9 +4,7 @@ import (
 	"github.com/docker/docker/api/types"
 )
 
-func (e *ContainerBuilder) ContainerStatisticsOneShot(
-	id string,
-) (
+func (e *ContainerBuilder) ContainerStatisticsOneShot() (
 	statsRet Stats,
 	err error,
 ) {
