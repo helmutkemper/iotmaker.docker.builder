@@ -31,6 +31,15 @@ import (
 //         - Apos inicializado a primeira vez, use as funções, ContainerStart,
 //           ContainerPause e ContainerStop, caso necessite controlar o container.
 func (e *ContainerBuilder) ContainerStart() (err error) {
+	if e.startedAfterBuild == false {
+		err = e.ContainerStartAfterBuild()
+		if err != nil {
+			util.TraceToLog()
+			return
+		}
+		return
+	}
+
 	if e.containerID == "" {
 		err = e.GetIdByContainerName()
 		if err != nil {

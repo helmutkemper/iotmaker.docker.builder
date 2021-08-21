@@ -49,6 +49,7 @@ func (e *ContainerBuilder) ContainerStartAfterBuild() (err error) {
 		}
 	}
 
+	e.startedAfterBuild = true
 	*e.onContainerReady <- true
 	return
 }

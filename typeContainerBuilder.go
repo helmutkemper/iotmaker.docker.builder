@@ -49,6 +49,8 @@ type ContainerBuilder struct {
 
 	makeDefaultDockerfile bool
 	printBuildOutput      bool
+	init                  bool
+	startedAfterBuild     bool
 
 	contentIdRsaFile               string
 	contentIdRsaFileWithScape      string
