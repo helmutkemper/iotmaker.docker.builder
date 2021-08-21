@@ -21,6 +21,7 @@ type Theater struct {
 	sceneCaos     []Configuration
 
 	refLinear []*Configuration
+	refCaos   []*Configuration
 }
 
 type Timers struct {
@@ -48,6 +49,10 @@ type Configuration struct {
 	Log     []LogFilter
 	Fail    []LogFilter
 	End     []LogFilter
+
+	started bool
+	paused  bool
+	stopped bool
 }
 
 func (e *Theater) AddCache(container Configuration) (err error) {
@@ -274,6 +279,35 @@ func (e *Theater) AddContainerToCaosScene(container Configuration) (err error) {
 	}
 
 	e.sceneCaos = append(e.sceneCaos, container)
+
+	return
+}
+
+func (e *Theater) startCaosScene() (err error) {
+
+	if e.refCaos == nil {
+		e.refCaos = make([]*Configuration, 0)
+	}
+
+	for _, container := range e.sceneCaos {
+		if container.Docker.GetContainerIsStarted() == true {
+			continue
+		}
+
+		err = container.Docker.ContainerStartAfterBuild()
+		if err != nil {
+			util.TraceToLog()
+			return
+		}
+	}
+
+	for _, container := range e.sceneCaos {
+		if container.LogPath == "" && container.Log == nil && container.Fail == nil && container.End == nil {
+			continue
+		}
+
+		e.refCaos = append(e.refCaos, &container)
+	}
 
 	return
 }
