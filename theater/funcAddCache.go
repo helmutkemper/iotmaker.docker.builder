@@ -8,20 +8,23 @@ import (
 	"github.com/helmutkemper/util"
 	"io/fs"
 	"log"
+	"math/rand"
 	"os"
 	"regexp"
 	"time"
 )
 
 type Theater struct {
-	sceneCache    []Configuration
-	sceneBuilding []Configuration
-	scenePrologue []Configuration
-	sceneLinear   []Configuration
-	sceneCaos     []Configuration
+	sceneCache    []*Configuration
+	sceneBuilding []*Configuration
+	scenePrologue []*Configuration
+	sceneLinear   []*Configuration
+	sceneCaos     []*Configuration
 
 	refLinear []*Configuration
 	refCaos   []*Configuration
+
+	ticker *time.Ticker
 }
 
 type Timers struct {
@@ -43,6 +46,19 @@ type LogFilter struct {
 	Replace string
 }
 
+type Restart struct {
+	FilterToStart      []LogFilter
+	TimeToStart        *Timers
+	RestartProbability float64
+	RestartLimit       int
+}
+
+type Caos struct {
+	FilterToStart []LogFilter
+	Restart       *Restart
+	TimeToStart   Timers
+}
+
 type Configuration struct {
 	Docker  *dockerBuild.ContainerBuilder
 	LogPath string
@@ -50,14 +66,139 @@ type Configuration struct {
 	Fail    []LogFilter
 	End     []LogFilter
 
-	started bool
-	paused  bool
-	stopped bool
+	Caos Caos
+
+	caosStarted       bool
+	caosCanRestart    bool
+	caosCanRestartEnd bool
+
+	containerStarted bool
+	containerPaused  bool
+	containerStopped bool
+
+	eventTicker time.Ticker
 }
 
-func (e *Theater) AddCache(container Configuration) (err error) {
+func (e *Theater) Init() {
+	e.ticker = time.NewTicker(2 * time.Second)
+	go func() {
+		for {
+			select {
+			case <-e.ticker.C:
+				e.managerLinear()
+				e.managerCaos()
+			}
+		}
+	}()
+}
+
+func (e *Theater) logsCleaner(logs []byte) [][]byte {
+	logs = bytes.ReplaceAll(logs, []byte("\r"), []byte(""))
+	return bytes.Split(logs, []byte("\n"))
+}
+
+func (e *Theater) logsSearchSimplesText(lineList [][]byte, configuration []LogFilter) (found bool) {
+	for logLine := len(lineList) - 1; logLine >= 0; logLine -= 1 {
+
+		for filterLine := 0; filterLine != len(configuration); filterLine += 1 {
+			if bytes.Contains(lineList[logLine], []byte(configuration[filterLine].Match)) == true {
+				found = true
+				return
+			}
+		}
+	}
+
+	return
+}
+
+func (e *Theater) managerLinear() {
+	var err error
+	var logs []byte
+	var lineList [][]byte
+	for _, container := range e.refLinear {
+		logs, err = container.Docker.GetContainerLog()
+		lineList = e.logsCleaner(logs)
+
+		err = e.writeContainerLogToFile(container.LogPath, lineList, container)
+		if err != nil {
+			util.TraceToLog()
+			return
+		}
+
+		if e.logsSearchSimplesText(lineList, container.Fail) == true {
+			//o que fazer o fail?
+		}
+
+		if e.logsSearchSimplesText(lineList, container.End) == true {
+			//o que fazer o final?
+		}
+	}
+}
+
+func (e *Theater) managerCaos(container *Configuration) {
+	var err error
+	var logs []byte
+	var lineList [][]byte
+
+	logs, err = container.Docker.GetContainerLog()
+	lineList = e.logsCleaner(logs)
+
+	if container.containerStarted == false {
+		go func(container *Configuration) {
+			select {
+			case <-time.NewTimer(1 * time.Second).C:
+				e.managerCaos(container)
+			}
+		}(container)
+	}
+
+	if container.LogPath != "" {
+		err = e.writeContainerLogToFile(container.LogPath, lineList, container)
+		if err != nil {
+			util.TraceToLog()
+			return
+		}
+	}
+
+	// flag indicando que o container pode ser reiniciado
+	if container.Caos.Restart.FilterToStart != nil && container.caosCanRestart == false {
+		if e.logsSearchSimplesText(lineList, container.Caos.Restart.FilterToStart) == true {
+			container.caosCanRestart = true
+		}
+	}
+
+	// flag o caos pode ser inicializado
+	if container.caosStarted == false && e.logsSearchSimplesText(lineList, container.Caos.FilterToStart) == true {
+		timeToStartCacos := e.selectBetweenMaxAndMin(container.Caos.TimeToStart.Max, container.Caos.TimeToStart.Min)
+		go func(container *Configuration) {
+			select {
+			case <-time.NewTimer(timeToStartCacos).C:
+				e.managerCaos(container)
+			}
+		}(container)
+		container.caosStarted = true
+	}
+
+	if container.caosStarted == true && container.caosCanRestart == true {
+
+	}
+
+	if container.caosStarted == true {
+
+	}
+
+	if e.logsSearchSimplesText(lineList, container.Fail) == true {
+		//o que fazer o fail?
+	}
+
+	if e.logsSearchSimplesText(lineList, container.End) == true {
+		//o que fazer o final?
+	}
+}
+
+func (e *Theater) AddCache(container *Configuration) (err error) {
 	if e.sceneCache == nil {
-		e.sceneCache = make([]Configuration, 0)
+		e.sceneCache = make([]*Configuration, 0)
 	}
 
 	if container.Docker.GetInitialized() == true {
@@ -128,9 +269,9 @@ func (e *Theater) buildCache() (err error) {
 	return
 }
 
-func (e *Theater) AddContainers(container Configuration) (err error) {
+func (e *Theater) AddContainers(container *Configuration) (err error) {
 	if e.sceneBuilding == nil {
-		e.sceneBuilding = make([]Configuration, 0)
+		e.sceneBuilding = make([]*Configuration, 0)
 	}
 
 	if container.Docker.GetInitialized() == true {
@@ -196,9 +337,9 @@ func (e *Theater) buildContainers() (err error) {
 	return
 }
 
-func (e *Theater) AddContainerToPrologueScene(container Configuration) (err error) {
+func (e *Theater) AddContainerToPrologueScene(container *Configuration) (err error) {
 	if e.scenePrologue == nil {
-		e.scenePrologue = make([]Configuration, 0)
+		e.scenePrologue = make([]*Configuration, 0)
 	}
 
 	if container.Docker.GetInitialized() == true {
@@ -224,9 +365,9 @@ func (e *Theater) startPrologueScene() (err error) {
 	return
 }
 
-func (e *Theater) AddContainerToLinearScene(container Configuration) (err error) {
+func (e *Theater) AddContainerToLinearScene(container *Configuration) (err error) {
 	if e.sceneLinear == nil {
-		e.sceneLinear = make([]Configuration, 0)
+		e.sceneLinear = make([]*Configuration, 0)
 	}
 
 	if container.Docker.GetInitialized() == true {
@@ -262,15 +403,15 @@ func (e *Theater) startLinearScene() (err error) {
 			continue
 		}
 
-		e.refLinear = append(e.refLinear, &container)
+		e.refLinear = append(e.refLinear, container)
 	}
 
 	return
 }
 
-func (e *Theater) AddContainerToCaosScene(container Configuration) (err error) {
+func (e *Theater) AddContainerToCaosScene(container *Configuration) (err error) {
 	if e.sceneCaos == nil {
-		e.sceneCaos = make([]Configuration, 0)
+		e.sceneCaos = make([]*Configuration, 0)
 	}
 
 	if container.Docker.GetInitialized() == true {
@@ -302,11 +443,12 @@ func (e *Theater) startCaosScene() (err error) {
 	}
 
 	for _, container := range e.sceneCaos {
-		if container.LogPath == "" && container.Log == nil && container.Fail == nil && container.End == nil {
+		if container.LogPath == "" && container.Log == nil &&
+			container.Fail == nil && container.End == nil {
 			continue
 		}
 
-		e.refCaos = append(e.refCaos, &container)
+		e.refCaos = append(e.refCaos, container)
 	}
 
 	return
@@ -334,7 +476,7 @@ func (e *Theater) buildAll() (err error) {
 	return
 }
 
-// WriteContainerLog
+// writeContainerLogToFile
 //
 // Português: Escreve um arquivo csv com dados capturados da saída padrão do container e dados estatísticos do container
 //   Entrada:
@@ -354,40 +496,7 @@ func (e *Theater) buildAll() (err error) {
 //             Match:   "bug:"
 //         End: Texto simples impresso na saída padrão indicando fim do teste
 //             Match:   "fim!"
-func (e *Theater) WriteContainerLog(path string, configuration Configuration) (end, fail bool, err error) {
-	var logs []byte
-	var lineList [][]byte
-
-	logs, err = configuration.Docker.GetContainerLog()
-	if err != nil {
-		util.TraceToLog()
-		return
-	}
-
-	logs = bytes.ReplaceAll(logs, []byte("\r"), []byte(""))
-	lineList = bytes.Split(logs, []byte("\n"))
-
-	if path == "" {
-		for logLine := len(lineList) - 1; logLine >= 0; logLine -= 1 {
-
-			for filterLine := 0; filterLine != len(configuration.Fail); filterLine += 1 {
-				if bytes.Contains(lineList[logLine], []byte(configuration.Fail[filterLine].Match)) == true {
-					fail = true
-					break
-				}
-			}
-
-			for filterLine := 0; filterLine != len(configuration.End); filterLine += 1 {
-				if bytes.Contains(lineList[logLine], []byte(configuration.End[filterLine].Match)) == true {
-					end = true
-					break
-				}
-			}
-
-		}
-
-		return
-	}
+func (e *Theater) writeContainerLogToFile(path string, lineList [][]byte, configuration *Configuration) (err error) {
 
 	var file *os.File
 	file, err = os.OpenFile(path, os.O_CREATE|os.O_APPEND|os.O_WRONLY, fs.ModePerm)
@@ -436,20 +545,6 @@ func (e *Theater) WriteContainerLog(path string, configuration Configuration) (e
 					util.TraceToLog()
 					return
 				}
-			}
-		}
-
-		for filterLine := 0; filterLine != len(configuration.Fail); filterLine += 1 {
-			if bytes.Contains(lineList[logLine], []byte(configuration.Fail[filterLine].Match)) == true {
-				fail = true
-				break
-			}
-		}
-
-		for filterLine := 0; filterLine != len(configuration.End); filterLine += 1 {
-			if bytes.Contains(lineList[logLine], []byte(configuration.End[filterLine].Match)) == true {
-				end = true
-				break
 			}
 		}
 	}
@@ -827,4 +922,14 @@ func (e *Theater) WriteContainerLog(path string, configuration Configuration) (e
 	}
 
 	return
+}
+
+func (e *Theater) selectBetweenMaxAndMin(max, min time.Duration) (selected time.Duration) {
+	randValue := e.getRandSeed().Int63n(int64(max)-int64(min)) + int64(min)
+	return time.Duration(randValue)
+}
+
+func (e *Theater) getRandSeed() (seed *rand.Rand) {
+	source := rand.NewSource(time.Now().UnixNano())
+	return rand.New(source)
 }

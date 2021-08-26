@@ -27,11 +27,3 @@ package iotmakerdockerbuilder
 func (e *ContainerBuilder) SetBuildFolderPath(value string) {
 	e.buildPath = value
 }
-
-func (e *ContainerBuilder) GetBuildFolderPath() (buildPath string) {
-	return e.buildPath
-}
-
-func (e *ContainerBuilder) GetContainerName() (containerName string) {
-	return e.containerName
-}
