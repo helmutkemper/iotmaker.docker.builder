@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"errors"
 	"fmt"
+	"github.com/docker/docker/api/types"
 	dockerBuild "github.com/helmutkemper/iotmaker.docker.builder"
 	"github.com/helmutkemper/util"
 	"io/fs"
@@ -117,19 +118,26 @@ func (e *Theater) managerLinear() {
 	var lineList [][]byte
 	for _, container := range e.refLinear {
 		logs, err = container.Docker.GetContainerLog()
-		lineList = e.logsCleaner(logs)
-
-		err = e.writeContainerLogToFile(container.LogPath, lineList, container)
 		if err != nil {
 			util.TraceToLog()
 			return
 		}
 
-		if e.logsSearchSimplesText(lineList, container.Fail) == true {
+		lineList = e.logsCleaner(logs)
+
+		if container.LogPath != "" {
+			err = e.writeContainerLogToFile(container.LogPath, lineList, container)
+			if err != nil {
+				util.TraceToLog()
+				return
+			}
+		}
+
+		if container.Fail != nil && e.logsSearchSimplesText(lineList, container.Fail) == true {
 			//o que fazer o fail?
 		}
 
-		if e.logsSearchSimplesText(lineList, container.End) == true {
+		if container.End != nil && e.logsSearchSimplesText(lineList, container.End) == true {
 			//o que fazer o final?
 		}
 	}
@@ -187,11 +195,11 @@ func (e *Theater) managerCaos(container *Configuration) {
 
 	}
 
-	if e.logsSearchSimplesText(lineList, container.Fail) == true {
+	if container.Fail != nil && e.logsSearchSimplesText(lineList, container.Fail) == true {
 		//o que fazer o fail?
 	}
 
-	if e.logsSearchSimplesText(lineList, container.End) == true {
+	if container.End != nil && e.logsSearchSimplesText(lineList, container.End) == true {
 		//o que fazer o final?
 	}
 }
@@ -549,7 +557,7 @@ func (e *Theater) writeContainerLogToFile(path string, lineList [][]byte, config
 		}
 	}
 
-	var stats = dockerBuild.Stats{}
+	var stats = types.Stats{}
 	stats, err = configuration.Docker.ContainerStatisticsOneShot()
 	if err != nil {
 		util.TraceToLog()

@@ -12,7 +12,7 @@ import (
 //           ContainerBuildAndStartFromImage, initializes the oncontainer and initializes
 //           the registry to the docker network, so that it works correctly.
 //           ContainerBuildWithoutStartingItFromImage just creates the container, so the
-//           first time it runs, it must have its network registry initialized so it can
+//           first time it runs, it must have its network registry initialized, so it can
 //           work properly.
 //         - After initializing the first time, use the functions, ContainerStart,
 //           ContainerPause and ContainerStop, if you need to control the container.
