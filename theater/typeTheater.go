@@ -34,6 +34,8 @@ type Timers struct {
 }
 
 type LogFilter struct {
+	Label string
+
 	// Texto contido na linha (tudo ou nada)
 	Match string
 
@@ -101,7 +103,7 @@ func (e *Configuration) SetLogPath(path string) (configuration *Configuration) {
 	return e
 }
 
-func (e *Configuration) AddFilterToLog(match, filter, search, replace string) (configuration *Configuration) {
+func (e *Configuration) AddFilterToLog(label, match, filter, search, replace string) (configuration *Configuration) {
 
 	if e.Log == nil {
 		e.Log = make([]LogFilter, 0)
@@ -109,6 +111,7 @@ func (e *Configuration) AddFilterToLog(match, filter, search, replace string) (c
 
 	e.Log = append(
 		e.Log, LogFilter{
+			Label:   label,
 			Match:   match,
 			Filter:  filter,
 			Search:  search,
@@ -442,6 +445,7 @@ func (e *Theater) manager() {
 
 			if container.containerPaused == true {
 
+				log.Printf("unpause")
 				err = container.Docker.ContainerUnpause()
 				if err != nil {
 					container.err <- errors.New(container.Docker.GetContainerName() + ".error: " + err.Error())
@@ -452,6 +456,7 @@ func (e *Theater) manager() {
 
 			} else if container.containerStopped == true {
 
+				log.Printf("start()")
 				err = container.Docker.ContainerStart()
 				if err != nil {
 					container.err <- errors.New(container.Docker.GetContainerName() + ".error: " + err.Error())
@@ -462,6 +467,7 @@ func (e *Theater) manager() {
 
 			} else if container.caosCanRestart == true && container.Caos.Restart != nil && container.Caos.Restart.RestartProbability <= probality && container.Caos.Restart.RestartLimit > 0 {
 
+				log.Printf("stop()")
 				err = container.Docker.ContainerStop()
 				if err != nil {
 					container.err <- errors.New(container.Docker.GetContainerName() + ".error: " + err.Error())
@@ -473,6 +479,7 @@ func (e *Theater) manager() {
 
 			} else {
 
+				log.Printf("pause()")
 				err = container.Docker.ContainerPause()
 				if err != nil {
 					container.err <- errors.New(container.Docker.GetContainerName() + ".error: " + err.Error())
@@ -779,46 +786,6 @@ func (e *Theater) writeContainerLogToFile(path string, lineList [][]byte, config
 
 	var skipMatch = make([]bool, len(configuration.Log))
 
-	for logLine := len(lineList) - 1; logLine >= 0; logLine -= 1 {
-		for filterLine := 0; filterLine != len(configuration.Log); filterLine += 1 {
-			if skipMatch[filterLine] == true {
-				continue
-			}
-
-			if bytes.Contains(lineList[logLine], []byte(configuration.Log[filterLine].Match)) == true {
-				skipMatch[filterLine] = true
-
-				var re *regexp.Regexp
-				re, err = regexp.Compile(configuration.Log[filterLine].Filter)
-				if err != nil {
-					util.TraceToLog()
-					log.Printf("regexp.Compile().error: %v", err)
-					log.Printf("regexp.Compile().error.filter: %v", configuration.Log[filterLine].Filter)
-					continue
-				}
-
-				var toFile []byte
-				toFile = re.ReplaceAll(lineList[logLine], []byte("${valueToGet}"))
-
-				if configuration.Log[filterLine].Search != "" {
-					toFile = bytes.ReplaceAll(toFile, []byte(configuration.Log[filterLine].Search), []byte(configuration.Log[filterLine].Replace))
-				}
-
-				_, err = file.Write(toFile)
-				if err != nil {
-					util.TraceToLog()
-					return
-				}
-
-				_, err = file.Write([]byte("\t"))
-				if err != nil {
-					util.TraceToLog()
-					return
-				}
-			}
-		}
-	}
-
 	var stats = types.Stats{}
 	stats, err = configuration.Docker.ContainerStatisticsOneShot()
 	if err != nil {
@@ -844,6 +811,68 @@ func (e *Theater) writeContainerLogToFile(path string, lineList [][]byte, config
 		if err != nil {
 			util.TraceToLog()
 			return
+		}
+	}
+
+	for logLine := len(lineList) - 1; logLine >= 0; logLine -= 1 {
+		for filterLine := 0; filterLine != len(configuration.Log); filterLine += 1 {
+			if skipMatch[filterLine] == true {
+				continue
+			}
+
+			if bytes.Contains(lineList[logLine], []byte(configuration.Log[filterLine].Match)) == true {
+				skipMatch[filterLine] = true
+
+				var re *regexp.Regexp
+				re, err = regexp.Compile(configuration.Log[filterLine].Filter)
+				if err != nil {
+					util.TraceToLog()
+					log.Printf("regexp.Compile().error: %v", err)
+					log.Printf("regexp.Compile().error.filter: %v", configuration.Log[filterLine].Filter)
+					continue
+				}
+
+				var toFile []byte
+				toFile = re.ReplaceAll(lineList[logLine], []byte("${valueToGet}"))
+
+				if configuration.Log[filterLine].Search != "" {
+					re, err = regexp.Compile(configuration.Log[filterLine].Search)
+					if err != nil {
+						util.TraceToLog()
+						log.Printf("regexp.Compile().error: %v", err)
+						log.Printf("regexp.Compile().error.filter: %v", configuration.Log[filterLine].Search)
+						continue
+					}
+
+					toFile = re.ReplaceAll(toFile, []byte(configuration.Log[filterLine].Replace))
+				}
+
+				if makeLabel == true {
+					_, err = file.Write([]byte(configuration.Log[filterLine].Label))
+					if err != nil {
+						util.TraceToLog()
+						return
+					}
+
+					_, err = file.Write([]byte("\t"))
+					if err != nil {
+						util.TraceToLog()
+						return
+					}
+				} else {
+					_, err = file.Write(toFile)
+					if err != nil {
+						util.TraceToLog()
+						return
+					}
+
+					_, err = file.Write([]byte("\t"))
+					if err != nil {
+						util.TraceToLog()
+						return
+					}
+				}
+			}
 		}
 	}
 

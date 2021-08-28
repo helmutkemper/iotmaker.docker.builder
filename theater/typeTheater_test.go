@@ -18,7 +18,10 @@ func TestTheater_AddContainers(t *testing.T) {
 
 	var server = NewContainer(&containerServer).
 		SetLogPath("./test.log.csv").
-		SetLinear()
+		AddFilterToLog("contador", "blabla", "^.*?counter: (?P<valueToGet>[\\d\\.]+)", "\\.", ",").
+		AddCaosPauseDuration(time.Second, 3*time.Second).
+		AddCaosUnpauseDuration(time.Second, 3*time.Second).
+		AddCaosStartDuration(time.Second, 3*time.Second)
 
 	var theater = Theater{}
 	err = theater.AddContainers(server)
@@ -68,30 +71,6 @@ func buildServerContainer(t *testing.T) (container builder.ContainerBuilder) {
 	container.AddPortToExpose("3000")
 	// replace container folder /static to host folder ./test/static
 	err = container.AddFileOrFolderToLinkBetweenConputerHostAndContainer("../test/static", "/static")
-	if err != nil {
-		util.TraceToLog()
-		log.Printf("err: %v", err)
-		t.Fail()
-	}
-	return
-	// inicialize container object
-	err = container.Init()
-	if err != nil {
-		util.TraceToLog()
-		log.Printf("err: %v", err)
-		t.Fail()
-	}
-
-	// builder new image from folder
-	err = container.ImageBuildFromFolder()
-	if err != nil {
-		util.TraceToLog()
-		log.Printf("err: %v", err)
-		t.Fail()
-	}
-
-	// build a new container from image
-	err = container.ContainerBuildAndStartFromImage()
 	if err != nil {
 		util.TraceToLog()
 		log.Printf("err: %v", err)
