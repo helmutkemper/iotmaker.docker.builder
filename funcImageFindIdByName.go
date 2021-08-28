@@ -14,7 +14,7 @@ func (e *ContainerBuilder) ImageFindIdByName(name string) (id string, err error)
 	}
 
 	id, err = e.dockerSys.ImageFindIdByName(name)
-	if err != nil {
+	if err != nil && err.Error() != "image name not found" {
 		util.TraceToLog()
 	}
 	return
