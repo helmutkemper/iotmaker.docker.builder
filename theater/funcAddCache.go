@@ -6,12 +6,14 @@ import (
 	"fmt"
 	"github.com/docker/docker/api/types"
 	dockerBuild "github.com/helmutkemper/iotmaker.docker.builder"
+	iotmakerdocker "github.com/helmutkemper/iotmaker.docker/v1.0.1"
 	"github.com/helmutkemper/util"
 	"io/fs"
 	"log"
 	"math/rand"
 	"os"
 	"regexp"
+	"strconv"
 	"time"
 )
 
@@ -48,8 +50,8 @@ type LogFilter struct {
 }
 
 type Restart struct {
-	FilterToStart      []LogFilter
-	TimeToStart        *Timers
+	FilterToStart      []LogFilter //todo: se não tiver filtro, restart pot tempo aleatório
+	TimeToStart        Timers
 	RestartProbability float64
 	RestartLimit       int
 }
@@ -58,6 +60,8 @@ type Caos struct {
 	FilterToStart []LogFilter
 	Restart       *Restart
 	TimeToStart   Timers
+	TimeToPause   Timers
+	TimeToUnpause Timers
 }
 
 type Configuration struct {
@@ -69,6 +73,7 @@ type Configuration struct {
 
 	Caos Caos
 
+	Linear            bool
 	caosStarted       bool
 	caosCanRestart    bool
 	caosCanRestartEnd bool
@@ -77,17 +82,206 @@ type Configuration struct {
 	containerPaused  bool
 	containerStopped bool
 
-	eventTicker time.Ticker
+	testEnd bool
+
+	err chan error
+
+	eventNext time.Time
+}
+
+func NewContainer(docker *dockerBuild.ContainerBuilder) (configuration *Configuration) {
+	return &Configuration{Docker: docker}
+}
+
+func (e *Configuration) SetLinear() (configuration *Configuration) {
+	e.Linear = true
+	return e
+}
+
+func (e *Configuration) SetLogPath(path string) (configuration *Configuration) {
+	e.LogPath = path
+	return e
+}
+
+func (e *Configuration) AddFilterToLog(match, filter, search, replace string) (configuration *Configuration) {
+
+	if e.Log == nil {
+		e.Log = make([]LogFilter, 0)
+	}
+
+	e.Log = append(
+		e.Log, LogFilter{
+			Match:   match,
+			Filter:  filter,
+			Search:  search,
+			Replace: replace,
+		},
+	)
+
+	return e
+}
+
+func (e *Configuration) AddFilterToFailEvent(match, filter, search, replace string) (configuration *Configuration) {
+
+	if e.Fail == nil {
+		e.Fail = make([]LogFilter, 0)
+	}
+
+	e.Fail = append(
+		e.Fail, LogFilter{
+			Match:   match,
+			Filter:  filter,
+			Search:  search,
+			Replace: replace,
+		},
+	)
+
+	return e
+}
+
+func (e *Configuration) AddFilterToEndEvent(match, filter, search, replace string) (configuration *Configuration) {
+
+	if e.End == nil {
+		e.End = make([]LogFilter, 0)
+	}
+
+	e.End = append(
+		e.End, LogFilter{
+			Match:   match,
+			Filter:  filter,
+			Search:  search,
+			Replace: replace,
+		},
+	)
+
+	return e
+}
+
+func (e *Configuration) AddFilterToStartCaos(match, filter, search, replace string) (configuration *Configuration) {
+
+	if e.Caos.FilterToStart == nil {
+		e.Caos.FilterToStart = make([]LogFilter, 0)
+	}
+
+	e.Caos.FilterToStart = append(
+		e.Caos.FilterToStart, LogFilter{
+			Match:   match,
+			Filter:  filter,
+			Search:  search,
+			Replace: replace,
+		},
+	)
+
+	return e
+}
+
+func (e *Configuration) AddCaosPauseDuration(min, max time.Duration) (configuration *Configuration) {
+
+	e.Caos.TimeToPause.Min = min
+	e.Caos.TimeToPause.Max = max
+
+	if e.Caos.TimeToStart.Min == 0 && e.Caos.TimeToStart.Max == 0 {
+		e.Caos.TimeToStart.Min = min
+		e.Caos.TimeToStart.Max = max
+	}
+
+	if e.Caos.TimeToUnpause.Min == 0 && e.Caos.TimeToUnpause.Max == 0 {
+		e.Caos.TimeToUnpause.Min = min
+		e.Caos.TimeToUnpause.Max = max
+	}
+
+	return e
+}
+
+func (e *Configuration) AddCaosUnpauseDuration(min, max time.Duration) (configuration *Configuration) {
+
+	e.Caos.TimeToUnpause.Min = min
+	e.Caos.TimeToUnpause.Max = max
+
+	if e.Caos.TimeToStart.Min == 0 && e.Caos.TimeToStart.Max == 0 {
+		e.Caos.TimeToStart.Min = min
+		e.Caos.TimeToStart.Max = max
+	}
+
+	if e.Caos.TimeToPause.Min == 0 && e.Caos.TimeToPause.Max == 0 {
+		e.Caos.TimeToPause.Min = min
+		e.Caos.TimeToPause.Max = max
+	}
+
+	return e
+}
+
+func (e *Configuration) AddCaosStartDuration(min, max time.Duration) (configuration *Configuration) {
+
+	e.Caos.TimeToStart.Min = min
+	e.Caos.TimeToStart.Max = max
+
+	if e.Caos.TimeToUnpause.Min == 0 && e.Caos.TimeToUnpause.Max == 0 {
+		e.Caos.TimeToUnpause.Min = min
+		e.Caos.TimeToUnpause.Max = max
+	}
+
+	if e.Caos.TimeToPause.Min == 0 && e.Caos.TimeToPause.Max == 0 {
+		e.Caos.TimeToPause.Min = min
+		e.Caos.TimeToPause.Max = max
+	}
+
+	return e
+}
+
+func (e *Configuration) AddCaosRestartFilter(match, filter, search, replace string) (configuration *Configuration) {
+
+	if e.Caos.Restart == nil {
+		e.Caos.Restart = &Restart{}
+	}
+
+	if e.Caos.Restart.FilterToStart == nil {
+		e.Caos.Restart.FilterToStart = make([]LogFilter, 0)
+	}
+
+	e.Caos.Restart.FilterToStart = append(
+		e.Caos.Restart.FilterToStart, LogFilter{
+			Match:   match,
+			Filter:  filter,
+			Search:  search,
+			Replace: replace,
+		},
+	)
+
+	return e
+}
+
+func (e *Configuration) AddCaosRestartInterval(min, max time.Duration) (configuration *Configuration) {
+
+	if e.Caos.Restart == nil {
+		e.Caos.Restart = &Restart{}
+	}
+
+	e.Caos.Restart.TimeToStart.Min = min
+	e.Caos.Restart.TimeToStart.Max = max
+
+	return e
+}
+
+func (e *Configuration) AddCaosRestartController(probability float64, limit int) (configuration *Configuration) {
+
+	if e.Caos.Restart == nil {
+		e.Caos.Restart = &Restart{}
+	}
+
+	e.Caos.Restart.RestartProbability = probability
+	e.Caos.Restart.RestartLimit = limit
+
+	return e
 }
 
 func (e *Theater) Init() {
-	e.ticker = time.NewTicker(2 * time.Second)
+	e.ticker = time.NewTicker(1 * time.Second)
 	go func() {
 		for {
 			select {
 			case <-e.ticker.C:
-				e.managerLinear()
-				e.managerCaos()
+				e.manager()
 			}
 		}
 	}()
@@ -98,11 +292,16 @@ func (e *Theater) logsCleaner(logs []byte) [][]byte {
 	return bytes.Split(logs, []byte("\n"))
 }
 
-func (e *Theater) logsSearchSimplesText(lineList [][]byte, configuration []LogFilter) (found bool) {
+func (e *Theater) logsSearchSimplesText(lineList [][]byte, configuration []LogFilter) (line []byte, found bool) {
+	if configuration == nil {
+		return
+	}
+
 	for logLine := len(lineList) - 1; logLine >= 0; logLine -= 1 {
 
 		for filterLine := 0; filterLine != len(configuration); filterLine += 1 {
-			if bytes.Contains(lineList[logLine], []byte(configuration[filterLine].Match)) == true {
+			line = lineList[logLine]
+			if bytes.Contains(line, []byte(configuration[filterLine].Match)) == true {
 				found = true
 				return
 			}
@@ -112,95 +311,159 @@ func (e *Theater) logsSearchSimplesText(lineList [][]byte, configuration []LogFi
 	return
 }
 
-func (e *Theater) managerLinear() {
+func (e *Theater) manager() {
 	var err error
 	var logs []byte
 	var lineList [][]byte
-	for _, container := range e.refLinear {
-		logs, err = container.Docker.GetContainerLog()
+	var line []byte
+	var found bool
+	var timeToNextEvent time.Duration
+	var probality float64
+
+	var inspect iotmakerdocker.ContainerInspect
+
+	for _, container := range e.refCaos {
+
+		probality = e.getProbalityNumber()
+
+		inspect, err = container.Docker.ContainerInspect()
 		if err != nil {
 			util.TraceToLog()
-			return
+			container.err <- errors.New(container.Docker.GetContainerName() + ".error: " + err.Error())
+			continue
+		}
+
+		if inspect.State.OOMKilled == true {
+			container.err <- errors.New(container.Docker.GetContainerName() + ".error: OOMKilled")
+			continue
+		}
+
+		if inspect.State.Dead == true {
+			container.err <- errors.New(container.Docker.GetContainerName() + ".error: dead")
+			continue
+		}
+
+		if inspect.State.ExitCode != 0 {
+			container.err <- errors.New(container.Docker.GetContainerName() + ".error: exit code " + strconv.Itoa(inspect.State.ExitCode))
+			continue
+		}
+
+		if (container.containerStopped == true || container.containerPaused == true) != true {
+			if inspect.State.Running == false {
+				container.err <- errors.New(container.Docker.GetContainerName() + ".error: not running")
+				continue
+			}
+
+			if inspect.State.Paused == false {
+				container.err <- errors.New(container.Docker.GetContainerName() + ".error: paused")
+				continue
+			}
+
+			if inspect.State.Restarting == false {
+				container.err <- errors.New(container.Docker.GetContainerName() + ".error: restarting")
+				continue
+			}
+		}
+
+		logs, err = container.Docker.GetContainerLog()
+		if err != nil {
+			container.err <- errors.New(container.Docker.GetContainerName() + ".error: " + err.Error())
+			util.TraceToLog()
+			continue
 		}
 
 		lineList = e.logsCleaner(logs)
 
-		if container.LogPath != "" {
-			err = e.writeContainerLogToFile(container.LogPath, lineList, container)
-			if err != nil {
-				util.TraceToLog()
-				return
-			}
-		}
-
-		if container.Fail != nil && e.logsSearchSimplesText(lineList, container.Fail) == true {
-			//o que fazer o fail?
-		}
-
-		if container.End != nil && e.logsSearchSimplesText(lineList, container.End) == true {
-			//o que fazer o final?
-		}
-	}
-}
-
-func (e *Theater) managerCaos(container *Configuration) {
-	var err error
-	var logs []byte
-	var lineList [][]byte
-
-	logs, err = container.Docker.GetContainerLog()
-	lineList = e.logsCleaner(logs)
-
-	if container.containerStarted == false {
-		go func(container *Configuration) {
-			select {
-			case <-time.NewTimer(1 * time.Second).C:
-				e.managerCaos(container)
-			}
-		}(container)
-	}
-
-	if container.LogPath != "" {
 		err = e.writeContainerLogToFile(container.LogPath, lineList, container)
 		if err != nil {
+			container.err <- errors.New(container.Docker.GetContainerName() + ".error: " + err.Error())
 			util.TraceToLog()
-			return
+			continue
 		}
-	}
 
-	// flag indicando que o container pode ser reiniciado
-	if container.Caos.Restart.FilterToStart != nil && container.caosCanRestart == false {
-		if e.logsSearchSimplesText(lineList, container.Caos.Restart.FilterToStart) == true {
-			container.caosCanRestart = true
+		if container.Linear == true {
+			continue
 		}
-	}
 
-	// flag o caos pode ser inicializado
-	if container.caosStarted == false && e.logsSearchSimplesText(lineList, container.Caos.FilterToStart) == true {
-		timeToStartCacos := e.selectBetweenMaxAndMin(container.Caos.TimeToStart.Max, container.Caos.TimeToStart.Min)
-		go func(container *Configuration) {
-			select {
-			case <-time.NewTimer(timeToStartCacos).C:
-				e.managerCaos(container)
+		// flag indicando que o container pode ser reiniciado
+		if container.Caos.Restart != nil {
+			_, found = e.logsSearchSimplesText(lineList, container.Caos.Restart.FilterToStart)
+			if container.caosCanRestart == false {
+				if found == true {
+					container.caosCanRestart = true
+				}
 			}
-		}(container)
-		container.caosStarted = true
-	}
+		}
 
-	if container.caosStarted == true && container.caosCanRestart == true {
+		// flag o caos pode ser inicializado
+		_, found = e.logsSearchSimplesText(lineList, container.Caos.FilterToStart)
+		if container.caosStarted == false && found == true {
+			container.caosStarted = true
+			timeToNextEvent = e.selectBetweenMaxAndMin(container.Caos.TimeToStart.Max, container.Caos.TimeToStart.Min)
+			container.eventNext = time.Now().Add(timeToNextEvent)
+		}
 
-	}
+		if container.containerStarted == false {
+			continue
+		}
 
-	if container.caosStarted == true {
+		line, found = e.logsSearchSimplesText(lineList, container.Fail)
+		if found == true {
+			container.err <- errors.New(container.Docker.GetContainerName() + ".error: test fail - " + string(line))
+		}
 
-	}
+		line, found = e.logsSearchSimplesText(lineList, container.End)
+		if found == true {
+			container.testEnd = true
+		}
 
-	if container.Fail != nil && e.logsSearchSimplesText(lineList, container.Fail) == true {
-		//o que fazer o fail?
-	}
+		if time.Now().After(container.eventNext) == true || time.Now().Equal(container.eventNext) == true {
 
-	if container.End != nil && e.logsSearchSimplesText(lineList, container.End) == true {
-		//o que fazer o final?
+			if container.containerPaused == true {
+
+				err = container.Docker.ContainerUnpause()
+				if err != nil {
+					container.err <- errors.New(container.Docker.GetContainerName() + ".error: " + err.Error())
+					util.TraceToLog()
+					continue
+				}
+				timeToNextEvent = e.selectBetweenMaxAndMin(container.Caos.TimeToPause.Max, container.Caos.TimeToPause.Min)
+
+			} else if container.containerStopped == true {
+
+				err = container.Docker.ContainerStart()
+				if err != nil {
+					container.err <- errors.New(container.Docker.GetContainerName() + ".error: " + err.Error())
+					util.TraceToLog()
+					continue
+				}
+				timeToNextEvent = e.selectBetweenMaxAndMin(container.Caos.TimeToPause.Max, container.Caos.TimeToPause.Min)
+
+			} else if container.caosCanRestart == true && container.Caos.Restart != nil && container.Caos.Restart.RestartProbability <= probality && container.Caos.Restart.RestartLimit > 0 {
+
+				err = container.Docker.ContainerStop()
+				if err != nil {
+					container.err <- errors.New(container.Docker.GetContainerName() + ".error: " + err.Error())
+					util.TraceToLog()
+					continue
+				}
+				container.Caos.Restart.RestartLimit -= 1
+				timeToNextEvent = e.selectBetweenMaxAndMin(container.Caos.TimeToStart.Max, container.Caos.TimeToStart.Min)
+
+			} else {
+
+				err = container.Docker.ContainerPause()
+				if err != nil {
+					container.err <- errors.New(container.Docker.GetContainerName() + ".error: " + err.Error())
+					util.TraceToLog()
+					continue
+				}
+				timeToNextEvent = e.selectBetweenMaxAndMin(container.Caos.TimeToUnpause.Max, container.Caos.TimeToUnpause.Min)
+
+			}
+
+			container.eventNext = time.Now().Add(timeToNextEvent)
+		}
 	}
 }
 
@@ -505,6 +768,18 @@ func (e *Theater) buildAll() (err error) {
 //         End: Texto simples impresso na saída padrão indicando fim do teste
 //             Match:   "fim!"
 func (e *Theater) writeContainerLogToFile(path string, lineList [][]byte, configuration *Configuration) (err error) {
+
+	if path == "" {
+		return
+	}
+
+	if lineList == nil {
+		return
+	}
+
+	if configuration == nil {
+		return
+	}
 
 	var file *os.File
 	file, err = os.OpenFile(path, os.O_CREATE|os.O_APPEND|os.O_WRONLY, fs.ModePerm)
@@ -930,6 +1205,10 @@ func (e *Theater) writeContainerLogToFile(path string, lineList [][]byte, config
 	}
 
 	return
+}
+
+func (e *Theater) getProbalityNumber() (probality float64) {
+	return 1.0 - e.getRandSeed().Float64()
 }
 
 func (e *Theater) selectBetweenMaxAndMin(max, min time.Duration) (selected time.Duration) {
