@@ -17,13 +17,14 @@ func TestTheater_AddContainers(t *testing.T) {
 	var containerServer = buildServerContainer(t)
 
 	var server = NewContainer(&containerServer).
-		//SetLogPath("./test.log.csv").
-		//AddFilterToLog("contador", "blabla", "^.*?counter: (?P<valueToGet>[\\d\\.]+)", "\\.", ",").
-		AddCaosPauseDuration(time.Second, 3*time.Second).
-		AddCaosUnpauseDuration(time.Second, 3*time.Second).
-		AddCaosStartDuration(time.Second, 3*time.Second).
-		AddCaosRestartInterval(1*time.Second, 2*time.Second).
-		AddCaosRestartController(0.5, 2)
+		SetLogPath("./test.log.csv").
+		AddFilterToLog("contador", "blabla", "^.*?counter: (?P<valueToGet>[\\d\\.]+)", "\\.", ",").
+		SetLinear()
+		//AddCaosPauseDuration(time.Second, 3*time.Second).
+		//AddCaosUnpauseDuration(time.Second, 3*time.Second).
+		//AddCaosStartDuration(time.Second, 3*time.Second).
+		//AddCaosRestartInterval(1*time.Second, 2*time.Second).
+		//AddCaosRestartController(0.5, 2)
 
 	var theater = Theater{}
 	err = theater.AddContainers(server)
@@ -71,6 +72,9 @@ func buildServerContainer(t *testing.T) (container builder.ContainerBuilder) {
 	container.SetWaitStringWithTimeout("starting server at port", 10*time.Second)
 	// change and open port 3000 to 3030
 	container.AddPortToExpose("3000")
+
+	container.SetImageBuildOptionsMemory(19 * builder.KMegaByte)
+
 	// replace container folder /static to host folder ./test/static
 	err = container.AddFileOrFolderToLinkBetweenConputerHostAndContainer("../test/static", "/static")
 	if err != nil {

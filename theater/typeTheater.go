@@ -55,7 +55,7 @@ type LogFilter struct {
 }
 
 type Restart struct {
-	FilterToStart      []LogFilter //todo: se não tiver filtro, restart pot tempo aleatório
+	FilterToStart      []LogFilter
 	TimeToStart        Timers
 	RestartProbability float64
 	RestartLimit       int
@@ -735,10 +735,6 @@ func (e *Theater) startCaosScene() (err error) {
 	}
 
 	for _, container := range e.sceneCaos {
-		if container.Linear == true {
-			continue
-		}
-
 		e.refCaos = append(e.refCaos, container)
 	}
 
