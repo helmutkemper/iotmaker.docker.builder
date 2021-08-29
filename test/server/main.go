@@ -21,7 +21,7 @@ func main() {
 			case <-tk.C:
 				counter += 1.321
 				log.Printf("blablabla counter: %.2f", counter)
-				memory = append(memory, make([]byte, 1024*1024)...)
+				memory = append(memory, make([]byte, 512*1024)...)
 			}
 		}
 	}()

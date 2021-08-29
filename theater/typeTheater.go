@@ -87,7 +87,7 @@ type Configuration struct {
 
 	Chaos Chaos
 
-	Linear            bool
+	linear            bool
 	caosStarted       bool
 	caosCanRestart    bool
 	caosCanRestartEnd bool
@@ -101,21 +101,52 @@ type Configuration struct {
 	eventNext time.Time
 }
 
+// NewTestContainerConfiguration
+//
+// Português: Adiciona um objeto de configuração de container para ser usado no teatro de teste.
+//   Entrada:
+//     docker: Ponteiro para o objeto dockerBuild.ContainerBuilder com a configuração do container a ser gerado.
+//   Saída:
+//     configuration: Objeto de configuração preenchido.
 func NewTestContainerConfiguration(docker *dockerBuild.ContainerBuilder) (configuration *Configuration) {
 	return &Configuration{Docker: docker}
 }
 
+// SetASceneLinearFlag
+//
+// Português: Transforma o senário de teste em um teste linear, preparando e subindo o container.
 func (e *Configuration) SetASceneLinearFlag() (configuration *Configuration) {
-	e.Linear = true
+	e.linear = true
 	return e
 }
 
+// SetContainerStatsLogPath
+//
+// Português: Salva um arquivo CSV com dados de métricas do container.
+//   Entrada:
+//     path: Caminho de onde salvar o arquivo CSV
+//   Saída:
+//     configuration: Objeto de configuração preenchido.
 func (e *Configuration) SetContainerStatsLogPath(path string) (configuration *Configuration) {
 	e.LogPath = path
 	return e
 }
 
-//Add a filter to capture information on the container's standard output for stats log
+// AddFilterToCaptureInformationOnTheContainersStandardOutputForStatsLog
+//
+// Adiciona um filtro de busca na saída padrão do container e arquiva a informação no arquivo CSV com as medições de uso
+// do container.
+//
+//   Entrada:
+//     label: Rótudo adicionado ao arquivo CSV.
+//     match: Texto simples procurado saída padrão a fim de indicar ocorência.
+//     filter: Expressão regular nomeada, com o termo `valueToGet`, usada para isolar o valor a ser escrito no arquivo CSV.
+//     search: Rexpressão regular usada para substituir valores no resultado de `filter` [opcional]
+//     replace: Elemento replace da expressão regular usada em `search` [opcional]
+//   Saída:
+//     configuration: Objeto de configuração preenchido.
+//
+// Nota: - Esta configuração requer a configuração SetContainerStatsLogPath()
 func (e *Configuration) AddFilterToCaptureInformationOnTheContainersStandardOutputForStatsLog(label, match, filter, search, replace string) (configuration *Configuration) {
 
 	if e.Log == nil {
@@ -444,7 +475,7 @@ func (e *Theater) manager() {
 			continue
 		}
 
-		if container.Linear == true {
+		if container.linear == true {
 			continue
 		}
 
