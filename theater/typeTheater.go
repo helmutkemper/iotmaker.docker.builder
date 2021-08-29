@@ -29,6 +29,8 @@ type Theater struct {
 	ticker *time.Ticker
 
 	errchannel chan error
+
+	cpus int
 }
 
 type Timers struct {
@@ -998,6 +1000,26 @@ func (e *Theater) writeContainerLogToFile(path string, lineList [][]byte, config
 
 	// Total CPU time consumed per core (Linux). Not used on Windows.
 	// Units: nanoseconds.
+	if len(stats.CPUStats.CPUUsage.PercpuUsage) != 0 {
+		e.cpus = len(stats.CPUStats.CPUUsage.PercpuUsage)
+	}
+
+	if e.cpus != 0 && len(stats.CPUStats.CPUUsage.PercpuUsage) == 0 {
+		for i := 0; i != e.cpus; i += 1 {
+			_, err = file.Write([]byte{0x30})
+			if err != nil {
+				util.TraceToLog()
+				return
+			}
+
+			_, err = file.Write([]byte("\t"))
+			if err != nil {
+				util.TraceToLog()
+				return
+			}
+		}
+	}
+
 	for _, cpuTime := range stats.CPUStats.CPUUsage.PercpuUsage {
 		if makeLabel == true {
 			_, err = file.Write([]byte("Total CPU time consumed per core (Units: nanoseconds on Linux). Not used on Windows.\t"))
@@ -1226,6 +1248,22 @@ func (e *Theater) writeContainerLogToFile(path string, lineList [][]byte, config
 	// CPU Usage. Linux and Windows.
 	// Total CPU time consumed per core (Linux). Not used on Windows.
 	// Units: nanoseconds.
+	if e.cpus != 0 && len(stats.CPUStats.CPUUsage.PercpuUsage) == 0 {
+		for i := 0; i != e.cpus; i += 1 {
+			_, err = file.Write([]byte{0x30})
+			if err != nil {
+				util.TraceToLog()
+				return
+			}
+
+			_, err = file.Write([]byte("\t"))
+			if err != nil {
+				util.TraceToLog()
+				return
+			}
+		}
+	}
+
 	for cpuNumber, cpuTime := range stats.PreCPUStats.CPUUsage.PercpuUsage {
 		if makeLabel == true {
 			_, err = file.Write([]byte(fmt.Sprintf("Total CPU time consumed per core (Units: nanoseconds on Linux). Not used on Windows. CPU: %v\t", cpuNumber)))
