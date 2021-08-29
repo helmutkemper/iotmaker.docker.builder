@@ -735,8 +735,7 @@ func (e *Theater) startCaosScene() (err error) {
 	}
 
 	for _, container := range e.sceneCaos {
-		if container.LogPath == "" && container.Log == nil &&
-			container.Fail == nil && container.End == nil {
+		if container.Linear == true {
 			continue
 		}
 

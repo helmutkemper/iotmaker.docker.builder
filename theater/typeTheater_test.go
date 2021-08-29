@@ -17,8 +17,8 @@ func TestTheater_AddContainers(t *testing.T) {
 	var containerServer = buildServerContainer(t)
 
 	var server = NewContainer(&containerServer).
-		SetLogPath("./test.log.csv").
-		AddFilterToLog("contador", "blabla", "^.*?counter: (?P<valueToGet>[\\d\\.]+)", "\\.", ",").
+		//SetLogPath("./test.log.csv").
+		//AddFilterToLog("contador", "blabla", "^.*?counter: (?P<valueToGet>[\\d\\.]+)", "\\.", ",").
 		AddCaosPauseDuration(time.Second, 3*time.Second).
 		AddCaosUnpauseDuration(time.Second, 3*time.Second).
 		AddCaosStartDuration(time.Second, 3*time.Second).
