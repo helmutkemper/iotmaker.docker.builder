@@ -63,7 +63,7 @@ type Restart struct {
 	minimumEventTime time.Time
 }
 
-type Caos struct {
+type Chaos struct {
 	FilterToStart []LogFilter
 	Restart       *Restart
 	TimeToStart   Timers
@@ -78,7 +78,7 @@ type Configuration struct {
 	Fail    []LogFilter
 	End     []LogFilter
 
-	Caos Caos
+	Chaos Chaos
 
 	Linear            bool
 	caosStarted       bool
@@ -94,21 +94,22 @@ type Configuration struct {
 	eventNext time.Time
 }
 
-func NewContainer(docker *dockerBuild.ContainerBuilder) (configuration *Configuration) {
+func NewTestContainerConfiguration(docker *dockerBuild.ContainerBuilder) (configuration *Configuration) {
 	return &Configuration{Docker: docker}
 }
 
-func (e *Configuration) SetLinear() (configuration *Configuration) {
+func (e *Configuration) SetASceneLinearFlag() (configuration *Configuration) {
 	e.Linear = true
 	return e
 }
 
-func (e *Configuration) SetLogPath(path string) (configuration *Configuration) {
+func (e *Configuration) SetContainerStatsLogPath(path string) (configuration *Configuration) {
 	e.LogPath = path
 	return e
 }
 
-func (e *Configuration) AddFilterToLog(label, match, filter, search, replace string) (configuration *Configuration) {
+//Add a filter to capture information on the container's standard output for stats log
+func (e *Configuration) AddFilterToCaptureInformationOnTheContainersStandardOutputForStatsLog(label, match, filter, search, replace string) (configuration *Configuration) {
 
 	if e.Log == nil {
 		e.Log = make([]LogFilter, 0)
@@ -127,7 +128,7 @@ func (e *Configuration) AddFilterToLog(label, match, filter, search, replace str
 	return e
 }
 
-func (e *Configuration) AddFilterToFailEvent(match, filter, search, replace string) (configuration *Configuration) {
+func (e *Configuration) AddASineOfChaosSettingFilterOnTheContainersStandardOutputToFailEvent(match, filter, search, replace string) (configuration *Configuration) {
 
 	if e.Fail == nil {
 		e.Fail = make([]LogFilter, 0)
@@ -145,7 +146,7 @@ func (e *Configuration) AddFilterToFailEvent(match, filter, search, replace stri
 	return e
 }
 
-func (e *Configuration) AddFilterToEndEvent(match, filter, search, replace string) (configuration *Configuration) {
+func (e *Configuration) AddASineOfChaosSettingFilterOnTheContainersStandardOutputToEndEvent(match, filter, search, replace string) (configuration *Configuration) {
 
 	if e.End == nil {
 		e.End = make([]LogFilter, 0)
@@ -163,14 +164,14 @@ func (e *Configuration) AddFilterToEndEvent(match, filter, search, replace strin
 	return e
 }
 
-func (e *Configuration) AddFilterToStartCaos(match, filter, search, replace string) (configuration *Configuration) {
+func (e *Configuration) AddASineOfChaosSettingFilterOnTheContainersStandardOutputToStartCaos(match, filter, search, replace string) (configuration *Configuration) {
 
-	if e.Caos.FilterToStart == nil {
-		e.Caos.FilterToStart = make([]LogFilter, 0)
+	if e.Chaos.FilterToStart == nil {
+		e.Chaos.FilterToStart = make([]LogFilter, 0)
 	}
 
-	e.Caos.FilterToStart = append(
-		e.Caos.FilterToStart, LogFilter{
+	e.Chaos.FilterToStart = append(
+		e.Chaos.FilterToStart, LogFilter{
 			Match:   match,
 			Filter:  filter,
 			Search:  search,
@@ -181,72 +182,73 @@ func (e *Configuration) AddFilterToStartCaos(match, filter, search, replace stri
 	return e
 }
 
-func (e *Configuration) AddCaosPauseDuration(min, max time.Duration) (configuration *Configuration) {
+// AddASineOfChaosSettingPauseDuration
+func (e *Configuration) AddASineOfChaosSettingPauseDuration(min, max time.Duration) (configuration *Configuration) {
 
-	e.Caos.TimeToPause.Min = min
-	e.Caos.TimeToPause.Max = max
+	e.Chaos.TimeToPause.Min = min
+	e.Chaos.TimeToPause.Max = max
 
-	if e.Caos.TimeToStart.Min == 0 && e.Caos.TimeToStart.Max == 0 {
-		e.Caos.TimeToStart.Min = min
-		e.Caos.TimeToStart.Max = max
+	if e.Chaos.TimeToStart.Min == 0 && e.Chaos.TimeToStart.Max == 0 {
+		e.Chaos.TimeToStart.Min = min
+		e.Chaos.TimeToStart.Max = max
 	}
 
-	if e.Caos.TimeToUnpause.Min == 0 && e.Caos.TimeToUnpause.Max == 0 {
-		e.Caos.TimeToUnpause.Min = min
-		e.Caos.TimeToUnpause.Max = max
-	}
-
-	return e
-}
-
-func (e *Configuration) AddCaosUnpauseDuration(min, max time.Duration) (configuration *Configuration) {
-
-	e.Caos.TimeToUnpause.Min = min
-	e.Caos.TimeToUnpause.Max = max
-
-	if e.Caos.TimeToStart.Min == 0 && e.Caos.TimeToStart.Max == 0 {
-		e.Caos.TimeToStart.Min = min
-		e.Caos.TimeToStart.Max = max
-	}
-
-	if e.Caos.TimeToPause.Min == 0 && e.Caos.TimeToPause.Max == 0 {
-		e.Caos.TimeToPause.Min = min
-		e.Caos.TimeToPause.Max = max
+	if e.Chaos.TimeToUnpause.Min == 0 && e.Chaos.TimeToUnpause.Max == 0 {
+		e.Chaos.TimeToUnpause.Min = min
+		e.Chaos.TimeToUnpause.Max = max
 	}
 
 	return e
 }
 
-func (e *Configuration) AddCaosStartDuration(min, max time.Duration) (configuration *Configuration) {
+func (e *Configuration) AddASineOfChaosSettingUnpauseDuration(min, max time.Duration) (configuration *Configuration) {
 
-	e.Caos.TimeToStart.Min = min
-	e.Caos.TimeToStart.Max = max
+	e.Chaos.TimeToUnpause.Min = min
+	e.Chaos.TimeToUnpause.Max = max
 
-	if e.Caos.TimeToUnpause.Min == 0 && e.Caos.TimeToUnpause.Max == 0 {
-		e.Caos.TimeToUnpause.Min = min
-		e.Caos.TimeToUnpause.Max = max
+	if e.Chaos.TimeToStart.Min == 0 && e.Chaos.TimeToStart.Max == 0 {
+		e.Chaos.TimeToStart.Min = min
+		e.Chaos.TimeToStart.Max = max
 	}
 
-	if e.Caos.TimeToPause.Min == 0 && e.Caos.TimeToPause.Max == 0 {
-		e.Caos.TimeToPause.Min = min
-		e.Caos.TimeToPause.Max = max
+	if e.Chaos.TimeToPause.Min == 0 && e.Chaos.TimeToPause.Max == 0 {
+		e.Chaos.TimeToPause.Min = min
+		e.Chaos.TimeToPause.Max = max
 	}
 
 	return e
 }
 
-func (e *Configuration) AddCaosRestartFilter(match, filter, search, replace string) (configuration *Configuration) {
+func (e *Configuration) AddASineOfChaosSettingStartDuration(min, max time.Duration) (configuration *Configuration) {
 
-	if e.Caos.Restart == nil {
-		e.Caos.Restart = &Restart{}
+	e.Chaos.TimeToStart.Min = min
+	e.Chaos.TimeToStart.Max = max
+
+	if e.Chaos.TimeToUnpause.Min == 0 && e.Chaos.TimeToUnpause.Max == 0 {
+		e.Chaos.TimeToUnpause.Min = min
+		e.Chaos.TimeToUnpause.Max = max
 	}
 
-	if e.Caos.Restart.FilterToStart == nil {
-		e.Caos.Restart.FilterToStart = make([]LogFilter, 0)
+	if e.Chaos.TimeToPause.Min == 0 && e.Chaos.TimeToPause.Max == 0 {
+		e.Chaos.TimeToPause.Min = min
+		e.Chaos.TimeToPause.Max = max
 	}
 
-	e.Caos.Restart.FilterToStart = append(
-		e.Caos.Restart.FilterToStart, LogFilter{
+	return e
+}
+
+func (e *Configuration) AddASineOfChaosSettingStartDurationRestartFilterOnTheContainersStandardOutput(match, filter, search, replace string) (configuration *Configuration) {
+
+	if e.Chaos.Restart == nil {
+		e.Chaos.Restart = &Restart{}
+	}
+
+	if e.Chaos.Restart.FilterToStart == nil {
+		e.Chaos.Restart.FilterToStart = make([]LogFilter, 0)
+	}
+
+	e.Chaos.Restart.FilterToStart = append(
+		e.Chaos.Restart.FilterToStart, LogFilter{
 			Match:   match,
 			Filter:  filter,
 			Search:  search,
@@ -257,26 +259,26 @@ func (e *Configuration) AddCaosRestartFilter(match, filter, search, replace stri
 	return e
 }
 
-func (e *Configuration) AddCaosRestartInterval(min, max time.Duration) (configuration *Configuration) {
+func (e *Configuration) AddASineOfChaosSettingRestartInterval(min, max time.Duration) (configuration *Configuration) {
 
-	if e.Caos.Restart == nil {
-		e.Caos.Restart = &Restart{}
+	if e.Chaos.Restart == nil {
+		e.Chaos.Restart = &Restart{}
 	}
 
-	e.Caos.Restart.TimeToStart.Min = min
-	e.Caos.Restart.TimeToStart.Max = max
+	e.Chaos.Restart.TimeToStart.Min = min
+	e.Chaos.Restart.TimeToStart.Max = max
 
 	return e
 }
 
-func (e *Configuration) AddCaosRestartController(probability float64, limit int) (configuration *Configuration) {
+func (e *Configuration) AddASineOfChaosSettingRestartIntervalRestartController(probability float64, limit int) (configuration *Configuration) {
 
-	if e.Caos.Restart == nil {
-		e.Caos.Restart = &Restart{}
+	if e.Chaos.Restart == nil {
+		e.Chaos.Restart = &Restart{}
 	}
 
-	e.Caos.Restart.RestartProbability = probability
-	e.Caos.Restart.RestartLimit = limit
+	e.Chaos.Restart.RestartProbability = probability
+	e.Chaos.Restart.RestartLimit = limit
 
 	return e
 }
@@ -286,6 +288,12 @@ func (e *Theater) Init() (err error) {
 	e.errchannel = make(chan error)
 
 	err = e.buildAll()
+	if err != nil {
+		util.TraceToLog()
+		return
+	}
+
+	err = e.startPrologueScene()
 	if err != nil {
 		util.TraceToLog()
 		return
@@ -361,25 +369,25 @@ func (e *Theater) manager() {
 
 		inspect, err = container.Docker.ContainerInspect()
 		if err != nil {
-			lineNumber = TraceToLog()
+			lineNumber = traceLineFromCode()
 			e.errchannel <- errors.New(strconv.Itoa(lineNumber) + " - " + container.Docker.GetContainerName() + ".error: " + err.Error())
 			continue
 		}
 
 		if inspect.State.OOMKilled == true {
-			lineNumber = TraceToLog()
+			lineNumber = traceLineFromCode()
 			e.errchannel <- errors.New(strconv.Itoa(lineNumber) + " - " + container.Docker.GetContainerName() + ".error: OOMKilled")
 			continue
 		}
 
 		if inspect.State.Dead == true {
-			lineNumber = TraceToLog()
+			lineNumber = traceLineFromCode()
 			e.errchannel <- errors.New(strconv.Itoa(lineNumber) + " - " + container.Docker.GetContainerName() + ".error: dead")
 			continue
 		}
 
 		if container.containerStopped == false && inspect.State.ExitCode != 0 {
-			lineNumber = TraceToLog()
+			lineNumber = traceLineFromCode()
 			e.errchannel <- errors.New(strconv.Itoa(lineNumber) + " - " + container.Docker.GetContainerName() + ".error: exit code " + strconv.Itoa(inspect.State.ExitCode))
 			continue
 		}
@@ -387,19 +395,19 @@ func (e *Theater) manager() {
 		if (container.containerStopped == true || container.containerPaused == true) != true {
 
 			if inspect.State.Running == false {
-				lineNumber = TraceToLog()
+				lineNumber = traceLineFromCode()
 				e.errchannel <- errors.New(strconv.Itoa(lineNumber) + " - " + container.Docker.GetContainerName() + ".error: not running")
 				continue
 			}
 
 			if inspect.State.Paused == true {
-				lineNumber = TraceToLog()
+				lineNumber = traceLineFromCode()
 				e.errchannel <- errors.New(container.Docker.GetContainerName() + ".error: paused")
 				continue
 			}
 
 			if inspect.State.Restarting == true {
-				lineNumber = TraceToLog()
+				lineNumber = traceLineFromCode()
 				e.errchannel <- errors.New(strconv.Itoa(lineNumber) + " - " + container.Docker.GetContainerName() + ".error: restarting")
 				continue
 			}
@@ -409,7 +417,7 @@ func (e *Theater) manager() {
 		logs, err = container.Docker.GetContainerLog()
 
 		if err != nil {
-			lineNumber = TraceToLog()
+			lineNumber = traceLineFromCode()
 			e.errchannel <- errors.New(strconv.Itoa(lineNumber) + " - " + container.Docker.GetContainerName() + ".error: " + err.Error())
 			continue
 		}
@@ -418,7 +426,7 @@ func (e *Theater) manager() {
 
 		err = e.writeContainerLogToFile(container.LogPath, lineList, container)
 		if err != nil {
-			lineNumber = TraceToLog()
+			lineNumber = traceLineFromCode()
 			e.errchannel <- errors.New(strconv.Itoa(lineNumber) + " - " + container.Docker.GetContainerName() + ".error: " + err.Error())
 			continue
 		}
@@ -428,12 +436,12 @@ func (e *Theater) manager() {
 		}
 
 		if container.caosCanRestart == false {
-			if container.Caos.Restart != nil && container.Caos.Restart.FilterToStart == nil && (container.Caos.Restart.TimeToStart.Min > 0 || container.Caos.Restart.TimeToStart.Max > 0) {
+			if container.Chaos.Restart != nil && container.Chaos.Restart.FilterToStart == nil && (container.Chaos.Restart.TimeToStart.Min > 0 || container.Chaos.Restart.TimeToStart.Max > 0) {
 				container.caosCanRestart = true
-				timeToNextEvent = e.selectBetweenMaxAndMin(container.Caos.Restart.TimeToStart.Max, container.Caos.Restart.TimeToStart.Min)
-				container.Caos.Restart.minimumEventTime = time.Now().Add(timeToNextEvent)
-			} else if container.Caos.Restart != nil {
-				_, found = e.logsSearchSimplesText(lineList, container.Caos.Restart.FilterToStart)
+				timeToNextEvent = e.selectBetweenMaxAndMin(container.Chaos.Restart.TimeToStart.Max, container.Chaos.Restart.TimeToStart.Min)
+				container.Chaos.Restart.minimumEventTime = time.Now().Add(timeToNextEvent)
+			} else if container.Chaos.Restart != nil {
+				_, found = e.logsSearchSimplesText(lineList, container.Chaos.Restart.FilterToStart)
 				if container.caosCanRestart == false {
 					if found == true {
 						container.caosCanRestart = true
@@ -443,10 +451,10 @@ func (e *Theater) manager() {
 		}
 
 		// flag o caos pode ser inicializado
-		_, found = e.logsSearchSimplesText(lineList, container.Caos.FilterToStart)
+		_, found = e.logsSearchSimplesText(lineList, container.Chaos.FilterToStart)
 		if container.caosStarted == false && found == true {
 			container.caosStarted = true
-			timeToNextEvent = e.selectBetweenMaxAndMin(container.Caos.TimeToStart.Max, container.Caos.TimeToStart.Min)
+			timeToNextEvent = e.selectBetweenMaxAndMin(container.Chaos.TimeToStart.Max, container.Chaos.TimeToStart.Min)
 			container.eventNext = time.Now().Add(timeToNextEvent)
 		}
 
@@ -464,7 +472,7 @@ func (e *Theater) manager() {
 			container.testEnd = true
 		}
 
-		var restartEnable = time.Now().After(container.Caos.Restart.minimumEventTime) == true || time.Now().Equal(container.Caos.Restart.minimumEventTime) == true
+		var restartEnable = time.Now().After(container.Chaos.Restart.minimumEventTime) == true || time.Now().Equal(container.Chaos.Restart.minimumEventTime) == true
 
 		if time.Now().After(container.eventNext) == true || time.Now().Equal(container.eventNext) == true {
 
@@ -477,7 +485,7 @@ func (e *Theater) manager() {
 					e.errchannel <- errors.New(container.Docker.GetContainerName() + ".error: " + err.Error())
 					continue
 				}
-				timeToNextEvent = e.selectBetweenMaxAndMin(container.Caos.TimeToPause.Max, container.Caos.TimeToPause.Min)
+				timeToNextEvent = e.selectBetweenMaxAndMin(container.Chaos.TimeToPause.Max, container.Chaos.TimeToPause.Min)
 				container.eventNext = time.Now().Add(timeToNextEvent)
 
 			} else if container.containerStopped == true {
@@ -490,10 +498,10 @@ func (e *Theater) manager() {
 					util.TraceToLog()
 					continue
 				}
-				timeToNextEvent = e.selectBetweenMaxAndMin(container.Caos.TimeToPause.Max, container.Caos.TimeToPause.Min)
+				timeToNextEvent = e.selectBetweenMaxAndMin(container.Chaos.TimeToPause.Max, container.Chaos.TimeToPause.Min)
 				container.eventNext = time.Now().Add(timeToNextEvent)
 
-			} else if restartEnable == true && container.caosCanRestart == true && container.Caos.Restart != nil && container.Caos.Restart.RestartProbability >= probality && container.Caos.Restart.RestartLimit > 0 {
+			} else if restartEnable == true && container.caosCanRestart == true && container.Chaos.Restart != nil && container.Chaos.Restart.RestartProbability >= probality && container.Chaos.Restart.RestartLimit > 0 {
 
 				log.Printf("stop()")
 				container.containerStopped = true
@@ -503,8 +511,8 @@ func (e *Theater) manager() {
 					util.TraceToLog()
 					continue
 				}
-				container.Caos.Restart.RestartLimit -= 1
-				timeToNextEvent = e.selectBetweenMaxAndMin(container.Caos.TimeToStart.Max, container.Caos.TimeToStart.Min)
+				container.Chaos.Restart.RestartLimit -= 1
+				timeToNextEvent = e.selectBetweenMaxAndMin(container.Chaos.TimeToStart.Max, container.Chaos.TimeToStart.Min)
 				container.eventNext = time.Now().Add(timeToNextEvent)
 
 			} else {
@@ -517,7 +525,7 @@ func (e *Theater) manager() {
 					util.TraceToLog()
 					continue
 				}
-				timeToNextEvent = e.selectBetweenMaxAndMin(container.Caos.TimeToUnpause.Max, container.Caos.TimeToUnpause.Min)
+				timeToNextEvent = e.selectBetweenMaxAndMin(container.Chaos.TimeToUnpause.Max, container.Chaos.TimeToUnpause.Min)
 				container.eventNext = time.Now().Add(timeToNextEvent)
 
 			}
@@ -525,7 +533,7 @@ func (e *Theater) manager() {
 	}
 }
 
-func (e *Theater) AddCache(container *Configuration) (err error) {
+func (e *Theater) AddImageConfigurationUsedAsCache(container *Configuration) (err error) {
 	if e.sceneCache == nil {
 		e.sceneCache = make([]*Configuration, 0)
 	}
@@ -598,7 +606,7 @@ func (e *Theater) buildCache() (err error) {
 	return
 }
 
-func (e *Theater) AddContainers(container *Configuration) (err error) {
+func (e *Theater) AddContainerConfiguration(container *Configuration) (err error) {
 	if e.sceneBuilding == nil {
 		e.sceneBuilding = make([]*Configuration, 0)
 	}
@@ -621,6 +629,7 @@ func (e *Theater) AddContainers(container *Configuration) (err error) {
 	}
 
 	e.sceneBuilding = append(e.sceneBuilding, container)
+	e.sceneCaos = append(e.sceneCaos, container)
 
 	return
 }
@@ -662,7 +671,7 @@ func (e *Theater) buildContainers() (err error) {
 	return
 }
 
-func (e *Theater) AddContainerToPrologueScene(container *Configuration) (err error) {
+func (e *Theater) AddContainerAddContainerConfigurationToPrologueScene(container *Configuration) (err error) {
 	if e.scenePrologue == nil {
 		e.scenePrologue = make([]*Configuration, 0)
 	}
@@ -686,21 +695,6 @@ func (e *Theater) startPrologueScene() (err error) {
 			return
 		}
 	}
-
-	return
-}
-
-func (e *Theater) AddContainerToCaosScene(container *Configuration) (err error) {
-	if e.sceneCaos == nil {
-		e.sceneCaos = make([]*Configuration, 0)
-	}
-
-	if container.Docker.GetInitialized() == true {
-		err = errors.New("do not initialize the container")
-		return
-	}
-
-	e.sceneCaos = append(e.sceneCaos, container)
 
 	return
 }
@@ -749,12 +743,6 @@ func (e *Theater) buildAll() (err error) {
 	}
 
 	err = e.buildContainers()
-	if err != nil {
-		util.TraceToLog()
-		return
-	}
-
-	err = e.startPrologueScene()
 	if err != nil {
 		util.TraceToLog()
 		return
@@ -1602,7 +1590,7 @@ func (e *Theater) getRandSeed() (seed *rand.Rand) {
 	return rand.New(source)
 }
 
-func TraceToLog() (line int) {
+func traceLineFromCode() (line int) {
 	var ok bool
 
 	_, _, line, ok = runtime.Caller(1)
