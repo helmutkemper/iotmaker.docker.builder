@@ -1,3 +1,11 @@
+// package theater
+//
+// Português: Monta um teatro de containers com senas lineares ou de caos, permitindo ao desenvolvedor montar em sua
+// máquina de trabalho testes de micro caos durante o desenvolvimento das suas aplicações.
+//
+// Para entender melhor o uso de senários de micro caos, imagine o desenvolvimento de aplicações se comunicando com
+// outras aplicações, onde a pausa e reinício aleatórios dos containers ajuda a entender melhor o
+// comportamento do projeto quando algo dá errado e a comunicação falha.
 package theater
 
 import (
@@ -22,13 +30,12 @@ type Theater struct {
 	sceneCache    []*Configuration
 	sceneBuilding []*Configuration
 	scenePrologue []*Configuration
-	sceneCaos     []*Configuration
-
-	refCaos []*Configuration
+	//sceneCaos     []*Configuration
 
 	ticker *time.Ticker
 
-	errchannel chan error
+	errChannel     chan error
+	successChannel chan struct{}
 
 	cpus int
 }
@@ -285,7 +292,13 @@ func (e *Configuration) AddASineOfChaosSettingRestartIntervalRestartController(p
 
 func (e *Theater) Init() (err error) {
 
-	e.errchannel = make(chan error)
+	if e.sceneBuilding == nil {
+		err = errors.New("reference of scenes is empty")
+		return
+	}
+
+	e.errChannel = make(chan error)
+	e.successChannel = make(chan struct{})
 
 	err = e.buildAll()
 	if err != nil {
@@ -318,7 +331,7 @@ func (e *Theater) Init() (err error) {
 	go func() {
 		for {
 			select {
-			case err := <-e.errchannel:
+			case err := <-e.errChannel:
 				log.Printf("error: %v", err)
 			}
 		}
@@ -363,32 +376,32 @@ func (e *Theater) manager() {
 
 	var inspect iotmakerdocker.ContainerInspect
 
-	for _, container := range e.refCaos {
+	for _, container := range e.sceneBuilding {
 
 		probality = e.getProbalityNumber()
 
 		inspect, err = container.Docker.ContainerInspect()
 		if err != nil {
 			lineNumber = traceLineFromCode()
-			e.errchannel <- errors.New(strconv.Itoa(lineNumber) + " - " + container.Docker.GetContainerName() + ".error: " + err.Error())
+			e.errChannel <- errors.New(strconv.Itoa(lineNumber) + " - " + container.Docker.GetContainerName() + ".error: " + err.Error())
 			continue
 		}
 
 		if inspect.State.OOMKilled == true {
 			lineNumber = traceLineFromCode()
-			e.errchannel <- errors.New(strconv.Itoa(lineNumber) + " - " + container.Docker.GetContainerName() + ".error: OOMKilled")
+			e.errChannel <- errors.New(strconv.Itoa(lineNumber) + " - " + container.Docker.GetContainerName() + ".error: OOMKilled")
 			continue
 		}
 
 		if inspect.State.Dead == true {
 			lineNumber = traceLineFromCode()
-			e.errchannel <- errors.New(strconv.Itoa(lineNumber) + " - " + container.Docker.GetContainerName() + ".error: dead")
+			e.errChannel <- errors.New(strconv.Itoa(lineNumber) + " - " + container.Docker.GetContainerName() + ".error: dead")
 			continue
 		}
 
 		if container.containerStopped == false && inspect.State.ExitCode != 0 {
 			lineNumber = traceLineFromCode()
-			e.errchannel <- errors.New(strconv.Itoa(lineNumber) + " - " + container.Docker.GetContainerName() + ".error: exit code " + strconv.Itoa(inspect.State.ExitCode))
+			e.errChannel <- errors.New(strconv.Itoa(lineNumber) + " - " + container.Docker.GetContainerName() + ".error: exit code " + strconv.Itoa(inspect.State.ExitCode))
 			continue
 		}
 
@@ -396,19 +409,19 @@ func (e *Theater) manager() {
 
 			if inspect.State.Running == false {
 				lineNumber = traceLineFromCode()
-				e.errchannel <- errors.New(strconv.Itoa(lineNumber) + " - " + container.Docker.GetContainerName() + ".error: not running")
+				e.errChannel <- errors.New(strconv.Itoa(lineNumber) + " - " + container.Docker.GetContainerName() + ".error: not running")
 				continue
 			}
 
 			if inspect.State.Paused == true {
 				lineNumber = traceLineFromCode()
-				e.errchannel <- errors.New(container.Docker.GetContainerName() + ".error: paused")
+				e.errChannel <- errors.New(container.Docker.GetContainerName() + ".error: paused")
 				continue
 			}
 
 			if inspect.State.Restarting == true {
 				lineNumber = traceLineFromCode()
-				e.errchannel <- errors.New(strconv.Itoa(lineNumber) + " - " + container.Docker.GetContainerName() + ".error: restarting")
+				e.errChannel <- errors.New(strconv.Itoa(lineNumber) + " - " + container.Docker.GetContainerName() + ".error: restarting")
 				continue
 			}
 
@@ -418,7 +431,7 @@ func (e *Theater) manager() {
 
 		if err != nil {
 			lineNumber = traceLineFromCode()
-			e.errchannel <- errors.New(strconv.Itoa(lineNumber) + " - " + container.Docker.GetContainerName() + ".error: " + err.Error())
+			e.errChannel <- errors.New(strconv.Itoa(lineNumber) + " - " + container.Docker.GetContainerName() + ".error: " + err.Error())
 			continue
 		}
 
@@ -427,7 +440,7 @@ func (e *Theater) manager() {
 		err = e.writeContainerLogToFile(container.LogPath, lineList, container)
 		if err != nil {
 			lineNumber = traceLineFromCode()
-			e.errchannel <- errors.New(strconv.Itoa(lineNumber) + " - " + container.Docker.GetContainerName() + ".error: " + err.Error())
+			e.errChannel <- errors.New(strconv.Itoa(lineNumber) + " - " + container.Docker.GetContainerName() + ".error: " + err.Error())
 			continue
 		}
 
@@ -464,7 +477,7 @@ func (e *Theater) manager() {
 
 		line, found = e.logsSearchSimplesText(lineList, container.Fail)
 		if found == true {
-			e.errchannel <- errors.New(container.Docker.GetContainerName() + ".error: test fail - " + string(line))
+			e.errChannel <- errors.New(container.Docker.GetContainerName() + ".error: test fail - " + string(line))
 		}
 
 		line, found = e.logsSearchSimplesText(lineList, container.End)
@@ -482,7 +495,7 @@ func (e *Theater) manager() {
 				container.containerPaused = false
 				err = container.Docker.ContainerUnpause()
 				if err != nil {
-					e.errchannel <- errors.New(container.Docker.GetContainerName() + ".error: " + err.Error())
+					e.errChannel <- errors.New(container.Docker.GetContainerName() + ".error: " + err.Error())
 					continue
 				}
 				timeToNextEvent = e.selectBetweenMaxAndMin(container.Chaos.TimeToPause.Max, container.Chaos.TimeToPause.Min)
@@ -494,7 +507,7 @@ func (e *Theater) manager() {
 				container.containerStopped = false
 				err = container.Docker.ContainerStart()
 				if err != nil {
-					e.errchannel <- errors.New(container.Docker.GetContainerName() + ".error: " + err.Error())
+					e.errChannel <- errors.New(container.Docker.GetContainerName() + ".error: " + err.Error())
 					util.TraceToLog()
 					continue
 				}
@@ -507,7 +520,7 @@ func (e *Theater) manager() {
 				container.containerStopped = true
 				err = container.Docker.ContainerStop()
 				if err != nil {
-					e.errchannel <- errors.New(container.Docker.GetContainerName() + ".error: " + err.Error())
+					e.errChannel <- errors.New(container.Docker.GetContainerName() + ".error: " + err.Error())
 					util.TraceToLog()
 					continue
 				}
@@ -521,7 +534,7 @@ func (e *Theater) manager() {
 				container.containerPaused = true
 				err = container.Docker.ContainerPause()
 				if err != nil {
-					e.errchannel <- errors.New(container.Docker.GetContainerName() + ".error: " + err.Error())
+					e.errChannel <- errors.New(container.Docker.GetContainerName() + ".error: " + err.Error())
 					util.TraceToLog()
 					continue
 				}
@@ -591,12 +604,7 @@ func (e *Theater) buildCache() (err error) {
 			return
 		}
 
-		var buildPath = container.Docker.GetBuildFolderPath()
-		if buildPath != "" {
-			err = container.Docker.ImageBuildFromFolder()
-		} else {
-			err = container.Docker.ImageBuildFromServer()
-		}
+		err = e.buildImage(container.Docker)
 		if err != nil {
 			util.TraceToLog()
 			return
@@ -629,7 +637,22 @@ func (e *Theater) AddContainerConfiguration(container *Configuration) (err error
 	}
 
 	e.sceneBuilding = append(e.sceneBuilding, container)
-	e.sceneCaos = append(e.sceneCaos, container)
+
+	return
+}
+
+func (e *Theater) buildImage(docker *dockerBuild.ContainerBuilder) (err error) {
+	var buildPath = docker.GetBuildFolderPath()
+	var url = docker.GetGitCloneToBuild()
+
+	if buildPath != "" {
+		err = docker.ImageBuildFromFolder()
+	} else if url != "" {
+		err = docker.ImageBuildFromServer()
+	}
+	if err != nil {
+		util.TraceToLog()
+	}
 
 	return
 }
@@ -650,12 +673,7 @@ func (e *Theater) buildContainers() (err error) {
 			return
 		}
 
-		var buildPath = container.Docker.GetBuildFolderPath()
-		if buildPath != "" {
-			err = container.Docker.ImageBuildFromFolder()
-		} else {
-			err = container.Docker.ImageBuildFromServer()
-		}
+		err = e.buildImage(container.Docker)
 		if err != nil {
 			util.TraceToLog()
 			return
@@ -701,11 +719,12 @@ func (e *Theater) startPrologueScene() (err error) {
 
 func (e *Theater) startCaosScene() (err error) {
 
-	if e.refCaos == nil {
-		e.refCaos = make([]*Configuration, 0)
+	if e.sceneBuilding == nil {
+		err = errors.New("reference of scenes is empty")
+		return
 	}
 
-	for _, container := range e.sceneCaos {
+	for _, container := range e.sceneBuilding {
 
 		if container.Docker.GetInitialized() == false {
 			err = container.Docker.Init()
@@ -717,25 +736,24 @@ func (e *Theater) startCaosScene() (err error) {
 
 		container.containerStarted = true
 
-		if container.Docker.GetContainerIsStarted() == true {
-			continue
+		if container.Docker.GetContainerIsStarted() == false {
+			err = container.Docker.ContainerStartAfterBuild()
+			if err != nil {
+				util.TraceToLog()
+				return
+			}
 		}
-
-		err = container.Docker.ContainerStartAfterBuild()
-		if err != nil {
-			util.TraceToLog()
-			return
-		}
-	}
-
-	for _, container := range e.sceneCaos {
-		e.refCaos = append(e.refCaos, container)
 	}
 
 	return
 }
 
 func (e *Theater) buildAll() (err error) {
+	if e.sceneBuilding == nil {
+		err = errors.New("reference of scenes is empty")
+		return
+	}
+
 	err = e.buildCache()
 	if err != nil {
 		util.TraceToLog()
