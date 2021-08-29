@@ -1015,9 +1015,9 @@ func (e *Theater) writeContainerLogToFile(path string, lineList [][]byte, config
 		}
 	}
 
-	for _, cpuTime := range stats.CPUStats.CPUUsage.PercpuUsage {
+	for cpuNumber, cpuTime := range stats.CPUStats.CPUUsage.PercpuUsage {
 		if makeLabel == true {
-			_, err = file.Write([]byte("Total CPU time consumed per core (Units: nanoseconds on Linux). Not used on Windows.\t"))
+			_, err = file.Write([]byte(fmt.Sprintf("Total CPU time consumed per core (Units: nanoseconds on Linux). Not used on Windows. CPU: %v\t", cpuNumber)))
 			if err != nil {
 				util.TraceToLog()
 				return

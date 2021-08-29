@@ -73,7 +73,7 @@ func buildServerContainer(t *testing.T) (container builder.ContainerBuilder) {
 	// change and open port 3000 to 3030
 	container.AddPortToExpose("3000")
 
-	container.SetImageBuildOptionsMemory(19 * builder.KMegaByte)
+	container.SetImageBuildOptionsMemory(500 * builder.KMegaByte)
 
 	// replace container folder /static to host folder ./test/static
 	err = container.AddFileOrFolderToLinkBetweenConputerHostAndContainer("../test/static", "/static")
