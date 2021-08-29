@@ -21,7 +21,9 @@ func TestTheater_AddContainers(t *testing.T) {
 		AddFilterToLog("contador", "blabla", "^.*?counter: (?P<valueToGet>[\\d\\.]+)", "\\.", ",").
 		AddCaosPauseDuration(time.Second, 3*time.Second).
 		AddCaosUnpauseDuration(time.Second, 3*time.Second).
-		AddCaosStartDuration(time.Second, 3*time.Second)
+		AddCaosStartDuration(time.Second, 3*time.Second).
+		AddCaosRestartInterval(1*time.Second, 2*time.Second).
+		AddCaosRestartController(0.5, 2)
 
 	var theater = Theater{}
 	err = theater.AddContainers(server)

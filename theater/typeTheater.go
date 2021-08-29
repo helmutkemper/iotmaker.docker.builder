@@ -13,6 +13,7 @@ import (
 	"math/rand"
 	"os"
 	"regexp"
+	"runtime"
 	"strconv"
 	"time"
 )
@@ -26,6 +27,8 @@ type Theater struct {
 	refCaos []*Configuration
 
 	ticker *time.Ticker
+
+	errchannel chan error
 }
 
 type Timers struct {
@@ -54,6 +57,8 @@ type Restart struct {
 	TimeToStart        Timers
 	RestartProbability float64
 	RestartLimit       int
+
+	minimumEventTime time.Time
 }
 
 type Caos struct {
@@ -83,8 +88,6 @@ type Configuration struct {
 	containerStopped bool
 
 	testEnd bool
-
-	err chan error
 
 	eventNext time.Time
 }
@@ -277,6 +280,9 @@ func (e *Configuration) AddCaosRestartController(probability float64, limit int)
 }
 
 func (e *Theater) Init() (err error) {
+
+	e.errchannel = make(chan error)
+
 	err = e.buildAll()
 	if err != nil {
 		util.TraceToLog()
@@ -295,6 +301,15 @@ func (e *Theater) Init() (err error) {
 			select {
 			case <-e.ticker.C:
 				e.manager()
+			}
+		}
+	}()
+
+	go func() {
+		for {
+			select {
+			case err := <-e.errchannel:
+				log.Printf("error: %v", err)
 			}
 		}
 	}()
@@ -334,6 +349,7 @@ func (e *Theater) manager() {
 	var found bool
 	var timeToNextEvent time.Duration
 	var probality float64
+	var lineNumber int
 
 	var inspect iotmakerdocker.ContainerInspect
 
@@ -343,55 +359,56 @@ func (e *Theater) manager() {
 
 		inspect, err = container.Docker.ContainerInspect()
 		if err != nil {
-			util.TraceToLog()
-			log.Printf("Inspect().error: %v", err)
-			container.err <- errors.New(container.Docker.GetContainerName() + ".error: " + err.Error())
+			lineNumber = TraceToLog()
+			e.errchannel <- errors.New(strconv.Itoa(lineNumber) + " - " + container.Docker.GetContainerName() + ".error: " + err.Error())
 			continue
 		}
 
 		if inspect.State.OOMKilled == true {
-			log.Printf("Inspect().error: OOMKilled")
-			container.err <- errors.New(container.Docker.GetContainerName() + ".error: OOMKilled")
+			lineNumber = TraceToLog()
+			e.errchannel <- errors.New(strconv.Itoa(lineNumber) + " - " + container.Docker.GetContainerName() + ".error: OOMKilled")
 			continue
 		}
 
 		if inspect.State.Dead == true {
-			log.Printf("Inspect().error: dead")
-			container.err <- errors.New(container.Docker.GetContainerName() + ".error: dead")
+			lineNumber = TraceToLog()
+			e.errchannel <- errors.New(strconv.Itoa(lineNumber) + " - " + container.Docker.GetContainerName() + ".error: dead")
 			continue
 		}
 
-		if inspect.State.ExitCode != 0 {
-			log.Printf("Inspect().error: exit code: %v", strconv.Itoa(inspect.State.ExitCode))
-			container.err <- errors.New(container.Docker.GetContainerName() + ".error: exit code " + strconv.Itoa(inspect.State.ExitCode))
+		if container.containerStopped == false && inspect.State.ExitCode != 0 {
+			lineNumber = TraceToLog()
+			e.errchannel <- errors.New(strconv.Itoa(lineNumber) + " - " + container.Docker.GetContainerName() + ".error: exit code " + strconv.Itoa(inspect.State.ExitCode))
 			continue
 		}
 
 		if (container.containerStopped == true || container.containerPaused == true) != true {
+
 			if inspect.State.Running == false {
-				container.err <- errors.New(container.Docker.GetContainerName() + ".error: not running")
-				log.Printf("error: %V", errors.New(container.Docker.GetContainerName()+".error: not running"))
+				lineNumber = TraceToLog()
+				e.errchannel <- errors.New(strconv.Itoa(lineNumber) + " - " + container.Docker.GetContainerName() + ".error: not running")
 				continue
 			}
 
 			if inspect.State.Paused == true {
-				container.err <- errors.New(container.Docker.GetContainerName() + ".error: paused")
-				log.Printf("error: %V", errors.New(container.Docker.GetContainerName()+".error: not running"))
+				lineNumber = TraceToLog()
+				e.errchannel <- errors.New(container.Docker.GetContainerName() + ".error: paused")
 				continue
 			}
 
 			if inspect.State.Restarting == true {
-				container.err <- errors.New(container.Docker.GetContainerName() + ".error: restarting")
-				log.Printf("error: %V", errors.New(container.Docker.GetContainerName()+".error: not running"))
+				lineNumber = TraceToLog()
+				e.errchannel <- errors.New(strconv.Itoa(lineNumber) + " - " + container.Docker.GetContainerName() + ".error: restarting")
 				continue
 			}
+
 		}
 
 		logs, err = container.Docker.GetContainerLog()
+
 		if err != nil {
-			log.Printf("error: %v", errors.New(container.Docker.GetContainerName()+".error: "+err.Error()))
-			container.err <- errors.New(container.Docker.GetContainerName() + ".error: " + err.Error())
-			util.TraceToLog()
+			lineNumber = TraceToLog()
+			e.errchannel <- errors.New(strconv.Itoa(lineNumber) + " - " + container.Docker.GetContainerName() + ".error: " + err.Error())
 			continue
 		}
 
@@ -399,9 +416,8 @@ func (e *Theater) manager() {
 
 		err = e.writeContainerLogToFile(container.LogPath, lineList, container)
 		if err != nil {
-			log.Printf("error: %v", errors.New(container.Docker.GetContainerName()+".error: "+err.Error()))
-			container.err <- errors.New(container.Docker.GetContainerName() + ".error: " + err.Error())
-			util.TraceToLog()
+			lineNumber = TraceToLog()
+			e.errchannel <- errors.New(strconv.Itoa(lineNumber) + " - " + container.Docker.GetContainerName() + ".error: " + err.Error())
 			continue
 		}
 
@@ -409,12 +425,17 @@ func (e *Theater) manager() {
 			continue
 		}
 
-		// flag indicando que o container pode ser reiniciado
-		if container.Caos.Restart != nil {
-			_, found = e.logsSearchSimplesText(lineList, container.Caos.Restart.FilterToStart)
-			if container.caosCanRestart == false {
-				if found == true {
-					container.caosCanRestart = true
+		if container.caosCanRestart == false {
+			if container.Caos.Restart != nil && container.Caos.Restart.FilterToStart == nil && (container.Caos.Restart.TimeToStart.Min > 0 || container.Caos.Restart.TimeToStart.Max > 0) {
+				container.caosCanRestart = true
+				timeToNextEvent = e.selectBetweenMaxAndMin(container.Caos.Restart.TimeToStart.Max, container.Caos.Restart.TimeToStart.Min)
+				container.Caos.Restart.minimumEventTime = time.Now().Add(timeToNextEvent)
+			} else if container.Caos.Restart != nil {
+				_, found = e.logsSearchSimplesText(lineList, container.Caos.Restart.FilterToStart)
+				if container.caosCanRestart == false {
+					if found == true {
+						container.caosCanRestart = true
+					}
 				}
 			}
 		}
@@ -433,7 +454,7 @@ func (e *Theater) manager() {
 
 		line, found = e.logsSearchSimplesText(lineList, container.Fail)
 		if found == true {
-			container.err <- errors.New(container.Docker.GetContainerName() + ".error: test fail - " + string(line))
+			e.errchannel <- errors.New(container.Docker.GetContainerName() + ".error: test fail - " + string(line))
 		}
 
 		line, found = e.logsSearchSimplesText(lineList, container.End)
@@ -441,56 +462,63 @@ func (e *Theater) manager() {
 			container.testEnd = true
 		}
 
+		var restartEnable = time.Now().After(container.Caos.Restart.minimumEventTime) == true || time.Now().Equal(container.Caos.Restart.minimumEventTime) == true
+
 		if time.Now().After(container.eventNext) == true || time.Now().Equal(container.eventNext) == true {
 
 			if container.containerPaused == true {
 
-				log.Printf("unpause")
+				log.Printf("unpause()")
+				container.containerPaused = false
 				err = container.Docker.ContainerUnpause()
 				if err != nil {
-					container.err <- errors.New(container.Docker.GetContainerName() + ".error: " + err.Error())
-					util.TraceToLog()
+					e.errchannel <- errors.New(container.Docker.GetContainerName() + ".error: " + err.Error())
 					continue
 				}
 				timeToNextEvent = e.selectBetweenMaxAndMin(container.Caos.TimeToPause.Max, container.Caos.TimeToPause.Min)
+				container.eventNext = time.Now().Add(timeToNextEvent)
 
 			} else if container.containerStopped == true {
 
 				log.Printf("start()")
+				container.containerStopped = false
 				err = container.Docker.ContainerStart()
 				if err != nil {
-					container.err <- errors.New(container.Docker.GetContainerName() + ".error: " + err.Error())
+					e.errchannel <- errors.New(container.Docker.GetContainerName() + ".error: " + err.Error())
 					util.TraceToLog()
 					continue
 				}
 				timeToNextEvent = e.selectBetweenMaxAndMin(container.Caos.TimeToPause.Max, container.Caos.TimeToPause.Min)
+				container.eventNext = time.Now().Add(timeToNextEvent)
 
-			} else if container.caosCanRestart == true && container.Caos.Restart != nil && container.Caos.Restart.RestartProbability <= probality && container.Caos.Restart.RestartLimit > 0 {
+			} else if restartEnable == true && container.caosCanRestart == true && container.Caos.Restart != nil && container.Caos.Restart.RestartProbability >= probality && container.Caos.Restart.RestartLimit > 0 {
 
 				log.Printf("stop()")
+				container.containerStopped = true
 				err = container.Docker.ContainerStop()
 				if err != nil {
-					container.err <- errors.New(container.Docker.GetContainerName() + ".error: " + err.Error())
+					e.errchannel <- errors.New(container.Docker.GetContainerName() + ".error: " + err.Error())
 					util.TraceToLog()
 					continue
 				}
 				container.Caos.Restart.RestartLimit -= 1
 				timeToNextEvent = e.selectBetweenMaxAndMin(container.Caos.TimeToStart.Max, container.Caos.TimeToStart.Min)
+				container.eventNext = time.Now().Add(timeToNextEvent)
 
 			} else {
 
 				log.Printf("pause()")
+				container.containerPaused = true
 				err = container.Docker.ContainerPause()
 				if err != nil {
-					container.err <- errors.New(container.Docker.GetContainerName() + ".error: " + err.Error())
+					e.errchannel <- errors.New(container.Docker.GetContainerName() + ".error: " + err.Error())
 					util.TraceToLog()
 					continue
 				}
 				timeToNextEvent = e.selectBetweenMaxAndMin(container.Caos.TimeToUnpause.Max, container.Caos.TimeToUnpause.Min)
+				container.eventNext = time.Now().Add(timeToNextEvent)
 
 			}
-
-			container.eventNext = time.Now().Add(timeToNextEvent)
 		}
 	}
 }
@@ -690,6 +718,8 @@ func (e *Theater) startCaosScene() (err error) {
 				return
 			}
 		}
+
+		container.containerStarted = true
 
 		if container.Docker.GetContainerIsStarted() == true {
 			continue
@@ -1537,4 +1567,16 @@ func (e *Theater) selectBetweenMaxAndMin(max, min time.Duration) (selected time.
 func (e *Theater) getRandSeed() (seed *rand.Rand) {
 	source := rand.NewSource(time.Now().UnixNano())
 	return rand.New(source)
+}
+
+func TraceToLog() (line int) {
+	var ok bool
+
+	_, _, line, ok = runtime.Caller(1)
+	if !ok {
+		log.Printf("TraceToLog().error: runtime.Caller() unknown error")
+		return
+	}
+
+	return
 }
