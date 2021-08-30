@@ -30,19 +30,30 @@ type Theater struct {
 	sceneCache    []*Configuration
 	sceneBuilding []*Configuration
 	scenePrologue []*Configuration
-	//sceneCaos     []*Configuration
-
-	ticker *time.Ticker
-
-	errChannel     chan error
-	successChannel chan struct{}
-
-	cpus int
+	ticker        *time.Ticker
+	event         chan Event
+	cpus          int
 }
 
 type Timers struct {
 	Min time.Duration
 	Max time.Duration
+}
+
+type Event struct {
+	ContainerName string
+	Message       string
+	Error         bool
+	Done          bool
+	Fail          bool
+}
+
+func (e *Event) clear() {
+	e.ContainerName = ""
+	e.Message = ""
+	e.Done = false
+	e.Error = false
+	e.Fail = false
 }
 
 type LogFilter struct {
@@ -95,8 +106,6 @@ type Configuration struct {
 	containerStarted bool
 	containerPaused  bool
 	containerStopped bool
-
-	testEnd bool
 
 	eventNext time.Time
 }
@@ -166,7 +175,7 @@ func (e *Configuration) AddFilterToCaptureInformationOnTheContainersStandardOutp
 	return e
 }
 
-func (e *Configuration) AddASineOfChaosSettingFilterOnTheContainersStandardOutputToFailEvent(match, filter, search, replace string) (configuration *Configuration) {
+func (e *Configuration) AddASceneSettingFilterOnTheContainersStandardOutputToFailEvent(match, filter, search, replace string) (configuration *Configuration) {
 
 	if e.Fail == nil {
 		e.Fail = make([]LogFilter, 0)
@@ -184,7 +193,7 @@ func (e *Configuration) AddASineOfChaosSettingFilterOnTheContainersStandardOutpu
 	return e
 }
 
-func (e *Configuration) AddASineOfChaosSettingFilterOnTheContainersStandardOutputToEndEvent(match, filter, search, replace string) (configuration *Configuration) {
+func (e *Configuration) AddASceneSettingFilterOnTheContainersStandardOutputToEndEvent(match, filter, search, replace string) (configuration *Configuration) {
 
 	if e.End == nil {
 		e.End = make([]LogFilter, 0)
@@ -202,7 +211,7 @@ func (e *Configuration) AddASineOfChaosSettingFilterOnTheContainersStandardOutpu
 	return e
 }
 
-func (e *Configuration) AddASineOfChaosSettingFilterOnTheContainersStandardOutputToStartCaos(match, filter, search, replace string) (configuration *Configuration) {
+func (e *Configuration) AddASceneOfChaosSettingFilterOnTheContainersStandardOutputToStartCaos(match, filter, search, replace string) (configuration *Configuration) {
 
 	if e.Chaos.FilterToStart == nil {
 		e.Chaos.FilterToStart = make([]LogFilter, 0)
@@ -220,8 +229,8 @@ func (e *Configuration) AddASineOfChaosSettingFilterOnTheContainersStandardOutpu
 	return e
 }
 
-// AddASineOfChaosSettingPauseDuration
-func (e *Configuration) AddASineOfChaosSettingPauseDuration(min, max time.Duration) (configuration *Configuration) {
+// AddASceneOfChaosSettingPauseDuration
+func (e *Configuration) AddASceneOfChaosSettingPauseDuration(min, max time.Duration) (configuration *Configuration) {
 
 	e.Chaos.TimeToPause.Min = min
 	e.Chaos.TimeToPause.Max = max
@@ -239,7 +248,7 @@ func (e *Configuration) AddASineOfChaosSettingPauseDuration(min, max time.Durati
 	return e
 }
 
-func (e *Configuration) AddASineOfChaosSettingUnpauseDuration(min, max time.Duration) (configuration *Configuration) {
+func (e *Configuration) AddASceneOfChaosSettingUnpauseDuration(min, max time.Duration) (configuration *Configuration) {
 
 	e.Chaos.TimeToUnpause.Min = min
 	e.Chaos.TimeToUnpause.Max = max
@@ -257,7 +266,7 @@ func (e *Configuration) AddASineOfChaosSettingUnpauseDuration(min, max time.Dura
 	return e
 }
 
-func (e *Configuration) AddASineOfChaosSettingStartDuration(min, max time.Duration) (configuration *Configuration) {
+func (e *Configuration) AddASceneOfChaosSettingStartDuration(min, max time.Duration) (configuration *Configuration) {
 
 	e.Chaos.TimeToStart.Min = min
 	e.Chaos.TimeToStart.Max = max
@@ -275,7 +284,7 @@ func (e *Configuration) AddASineOfChaosSettingStartDuration(min, max time.Durati
 	return e
 }
 
-func (e *Configuration) AddASineOfChaosSettingStartDurationRestartFilterOnTheContainersStandardOutput(match, filter, search, replace string) (configuration *Configuration) {
+func (e *Configuration) AddASceneOfChaosSettingStartDurationRestartFilterOnTheContainersStandardOutput(match, filter, search, replace string) (configuration *Configuration) {
 
 	if e.Chaos.Restart == nil {
 		e.Chaos.Restart = &Restart{}
@@ -297,7 +306,7 @@ func (e *Configuration) AddASineOfChaosSettingStartDurationRestartFilterOnTheCon
 	return e
 }
 
-func (e *Configuration) AddASineOfChaosSettingRestartInterval(min, max time.Duration) (configuration *Configuration) {
+func (e *Configuration) AddASceneOfChaosSettingRestartInterval(min, max time.Duration) (configuration *Configuration) {
 
 	if e.Chaos.Restart == nil {
 		e.Chaos.Restart = &Restart{}
@@ -309,7 +318,7 @@ func (e *Configuration) AddASineOfChaosSettingRestartInterval(min, max time.Dura
 	return e
 }
 
-func (e *Configuration) AddASineOfChaosSettingRestartIntervalRestartController(probability float64, limit int) (configuration *Configuration) {
+func (e *Configuration) AddASceneOfChaosSettingRestartIntervalRestartController(probability float64, limit int) (configuration *Configuration) {
 
 	if e.Chaos.Restart == nil {
 		e.Chaos.Restart = &Restart{}
@@ -321,6 +330,10 @@ func (e *Configuration) AddASineOfChaosSettingRestartIntervalRestartController(p
 	return e
 }
 
+func (e *Theater) GetChannels() (eventChannel *chan Event) {
+	return &e.event
+}
+
 func (e *Theater) Init() (err error) {
 
 	if e.sceneBuilding == nil {
@@ -328,8 +341,7 @@ func (e *Theater) Init() (err error) {
 		return
 	}
 
-	e.errChannel = make(chan error)
-	e.successChannel = make(chan struct{})
+	e.event = make(chan Event)
 
 	err = e.buildAll()
 	if err != nil {
@@ -359,15 +371,6 @@ func (e *Theater) Init() (err error) {
 		}
 	}()
 
-	go func() {
-		for {
-			select {
-			case err := <-e.errChannel:
-				log.Printf("error: %v", err)
-			}
-		}
-	}()
-
 	return
 }
 
@@ -376,7 +379,8 @@ func (e *Theater) logsCleaner(logs []byte) [][]byte {
 	return bytes.Split(logs, []byte("\n"))
 }
 
-func (e *Theater) logsSearchSimplesText(lineList [][]byte, configuration []LogFilter) (line []byte, found bool) {
+func (e *Theater) logsSearchSimpleText(lineList [][]byte, configuration []LogFilter) (line []byte, found bool) {
+	var err error
 	if configuration == nil {
 		return
 	}
@@ -386,6 +390,35 @@ func (e *Theater) logsSearchSimplesText(lineList [][]byte, configuration []LogFi
 		for filterLine := 0; filterLine != len(configuration); filterLine += 1 {
 			line = lineList[logLine]
 			if bytes.Contains(line, []byte(configuration[filterLine].Match)) == true {
+
+				// *************************************************************************************************************
+				if configuration[filterLine].Filter != "" {
+
+					var re *regexp.Regexp
+					re, err = regexp.Compile(configuration[filterLine].Filter)
+					if err != nil {
+						util.TraceToLog()
+						log.Printf("regexp.Compile().error: %v", err)
+						log.Printf("regexp.Compile().error.filter: %v", configuration[filterLine].Filter)
+						continue
+					}
+
+					line = re.ReplaceAll(lineList[logLine], []byte("${valueToGet}"))
+
+					if configuration[filterLine].Search != "" {
+						re, err = regexp.Compile(configuration[filterLine].Search)
+						if err != nil {
+							util.TraceToLog()
+							log.Printf("regexp.Compile().error: %v", err)
+							log.Printf("regexp.Compile().error.filter: %v", configuration[filterLine].Search)
+							continue
+						}
+
+						line = re.ReplaceAll(line, []byte(configuration[filterLine].Replace))
+					}
+				}
+				// *************************************************************************************************************
+
 				found = true
 				return
 			}
@@ -404,6 +437,7 @@ func (e *Theater) manager() {
 	var timeToNextEvent time.Duration
 	var probality float64
 	var lineNumber int
+	var event Event
 
 	var inspect iotmakerdocker.ContainerInspect
 
@@ -414,25 +448,41 @@ func (e *Theater) manager() {
 		inspect, err = container.Docker.ContainerInspect()
 		if err != nil {
 			lineNumber = traceLineFromCode()
-			e.errChannel <- errors.New(strconv.Itoa(lineNumber) + " - " + container.Docker.GetContainerName() + ".error: " + err.Error())
+			event.clear()
+			event.ContainerName = container.Docker.GetContainerName()
+			event.Message = "[" + strconv.Itoa(lineNumber) + "]: " + err.Error()
+			event.Error = true
+			e.event <- event
 			continue
 		}
 
 		if inspect.State.OOMKilled == true {
 			lineNumber = traceLineFromCode()
-			e.errChannel <- errors.New(strconv.Itoa(lineNumber) + " - " + container.Docker.GetContainerName() + ".error: OOMKilled")
+			event.clear()
+			event.ContainerName = container.Docker.GetContainerName()
+			event.Message = "[" + strconv.Itoa(lineNumber) + "]: " + "OOMKilled"
+			event.Error = true
+			e.event <- event
 			continue
 		}
 
 		if inspect.State.Dead == true {
 			lineNumber = traceLineFromCode()
-			e.errChannel <- errors.New(strconv.Itoa(lineNumber) + " - " + container.Docker.GetContainerName() + ".error: dead")
+			event.clear()
+			event.ContainerName = container.Docker.GetContainerName()
+			event.Message = "[" + strconv.Itoa(lineNumber) + "]: " + "dead"
+			event.Error = true
+			e.event <- event
 			continue
 		}
 
 		if container.containerStopped == false && inspect.State.ExitCode != 0 {
 			lineNumber = traceLineFromCode()
-			e.errChannel <- errors.New(strconv.Itoa(lineNumber) + " - " + container.Docker.GetContainerName() + ".error: exit code " + strconv.Itoa(inspect.State.ExitCode))
+			event.clear()
+			event.ContainerName = container.Docker.GetContainerName()
+			event.Message = "[" + strconv.Itoa(lineNumber) + "]: " + "exit code: " + strconv.Itoa(inspect.State.ExitCode)
+			event.Error = true
+			e.event <- event
 			continue
 		}
 
@@ -440,39 +490,77 @@ func (e *Theater) manager() {
 
 			if inspect.State.Running == false {
 				lineNumber = traceLineFromCode()
-				e.errChannel <- errors.New(strconv.Itoa(lineNumber) + " - " + container.Docker.GetContainerName() + ".error: not running")
+				event.clear()
+				event.ContainerName = container.Docker.GetContainerName()
+				event.Message = "[" + strconv.Itoa(lineNumber) + "]: " + "not running"
+				event.Error = true
+				e.event <- event
 				continue
 			}
 
 			if inspect.State.Paused == true {
 				lineNumber = traceLineFromCode()
-				e.errChannel <- errors.New(container.Docker.GetContainerName() + ".error: paused")
+				event.clear()
+				event.ContainerName = container.Docker.GetContainerName()
+				event.Message = "[" + strconv.Itoa(lineNumber) + "]: " + "paused"
+				event.Error = true
+				e.event <- event
 				continue
 			}
 
 			if inspect.State.Restarting == true {
 				lineNumber = traceLineFromCode()
-				e.errChannel <- errors.New(strconv.Itoa(lineNumber) + " - " + container.Docker.GetContainerName() + ".error: restarting")
+				event.clear()
+				event.ContainerName = container.Docker.GetContainerName()
+				event.Message = "[" + strconv.Itoa(lineNumber) + "]: " + "restarting"
+				event.Error = true
+				e.event <- event
 				continue
 			}
 
 		}
 
 		logs, err = container.Docker.GetContainerLog()
-
 		if err != nil {
 			lineNumber = traceLineFromCode()
-			e.errChannel <- errors.New(strconv.Itoa(lineNumber) + " - " + container.Docker.GetContainerName() + ".error: " + err.Error())
+			event.clear()
+			event.ContainerName = container.Docker.GetContainerName()
+			event.Message = "[" + strconv.Itoa(lineNumber) + "]: " + err.Error()
+			event.Error = true
+			e.event <- event
 			continue
 		}
 
 		lineList = e.logsCleaner(logs)
-
 		err = e.writeContainerLogToFile(container.LogPath, lineList, container)
 		if err != nil {
 			lineNumber = traceLineFromCode()
-			e.errChannel <- errors.New(strconv.Itoa(lineNumber) + " - " + container.Docker.GetContainerName() + ".error: " + err.Error())
+			event.clear()
+			event.ContainerName = container.Docker.GetContainerName()
+			event.Message = "[" + strconv.Itoa(lineNumber) + "]: " + err.Error()
+			event.Error = true
+			e.event <- event
 			continue
+		}
+
+		line, found = e.logsSearchSimpleText(lineList, container.Fail)
+		if found == true {
+			lineNumber = traceLineFromCode()
+			event.clear()
+			event.ContainerName = container.Docker.GetContainerName()
+			event.Message = string(line)
+			event.Fail = true
+			e.event <- event
+		}
+
+		line, found = e.logsSearchSimpleText(lineList, container.End)
+		if found == true {
+			lineNumber = traceLineFromCode()
+			event.clear()
+			event.ContainerName = container.Docker.GetContainerName()
+			event.Message = string(line)
+			event.Done = true
+			e.event <- event
 		}
 
 		if container.linear == true {
@@ -485,7 +573,7 @@ func (e *Theater) manager() {
 				timeToNextEvent = e.selectBetweenMaxAndMin(container.Chaos.Restart.TimeToStart.Max, container.Chaos.Restart.TimeToStart.Min)
 				container.Chaos.Restart.minimumEventTime = time.Now().Add(timeToNextEvent)
 			} else if container.Chaos.Restart != nil {
-				_, found = e.logsSearchSimplesText(lineList, container.Chaos.Restart.FilterToStart)
+				_, found = e.logsSearchSimpleText(lineList, container.Chaos.Restart.FilterToStart)
 				if container.caosCanRestart == false {
 					if found == true {
 						container.caosCanRestart = true
@@ -495,7 +583,7 @@ func (e *Theater) manager() {
 		}
 
 		// flag o caos pode ser inicializado
-		_, found = e.logsSearchSimplesText(lineList, container.Chaos.FilterToStart)
+		_, found = e.logsSearchSimpleText(lineList, container.Chaos.FilterToStart)
 		if container.caosStarted == false && found == true {
 			container.caosStarted = true
 			timeToNextEvent = e.selectBetweenMaxAndMin(container.Chaos.TimeToStart.Max, container.Chaos.TimeToStart.Min)
@@ -504,16 +592,6 @@ func (e *Theater) manager() {
 
 		if container.containerStarted == false {
 			continue
-		}
-
-		line, found = e.logsSearchSimplesText(lineList, container.Fail)
-		if found == true {
-			e.errChannel <- errors.New(container.Docker.GetContainerName() + ".error: test fail - " + string(line))
-		}
-
-		line, found = e.logsSearchSimplesText(lineList, container.End)
-		if found == true {
-			container.testEnd = true
 		}
 
 		var restartEnable = time.Now().After(container.Chaos.Restart.minimumEventTime) == true || time.Now().Equal(container.Chaos.Restart.minimumEventTime) == true
@@ -526,7 +604,11 @@ func (e *Theater) manager() {
 				container.containerPaused = false
 				err = container.Docker.ContainerUnpause()
 				if err != nil {
-					e.errChannel <- errors.New(container.Docker.GetContainerName() + ".error: " + err.Error())
+					lineNumber = traceLineFromCode()
+					event.clear()
+					event.ContainerName = container.Docker.GetContainerName()
+					event.Message = "[" + strconv.Itoa(lineNumber) + "]: " + err.Error()
+					event.Error = true
 					continue
 				}
 				timeToNextEvent = e.selectBetweenMaxAndMin(container.Chaos.TimeToPause.Max, container.Chaos.TimeToPause.Min)
@@ -538,8 +620,11 @@ func (e *Theater) manager() {
 				container.containerStopped = false
 				err = container.Docker.ContainerStart()
 				if err != nil {
-					e.errChannel <- errors.New(container.Docker.GetContainerName() + ".error: " + err.Error())
-					util.TraceToLog()
+					lineNumber = traceLineFromCode()
+					event.clear()
+					event.ContainerName = container.Docker.GetContainerName()
+					event.Message = "[" + strconv.Itoa(lineNumber) + "]: " + err.Error()
+					event.Error = true
 					continue
 				}
 				timeToNextEvent = e.selectBetweenMaxAndMin(container.Chaos.TimeToPause.Max, container.Chaos.TimeToPause.Min)
@@ -551,8 +636,11 @@ func (e *Theater) manager() {
 				container.containerStopped = true
 				err = container.Docker.ContainerStop()
 				if err != nil {
-					e.errChannel <- errors.New(container.Docker.GetContainerName() + ".error: " + err.Error())
-					util.TraceToLog()
+					lineNumber = traceLineFromCode()
+					event.clear()
+					event.ContainerName = container.Docker.GetContainerName()
+					event.Message = "[" + strconv.Itoa(lineNumber) + "]: " + err.Error()
+					event.Error = true
 					continue
 				}
 				container.Chaos.Restart.RestartLimit -= 1
@@ -565,8 +653,11 @@ func (e *Theater) manager() {
 				container.containerPaused = true
 				err = container.Docker.ContainerPause()
 				if err != nil {
-					e.errChannel <- errors.New(container.Docker.GetContainerName() + ".error: " + err.Error())
-					util.TraceToLog()
+					lineNumber = traceLineFromCode()
+					event.clear()
+					event.ContainerName = container.Docker.GetContainerName()
+					event.Message = "[" + strconv.Itoa(lineNumber) + "]: " + err.Error()
+					event.Error = true
 					continue
 				}
 				timeToNextEvent = e.selectBetweenMaxAndMin(container.Chaos.TimeToUnpause.Max, container.Chaos.TimeToUnpause.Min)
