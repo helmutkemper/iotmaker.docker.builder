@@ -8,6 +8,131 @@ import (
 	"time"
 )
 
+func TestTheater_BuildFromImage(t *testing.T) {
+	var err error
+
+	builder.GarbageCollector()
+
+	// create a container
+	var containerNats = builder.ContainerBuilder{}
+	// imprime a saída padrão do container
+	containerNats.SetPrintBuildOnStrOut()
+	// set image name for docker pull
+	containerNats.SetImageName("nats:latest")
+	// set a container name
+	containerNats.SetContainerName("nats_delete_after_test")
+	// set a waits for the text to appear in the standard container output to proceed [optional]
+	containerNats.SetWaitStringWithTimeout("Listening for route connections on 0.0.0.0:6222", 10*time.Second)
+
+	var containerNatsConfiguration = NewTestContainerConfiguration(&containerNats).
+		SetASceneLinearFlag()
+
+	// Theater
+	var theater = Theater{}
+
+	// Add first scene
+	err = theater.AddContainerConfiguration(containerNatsConfiguration)
+	if err != nil {
+		util.TraceToLog()
+		log.Printf("err: %v", err)
+		t.Fail()
+	}
+
+	// Init theater
+	err = theater.Init()
+	if err != nil {
+		util.TraceToLog()
+		log.Printf("err: %v", err)
+		t.Fail()
+	}
+
+	builder.GarbageCollector()
+}
+
+func TestTheater_WriteStatsCSV(t *testing.T) {
+	var err error
+
+	builder.GarbageCollector()
+
+	var container = builder.ContainerBuilder{}
+	// imprime a saída padrão do container
+	container.SetPrintBuildOnStrOut()
+	// caso exista uma imagem de nome cache:latest, ela será usada como base para criar o container
+	container.SetCacheEnable(true)
+	// monta um dockerfile padrão para o golang onde o arquivo main.go e o arquivo go.mod devem está na pasta raiz
+	container.MakeDefaultDockerfileForMe()
+	// new image name delete:latest
+	container.SetImageName("delete:latest")
+	// set a folder path to make a new image
+	container.SetBuildFolderPath("../test/counter")
+	// container name container_delete_server_after_test
+	container.SetContainerName("container_delete_server_after_test")
+	// define o limite de memória
+	container.SetImageBuildOptionsMemory(100 * builder.KMegaByte)
+
+	// replace container folder /static to host folder ./test/static
+	err = container.AddFileOrFolderToLinkBetweenConputerHostAndContainer("../test/static", "/static")
+	if err != nil {
+		util.TraceToLog()
+		log.Printf("err: %v", err)
+		t.Fail()
+	}
+
+	var containerServerConfiguration = NewTestContainerConfiguration(&container).
+		SetContainerStatsLogPath("./server.log.csv").
+		AddASceneSettingFilterOnTheContainersStandardOutputToEndEvent("done!", "^.*?(?P<valueToGet>\\d+/\\d+/\\d+ \\d+:\\d+:\\d+ done!).*", "", "").
+		AddASceneSettingFilterOnTheContainersStandardOutputToFailEvent(
+			"counter: 20",
+			"^.*?(?P<valueToGet>\\d+/\\d+/\\d+ \\d+:\\d+:\\d+ counter: [\\d\\.]+).*",
+			"(?P<date>\\d+/\\d+/\\d+)\\s+(?P<hour>\\d+:\\d+:\\d+)\\s+counter:\\s+(?P<value>[\\d\\.]+).*",
+			"Value: ${value} - Hour: ${hour} - Date: ${date}",
+		).
+		SetASceneLinearFlag()
+
+	// Theater
+	var theater = Theater{}
+
+	// Add second scene
+	err = theater.AddContainerConfiguration(containerServerConfiguration)
+	if err != nil {
+		util.TraceToLog()
+		log.Printf("err: %v", err)
+		t.Fail()
+	}
+
+	// Init theater
+	err = theater.Init()
+	if err != nil {
+		util.TraceToLog()
+		log.Printf("err: %v", err)
+		t.Fail()
+	}
+
+	eventCh := theater.GetChannels()
+
+	select {
+	case event := <-*eventCh:
+		if event.Error == true {
+			t.Fail()
+			log.Printf("error: %v", event.Message)
+			break
+		}
+
+		if event.Done == true {
+			log.Printf("test pass: %v", event.Message)
+			break
+		}
+
+		if event.Fail == true {
+			t.Fail()
+			log.Printf("test fail: %v", event.Message)
+			break
+		}
+	}
+
+	builder.GarbageCollector()
+}
+
 func TestTheater_AddContainers(t *testing.T) {
 	var err error
 
