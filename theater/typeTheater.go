@@ -26,6 +26,190 @@ import (
 	"time"
 )
 
+const (
+
+	// KAll
+	//
+	// English: Enable all values to log
+	KAll = 0xFFFFFFFF
+
+	// KReadingTime
+	//
+	// English: Reading time
+	KReadingTime = 0b00000000000000000000000000000001
+
+	// KCurrentNumberOfOidsInTheCGroup
+	//
+	// English: Linux specific stats, not populated on Windows. Current is the number of pids in the cgroup
+	KCurrentNumberOfOidsInTheCGroup = 0b00000000000000000000000000000010
+
+	// KLimitOnTheNumberOfPidsInTheCGroup
+	//
+	// English: Linux specific stats, not populated on Windows. Limit is the hard limit on the number of pids in the cgroup. A "Limit" of 0 means that there is no limit.
+	KLimitOnTheNumberOfPidsInTheCGroup = 0b00000000000000000000000000000100
+
+	// KTotalCPUTimeConsumed
+	//
+	// English: Total CPU time consumed. (Units: nanoseconds on Linux, Units: 100's of nanoseconds on Windows)
+	KTotalCPUTimeConsumed = 0b00000000000000000000000000001000
+
+	// KTotalCPUTimeConsumedPerCore
+	//
+	// English: Total CPU time consumed. (Units: nanoseconds on Linux, Units: 100's of nanoseconds on Windows)
+	KTotalCPUTimeConsumedPerCore = 0b00000000000000000000000000010000
+
+	// KTimeSpentByTasksOfTheCGroupInKernelMode
+	//
+	// English: Time spent by tasks of the cgroup in kernel mode (Units: nanoseconds on Linux). Time spent by all container processes in kernel mode (Units: 100's of nanoseconds on Windows.Not populated for Hyper-V Containers.)
+	KTimeSpentByTasksOfTheCGroupInKernelMode = 0b00000000000000000000000000100000
+
+	// KTimeSpentByTasksOfTheCGroupInUserMode
+	//
+	// English: Time spent by tasks of the cgroup in user mode (Units: nanoseconds on Linux). Time spent by all container processes in user mode (Units: 100's of nanoseconds on Windows. Not populated for Hyper-V Containers)
+	KTimeSpentByTasksOfTheCGroupInUserMode = 0b00000000000000000000000001000000
+
+	// KSystemUsage
+	//
+	// English: System Usage. Linux only.
+	KSystemUsage = 0b00000000000000000000000010000000
+
+	// KOnlineCPUs
+	//
+	// English: Online CPUs. Linux only.
+	KOnlineCPUs = 0b00000000000000000000000100000000
+
+	// KNumberOfPeriodsWithThrottlingActive
+	//
+	// English: Throttling Data. Linux only. Number of periods with throttling active.
+	KNumberOfPeriodsWithThrottlingActive = 0b00000000000000000000001000000000
+
+	// KNumberOfPeriodsWhenTheContainerHitsItsThrottlingLimit
+	//
+	// English: Throttling Data. Linux only. Number of periods when the container hits its throttling limit.
+	KNumberOfPeriodsWhenTheContainerHitsItsThrottlingLimit = 0b00000000000000000000010000000000
+
+	// KAggregateTimeTheContainerWasThrottledForInNanoseconds
+	//
+	// English: Throttling Data. Linux only. Aggregate time the container was throttled for in nanoseconds.
+	KAggregateTimeTheContainerWasThrottledForInNanoseconds = 0b00000000000000000000100000000000
+
+	// KTotalPreCPUTimeConsumed
+	//
+	// English: Total CPU time consumed per core (Units: nanoseconds on Linux). Not used on Windows.
+	KTotalPreCPUTimeConsumed = 0b00000000000000000001000000000000
+
+	// KTotalPreCPUTimeConsumedPerCore
+	//
+	// English: Total CPU time consumed per core (Units: nanoseconds on Linux). Not used on Windows.
+	KTotalPreCPUTimeConsumedPerCore = 0b00000000000000000010000000000000
+
+	// KTimeSpentByPreCPUTasksOfTheCGroupInKernelMode
+	//
+	// English: Time spent by tasks of the cgroup in kernel mode (Units: nanoseconds on Linux) - Time spent by all container processes in kernel mode (Units: 100's of nanoseconds on Windows - Not populated for Hyper-V Containers.)
+	KTimeSpentByPreCPUTasksOfTheCGroupInKernelMode = 0b00000000000000000100000000000000
+
+	// KTimeSpentByPreCPUTasksOfTheCGroupInUserMode
+	//
+	// English: Time spent by tasks of the cgroup in user mode (Units: nanoseconds on Linux) - Time spent by all container processes in user mode (Units: 100's of nanoseconds on Windows. Not populated for Hyper-V Containers)
+	KTimeSpentByPreCPUTasksOfTheCGroupInUserMode = 0b00000000000000001000000000000000
+
+	// KPreCPUSystemUsage
+	//
+	// English: System Usage. (Linux only)
+	KPreCPUSystemUsage = 0b00000000000000010000000000000000
+
+	// KOnlinePreCPUs
+	//
+	// English: Online CPUs. (Linux only)
+	KOnlinePreCPUs = 0b00000000000000100000000000000000
+
+	// KAggregatePreCPUTimeTheContainerWasThrottled
+	//
+	// English: Throttling Data. (Linux only) - Aggregate time the container was throttled for in nanoseconds
+	KAggregatePreCPUTimeTheContainerWasThrottled = 0b00000000000001000000000000000000
+
+	// KNumberOfPeriodsWithPreCPUThrottlingActive
+	//
+	// English: Throttling Data. (Linux only) - Number of periods with throttling active
+	KNumberOfPeriodsWithPreCPUThrottlingActive = 0b00000000000010000000000000000000
+
+	// KNumberOfPeriodsWhenTheContainerPreCPUHitsItsThrottlingLimit
+	//
+	// English: Throttling Data. (Linux only) - Number of periods when the container hits its throttling limit.
+	KNumberOfPeriodsWhenTheContainerPreCPUHitsItsThrottlingLimit = 0b00000000000100000000000000000000
+
+	// KCurrentResCounterUsageForMemory
+	//
+	// English: Current res_counter usage for memory
+	KCurrentResCounterUsageForMemory = 0b00000000001000000000000000000000
+
+	// KMaximumUsageEverRecorded
+	//
+	// English: Maximum usage ever recorded
+	KMaximumUsageEverRecorded = 0b00000000010000000000000000000000
+
+	// KNumberOfTimesMemoryUsageHitsLimits
+	//
+	// English: Number of times memory usage hits limits
+	KNumberOfTimesMemoryUsageHitsLimits = 0b00000000100000000000000000000000
+
+	// KMemoryLimit
+	//
+	// English: Memory limit
+	KMemoryLimit = 0b00000001000000000000000000000000
+
+	// KCommittedBytes
+	//
+	// English: Committed bytes
+	KCommittedBytes = 0b00000010000000000000000000000000
+
+	// KPeakCommittedBytes
+	//
+	// English: Peak committed bytes
+	KPeakCommittedBytes = 0b00000100000000000000000000000000
+
+	// KPrivateWorkingSet
+	//
+	// English: Private working set
+	KPrivateWorkingSet = 0b00001000000000000000000000000000
+
+	// KMacOsLogWithAllCores
+	//
+	// English: Mac OS Log
+	KMacOsLogWithAllCores = KReadingTime |
+		KCurrentNumberOfOidsInTheCGroup |
+		KTotalCPUTimeConsumed |
+		KTotalCPUTimeConsumedPerCore |
+		KTimeSpentByTasksOfTheCGroupInKernelMode |
+		KSystemUsage |
+		KOnlineCPUs |
+		KTotalPreCPUTimeConsumed |
+		KTotalPreCPUTimeConsumedPerCore |
+		KTimeSpentByPreCPUTasksOfTheCGroupInKernelMode |
+		KPreCPUSystemUsage |
+		KOnlinePreCPUs |
+		KCurrentResCounterUsageForMemory |
+		KMaximumUsageEverRecorded |
+		KMemoryLimit
+
+	// KMacOsLog
+	//
+	// English: Mac OS Log
+	KMacOsLog = KReadingTime |
+		KCurrentNumberOfOidsInTheCGroup |
+		KTotalCPUTimeConsumed |
+		KTimeSpentByTasksOfTheCGroupInKernelMode |
+		KSystemUsage |
+		KOnlineCPUs |
+		KTotalPreCPUTimeConsumed |
+		KTimeSpentByPreCPUTasksOfTheCGroupInKernelMode |
+		KPreCPUSystemUsage |
+		KOnlinePreCPUs |
+		KCurrentResCounterUsageForMemory |
+		KMaximumUsageEverRecorded |
+		KMemoryLimit
+)
+
 type Theater struct {
 	sceneCache    []*Configuration
 	sceneBuilding []*Configuration
@@ -33,6 +217,7 @@ type Theater struct {
 	ticker        *time.Ticker
 	event         chan Event
 	cpus          int
+	logFlags      int
 }
 
 type Timers struct {
@@ -341,6 +526,13 @@ func (e *Theater) Init() (err error) {
 		return
 	}
 
+	var osName = runtime.GOOS
+	if e.logFlags == 0 && osName == "darwin" {
+		e.logFlags = KMacOsLog
+	} else if e.logFlags == 0 {
+		e.logFlags = KAll
+	}
+
 	e.event = make(chan Event)
 
 	err = e.buildAll()
@@ -379,7 +571,7 @@ func (e *Theater) logsCleaner(logs []byte) [][]byte {
 	return bytes.Split(logs, []byte("\n"))
 }
 
-func (e *Theater) logsSearchSimpleText(lineList [][]byte, configuration []LogFilter) (line []byte, found bool) {
+func (e *Theater) logsSearchAndReplaceIntoText(lineList [][]byte, configuration []LogFilter) (line []byte, found bool) {
 	var err error
 	if configuration == nil {
 		return
@@ -391,7 +583,6 @@ func (e *Theater) logsSearchSimpleText(lineList [][]byte, configuration []LogFil
 			line = lineList[logLine]
 			if bytes.Contains(line, []byte(configuration[filterLine].Match)) == true {
 
-				// *************************************************************************************************************
 				if configuration[filterLine].Filter != "" {
 
 					var re *regexp.Regexp
@@ -417,7 +608,6 @@ func (e *Theater) logsSearchSimpleText(lineList [][]byte, configuration []LogFil
 						line = re.ReplaceAll(line, []byte(configuration[filterLine].Replace))
 					}
 				}
-				// *************************************************************************************************************
 
 				found = true
 				return
@@ -543,7 +733,7 @@ func (e *Theater) manager() {
 			continue
 		}
 
-		line, found = e.logsSearchSimpleText(lineList, container.Fail)
+		line, found = e.logsSearchAndReplaceIntoText(lineList, container.Fail)
 		if found == true {
 			lineNumber = traceLineFromCode()
 			event.clear()
@@ -553,7 +743,7 @@ func (e *Theater) manager() {
 			e.event <- event
 		}
 
-		line, found = e.logsSearchSimpleText(lineList, container.End)
+		line, found = e.logsSearchAndReplaceIntoText(lineList, container.End)
 		if found == true {
 			lineNumber = traceLineFromCode()
 			event.clear()
@@ -573,7 +763,7 @@ func (e *Theater) manager() {
 				timeToNextEvent = e.selectBetweenMaxAndMin(container.Chaos.Restart.TimeToStart.Max, container.Chaos.Restart.TimeToStart.Min)
 				container.Chaos.Restart.minimumEventTime = time.Now().Add(timeToNextEvent)
 			} else if container.Chaos.Restart != nil {
-				_, found = e.logsSearchSimpleText(lineList, container.Chaos.Restart.FilterToStart)
+				_, found = e.logsSearchAndReplaceIntoText(lineList, container.Chaos.Restart.FilterToStart)
 				if container.caosCanRestart == false {
 					if found == true {
 						container.caosCanRestart = true
@@ -583,7 +773,7 @@ func (e *Theater) manager() {
 		}
 
 		// flag o caos pode ser inicializado
-		_, found = e.logsSearchSimpleText(lineList, container.Chaos.FilterToStart)
+		_, found = e.logsSearchAndReplaceIntoText(lineList, container.Chaos.FilterToStart)
 		if container.caosStarted == false && found == true {
 			container.caosStarted = true
 			timeToNextEvent = e.selectBetweenMaxAndMin(container.Chaos.TimeToStart.Max, container.Chaos.TimeToStart.Min)
@@ -949,13 +1139,13 @@ func (e *Theater) writeContainerLogToFile(path string, lineList [][]byte, config
 	}
 
 	// time
-	if makeLabel == true {
-		_, err = file.Write([]byte("reading time\t"))
+	if makeLabel == true && e.logFlags&KReadingTime == KReadingTime {
+		_, err = file.Write([]byte("Reading time\t"))
 		if err != nil {
 			util.TraceToLog()
 			return
 		}
-	} else {
+	} else if e.logFlags&KReadingTime == KReadingTime {
 		_, err = file.Write([]byte(stats.Read.String()))
 		if err != nil {
 			util.TraceToLog()
@@ -1033,13 +1223,13 @@ func (e *Theater) writeContainerLogToFile(path string, lineList [][]byte, config
 
 	// Linux specific stats, not populated on Windows.
 	// Current is the number of pids in the cgroup
-	if makeLabel == true {
+	if makeLabel == true && e.logFlags&KCurrentNumberOfOidsInTheCGroup == KCurrentNumberOfOidsInTheCGroup {
 		_, err = file.Write([]byte("Linux specific stats, not populated on Windows. Current is the number of pids in the cgroup\t"))
 		if err != nil {
 			util.TraceToLog()
 			return
 		}
-	} else {
+	} else if e.logFlags&KCurrentNumberOfOidsInTheCGroup == KCurrentNumberOfOidsInTheCGroup {
 		_, err = file.Write([]byte(fmt.Sprintf("%v", stats.PidsStats.Current)))
 		if err != nil {
 			util.TraceToLog()
@@ -1056,13 +1246,13 @@ func (e *Theater) writeContainerLogToFile(path string, lineList [][]byte, config
 	// Linux specific stats, not populated on Windows.
 	// Limit is the hard limit on the number of pids in the cgroup.
 	// A "Limit" of 0 means that there is no limit.
-	if makeLabel == true {
+	if makeLabel == true && e.logFlags&KLimitOnTheNumberOfPidsInTheCGroup == KLimitOnTheNumberOfPidsInTheCGroup {
 		_, err = file.Write([]byte("Linux specific stats, not populated on Windows. Limit is the hard limit on the number of pids in the cgroup. A \"Limit\" of 0 means that there is no limit.\t"))
 		if err != nil {
 			util.TraceToLog()
 			return
 		}
-	} else {
+	} else if e.logFlags&KLimitOnTheNumberOfPidsInTheCGroup == KLimitOnTheNumberOfPidsInTheCGroup {
 		_, err = file.Write([]byte(fmt.Sprintf("%v", stats.PidsStats.Limit)))
 		if err != nil {
 			util.TraceToLog()
@@ -1079,13 +1269,13 @@ func (e *Theater) writeContainerLogToFile(path string, lineList [][]byte, config
 	// Total CPU time consumed.
 	// Units: nanoseconds (Linux)
 	// Units: 100's of nanoseconds (Windows)
-	if makeLabel == true {
+	if makeLabel == true && e.logFlags&KTotalCPUTimeConsumed == KTotalCPUTimeConsumed {
 		_, err = file.Write([]byte("Total CPU time consumed. (Units: nanoseconds on Linux, Units: 100's of nanoseconds on Windows)\t"))
 		if err != nil {
 			util.TraceToLog()
 			return
 		}
-	} else {
+	} else if e.logFlags&KTotalCPUTimeConsumed == KTotalCPUTimeConsumed {
 		_, err = file.Write([]byte(fmt.Sprintf("%v", stats.CPUStats.CPUUsage.TotalUsage)))
 		if err != nil {
 			util.TraceToLog()
@@ -1099,68 +1289,60 @@ func (e *Theater) writeContainerLogToFile(path string, lineList [][]byte, config
 		}
 	}
 
-	// Total CPU time consumed per core (Linux). Not used on Windows.
-	// Total CPU length.
-	//if makeLabel == true {
-	//	_, err = file.Write([]byte("Total length of CPUs used in time consumed per core fields (Linux). Not used on Windows.\t"))
-	//	if err != nil {
-	//		util.TraceToLog()
-	//		return
-	//	}
-	//} else {
-	//	_, err = file.Write([]byte(fmt.Sprintf("%v", len(stats.CPUStats.CPUUsage.PercpuUsage))))
-	//	if err != nil {
-	//		util.TraceToLog()
-	//		return
-	//	}
-	//
-	//	_, err = file.Write([]byte("\t"))
-	//	if err != nil {
-	//		util.TraceToLog()
-	//		return
-	//	}
-	//}
-
-	// Total CPU time consumed per core (Linux). Not used on Windows.
-	// Units: nanoseconds.
 	if len(stats.CPUStats.CPUUsage.PercpuUsage) != 0 {
 		e.cpus = len(stats.CPUStats.CPUUsage.PercpuUsage)
 	}
 
-	if e.cpus != 0 && len(stats.CPUStats.CPUUsage.PercpuUsage) == 0 {
-		for i := 0; i != e.cpus; i += 1 {
-			_, err = file.Write([]byte{0x30})
-			if err != nil {
-				util.TraceToLog()
-				return
-			}
+	if e.logFlags&KTotalCPUTimeConsumedPerCore == KTotalCPUTimeConsumedPerCore {
+		// Total CPU time consumed per core (Linux). Not used on Windows.
+		// Units: nanoseconds.
+		if e.cpus != 0 && len(stats.CPUStats.CPUUsage.PercpuUsage) == 0 {
+			if makeLabel == true {
+				for cpuNumber := 0; cpuNumber != e.cpus; cpuNumber += 1 {
+					_, err = file.Write([]byte(fmt.Sprintf("Total CPU time consumed per core (Units: nanoseconds on Linux). Not used on Windows. CPU: %v\t", cpuNumber)))
+					if err != nil {
+						util.TraceToLog()
+						return
+					}
+				}
+			} else {
 
-			_, err = file.Write([]byte("\t"))
-			if err != nil {
-				util.TraceToLog()
-				return
-			}
-		}
-	}
+				for i := 0; i != e.cpus; i += 1 {
+					_, err = file.Write([]byte{0x30})
+					if err != nil {
+						util.TraceToLog()
+						return
+					}
 
-	for cpuNumber, cpuTime := range stats.CPUStats.CPUUsage.PercpuUsage {
-		if makeLabel == true {
-			_, err = file.Write([]byte(fmt.Sprintf("Total CPU time consumed per core (Units: nanoseconds on Linux). Not used on Windows. CPU: %v\t", cpuNumber)))
-			if err != nil {
-				util.TraceToLog()
-				return
+					_, err = file.Write([]byte("\t"))
+					if err != nil {
+						util.TraceToLog()
+						return
+					}
+				}
 			}
-		} else {
-			_, err = file.Write([]byte(fmt.Sprintf("%v", cpuTime)))
-			if err != nil {
-				util.TraceToLog()
-				return
-			}
+		} else if e.cpus != 0 && len(stats.CPUStats.CPUUsage.PercpuUsage) == e.cpus {
 
-			_, err = file.Write([]byte("\t"))
-			if err != nil {
-				util.TraceToLog()
-				return
+			for cpuNumber, cpuTime := range stats.CPUStats.CPUUsage.PercpuUsage {
+				if makeLabel == true {
+					_, err = file.Write([]byte(fmt.Sprintf("Total CPU time consumed per core (Units: nanoseconds on Linux). Not used on Windows. CPU: %v\t", cpuNumber)))
+					if err != nil {
+						util.TraceToLog()
+						return
+					}
+				} else {
+					_, err = file.Write([]byte(fmt.Sprintf("%v", cpuTime)))
+					if err != nil {
+						util.TraceToLog()
+						return
+					}
+
+					_, err = file.Write([]byte("\t"))
+					if err != nil {
+						util.TraceToLog()
+						return
+					}
+				}
 			}
 		}
 	}
@@ -1169,13 +1351,13 @@ func (e *Theater) writeContainerLogToFile(path string, lineList [][]byte, config
 	// Time spent by all container processes in kernel mode (Windows).
 	// Units: nanoseconds (Linux).
 	// Units: 100's of nanoseconds (Windows). Not populated for Hyper-V Containers.
-	if makeLabel == true {
+	if makeLabel == true && e.logFlags&KTimeSpentByTasksOfTheCGroupInKernelMode == KTimeSpentByTasksOfTheCGroupInKernelMode {
 		_, err = file.Write([]byte("Time spent by tasks of the cgroup in kernel mode (Units: nanoseconds on Linux). Time spent by all container processes in kernel mode (Units: 100's of nanoseconds on Windows.Not populated for Hyper-V Containers.).\t"))
 		if err != nil {
 			util.TraceToLog()
 			return
 		}
-	} else {
+	} else if e.logFlags&KTimeSpentByTasksOfTheCGroupInKernelMode == KTimeSpentByTasksOfTheCGroupInKernelMode {
 		_, err = file.Write([]byte(fmt.Sprintf("%v", stats.CPUStats.CPUUsage.UsageInKernelmode)))
 		if err != nil {
 			util.TraceToLog()
@@ -1193,13 +1375,13 @@ func (e *Theater) writeContainerLogToFile(path string, lineList [][]byte, config
 	// Time spent by all container processes in user mode (Windows).
 	// Units: nanoseconds (Linux).
 	// Units: 100's of nanoseconds (Windows). Not populated for Hyper-V Containers
-	if makeLabel == true {
+	if makeLabel == true && e.logFlags&KTimeSpentByTasksOfTheCGroupInUserMode == KTimeSpentByTasksOfTheCGroupInUserMode {
 		_, err = file.Write([]byte("Time spent by tasks of the cgroup in user mode (Units: nanoseconds on Linux). Time spent by all container processes in user mode (Units: 100's of nanoseconds on Windows. Not populated for Hyper-V Containers).\t"))
 		if err != nil {
 			util.TraceToLog()
 			return
 		}
-	} else {
+	} else if e.logFlags&KTimeSpentByTasksOfTheCGroupInUserMode == KTimeSpentByTasksOfTheCGroupInUserMode {
 		_, err = file.Write([]byte(fmt.Sprintf("%v", stats.CPUStats.CPUUsage.UsageInUsermode)))
 		if err != nil {
 			util.TraceToLog()
@@ -1214,13 +1396,13 @@ func (e *Theater) writeContainerLogToFile(path string, lineList [][]byte, config
 	}
 
 	// System Usage. Linux only.
-	if makeLabel == true {
+	if makeLabel == true && e.logFlags&KSystemUsage == KSystemUsage {
 		_, err = file.Write([]byte("System Usage. Linux only.\t"))
 		if err != nil {
 			util.TraceToLog()
 			return
 		}
-	} else {
+	} else if e.logFlags&KSystemUsage == KSystemUsage {
 		_, err = file.Write([]byte(fmt.Sprintf("%v", stats.CPUStats.SystemUsage)))
 		if err != nil {
 			util.TraceToLog()
@@ -1235,13 +1417,13 @@ func (e *Theater) writeContainerLogToFile(path string, lineList [][]byte, config
 	}
 
 	// Online CPUs. Linux only.
-	if makeLabel == true {
+	if makeLabel == true && e.logFlags&KOnlineCPUs == KOnlineCPUs {
 		_, err = file.Write([]byte("Online CPUs. Linux only.\t"))
 		if err != nil {
 			util.TraceToLog()
 			return
 		}
-	} else {
+	} else if e.logFlags&KOnlineCPUs == KOnlineCPUs {
 		_, err = file.Write([]byte(fmt.Sprintf("%v", stats.CPUStats.OnlineCPUs)))
 		if err != nil {
 			util.TraceToLog()
@@ -1257,13 +1439,13 @@ func (e *Theater) writeContainerLogToFile(path string, lineList [][]byte, config
 
 	// Throttling Data. Linux only.
 	// Number of periods with throttling active
-	if makeLabel == true {
+	if makeLabel == true && e.logFlags&KNumberOfPeriodsWithThrottlingActive == KNumberOfPeriodsWithThrottlingActive {
 		_, err = file.Write([]byte("Throttling Data. Linux only. Number of periods with throttling active.\t"))
 		if err != nil {
 			util.TraceToLog()
 			return
 		}
-	} else {
+	} else if e.logFlags&KNumberOfPeriodsWithThrottlingActive == KNumberOfPeriodsWithThrottlingActive {
 		_, err = file.Write([]byte(fmt.Sprintf("%v", stats.CPUStats.ThrottlingData.Periods)))
 		if err != nil {
 			util.TraceToLog()
@@ -1279,13 +1461,13 @@ func (e *Theater) writeContainerLogToFile(path string, lineList [][]byte, config
 
 	// Throttling Data. Linux only.
 	// Number of periods when the container hits its throttling limit.
-	if makeLabel == true {
+	if makeLabel == true && e.logFlags&KNumberOfPeriodsWhenTheContainerHitsItsThrottlingLimit == KNumberOfPeriodsWhenTheContainerHitsItsThrottlingLimit {
 		_, err = file.Write([]byte("Throttling Data. Linux only. Number of periods when the container hits its throttling limit.\t"))
 		if err != nil {
 			util.TraceToLog()
 			return
 		}
-	} else {
+	} else if e.logFlags&KNumberOfPeriodsWhenTheContainerHitsItsThrottlingLimit == KNumberOfPeriodsWhenTheContainerHitsItsThrottlingLimit {
 		_, err = file.Write([]byte(fmt.Sprintf("%v", stats.CPUStats.ThrottlingData.ThrottledPeriods)))
 		if err != nil {
 			util.TraceToLog()
@@ -1301,13 +1483,13 @@ func (e *Theater) writeContainerLogToFile(path string, lineList [][]byte, config
 
 	// Throttling Data. Linux only.
 	// Aggregate time the container was throttled for in nanoseconds.
-	if makeLabel == true {
+	if makeLabel == true && e.logFlags&KAggregateTimeTheContainerWasThrottledForInNanoseconds == KAggregateTimeTheContainerWasThrottledForInNanoseconds {
 		_, err = file.Write([]byte("Throttling Data. Linux only. Aggregate time the container was throttled for in nanoseconds.\t"))
 		if err != nil {
 			util.TraceToLog()
 			return
 		}
-	} else {
+	} else if e.logFlags&KAggregateTimeTheContainerWasThrottledForInNanoseconds == KAggregateTimeTheContainerWasThrottledForInNanoseconds {
 		_, err = file.Write([]byte(fmt.Sprintf("%v", stats.CPUStats.ThrottlingData.ThrottledTime)))
 		if err != nil {
 			util.TraceToLog()
@@ -1325,13 +1507,13 @@ func (e *Theater) writeContainerLogToFile(path string, lineList [][]byte, config
 	// Total CPU time consumed.
 	// Units: nanoseconds (Linux)
 	// Units: 100's of nanoseconds (Windows)
-	if makeLabel == true {
+	if makeLabel == true && e.logFlags&KTotalPreCPUTimeConsumed == KTotalPreCPUTimeConsumed {
 		_, err = file.Write([]byte("Total CPU time consumed. (Units: nanoseconds on Linux. Units: 100's of nanoseconds on Windows)\t"))
 		if err != nil {
 			util.TraceToLog()
 			return
 		}
-	} else {
+	} else if e.logFlags&KTotalPreCPUTimeConsumed == KTotalPreCPUTimeConsumed {
 		_, err = file.Write([]byte(fmt.Sprintf("%v", stats.PreCPUStats.CPUUsage.TotalUsage)))
 		if err != nil {
 			util.TraceToLog()
@@ -1345,56 +1527,35 @@ func (e *Theater) writeContainerLogToFile(path string, lineList [][]byte, config
 		}
 	}
 
-	// CPU Usage. Linux and Windows.
-	// Total CPU time consumed per core (Linux). Not used on Windows.
-	// Total length of CPUs
-	//if makeLabel == true {
-	//	_, err = file.Write([]byte("Total CPU time consumed per core (Units: nanoseconds on Linux). Not used on Windows. Length of CPUs\t"))
-	//	if err != nil {
-	//		util.TraceToLog()
-	//		return
-	//	}
-	//} else {
-	//	_, err = file.Write([]byte(fmt.Sprintf("%v", len(stats.PreCPUStats.CPUUsage.PercpuUsage))))
-	//	if err != nil {
-	//		util.TraceToLog()
-	//		return
-	//	}
-	//
-	//	_, err = file.Write([]byte("\t"))
-	//	if err != nil {
-	//		util.TraceToLog()
-	//		return
-	//	}
-	//}
-
-	// CPU Usage. Linux and Windows.
-	// Total CPU time consumed per core (Linux). Not used on Windows.
-	// Units: nanoseconds.
-	if e.cpus != 0 && len(stats.CPUStats.CPUUsage.PercpuUsage) == 0 {
-		for i := 0; i != e.cpus; i += 1 {
-			_, err = file.Write([]byte{0x30})
-			if err != nil {
-				util.TraceToLog()
-				return
-			}
-
-			_, err = file.Write([]byte("\t"))
-			if err != nil {
-				util.TraceToLog()
-				return
-			}
-		}
-	}
-
-	for cpuNumber, cpuTime := range stats.PreCPUStats.CPUUsage.PercpuUsage {
-		if makeLabel == true {
+	if makeLabel == true && e.logFlags&KTotalPreCPUTimeConsumedPerCore == KTotalPreCPUTimeConsumedPerCore {
+		for cpuNumber := 0; cpuNumber != e.cpus; cpuNumber += 1 {
 			_, err = file.Write([]byte(fmt.Sprintf("Total CPU time consumed per core (Units: nanoseconds on Linux). Not used on Windows. CPU: %v\t", cpuNumber)))
 			if err != nil {
 				util.TraceToLog()
 				return
 			}
-		} else {
+		}
+	} else if e.logFlags&KTotalPreCPUTimeConsumedPerCore == KTotalPreCPUTimeConsumedPerCore {
+		// CPU Usage. Linux and Windows.
+		// Total CPU time consumed per core (Linux). Not used on Windows.
+		// Units: nanoseconds.
+		if e.cpus != 0 && len(stats.CPUStats.CPUUsage.PercpuUsage) == 0 {
+			for i := 0; i != e.cpus; i += 1 {
+				_, err = file.Write([]byte{0x30})
+				if err != nil {
+					util.TraceToLog()
+					return
+				}
+
+				_, err = file.Write([]byte("\t"))
+				if err != nil {
+					util.TraceToLog()
+					return
+				}
+			}
+		}
+
+		for _, cpuTime := range stats.PreCPUStats.CPUUsage.PercpuUsage {
 			_, err = file.Write([]byte(fmt.Sprintf("%v", cpuTime)))
 			if err != nil {
 				util.TraceToLog()
@@ -1414,13 +1575,13 @@ func (e *Theater) writeContainerLogToFile(path string, lineList [][]byte, config
 	// Time spent by all container processes in kernel mode (Windows).
 	// Units: nanoseconds (Linux).
 	// Units: 100's of nanoseconds (Windows). Not populated for Hyper-V Containers.
-	if makeLabel == true {
+	if makeLabel == true && e.logFlags&KTimeSpentByPreCPUTasksOfTheCGroupInKernelMode == KTimeSpentByPreCPUTasksOfTheCGroupInKernelMode {
 		_, err = file.Write([]byte("Time spent by tasks of the cgroup in kernel mode (Units: nanoseconds on Linux) - Time spent by all container processes in kernel mode (Units: 100's of nanoseconds on Windows - Not populated for Hyper-V Containers.)\t"))
 		if err != nil {
 			util.TraceToLog()
 			return
 		}
-	} else {
+	} else if e.logFlags&KTimeSpentByPreCPUTasksOfTheCGroupInKernelMode == KTimeSpentByPreCPUTasksOfTheCGroupInKernelMode {
 		_, err = file.Write([]byte(fmt.Sprintf("%v", stats.PreCPUStats.CPUUsage.UsageInKernelmode)))
 		if err != nil {
 			util.TraceToLog()
@@ -1439,13 +1600,13 @@ func (e *Theater) writeContainerLogToFile(path string, lineList [][]byte, config
 	// Time spent by all container processes in user mode (Windows).
 	// Units: nanoseconds (Linux).
 	// Units: 100's of nanoseconds (Windows). Not populated for Hyper-V Containers
-	if makeLabel == true {
+	if makeLabel == true && e.logFlags&KTimeSpentByPreCPUTasksOfTheCGroupInUserMode == KTimeSpentByPreCPUTasksOfTheCGroupInUserMode {
 		_, err = file.Write([]byte("Time spent by tasks of the cgroup in user mode (Units: nanoseconds on Linux) - Time spent by all container processes in user mode (Units: 100's of nanoseconds on Windows. Not populated for Hyper-V Containers)\t"))
 		if err != nil {
 			util.TraceToLog()
 			return
 		}
-	} else {
+	} else if e.logFlags&KTimeSpentByPreCPUTasksOfTheCGroupInUserMode == KTimeSpentByPreCPUTasksOfTheCGroupInUserMode {
 		_, err = file.Write([]byte(fmt.Sprintf("%v", stats.PreCPUStats.CPUUsage.UsageInUsermode)))
 		if err != nil {
 			util.TraceToLog()
@@ -1460,13 +1621,13 @@ func (e *Theater) writeContainerLogToFile(path string, lineList [][]byte, config
 	}
 
 	// System Usage. Linux only.
-	if makeLabel == true {
+	if makeLabel == true && e.logFlags&KPreCPUSystemUsage == KPreCPUSystemUsage {
 		_, err = file.Write([]byte("System Usage. (Linux only)\t"))
 		if err != nil {
 			util.TraceToLog()
 			return
 		}
-	} else {
+	} else if e.logFlags&KPreCPUSystemUsage == KPreCPUSystemUsage {
 		_, err = file.Write([]byte(fmt.Sprintf("%v", stats.PreCPUStats.SystemUsage)))
 		if err != nil {
 			util.TraceToLog()
@@ -1481,13 +1642,13 @@ func (e *Theater) writeContainerLogToFile(path string, lineList [][]byte, config
 	}
 
 	// Online CPUs. Linux only.
-	if makeLabel == true {
+	if makeLabel == true && e.logFlags&KOnlinePreCPUs == KOnlinePreCPUs {
 		_, err = file.Write([]byte("Online CPUs. (Linux only)\t"))
 		if err != nil {
 			util.TraceToLog()
 			return
 		}
-	} else {
+	} else if e.logFlags&KOnlinePreCPUs == KOnlinePreCPUs {
 		_, err = file.Write([]byte(fmt.Sprintf("%v", stats.PreCPUStats.OnlineCPUs)))
 		if err != nil {
 			util.TraceToLog()
@@ -1503,13 +1664,13 @@ func (e *Theater) writeContainerLogToFile(path string, lineList [][]byte, config
 
 	// Throttling Data. Linux only.
 	// Aggregate time the container was throttled for in nanoseconds.
-	if makeLabel == true {
+	if makeLabel == true && e.logFlags&KAggregatePreCPUTimeTheContainerWasThrottled == KAggregatePreCPUTimeTheContainerWasThrottled {
 		_, err = file.Write([]byte("Throttling Data. (Linux only) - Aggregate time the container was throttled for in nanoseconds.\t"))
 		if err != nil {
 			util.TraceToLog()
 			return
 		}
-	} else {
+	} else if e.logFlags&KAggregatePreCPUTimeTheContainerWasThrottled == KAggregatePreCPUTimeTheContainerWasThrottled {
 		_, err = file.Write([]byte(fmt.Sprintf("%v", stats.PreCPUStats.ThrottlingData.ThrottledTime)))
 		if err != nil {
 			util.TraceToLog()
@@ -1525,13 +1686,13 @@ func (e *Theater) writeContainerLogToFile(path string, lineList [][]byte, config
 
 	// Throttling Data. Linux only.
 	// Number of periods with throttling active
-	if makeLabel == true {
+	if makeLabel == true && e.logFlags&KNumberOfPeriodsWithPreCPUThrottlingActive == KNumberOfPeriodsWithPreCPUThrottlingActive {
 		_, err = file.Write([]byte("Throttling Data. (Linux only) - Number of periods with throttling active.\t"))
 		if err != nil {
 			util.TraceToLog()
 			return
 		}
-	} else {
+	} else if e.logFlags&KNumberOfPeriodsWithPreCPUThrottlingActive == KNumberOfPeriodsWithPreCPUThrottlingActive {
 		_, err = file.Write([]byte(fmt.Sprintf("%v", stats.PreCPUStats.ThrottlingData.Periods)))
 		if err != nil {
 			util.TraceToLog()
@@ -1547,13 +1708,13 @@ func (e *Theater) writeContainerLogToFile(path string, lineList [][]byte, config
 
 	// Throttling Data. Linux only.
 	// Number of periods when the container hits its throttling limit.
-	if makeLabel == true {
+	if makeLabel == true && e.logFlags&KNumberOfPeriodsWhenTheContainerPreCPUHitsItsThrottlingLimit == KNumberOfPeriodsWhenTheContainerPreCPUHitsItsThrottlingLimit {
 		_, err = file.Write([]byte("Throttling Data. (Linux only) - Number of periods when the container hits its throttling limit.\t"))
 		if err != nil {
 			util.TraceToLog()
 			return
 		}
-	} else {
+	} else if e.logFlags&KNumberOfPeriodsWhenTheContainerPreCPUHitsItsThrottlingLimit == KNumberOfPeriodsWhenTheContainerPreCPUHitsItsThrottlingLimit {
 		_, err = file.Write([]byte(fmt.Sprintf("%v", stats.PreCPUStats.ThrottlingData.ThrottledPeriods)))
 		if err != nil {
 			util.TraceToLog()
@@ -1568,13 +1729,13 @@ func (e *Theater) writeContainerLogToFile(path string, lineList [][]byte, config
 	}
 
 	// current res_counter usage for memory
-	if makeLabel == true {
-		_, err = file.Write([]byte("current res_counter usage for memory\t"))
+	if makeLabel == true && e.logFlags&KCurrentResCounterUsageForMemory == KCurrentResCounterUsageForMemory {
+		_, err = file.Write([]byte("Current res_counter usage for memory\t"))
 		if err != nil {
 			util.TraceToLog()
 			return
 		}
-	} else {
+	} else if e.logFlags&KCurrentResCounterUsageForMemory == KCurrentResCounterUsageForMemory {
 		_, err = file.Write([]byte(fmt.Sprintf("%v", stats.MemoryStats.Usage)))
 		if err != nil {
 			util.TraceToLog()
@@ -1589,13 +1750,13 @@ func (e *Theater) writeContainerLogToFile(path string, lineList [][]byte, config
 	}
 
 	// maximum usage ever recorded.
-	if makeLabel == true {
-		_, err = file.Write([]byte("maximum usage ever recorded.\t"))
+	if makeLabel == true && e.logFlags&KMaximumUsageEverRecorded == KMaximumUsageEverRecorded {
+		_, err = file.Write([]byte("Maximum usage ever recorded.\t"))
 		if err != nil {
 			util.TraceToLog()
 			return
 		}
-	} else {
+	} else if e.logFlags&KMaximumUsageEverRecorded == KMaximumUsageEverRecorded {
 		_, err = file.Write([]byte(fmt.Sprintf("%v", stats.MemoryStats.MaxUsage)))
 		if err != nil {
 			util.TraceToLog()
@@ -1610,13 +1771,13 @@ func (e *Theater) writeContainerLogToFile(path string, lineList [][]byte, config
 	}
 
 	// number of times memory usage hits limits.
-	if makeLabel == true {
-		_, err = file.Write([]byte("number of times memory usage hits limits.\t"))
+	if makeLabel == true && e.logFlags&KNumberOfTimesMemoryUsageHitsLimits == KNumberOfTimesMemoryUsageHitsLimits {
+		_, err = file.Write([]byte("Number of times memory usage hits limits.\t"))
 		if err != nil {
 			util.TraceToLog()
 			return
 		}
-	} else {
+	} else if e.logFlags&KNumberOfTimesMemoryUsageHitsLimits == KNumberOfTimesMemoryUsageHitsLimits {
 		_, err = file.Write([]byte(fmt.Sprintf("%v", stats.MemoryStats.Failcnt)))
 		if err != nil {
 			util.TraceToLog()
@@ -1630,13 +1791,13 @@ func (e *Theater) writeContainerLogToFile(path string, lineList [][]byte, config
 		}
 	}
 
-	if makeLabel == true {
-		_, err = file.Write([]byte("memory limit\t"))
+	if makeLabel == true && e.logFlags&KMemoryLimit == KMemoryLimit {
+		_, err = file.Write([]byte("Memory limit\t"))
 		if err != nil {
 			util.TraceToLog()
 			return
 		}
-	} else {
+	} else if e.logFlags&KMemoryLimit == KMemoryLimit {
 		_, err = file.Write([]byte(fmt.Sprintf("%v", stats.MemoryStats.Limit)))
 		if err != nil {
 			util.TraceToLog()
@@ -1651,13 +1812,13 @@ func (e *Theater) writeContainerLogToFile(path string, lineList [][]byte, config
 	}
 
 	// committed bytes
-	if makeLabel == true {
-		_, err = file.Write([]byte("committed bytes\t"))
+	if makeLabel == true && e.logFlags&KCommittedBytes == KCommittedBytes {
+		_, err = file.Write([]byte("Committed bytes\t"))
 		if err != nil {
 			util.TraceToLog()
 			return
 		}
-	} else {
+	} else if e.logFlags&KCommittedBytes == KCommittedBytes {
 		_, err = file.Write([]byte(fmt.Sprintf("%v", stats.MemoryStats.Commit)))
 		if err != nil {
 			util.TraceToLog()
@@ -1672,13 +1833,13 @@ func (e *Theater) writeContainerLogToFile(path string, lineList [][]byte, config
 	}
 
 	// peak committed bytes
-	if makeLabel == true {
-		_, err = file.Write([]byte("peak committed bytes\t"))
+	if makeLabel == true && e.logFlags&KPeakCommittedBytes == KPeakCommittedBytes {
+		_, err = file.Write([]byte("Peak committed bytes\t"))
 		if err != nil {
 			util.TraceToLog()
 			return
 		}
-	} else {
+	} else if e.logFlags&KPeakCommittedBytes == KPeakCommittedBytes {
 		_, err = file.Write([]byte(fmt.Sprintf("%v", stats.MemoryStats.CommitPeak)))
 		if err != nil {
 			util.TraceToLog()
@@ -1693,24 +1854,30 @@ func (e *Theater) writeContainerLogToFile(path string, lineList [][]byte, config
 	}
 
 	// private working set
-	if makeLabel == true {
-		_, err = file.Write([]byte("private working set\n"))
+	if makeLabel == true && e.logFlags&KPrivateWorkingSet == KPrivateWorkingSet {
+		_, err = file.Write([]byte("Private working set\n"))
 		if err != nil {
 			util.TraceToLog()
 			return
 		}
-	} else {
+	} else if e.logFlags&KPrivateWorkingSet == KPrivateWorkingSet {
 		_, err = file.Write([]byte(fmt.Sprintf("%v", stats.MemoryStats.PrivateWorkingSet)))
 		if err != nil {
 			util.TraceToLog()
 			return
 		}
 
-		_, err = file.Write([]byte("\n"))
+		_, err = file.Write([]byte("\t"))
 		if err != nil {
 			util.TraceToLog()
 			return
 		}
+	}
+
+	_, err = file.Write([]byte("\n"))
+	if err != nil {
+		util.TraceToLog()
+		return
 	}
 
 	return
@@ -1718,6 +1885,10 @@ func (e *Theater) writeContainerLogToFile(path string, lineList [][]byte, config
 
 func (e *Theater) getProbalityNumber() (probality float64) {
 	return 1.0 - e.getRandSeed().Float64()
+}
+
+func (e *Theater) SetLogFields(logFlags int) {
+	e.logFlags = logFlags
 }
 
 func (e *Theater) selectBetweenMaxAndMin(max, min time.Duration) (selected time.Duration) {

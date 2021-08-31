@@ -41,5 +41,4 @@ FROM scratch
 COPY --from=builder /app/main .
 # (en) execute your project
 # (pt) executa o seu projeto
-VOLUME /static
 CMD ["/main"]

@@ -1,8 +1,10 @@
 package theater
 
 import (
+	"bytes"
 	builder "github.com/helmutkemper/iotmaker.docker.builder"
 	"github.com/helmutkemper/util"
+	"io/ioutil"
 	"log"
 	"testing"
 	"time"
@@ -66,26 +68,23 @@ func TestTheater_WriteStatsCSV(t *testing.T) {
 	// set a folder path to make a new image
 	container.SetBuildFolderPath("../test/counter")
 	// container name container_delete_server_after_test
-	container.SetContainerName("container_delete_server_after_test")
+	container.SetContainerName("container_delete_counter_after_test")
 	// define o limite de memória
 	container.SetImageBuildOptionsMemory(100 * builder.KMegaByte)
 
-	// replace container folder /static to host folder ./test/static
-	err = container.AddFileOrFolderToLinkBetweenConputerHostAndContainer("../test/static", "/static")
-	if err != nil {
-		util.TraceToLog()
-		log.Printf("err: %v", err)
-		t.Fail()
-	}
-
 	var containerServerConfiguration = NewTestContainerConfiguration(&container).
-		SetContainerStatsLogPath("./server.log.csv").
-		AddASceneSettingFilterOnTheContainersStandardOutputToEndEvent("done!", "^.*?(?P<valueToGet>\\d+/\\d+/\\d+ \\d+:\\d+:\\d+ done!).*", "", "").
+		SetContainerStatsLogPath("./counter.log.csv").
+		AddASceneSettingFilterOnTheContainersStandardOutputToEndEvent(
+			"done!",
+			"^.*?(?P<valueToGet>\\d+/\\d+/\\d+ \\d+:\\d+:\\d+ done!).*",
+			"",
+			"",
+		).
 		AddASceneSettingFilterOnTheContainersStandardOutputToFailEvent(
-			"counter: 20",
+			"counter: 40",
 			"^.*?(?P<valueToGet>\\d+/\\d+/\\d+ \\d+:\\d+:\\d+ counter: [\\d\\.]+).*",
 			"(?P<date>\\d+/\\d+/\\d+)\\s+(?P<hour>\\d+:\\d+:\\d+)\\s+counter:\\s+(?P<value>[\\d\\.]+).*",
-			"Value: ${value} - Hour: ${hour} - Date: ${date}",
+			"Test Fail! Counter Value: ${value} - Hour: ${hour} - Date: ${date}",
 		).
 		SetASceneLinearFlag()
 
@@ -107,6 +106,8 @@ func TestTheater_WriteStatsCSV(t *testing.T) {
 		log.Printf("err: %v", err)
 		t.Fail()
 	}
+
+	theater.SetLogFields(KMacOsLog)
 
 	eventCh := theater.GetChannels()
 
@@ -131,6 +132,47 @@ func TestTheater_WriteStatsCSV(t *testing.T) {
 	}
 
 	builder.GarbageCollector()
+
+	var file []byte
+	file, err = ioutil.ReadFile("./counter.log.csv")
+	if err != nil {
+		t.Fail()
+		log.Printf("error: %v", err.Error())
+	}
+
+	var counter = 0
+	var line = make([]byte, 0)
+	for _, char := range file {
+		if char == []byte("\n")[0] {
+			counter += 1
+			if counter == 1 {
+				var lineReader = []byte(
+					"Reading time\t" +
+						"Linux specific stats, not populated on Windows. Current is the number of pids in the cgroup\t" +
+						"Total CPU time consumed. (Units: nanoseconds on Linux, Units: 100's of nanoseconds on Windows)\t" +
+						"Time spent by tasks of the cgroup in kernel mode (Units: nanoseconds on Linux). Time spent by all container processes in kernel mode (Units: 100's of nanoseconds on Windows.Not populated for Hyper-V Containers.).\t" +
+						"System Usage. Linux only.\t" +
+						"Online CPUs. Linux only.\t" +
+						"Total CPU time consumed. (Units: nanoseconds on Linux. Units: 100's of nanoseconds on Windows)\t" +
+						"Time spent by tasks of the cgroup in kernel mode (Units: nanoseconds on Linux) - Time spent by all container processes in kernel mode (Units: 100's of nanoseconds on Windows - Not populated for Hyper-V Containers.)\t" +
+						"System Usage. (Linux only)\t" +
+						"Online CPUs. (Linux only)\t" +
+						"Current res_counter usage for memory\t" +
+						"Maximum usage ever recorded.\t" +
+						"Memory limit\t",
+				)
+				if bytes.Equal(line, lineReader) == false {
+					t.Fail()
+					log.Printf("CSV reader fail")
+				}
+			}
+		} else {
+			line = append(line, char)
+		}
+	}
+
+	//_ = os.Remove("./counter.log.csv")
+
 }
 
 func TestTheater_AddContainers(t *testing.T) {
@@ -193,7 +235,7 @@ func TestTheater_AddContainers(t *testing.T) {
 	// *******************************************************************************************************************
 
 	var containerServerConfiguration = NewTestContainerConfiguration(&container).
-		SetContainerStatsLogPath("./server.log.csv").
+		SetContainerStatsLogPath("./counter.log.csv").
 		//AddFilterToCaptureInformationOnTheContainersStandardOutputForStatsLog("contador", "blabla", "^.*?counter: (?P<valueToGet>[\\d\\.]+)", "\\.", ",").
 		//AddASceneOfChaosSettingPauseDuration(5*time.Second, 10*time.Second).
 		//AddASceneOfChaosSettingUnpauseDuration(20*time.Second, 30*time.Second).
