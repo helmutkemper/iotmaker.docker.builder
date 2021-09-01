@@ -31,147 +31,156 @@ const (
 	// KAll
 	//
 	// English: Enable all values to log
-	KAll = 0xFFFFFFFF
+	KAll = 0x8FFFFFFFFFFFFFF
 
 	// KReadingTime
 	//
 	// English: Reading time
-	KReadingTime = 0b00000000000000000000000000000001
+	KReadingTime = 0b0000000000000000000000000000000000000000000000000000000000000001
 
 	// KCurrentNumberOfOidsInTheCGroup
 	//
 	// English: Linux specific stats, not populated on Windows. Current is the number of pids in the cgroup
-	KCurrentNumberOfOidsInTheCGroup = 0b00000000000000000000000000000010
+	KCurrentNumberOfOidsInTheCGroup = 0b0000000000000000000000000000000000000000000000000000000000000010
 
 	// KLimitOnTheNumberOfPidsInTheCGroup
 	//
 	// English: Linux specific stats, not populated on Windows. Limit is the hard limit on the number of pids in the cgroup. A "Limit" of 0 means that there is no limit.
-	KLimitOnTheNumberOfPidsInTheCGroup = 0b00000000000000000000000000000100
+	KLimitOnTheNumberOfPidsInTheCGroup = 0b0000000000000000000000000000000000000000000000000000000000000100
 
 	// KTotalCPUTimeConsumed
 	//
 	// English: Total CPU time consumed. (Units: nanoseconds on Linux, Units: 100's of nanoseconds on Windows)
-	KTotalCPUTimeConsumed = 0b00000000000000000000000000001000
+	KTotalCPUTimeConsumed = 0b0000000000000000000000000000000000000000000000000000000000001000
 
 	// KTotalCPUTimeConsumedPerCore
 	//
 	// English: Total CPU time consumed. (Units: nanoseconds on Linux, Units: 100's of nanoseconds on Windows)
-	KTotalCPUTimeConsumedPerCore = 0b00000000000000000000000000010000
+	KTotalCPUTimeConsumedPerCore = 0b0000000000000000000000000000000000000000000000000000000000010000
 
 	// KTimeSpentByTasksOfTheCGroupInKernelMode
 	//
 	// English: Time spent by tasks of the cgroup in kernel mode (Units: nanoseconds on Linux). Time spent by all container processes in kernel mode (Units: 100's of nanoseconds on Windows.Not populated for Hyper-V Containers.)
-	KTimeSpentByTasksOfTheCGroupInKernelMode = 0b00000000000000000000000000100000
+	KTimeSpentByTasksOfTheCGroupInKernelMode = 0b0000000000000000000000000000000000000000000000000000000000100000
 
 	// KTimeSpentByTasksOfTheCGroupInUserMode
 	//
 	// English: Time spent by tasks of the cgroup in user mode (Units: nanoseconds on Linux). Time spent by all container processes in user mode (Units: 100's of nanoseconds on Windows. Not populated for Hyper-V Containers)
-	KTimeSpentByTasksOfTheCGroupInUserMode = 0b00000000000000000000000001000000
+	KTimeSpentByTasksOfTheCGroupInUserMode = 0b0000000000000000000000000000000000000000000000000000000001000000
 
 	// KSystemUsage
 	//
 	// English: System Usage. Linux only.
-	KSystemUsage = 0b00000000000000000000000010000000
+	KSystemUsage = 0b0000000000000000000000000000000000000000000000000000000010000000
 
 	// KOnlineCPUs
 	//
 	// English: Online CPUs. Linux only.
-	KOnlineCPUs = 0b00000000000000000000000100000000
+	KOnlineCPUs = 0b0000000000000000000000000000000000000000000000000000000100000000
 
 	// KNumberOfPeriodsWithThrottlingActive
 	//
 	// English: Throttling Data. Linux only. Number of periods with throttling active.
-	KNumberOfPeriodsWithThrottlingActive = 0b00000000000000000000001000000000
+	KNumberOfPeriodsWithThrottlingActive = 0b0000000000000000000000000000000000000000000000000000001000000000
 
 	// KNumberOfPeriodsWhenTheContainerHitsItsThrottlingLimit
 	//
 	// English: Throttling Data. Linux only. Number of periods when the container hits its throttling limit.
-	KNumberOfPeriodsWhenTheContainerHitsItsThrottlingLimit = 0b00000000000000000000010000000000
+	KNumberOfPeriodsWhenTheContainerHitsItsThrottlingLimit = 0b0000000000000000000000000000000000000000000000000000010000000000
 
 	// KAggregateTimeTheContainerWasThrottledForInNanoseconds
 	//
 	// English: Throttling Data. Linux only. Aggregate time the container was throttled for in nanoseconds.
-	KAggregateTimeTheContainerWasThrottledForInNanoseconds = 0b00000000000000000000100000000000
+	KAggregateTimeTheContainerWasThrottledForInNanoseconds = 0b0000000000000000000000000000000000000000000000000000100000000000
 
 	// KTotalPreCPUTimeConsumed
 	//
 	// English: Total CPU time consumed per core (Units: nanoseconds on Linux). Not used on Windows.
-	KTotalPreCPUTimeConsumed = 0b00000000000000000001000000000000
+	KTotalPreCPUTimeConsumed = 0b0000000000000000000000000000000000000000000000000001000000000000
 
 	// KTotalPreCPUTimeConsumedPerCore
 	//
 	// English: Total CPU time consumed per core (Units: nanoseconds on Linux). Not used on Windows.
-	KTotalPreCPUTimeConsumedPerCore = 0b00000000000000000010000000000000
+	KTotalPreCPUTimeConsumedPerCore = 0b0000000000000000000000000000000000000000000000000010000000000000
 
 	// KTimeSpentByPreCPUTasksOfTheCGroupInKernelMode
 	//
 	// English: Time spent by tasks of the cgroup in kernel mode (Units: nanoseconds on Linux) - Time spent by all container processes in kernel mode (Units: 100's of nanoseconds on Windows - Not populated for Hyper-V Containers.)
-	KTimeSpentByPreCPUTasksOfTheCGroupInKernelMode = 0b00000000000000000100000000000000
+	KTimeSpentByPreCPUTasksOfTheCGroupInKernelMode = 0b0000000000000000000000000000000000000000000000000100000000000000
 
 	// KTimeSpentByPreCPUTasksOfTheCGroupInUserMode
 	//
 	// English: Time spent by tasks of the cgroup in user mode (Units: nanoseconds on Linux) - Time spent by all container processes in user mode (Units: 100's of nanoseconds on Windows. Not populated for Hyper-V Containers)
-	KTimeSpentByPreCPUTasksOfTheCGroupInUserMode = 0b00000000000000001000000000000000
+	KTimeSpentByPreCPUTasksOfTheCGroupInUserMode = 0b0000000000000000000000000000000000000000000000001000000000000000
 
 	// KPreCPUSystemUsage
 	//
 	// English: System Usage. (Linux only)
-	KPreCPUSystemUsage = 0b00000000000000010000000000000000
+	KPreCPUSystemUsage = 0b0000000000000000000000000000000000000000000000010000000000000000
 
 	// KOnlinePreCPUs
 	//
 	// English: Online CPUs. (Linux only)
-	KOnlinePreCPUs = 0b00000000000000100000000000000000
+	KOnlinePreCPUs = 0b0000000000000000000000000000000000000000000000100000000000000000
 
 	// KAggregatePreCPUTimeTheContainerWasThrottled
 	//
 	// English: Throttling Data. (Linux only) - Aggregate time the container was throttled for in nanoseconds
-	KAggregatePreCPUTimeTheContainerWasThrottled = 0b00000000000001000000000000000000
+	KAggregatePreCPUTimeTheContainerWasThrottled = 0b0000000000000000000000000000000000000000000001000000000000000000
 
 	// KNumberOfPeriodsWithPreCPUThrottlingActive
 	//
 	// English: Throttling Data. (Linux only) - Number of periods with throttling active
-	KNumberOfPeriodsWithPreCPUThrottlingActive = 0b00000000000010000000000000000000
+	KNumberOfPeriodsWithPreCPUThrottlingActive = 0b0000000000000000000000000000000000000000000010000000000000000000
 
 	// KNumberOfPeriodsWhenTheContainerPreCPUHitsItsThrottlingLimit
 	//
 	// English: Throttling Data. (Linux only) - Number of periods when the container hits its throttling limit.
-	KNumberOfPeriodsWhenTheContainerPreCPUHitsItsThrottlingLimit = 0b00000000000100000000000000000000
+	KNumberOfPeriodsWhenTheContainerPreCPUHitsItsThrottlingLimit = 0b0000000000000000000000000000000000000000000100000000000000000000
 
 	// KCurrentResCounterUsageForMemory
 	//
 	// English: Current res_counter usage for memory
-	KCurrentResCounterUsageForMemory = 0b00000000001000000000000000000000
+	KCurrentResCounterUsageForMemory = 0b0000000000000000000000000000000000000000001000000000000000000000
 
 	// KMaximumUsageEverRecorded
 	//
 	// English: Maximum usage ever recorded
-	KMaximumUsageEverRecorded = 0b00000000010000000000000000000000
+	KMaximumUsageEverRecorded = 0b0000000000000000000000000000000000000000010000000000000000000000
 
 	// KNumberOfTimesMemoryUsageHitsLimits
 	//
 	// English: Number of times memory usage hits limits
-	KNumberOfTimesMemoryUsageHitsLimits = 0b00000000100000000000000000000000
+	KNumberOfTimesMemoryUsageHitsLimits = 0b0000000000000000000000000000000000000000100000000000000000000000
 
 	// KMemoryLimit
 	//
 	// English: Memory limit
-	KMemoryLimit = 0b00000001000000000000000000000000
+	KMemoryLimit = 0b0000000000000000000000000000000000000001000000000000000000000000
 
 	// KCommittedBytes
 	//
 	// English: Committed bytes
-	KCommittedBytes = 0b00000010000000000000000000000000
+	KCommittedBytes = 0b0000000000000000000000000000000000000010000000000000000000000000
 
 	// KPeakCommittedBytes
 	//
 	// English: Peak committed bytes
-	KPeakCommittedBytes = 0b00000100000000000000000000000000
+	KPeakCommittedBytes = 0b0000000000000000000000000000000000000100000000000000000000000000
 
 	// KPrivateWorkingSet
 	//
 	// English: Private working set
-	KPrivateWorkingSet = 0b00001000000000000000000000000000
+	KPrivateWorkingSet = 0b0000000000000000000000000000000000001000000000000000000000000000
+
+	KBlkioIoServiceBytesRecursive = 0b0000000000000000000000000000000000010000000000000000000000000000
+	KBlkioIoServicedRecursive     = 0b0000000000000000000000000000000000100000000000000000000000000000
+	KBlkioIoQueuedRecursive       = 0b0000000000000000000000000000000001000000000000000000000000000000
+	KBlkioIoServiceTimeRecursive  = 0b0000000000000000000000000000000010000000000000000000000000000000
+	KBlkioIoWaitTimeRecursive     = 0b0000000000000000000000000000000100000000000000000000000000000000
+	KBlkioIoMergedRecursive       = 0b0000000000000000000000000000001000000000000000000000000000000000
+	KBlkioIoTimeRecursive         = 0b0000000000000000000000000000010000000000000000000000000000000000
+	KBlkioSectorsRecursive        = 0b0000000000000000000000000000100000000000000000000000000000000000
 
 	// KMacOsLogWithAllCores
 	//
@@ -190,7 +199,15 @@ const (
 		KOnlinePreCPUs |
 		KCurrentResCounterUsageForMemory |
 		KMaximumUsageEverRecorded |
-		KMemoryLimit
+		KMemoryLimit |
+		KBlkioIoServiceBytesRecursive |
+		KBlkioIoServicedRecursive |
+		KBlkioIoQueuedRecursive |
+		KBlkioIoServiceTimeRecursive |
+		KBlkioIoWaitTimeRecursive |
+		KBlkioIoMergedRecursive |
+		KBlkioIoTimeRecursive |
+		KBlkioSectorsRecursive
 
 	// KMacOsLog
 	//
@@ -207,7 +224,15 @@ const (
 		KOnlinePreCPUs |
 		KCurrentResCounterUsageForMemory |
 		KMaximumUsageEverRecorded |
-		KMemoryLimit
+		KMemoryLimit |
+		KBlkioIoServiceBytesRecursive |
+		KBlkioIoServicedRecursive |
+		KBlkioIoQueuedRecursive |
+		KBlkioIoServiceTimeRecursive |
+		KBlkioIoWaitTimeRecursive |
+		KBlkioIoMergedRecursive |
+		KBlkioIoTimeRecursive |
+		KBlkioSectorsRecursive
 )
 
 type Theater struct {
@@ -217,7 +242,7 @@ type Theater struct {
 	ticker        *time.Ticker
 	event         chan Event
 	cpus          int
-	logFlags      int
+	logFlags      int64
 }
 
 type Timers struct {
@@ -1221,6 +1246,145 @@ func (e *Theater) writeContainerLogToFile(path string, lineList [][]byte, config
 		}
 	}
 
+	if makeLabel == true && e.logFlags&KBlkioIoServiceBytesRecursive == KBlkioIoServiceBytesRecursive {
+		log.Printf("***************************************************************")
+		log.Printf("%+v", stats.BlkioStats.IoServiceBytesRecursive)
+		for i := 0; i != len(stats.BlkioStats.IoServiceBytesRecursive); i += 1 {
+			_, err = file.Write([]byte("BlkioStats stores All IO service stats for data read and write. Io ServiceBytes Recursive.\t"))
+			if err != nil {
+				util.TraceToLog()
+				return
+			}
+		}
+	} else if e.logFlags&KBlkioIoServiceBytesRecursive == KBlkioIoServiceBytesRecursive {
+		log.Printf("***************************************************************")
+		for i := 0; i != len(stats.BlkioStats.IoServiceBytesRecursive); i += 1 {
+			_, err = file.Write([]byte(strconv.FormatUint(stats.BlkioStats.IoServiceBytesRecursive[i].Major, 10)))
+			_, err = file.Write([]byte(strconv.FormatUint(stats.BlkioStats.IoServiceBytesRecursive[i].Minor, 10)))
+			_, err = file.Write([]byte(stats.BlkioStats.IoServiceBytesRecursive[i].Op))
+			_, err = file.Write([]byte(strconv.FormatUint(stats.BlkioStats.IoServiceBytesRecursive[i].Value, 10)))
+		}
+	}
+
+	if makeLabel == true && e.logFlags&KBlkioIoServicedRecursive == KBlkioIoServicedRecursive {
+		for i := 0; i != len(stats.BlkioStats.IoServicedRecursive); i += 1 {
+			_, err = file.Write([]byte("BlkioStats stores All IO service stats for data read and write. Io Serviced Recursive.\t"))
+			if err != nil {
+				util.TraceToLog()
+				return
+			}
+		}
+	} else if e.logFlags&KBlkioIoServicedRecursive == KBlkioIoServicedRecursive {
+		for i := 0; i != len(stats.BlkioStats.IoServicedRecursive); i += 1 {
+			_, err = file.Write([]byte(strconv.FormatUint(stats.BlkioStats.IoServicedRecursive[i].Major, 10)))
+			_, err = file.Write([]byte(strconv.FormatUint(stats.BlkioStats.IoServicedRecursive[i].Minor, 10)))
+			_, err = file.Write([]byte(stats.BlkioStats.IoServicedRecursive[i].Op))
+			_, err = file.Write([]byte(strconv.FormatUint(stats.BlkioStats.IoServicedRecursive[i].Value, 10)))
+		}
+	}
+
+	if makeLabel == true && e.logFlags&KBlkioIoQueuedRecursive == KBlkioIoQueuedRecursive {
+		for i := 0; i != len(stats.BlkioStats.IoQueuedRecursive); i += 1 {
+			_, err = file.Write([]byte("BlkioStats stores All IO service stats for data read and write. Io Queued Recursive.\t"))
+			if err != nil {
+				util.TraceToLog()
+				return
+			}
+		}
+	} else if e.logFlags&KBlkioIoQueuedRecursive == KBlkioIoQueuedRecursive {
+		for i := 0; i != len(stats.BlkioStats.IoQueuedRecursive); i += 1 {
+			_, err = file.Write([]byte(strconv.FormatUint(stats.BlkioStats.IoQueuedRecursive[i].Major, 10)))
+			_, err = file.Write([]byte(strconv.FormatUint(stats.BlkioStats.IoQueuedRecursive[i].Minor, 10)))
+			_, err = file.Write([]byte(stats.BlkioStats.IoQueuedRecursive[i].Op))
+			_, err = file.Write([]byte(strconv.FormatUint(stats.BlkioStats.IoQueuedRecursive[i].Value, 10)))
+		}
+	}
+
+	if makeLabel == true && e.logFlags&KBlkioIoServiceTimeRecursive == KBlkioIoServiceTimeRecursive {
+		for i := 0; i != len(stats.BlkioStats.IoServiceTimeRecursive); i += 1 {
+			_, err = file.Write([]byte("BlkioStats stores All IO service stats for data read and write. Io Service TimeRecursive.\t"))
+			if err != nil {
+				util.TraceToLog()
+				return
+			}
+		}
+	} else if e.logFlags&KBlkioIoServiceTimeRecursive == KBlkioIoServiceTimeRecursive {
+		for i := 0; i != len(stats.BlkioStats.IoServiceTimeRecursive); i += 1 {
+			_, err = file.Write([]byte(strconv.FormatUint(stats.BlkioStats.IoServiceTimeRecursive[i].Major, 10)))
+			_, err = file.Write([]byte(strconv.FormatUint(stats.BlkioStats.IoServiceTimeRecursive[i].Minor, 10)))
+			_, err = file.Write([]byte(stats.BlkioStats.IoServiceTimeRecursive[i].Op))
+			_, err = file.Write([]byte(strconv.FormatUint(stats.BlkioStats.IoServiceTimeRecursive[i].Value, 10)))
+		}
+	}
+
+	if makeLabel == true && e.logFlags&KBlkioIoWaitTimeRecursive == KBlkioIoWaitTimeRecursive {
+		for i := 0; i != len(stats.BlkioStats.IoWaitTimeRecursive); i += 1 {
+			_, err = file.Write([]byte("BlkioStats stores All IO service stats for data read and write. Io Wait TimeRecursive.\t"))
+			if err != nil {
+				util.TraceToLog()
+				return
+			}
+		}
+	} else if e.logFlags&KBlkioIoWaitTimeRecursive == KBlkioIoWaitTimeRecursive {
+		for i := 0; i != len(stats.BlkioStats.IoWaitTimeRecursive); i += 1 {
+			_, err = file.Write([]byte(strconv.FormatUint(stats.BlkioStats.IoWaitTimeRecursive[i].Major, 10)))
+			_, err = file.Write([]byte(strconv.FormatUint(stats.BlkioStats.IoWaitTimeRecursive[i].Minor, 10)))
+			_, err = file.Write([]byte(stats.BlkioStats.IoWaitTimeRecursive[i].Op))
+			_, err = file.Write([]byte(strconv.FormatUint(stats.BlkioStats.IoWaitTimeRecursive[i].Value, 10)))
+		}
+	}
+
+	if makeLabel == true && e.logFlags&KBlkioIoMergedRecursive == KBlkioIoMergedRecursive {
+		for i := 0; i != len(stats.BlkioStats.IoMergedRecursive); i += 1 {
+			_, err = file.Write([]byte("BlkioStats stores All IO service stats for data read and write. Io Merged Recursive.\t"))
+			if err != nil {
+				util.TraceToLog()
+				return
+			}
+		}
+	} else if e.logFlags&KBlkioIoMergedRecursive == KBlkioIoMergedRecursive {
+		for i := 0; i != len(stats.BlkioStats.IoMergedRecursive); i += 1 {
+			_, err = file.Write([]byte(strconv.FormatUint(stats.BlkioStats.IoMergedRecursive[i].Major, 10)))
+			_, err = file.Write([]byte(strconv.FormatUint(stats.BlkioStats.IoMergedRecursive[i].Minor, 10)))
+			_, err = file.Write([]byte(stats.BlkioStats.IoMergedRecursive[i].Op))
+			_, err = file.Write([]byte(strconv.FormatUint(stats.BlkioStats.IoMergedRecursive[i].Value, 10)))
+		}
+	}
+
+	if makeLabel == true && e.logFlags&KBlkioIoTimeRecursive == KBlkioIoTimeRecursive {
+		for i := 0; i != len(stats.BlkioStats.IoTimeRecursive); i += 1 {
+			_, err = file.Write([]byte("BlkioStats stores All IO service stats for data read and write. Io Time Recursive.\t"))
+			if err != nil {
+				util.TraceToLog()
+				return
+			}
+		}
+	} else if e.logFlags&KBlkioIoTimeRecursive == KBlkioIoTimeRecursive {
+		for i := 0; i != len(stats.BlkioStats.IoTimeRecursive); i += 1 {
+			_, err = file.Write([]byte(strconv.FormatUint(stats.BlkioStats.IoTimeRecursive[i].Major, 10)))
+			_, err = file.Write([]byte(strconv.FormatUint(stats.BlkioStats.IoTimeRecursive[i].Minor, 10)))
+			_, err = file.Write([]byte(stats.BlkioStats.IoTimeRecursive[i].Op))
+			_, err = file.Write([]byte(strconv.FormatUint(stats.BlkioStats.IoTimeRecursive[i].Value, 10)))
+		}
+	}
+
+	if makeLabel == true && e.logFlags&KBlkioSectorsRecursive == KBlkioSectorsRecursive {
+		for i := 0; i != len(stats.BlkioStats.SectorsRecursive); i += 1 {
+			_, err = file.Write([]byte("BlkioStats stores All IO service stats for data read and write. Sectors Recursive.\t"))
+			if err != nil {
+				util.TraceToLog()
+				return
+			}
+		}
+	} else if e.logFlags&KBlkioSectorsRecursive == KBlkioSectorsRecursive {
+		for i := 0; i != len(stats.BlkioStats.SectorsRecursive); i += 1 {
+			_, err = file.Write([]byte(strconv.FormatUint(stats.BlkioStats.SectorsRecursive[i].Major, 10)))
+			_, err = file.Write([]byte(strconv.FormatUint(stats.BlkioStats.SectorsRecursive[i].Minor, 10)))
+			_, err = file.Write([]byte(stats.BlkioStats.SectorsRecursive[i].Op))
+			_, err = file.Write([]byte(strconv.FormatUint(stats.BlkioStats.SectorsRecursive[i].Value, 10)))
+		}
+	}
+
 	// Linux specific stats, not populated on Windows.
 	// Current is the number of pids in the cgroup
 	if makeLabel == true && e.logFlags&KCurrentNumberOfOidsInTheCGroup == KCurrentNumberOfOidsInTheCGroup {
@@ -1887,7 +2051,7 @@ func (e *Theater) getProbalityNumber() (probality float64) {
 	return 1.0 - e.getRandSeed().Float64()
 }
 
-func (e *Theater) SetLogFields(logFlags int) {
+func (e *Theater) SetLogFields(logFlags int64) {
 	e.logFlags = logFlags
 }
 
