@@ -128,9 +128,9 @@ func (e *ContainerBuilder) ImageBuildFromFolder() (err error) {
 
 					log.Printf("%v", stream)
 
-					if event.Closed == true {
-						return
-					}
+					//if event.Closed == true {
+					//	return
+					//}
 				}
 			}
 		}(&e.changePointer)
