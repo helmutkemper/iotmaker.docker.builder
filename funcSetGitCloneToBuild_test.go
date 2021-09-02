@@ -33,7 +33,7 @@ func ExampleContainerBuilder_SetGitCloneToBuild() {
 	}
 
 	// builder new image from git project
-	err = container.ImageBuildFromServer()
+	_, err = container.ImageBuildFromServer()
 	if err != nil {
 		panic(err)
 	}

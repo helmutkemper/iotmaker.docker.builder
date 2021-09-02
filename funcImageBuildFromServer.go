@@ -2,6 +2,7 @@ package iotmakerdockerbuilder
 
 import (
 	"errors"
+	"github.com/docker/docker/api/types"
 	"github.com/go-git/go-git/v5"
 	"github.com/go-git/go-git/v5/plumbing/transport/http"
 	"github.com/go-git/go-git/v5/plumbing/transport/ssh"
@@ -35,7 +36,7 @@ import (
 //   ~/.gitconfig;
 //   As funções SetGitConfigFile(), SetSshIdRsaFile() e SetSshKnownHostsFile() podem ser usadas para definir os
 //   arquivos de configurações se segurança do git manualmente.
-func (e *ContainerBuilder) ImageBuildFromServer() (err error) {
+func (e *ContainerBuilder) ImageBuildFromServer() (inspect types.ImageInspect, err error) {
 	err = e.verifyImageName()
 	if err != nil {
 		util.TraceToLog()
@@ -205,6 +206,12 @@ func (e *ContainerBuilder) ImageBuildFromServer() (err error) {
 	//if err != nil {
 	//	return
 	//}
+
+	inspect, err = e.ImageInspect()
+	if err != nil {
+		util.TraceToLog()
+		return
+	}
 
 	return
 }

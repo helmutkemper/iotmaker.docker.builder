@@ -31,8 +31,10 @@ func main() {
 		panic(err)
 	}
 
+	// todo: fazer o inspect
+
 	// builder new image from folder
-	err = container.ImageBuildFromFolder()
+	_, err = container.ImageBuildFromFolder()
 	if err != nil {
 		panic(err)
 	}

@@ -236,13 +236,14 @@ const (
 )
 
 type Theater struct {
-	sceneCache    []*Configuration
-	sceneBuilding []*Configuration
-	scenePrologue []*Configuration
-	ticker        *time.Ticker
-	event         chan Event
-	cpus          int
-	logFlags      int64
+	imageExpirationTime time.Duration
+	sceneCache          []*Configuration
+	sceneBuilding       []*Configuration
+	scenePrologue       []*Configuration
+	ticker              *time.Ticker
+	event               chan Event
+	cpus                int
+	logFlags            int64
 }
 
 type Timers struct {
@@ -538,6 +539,18 @@ func (e *Configuration) AddASceneOfChaosSettingRestartIntervalRestartController(
 	e.Chaos.Restart.RestartLimit = limit
 
 	return e
+}
+
+func (e *Theater) SetImageExpirationTime(expiration time.Duration) {
+	e.imageExpirationTime = expiration
+}
+
+func (e *Theater) GetImageExpirationTime() (expiration time.Duration) {
+	return e.imageExpirationTime
+}
+
+func (e *Theater) imageExpirationTimeIsValid(docker *dockerBuild.ContainerBuilder) (valid bool) {
+	return time.Now().Add(e.GetImageExpirationTime() * -1).Before(docker.GetImageCreated())
 }
 
 func (e *Theater) GetChannels() (eventChannel *chan Event) {
@@ -982,13 +995,14 @@ func (e *Theater) buildImage(docker *dockerBuild.ContainerBuilder) (err error) {
 	var buildPath = docker.GetBuildFolderPath()
 	var url = docker.GetGitCloneToBuild()
 
-	if buildPath != "" {
-		err = docker.ImageBuildFromFolder()
-	} else if url != "" {
-		err = docker.ImageBuildFromServer()
+	if buildPath != "" && (e.GetImageExpirationTime() == 0 || e.imageExpirationTimeIsValid(docker) == false) {
+		_, err = docker.ImageBuildFromFolder()
+	} else if url != "" && (e.GetImageExpirationTime() == 0 || e.imageExpirationTimeIsValid(docker) == false) {
+		_, err = docker.ImageBuildFromServer()
 	}
 	if err != nil {
 		util.TraceToLog()
+		return
 	}
 
 	return

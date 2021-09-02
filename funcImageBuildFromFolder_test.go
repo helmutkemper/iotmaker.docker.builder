@@ -68,8 +68,10 @@ func ExampleContainerBuilder_ImageBuildFromFolder() {
 		panic(err)
 	}
 
+	// todo: fazer o teste do inspect
+
 	// builder new image from folder
-	err = container.ImageBuildFromFolder()
+	_, err = container.ImageBuildFromFolder()
 	if err != nil {
 		panic(err)
 	}

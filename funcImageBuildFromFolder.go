@@ -2,6 +2,7 @@ package iotmakerdockerbuilder
 
 import (
 	"errors"
+	"github.com/docker/docker/api/types"
 	iotmakerdocker "github.com/helmutkemper/iotmaker.docker/v1.0.1"
 	"github.com/helmutkemper/util"
 	"io/fs"
@@ -33,7 +34,7 @@ import (
 //     Caso o projeto seja em golang e o arquivo main.go, contendo o pacote main, esteja contido na pasta raiz,
 //     com o arquivo go.mod, pode ser usada a função MakeDefaultDockerfileForMe() para ser usado um arquivo
 //     Dockerfile padrão
-func (e *ContainerBuilder) ImageBuildFromFolder() (err error) {
+func (e *ContainerBuilder) ImageBuildFromFolder() (inspect types.ImageInspect, err error) {
 	err = e.verifyImageName()
 	if err != nil {
 		util.TraceToLog()
@@ -160,6 +161,12 @@ func (e *ContainerBuilder) ImageBuildFromFolder() (err error) {
 	//if err != nil {
 	//	return
 	//}
+
+	inspect, err = e.ImageInspect()
+	if err != nil {
+		util.TraceToLog()
+		return
+	}
 
 	return
 }

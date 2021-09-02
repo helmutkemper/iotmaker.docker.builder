@@ -145,7 +145,7 @@ func (e *NetworkChaos) Init() (err error) {
 	}
 
 	//if e.imageExists() == false {
-	err = e.overload.ImageBuildFromFolder()
+	_, err = e.overload.ImageBuildFromFolder()
 
 	if err != nil {
 		util.TraceToLog()

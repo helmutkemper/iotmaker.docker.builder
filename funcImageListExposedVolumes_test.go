@@ -22,7 +22,8 @@ func ExampleContainerBuilder_ImageListExposedVolumes() {
 		panic(err)
 	}
 
-	err = container.ImageBuildFromServer()
+	// todo: fazer o teste do inspect
+	_, err = container.ImageBuildFromServer()
 	if err != nil {
 		util.TraceToLog()
 		panic(err)

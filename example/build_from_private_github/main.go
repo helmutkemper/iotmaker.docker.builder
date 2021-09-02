@@ -51,8 +51,10 @@ func main() {
 		panic(err)
 	}
 
+	// todo: fazer o inspect
+
 	// builder new image from git project
-	err = container.ImageBuildFromServer()
+	_, err = container.ImageBuildFromServer()
 	if err != nil {
 		panic(err)
 	}

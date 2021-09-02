@@ -22,10 +22,24 @@ type ContainerBuilder struct {
 	changePointer           chan iotmakerdocker.ContainerPullStatusSendToChannel
 	onContainerReady        *chan bool
 	onContainerInspect      *chan bool
+	imageInspected          bool
 	imageInstallExtras      bool
 	imageCacheName          string
 	imageName               string
 	imageID                 string
+	imageRepoTags           []string
+	imageRepoDigests        []string
+	imageParent             string
+	imageComment            string
+	imageCreated            time.Time
+	imageContainer          string
+	imageAuthor             string
+	imageArchitecture       string
+	imageVariant            string
+	imageOs                 string
+	imageOsVersion          string
+	imageSize               int64
+	imageVirtualSize        int64
 	containerName           string
 	buildPath               string
 	environmentVar          []string
