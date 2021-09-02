@@ -938,8 +938,8 @@ func (e *Theater) buildCache() (err error) {
 	var id string
 
 	for _, container := range e.sceneCache {
-		id, err = container.Docker.ImageFindIdByName(container.Docker.GetImageCacheName())
-		if err != nil {
+		id, err = container.Docker.ImageFindIdByName(container.Docker.GetImageName())
+		if err != nil && err.Error() != "image name not found" {
 			util.TraceToLog()
 			return
 		}
