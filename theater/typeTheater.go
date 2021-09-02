@@ -896,7 +896,7 @@ func (e *Theater) manager() {
 	}
 }
 
-func (e *Theater) AddImageConfigurationUsedAsCache(container *Configuration) (err error) {
+func (e *Theater) AddCacheConfig(container *Configuration) (err error) {
 	if e.sceneCache == nil {
 		e.sceneCache = make([]*Configuration, 0)
 	}
@@ -938,7 +938,7 @@ func (e *Theater) buildCache() (err error) {
 	var id string
 
 	for _, container := range e.sceneCache {
-		id, err = container.Docker.ImageFindIdByName(container.Docker.GetImageName())
+		id, err = container.Docker.ImageFindIdByName(container.Docker.GetImageCacheName())
 		if err != nil {
 			util.TraceToLog()
 			return
@@ -1040,7 +1040,7 @@ func (e *Theater) buildContainers() (err error) {
 	return
 }
 
-func (e *Theater) AddContainerAddContainerConfigurationToPrologueScene(container *Configuration) (err error) {
+func (e *Theater) AddContainerConfigurationToPrologueScene(container *Configuration) (err error) {
 	if e.scenePrologue == nil {
 		e.scenePrologue = make([]*Configuration, 0)
 	}
