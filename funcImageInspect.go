@@ -14,8 +14,8 @@ func (e *ContainerBuilder) ImageInspect() (inspect types.ImageInspect, err error
 		return
 	}
 	log.Printf("inspect.Created: %v", inspect.Created)
-	log.Printf("time.RFC3339Nano: %v", time.RFC3339Nano)
-	e.imageCreated, err = time.Parse(time.RFC3339Nano, inspect.Created)
+	log.Printf("time.RFC3339Nano: %v", time.RFC3339)
+	e.imageCreated, err = time.Parse(time.RFC3339, inspect.Created)
 	if err != nil {
 		util.TraceToLog()
 		return
