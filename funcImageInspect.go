@@ -21,15 +21,14 @@ func (e *ContainerBuilder) ImageInspect() (inspect types.ImageInspect, err error
 		util.TraceToLog()
 		return
 	}
-	log.Printf("inspect.Created: %v", inspect.Created)
-	log.Printf("time.RFC3339: %v", time.RFC3339)
+
 	e.imageCreated, err = time.Parse(time.RFC3339Nano, inspect.Created)
 	if err != nil {
 		log.Printf("error: %v", err.Error())
 		util.TraceToLog()
 		return
 	}
-	log.Printf("e.imageCreated: %v", e.imageCreated)
+
 	e.imageInspected = true
 
 	e.imageRepoTags = inspect.RepoTags

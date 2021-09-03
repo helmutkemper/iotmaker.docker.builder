@@ -551,10 +551,6 @@ func (e *Theater) GetImageExpirationTime() (expiration time.Duration) {
 
 func (e *Theater) imageExpirationTimeIsValid(docker *dockerBuild.ContainerBuilder) (valid bool) {
 	_, _ = docker.ImageInspect()
-	log.Printf("docker.GetImageCreated(): %v", docker.GetImageCreated())
-	log.Printf("docker.GetImageCreated().Add(e.GetImageExpirationTime()): %v", docker.GetImageCreated().Add(e.GetImageExpirationTime()))
-	log.Printf("time.Now(): %v", time.Now())
-	log.Printf("docker.GetImageCreated().Add(e.GetImageExpirationTime()).After(time.Now()): %v", docker.GetImageCreated().Add(e.GetImageExpirationTime()).After(time.Now()))
 	return docker.GetImageCreated().Add(e.GetImageExpirationTime()).After(time.Now())
 }
 
