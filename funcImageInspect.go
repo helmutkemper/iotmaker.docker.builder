@@ -3,6 +3,7 @@ package iotmakerdockerbuilder
 import (
 	"github.com/docker/docker/api/types"
 	"github.com/helmutkemper/util"
+	"log"
 	"time"
 )
 
@@ -12,7 +13,8 @@ func (e *ContainerBuilder) ImageInspect() (inspect types.ImageInspect, err error
 		util.TraceToLog()
 		return
 	}
-
+	log.Printf("inspect.Created: %v", inspect.Created)
+	log.Printf("time.RFC3339Nano: %v", time.RFC3339Nano)
 	e.imageCreated, err = time.Parse(time.RFC3339Nano, inspect.Created)
 	if err != nil {
 		util.TraceToLog()
