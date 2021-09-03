@@ -8,6 +8,14 @@ import (
 )
 
 func (e *ContainerBuilder) ImageInspect() (inspect types.ImageInspect, err error) {
+	if e.imageID == "" {
+		e.imageID, err = e.ImageFindIdByName(e.GetImageName())
+		if err != nil {
+			util.TraceToLog()
+			return
+		}
+	}
+
 	inspect, err = e.dockerSys.ImageInspect(e.imageID)
 	if err != nil {
 		util.TraceToLog()
