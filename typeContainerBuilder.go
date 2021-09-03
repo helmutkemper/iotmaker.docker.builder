@@ -10,12 +10,48 @@ import (
 	"time"
 )
 
+type chaos struct {
+	filterToStart            []LogFilter
+	filterRestart            []LogFilter
+	filterSuccess            []LogFilter
+	filterFail               []LogFilter
+	filterLog                []LogFilter
+	sceneName                string
+	logPath                  string
+	minimumTimeBeforeRestart time.Duration
+	maximumTimeBeforeRestart time.Duration
+	minimumTimeToStart       time.Duration
+	maximumTimeToStart       time.Duration
+	minimumTimeToPause       time.Duration
+	maximumTimeToPause       time.Duration
+	minimumTimeToUnpause     time.Duration
+	maximumTimeToUnpause     time.Duration
+	minimumTimeToRestart     time.Duration
+	maximumTimeToRestart     time.Duration
+	restartProbability       float64
+	restartLimit             int
+	enableChaos              bool
+	event                    chan Event
+	containerStarted         bool
+	containerPaused          bool
+	containerStopped         bool
+	linear                   bool
+	caosStarted              bool
+	caosCanRestart           bool
+	caosCanRestartEnd        bool
+
+	eventNext time.Time
+}
+
 // ContainerBuilder
 //
 // English: Docker manager
 //
 // Português: Gerenciador de containers e imagens docker
 type ContainerBuilder struct {
+	logCpus                 int
+	logFlags                int64
+	chaos                   chaos
 	enableCache             bool
 	network                 isolatedNetwork.ContainerBuilderNetworkInterface
 	dockerSys               iotmakerdocker.DockerSystem
