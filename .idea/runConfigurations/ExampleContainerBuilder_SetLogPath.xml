@@ -1,0 +1,13 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="ExampleContainerBuilder_SetLogPath" type="GoTestRunConfiguration" factoryName="Go Test">
+    <module name="iotmaker.docker.builder" />
+    <working_directory value="$PROJECT_DIR$" />
+    <kind value="FILE" />
+    <package value="github.com/helmutkemper/iotmaker.docker.builder" />
+    <directory value="$PROJECT_DIR$" />
+    <filePath value="$PROJECT_DIR$/funcSetLogPath_test.go" />
+    <framework value="gotest" />
+    <pattern value="^\QExampleContainerBuilder_SetLogPath\E$" />
+    <method v="2" />
+  </configuration>
+</component>
