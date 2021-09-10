@@ -72,32 +72,30 @@ func TestTheater_WriteStatsCSV(t *testing.T) {
 	// define o limite de memória
 	container.SetImageBuildOptionsMemory(100 * builder.KMegaByte)
 
-	var containerServerConfiguration = NewTestContainerConfiguration(&container).
-		SetContainerStatsLogPath("./counter.log.csv").
-		AddASceneSettingFilterOnTheContainersStandardOutputToEndEvent(
-			"done!",
-			"^.*?(?P<valueToGet>\\d+/\\d+/\\d+ \\d+:\\d+:\\d+ done!).*",
-			"",
-			"",
-		).
-		AddASceneSettingFilterOnTheContainersStandardOutputToFailEvent(
-			"counter: 40",
-			"^.*?(?P<valueToGet>\\d+/\\d+/\\d+ \\d+:\\d+:\\d+ counter: [\\d\\.]+).*",
-			"(?P<date>\\d+/\\d+/\\d+)\\s+(?P<hour>\\d+:\\d+:\\d+)\\s+counter:\\s+(?P<value>[\\d\\.]+).*",
-			"Test Fail! Counter Value: ${value} - Hour: ${hour} - Date: ${date}",
-		).
-		SetASceneLinearFlag()
+	container.SetLogPath("./counter.log.csv")
+	container.AddFilterToSuccess(
+		"done!",
+		"^.*?(?P<valueToGet>\\d+/\\d+/\\d+ \\d+:\\d+:\\d+ done!).*",
+		"",
+		"",
+	)
+	container.AddFilterToFail(
+		"counter: 40",
+		"^.*?(?P<valueToGet>\\d+/\\d+/\\d+ \\d+:\\d+:\\d+ counter: [\\d\\.]+).*",
+		"(?P<date>\\d+/\\d+/\\d+)\\s+(?P<hour>\\d+:\\d+:\\d+)\\s+counter:\\s+(?P<value>[\\d\\.]+).*",
+		"Test Fail! Counter Value: ${value} - Hour: ${hour} - Date: ${date}",
+	)
 
 	// Theater
 	var theater = Theater{}
 
 	// Add second scene
-	err = theater.AddContainerConfiguration(containerServerConfiguration)
-	if err != nil {
-		util.TraceToLog()
-		log.Printf("err: %v", err)
-		t.Fail()
-	}
+	//err = theater.AddContainerConfiguration(containerServerConfiguration)
+	//if err != nil {
+	//	util.TraceToLog()
+	//	log.Printf("err: %v", err)
+	//	t.Fail()
+	//}
 
 	// Init theater
 	err = theater.Init()

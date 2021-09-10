@@ -3,6 +3,7 @@ package iotmakerdockerbuilder
 import (
 	"github.com/helmutkemper/util"
 	"log"
+	"time"
 )
 
 // ContainerStartAfterBuild (english):
@@ -49,6 +50,7 @@ func (e *ContainerBuilder) ContainerStartAfterBuild() (err error) {
 		}
 	}
 
+	e.chaos.serviceStartedAt = time.Now()
 	e.startedAfterBuild = true
 	*e.onContainerReady <- true
 	return

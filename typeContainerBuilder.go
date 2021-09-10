@@ -18,10 +18,11 @@ type chaos struct {
 	filterLog                []LogFilter
 	sceneName                string
 	logPath                  string
+	serviceStartedAt         time.Time
 	minimumTimeBeforeRestart time.Duration
 	maximumTimeBeforeRestart time.Duration
-	minimumTimeToStart       time.Duration
-	maximumTimeToStart       time.Duration
+	minimumTimeToStartChaos  time.Duration
+	maximumTimeToStartChaos  time.Duration
 	minimumTimeToPause       time.Duration
 	maximumTimeToPause       time.Duration
 	minimumTimeToUnpause     time.Duration
@@ -32,13 +33,13 @@ type chaos struct {
 	restartLimit             int
 	enableChaos              bool
 	event                    chan Event
-	containerStarted         bool
+	//containerStarted         bool
 	containerPaused          bool
 	containerStopped         bool
 	linear                   bool
-	caosStarted              bool
-	caosCanRestart           bool
-	caosCanRestartEnd        bool
+	chaosStarted             bool
+	chaosCanRestartContainer bool
+	//chaosCanRestartEnd       bool
 
 	eventNext time.Time
 }
