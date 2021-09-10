@@ -22,7 +22,7 @@ func ExampleContainerBuilder_SetLogPath() {
 	// new image name delete:latest
 	container.SetImageName("delete:latest")
 	// set a folder path to make a new image
-	container.SetBuildFolderPath("../test/counter")
+	container.SetBuildFolderPath("./test/counter")
 	// container name container_delete_server_after_test
 	container.SetContainerName("container_delete_counter_after_test")
 	// define o limite de memória
@@ -44,13 +44,15 @@ func ExampleContainerBuilder_SetLogPath() {
 
 	err = container.Init()
 	if err != nil {
-		log.Printf("error: %v", err.Error())
+		fmt.Printf("error: %v", err.Error())
+		GarbageCollector()
 		return
 	}
 
 	imageInspect, err = container.ImageBuildFromFolder()
 	if err != nil {
-		log.Printf("error: %v", err.Error())
+		fmt.Printf("error: %v", err.Error())
+		GarbageCollector()
 		return
 	}
 
@@ -60,6 +62,7 @@ func ExampleContainerBuilder_SetLogPath() {
 	err = container.ContainerBuildAndStartFromImage()
 	if err != nil {
 		log.Printf("error: %v", err.Error())
+		GarbageCollector()
 		return
 	}
 
@@ -73,6 +76,8 @@ func ExampleContainerBuilder_SetLogPath() {
 		fmt.Printf("error: %v", e.Error)
 		fmt.Printf("message: %v", e.Message)
 	}
+
+	GarbageCollector()
 
 	// Output:
 
