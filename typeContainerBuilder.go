@@ -33,6 +33,7 @@ type chaos struct {
 	restartLimit             int
 	enableChaos              bool
 	event                    chan Event
+	monitorStop              chan struct{}
 	//containerStarted         bool
 	containerPaused          bool
 	containerStopped         bool

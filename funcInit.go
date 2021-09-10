@@ -4,6 +4,7 @@ import (
 	dockerfileGolang "github.com/helmutkemper/iotmaker.docker.builder.golang.dockerfile"
 	iotmakerdocker "github.com/helmutkemper/iotmaker.docker/v1.0.1"
 	"github.com/helmutkemper/util"
+	"runtime"
 	"time"
 )
 
@@ -14,6 +15,15 @@ import (
 // Português: Inicializa o objeto e deve ser chamado apenas depois de toas as configurações serem definidas
 func (e *ContainerBuilder) Init() (err error) {
 	e.init = true
+
+	var osName = runtime.GOOS
+	if e.logFlags == 0 && osName == "darwin" {
+		e.logFlags = KMacOsLog
+	} else if e.logFlags == 0 {
+		e.logFlags = KAll
+	}
+
+	e.chaos.event = make(chan Event)
 
 	if e.imageCacheName == "" {
 		e.imageCacheName = "cache:latest"

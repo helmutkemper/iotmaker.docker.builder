@@ -34,10 +34,12 @@ import (
 //             Match:   "fim!"
 func (e *ContainerBuilder) writeContainerLogToFile(path string, lineList [][]byte) (err error) {
 	if path == "" {
+		util.TraceToLog()
 		return
 	}
 
 	if lineList == nil {
+		util.TraceToLog()
 		return
 	}
 
@@ -50,6 +52,7 @@ func (e *ContainerBuilder) writeContainerLogToFile(path string, lineList [][]byt
 	var file *os.File
 	file, err = os.OpenFile(path, os.O_CREATE|os.O_APPEND|os.O_WRONLY, fs.ModePerm)
 	if err != nil {
+		log.Printf("writeContainerLogToFile().error: %v", err.Error())
 		util.TraceToLog()
 		return
 	}
@@ -61,6 +64,7 @@ func (e *ContainerBuilder) writeContainerLogToFile(path string, lineList [][]byt
 	var stats = types.Stats{}
 	stats, err = e.ContainerStatisticsOneShot()
 	if err != nil {
+		log.Printf("writeContainerLogToFile().error: %v", err.Error())
 		util.TraceToLog()
 		return
 	}
@@ -69,18 +73,21 @@ func (e *ContainerBuilder) writeContainerLogToFile(path string, lineList [][]byt
 	if makeLabel == true && e.logFlags&KReadingTime == KReadingTime {
 		_, err = file.Write([]byte("Reading time\t"))
 		if err != nil {
+			log.Printf("writeContainerLogToFile().error: %v", err.Error())
 			util.TraceToLog()
 			return
 		}
 	} else if e.logFlags&KReadingTime == KReadingTime {
 		_, err = file.Write([]byte(stats.Read.String()))
 		if err != nil {
+			log.Printf("writeContainerLogToFile().error: %v", err.Error())
 			util.TraceToLog()
 			return
 		}
 
 		_, err = file.Write([]byte("\t"))
 		if err != nil {
+			log.Printf("writeContainerLogToFile().error: %v", err.Error())
 			util.TraceToLog()
 			return
 		}
@@ -122,24 +129,28 @@ func (e *ContainerBuilder) writeContainerLogToFile(path string, lineList [][]byt
 				if makeLabel == true {
 					_, err = file.Write([]byte(e.chaos.filterLog[filterLine].Label))
 					if err != nil {
+						log.Printf("writeContainerLogToFile().error: %v", err.Error())
 						util.TraceToLog()
 						return
 					}
 
 					_, err = file.Write([]byte("\t"))
 					if err != nil {
+						log.Printf("writeContainerLogToFile().error: %v", err.Error())
 						util.TraceToLog()
 						return
 					}
 				} else {
 					_, err = file.Write(toFile)
 					if err != nil {
+						log.Printf("writeContainerLogToFile().error: %v", err.Error())
 						util.TraceToLog()
 						return
 					}
 
 					_, err = file.Write([]byte("\t"))
 					if err != nil {
+						log.Printf("writeContainerLogToFile().error: %v", err.Error())
 						util.TraceToLog()
 						return
 					}
@@ -149,22 +160,43 @@ func (e *ContainerBuilder) writeContainerLogToFile(path string, lineList [][]byt
 	}
 
 	if makeLabel == true && e.logFlags&KBlkioIoServiceBytesRecursive == KBlkioIoServiceBytesRecursive {
-		log.Printf("***************************************************************")
-		log.Printf("%+v", stats.BlkioStats.IoServiceBytesRecursive)
 		for i := 0; i != len(stats.BlkioStats.IoServiceBytesRecursive); i += 1 {
 			_, err = file.Write([]byte("BlkioStats stores All IO service stats for data read and write. Io ServiceBytes Recursive.\t"))
 			if err != nil {
+				log.Printf("writeContainerLogToFile().error: %v", err.Error())
 				util.TraceToLog()
 				return
 			}
 		}
 	} else if e.logFlags&KBlkioIoServiceBytesRecursive == KBlkioIoServiceBytesRecursive {
-		log.Printf("***************************************************************")
 		for i := 0; i != len(stats.BlkioStats.IoServiceBytesRecursive); i += 1 {
 			_, err = file.Write([]byte(strconv.FormatUint(stats.BlkioStats.IoServiceBytesRecursive[i].Major, 10)))
+			if err != nil {
+				log.Printf("writeContainerLogToFile().error: %v", err.Error())
+				util.TraceToLog()
+				return
+			}
+
 			_, err = file.Write([]byte(strconv.FormatUint(stats.BlkioStats.IoServiceBytesRecursive[i].Minor, 10)))
+			if err != nil {
+				log.Printf("writeContainerLogToFile().error: %v", err.Error())
+				util.TraceToLog()
+				return
+			}
+
 			_, err = file.Write([]byte(stats.BlkioStats.IoServiceBytesRecursive[i].Op))
+			if err != nil {
+				log.Printf("writeContainerLogToFile().error: %v", err.Error())
+				util.TraceToLog()
+				return
+			}
+
 			_, err = file.Write([]byte(strconv.FormatUint(stats.BlkioStats.IoServiceBytesRecursive[i].Value, 10)))
+			if err != nil {
+				log.Printf("writeContainerLogToFile().error: %v", err.Error())
+				util.TraceToLog()
+				return
+			}
 		}
 	}
 
@@ -172,6 +204,7 @@ func (e *ContainerBuilder) writeContainerLogToFile(path string, lineList [][]byt
 		for i := 0; i != len(stats.BlkioStats.IoServicedRecursive); i += 1 {
 			_, err = file.Write([]byte("BlkioStats stores All IO service stats for data read and write. Io Serviced Recursive.\t"))
 			if err != nil {
+				log.Printf("writeContainerLogToFile().error: %v", err.Error())
 				util.TraceToLog()
 				return
 			}
@@ -179,9 +212,32 @@ func (e *ContainerBuilder) writeContainerLogToFile(path string, lineList [][]byt
 	} else if e.logFlags&KBlkioIoServicedRecursive == KBlkioIoServicedRecursive {
 		for i := 0; i != len(stats.BlkioStats.IoServicedRecursive); i += 1 {
 			_, err = file.Write([]byte(strconv.FormatUint(stats.BlkioStats.IoServicedRecursive[i].Major, 10)))
+			if err != nil {
+				log.Printf("writeContainerLogToFile().error: %v", err.Error())
+				util.TraceToLog()
+				return
+			}
+
 			_, err = file.Write([]byte(strconv.FormatUint(stats.BlkioStats.IoServicedRecursive[i].Minor, 10)))
+			if err != nil {
+				log.Printf("writeContainerLogToFile().error: %v", err.Error())
+				util.TraceToLog()
+				return
+			}
+
 			_, err = file.Write([]byte(stats.BlkioStats.IoServicedRecursive[i].Op))
+			if err != nil {
+				log.Printf("writeContainerLogToFile().error: %v", err.Error())
+				util.TraceToLog()
+				return
+			}
+
 			_, err = file.Write([]byte(strconv.FormatUint(stats.BlkioStats.IoServicedRecursive[i].Value, 10)))
+			if err != nil {
+				log.Printf("writeContainerLogToFile().error: %v", err.Error())
+				util.TraceToLog()
+				return
+			}
 		}
 	}
 
@@ -189,6 +245,7 @@ func (e *ContainerBuilder) writeContainerLogToFile(path string, lineList [][]byt
 		for i := 0; i != len(stats.BlkioStats.IoQueuedRecursive); i += 1 {
 			_, err = file.Write([]byte("BlkioStats stores All IO service stats for data read and write. Io Queued Recursive.\t"))
 			if err != nil {
+				log.Printf("writeContainerLogToFile().error: %v", err.Error())
 				util.TraceToLog()
 				return
 			}
@@ -196,9 +253,32 @@ func (e *ContainerBuilder) writeContainerLogToFile(path string, lineList [][]byt
 	} else if e.logFlags&KBlkioIoQueuedRecursive == KBlkioIoQueuedRecursive {
 		for i := 0; i != len(stats.BlkioStats.IoQueuedRecursive); i += 1 {
 			_, err = file.Write([]byte(strconv.FormatUint(stats.BlkioStats.IoQueuedRecursive[i].Major, 10)))
+			if err != nil {
+				log.Printf("writeContainerLogToFile().error: %v", err.Error())
+				util.TraceToLog()
+				return
+			}
+
 			_, err = file.Write([]byte(strconv.FormatUint(stats.BlkioStats.IoQueuedRecursive[i].Minor, 10)))
+			if err != nil {
+				log.Printf("writeContainerLogToFile().error: %v", err.Error())
+				util.TraceToLog()
+				return
+			}
+
 			_, err = file.Write([]byte(stats.BlkioStats.IoQueuedRecursive[i].Op))
+			if err != nil {
+				log.Printf("writeContainerLogToFile().error: %v", err.Error())
+				util.TraceToLog()
+				return
+			}
+
 			_, err = file.Write([]byte(strconv.FormatUint(stats.BlkioStats.IoQueuedRecursive[i].Value, 10)))
+			if err != nil {
+				log.Printf("writeContainerLogToFile().error: %v", err.Error())
+				util.TraceToLog()
+				return
+			}
 		}
 	}
 
@@ -213,9 +293,33 @@ func (e *ContainerBuilder) writeContainerLogToFile(path string, lineList [][]byt
 	} else if e.logFlags&KBlkioIoServiceTimeRecursive == KBlkioIoServiceTimeRecursive {
 		for i := 0; i != len(stats.BlkioStats.IoServiceTimeRecursive); i += 1 {
 			_, err = file.Write([]byte(strconv.FormatUint(stats.BlkioStats.IoServiceTimeRecursive[i].Major, 10)))
+			if err != nil {
+				log.Printf("writeContainerLogToFile().error: %v", err.Error())
+				util.TraceToLog()
+				return
+			}
+
 			_, err = file.Write([]byte(strconv.FormatUint(stats.BlkioStats.IoServiceTimeRecursive[i].Minor, 10)))
+			if err != nil {
+				log.Printf("writeContainerLogToFile().error: %v", err.Error())
+				util.TraceToLog()
+				return
+			}
+
 			_, err = file.Write([]byte(stats.BlkioStats.IoServiceTimeRecursive[i].Op))
+			if err != nil {
+				log.Printf("writeContainerLogToFile().error: %v", err.Error())
+				util.TraceToLog()
+				return
+			}
+
 			_, err = file.Write([]byte(strconv.FormatUint(stats.BlkioStats.IoServiceTimeRecursive[i].Value, 10)))
+			if err != nil {
+				log.Printf("writeContainerLogToFile().error: %v", err.Error())
+				util.TraceToLog()
+				return
+			}
+
 		}
 	}
 
@@ -223,6 +327,7 @@ func (e *ContainerBuilder) writeContainerLogToFile(path string, lineList [][]byt
 		for i := 0; i != len(stats.BlkioStats.IoWaitTimeRecursive); i += 1 {
 			_, err = file.Write([]byte("BlkioStats stores All IO service stats for data read and write. Io Wait TimeRecursive.\t"))
 			if err != nil {
+				log.Printf("writeContainerLogToFile().error: %v", err.Error())
 				util.TraceToLog()
 				return
 			}
@@ -230,9 +335,32 @@ func (e *ContainerBuilder) writeContainerLogToFile(path string, lineList [][]byt
 	} else if e.logFlags&KBlkioIoWaitTimeRecursive == KBlkioIoWaitTimeRecursive {
 		for i := 0; i != len(stats.BlkioStats.IoWaitTimeRecursive); i += 1 {
 			_, err = file.Write([]byte(strconv.FormatUint(stats.BlkioStats.IoWaitTimeRecursive[i].Major, 10)))
+			if err != nil {
+				log.Printf("writeContainerLogToFile().error: %v", err.Error())
+				util.TraceToLog()
+				return
+			}
+
 			_, err = file.Write([]byte(strconv.FormatUint(stats.BlkioStats.IoWaitTimeRecursive[i].Minor, 10)))
+			if err != nil {
+				log.Printf("writeContainerLogToFile().error: %v", err.Error())
+				util.TraceToLog()
+				return
+			}
+
 			_, err = file.Write([]byte(stats.BlkioStats.IoWaitTimeRecursive[i].Op))
+			if err != nil {
+				log.Printf("writeContainerLogToFile().error: %v", err.Error())
+				util.TraceToLog()
+				return
+			}
+
 			_, err = file.Write([]byte(strconv.FormatUint(stats.BlkioStats.IoWaitTimeRecursive[i].Value, 10)))
+			if err != nil {
+				log.Printf("writeContainerLogToFile().error: %v", err.Error())
+				util.TraceToLog()
+				return
+			}
 		}
 	}
 
@@ -240,6 +368,7 @@ func (e *ContainerBuilder) writeContainerLogToFile(path string, lineList [][]byt
 		for i := 0; i != len(stats.BlkioStats.IoMergedRecursive); i += 1 {
 			_, err = file.Write([]byte("BlkioStats stores All IO service stats for data read and write. Io Merged Recursive.\t"))
 			if err != nil {
+				log.Printf("writeContainerLogToFile().error: %v", err.Error())
 				util.TraceToLog()
 				return
 			}
@@ -247,9 +376,32 @@ func (e *ContainerBuilder) writeContainerLogToFile(path string, lineList [][]byt
 	} else if e.logFlags&KBlkioIoMergedRecursive == KBlkioIoMergedRecursive {
 		for i := 0; i != len(stats.BlkioStats.IoMergedRecursive); i += 1 {
 			_, err = file.Write([]byte(strconv.FormatUint(stats.BlkioStats.IoMergedRecursive[i].Major, 10)))
+			if err != nil {
+				log.Printf("writeContainerLogToFile().error: %v", err.Error())
+				util.TraceToLog()
+				return
+			}
+
 			_, err = file.Write([]byte(strconv.FormatUint(stats.BlkioStats.IoMergedRecursive[i].Minor, 10)))
+			if err != nil {
+				log.Printf("writeContainerLogToFile().error: %v", err.Error())
+				util.TraceToLog()
+				return
+			}
+
 			_, err = file.Write([]byte(stats.BlkioStats.IoMergedRecursive[i].Op))
+			if err != nil {
+				log.Printf("writeContainerLogToFile().error: %v", err.Error())
+				util.TraceToLog()
+				return
+			}
+
 			_, err = file.Write([]byte(strconv.FormatUint(stats.BlkioStats.IoMergedRecursive[i].Value, 10)))
+			if err != nil {
+				log.Printf("writeContainerLogToFile().error: %v", err.Error())
+				util.TraceToLog()
+				return
+			}
 		}
 	}
 
@@ -257,6 +409,7 @@ func (e *ContainerBuilder) writeContainerLogToFile(path string, lineList [][]byt
 		for i := 0; i != len(stats.BlkioStats.IoTimeRecursive); i += 1 {
 			_, err = file.Write([]byte("BlkioStats stores All IO service stats for data read and write. Io Time Recursive.\t"))
 			if err != nil {
+				log.Printf("writeContainerLogToFile().error: %v", err.Error())
 				util.TraceToLog()
 				return
 			}
@@ -264,9 +417,32 @@ func (e *ContainerBuilder) writeContainerLogToFile(path string, lineList [][]byt
 	} else if e.logFlags&KBlkioIoTimeRecursive == KBlkioIoTimeRecursive {
 		for i := 0; i != len(stats.BlkioStats.IoTimeRecursive); i += 1 {
 			_, err = file.Write([]byte(strconv.FormatUint(stats.BlkioStats.IoTimeRecursive[i].Major, 10)))
+			if err != nil {
+				log.Printf("writeContainerLogToFile().error: %v", err.Error())
+				util.TraceToLog()
+				return
+			}
+
 			_, err = file.Write([]byte(strconv.FormatUint(stats.BlkioStats.IoTimeRecursive[i].Minor, 10)))
+			if err != nil {
+				log.Printf("writeContainerLogToFile().error: %v", err.Error())
+				util.TraceToLog()
+				return
+			}
+
 			_, err = file.Write([]byte(stats.BlkioStats.IoTimeRecursive[i].Op))
+			if err != nil {
+				log.Printf("writeContainerLogToFile().error: %v", err.Error())
+				util.TraceToLog()
+				return
+			}
+
 			_, err = file.Write([]byte(strconv.FormatUint(stats.BlkioStats.IoTimeRecursive[i].Value, 10)))
+			if err != nil {
+				log.Printf("writeContainerLogToFile().error: %v", err.Error())
+				util.TraceToLog()
+				return
+			}
 		}
 	}
 
@@ -274,6 +450,7 @@ func (e *ContainerBuilder) writeContainerLogToFile(path string, lineList [][]byt
 		for i := 0; i != len(stats.BlkioStats.SectorsRecursive); i += 1 {
 			_, err = file.Write([]byte("BlkioStats stores All IO service stats for data read and write. Sectors Recursive.\t"))
 			if err != nil {
+				log.Printf("writeContainerLogToFile().error: %v", err.Error())
 				util.TraceToLog()
 				return
 			}
@@ -281,9 +458,32 @@ func (e *ContainerBuilder) writeContainerLogToFile(path string, lineList [][]byt
 	} else if e.logFlags&KBlkioSectorsRecursive == KBlkioSectorsRecursive {
 		for i := 0; i != len(stats.BlkioStats.SectorsRecursive); i += 1 {
 			_, err = file.Write([]byte(strconv.FormatUint(stats.BlkioStats.SectorsRecursive[i].Major, 10)))
+			if err != nil {
+				log.Printf("writeContainerLogToFile().error: %v", err.Error())
+				util.TraceToLog()
+				return
+			}
+
 			_, err = file.Write([]byte(strconv.FormatUint(stats.BlkioStats.SectorsRecursive[i].Minor, 10)))
+			if err != nil {
+				log.Printf("writeContainerLogToFile().error: %v", err.Error())
+				util.TraceToLog()
+				return
+			}
+
 			_, err = file.Write([]byte(stats.BlkioStats.SectorsRecursive[i].Op))
+			if err != nil {
+				log.Printf("writeContainerLogToFile().error: %v", err.Error())
+				util.TraceToLog()
+				return
+			}
+
 			_, err = file.Write([]byte(strconv.FormatUint(stats.BlkioStats.SectorsRecursive[i].Value, 10)))
+			if err != nil {
+				log.Printf("writeContainerLogToFile().error: %v", err.Error())
+				util.TraceToLog()
+				return
+			}
 		}
 	}
 
@@ -292,18 +492,21 @@ func (e *ContainerBuilder) writeContainerLogToFile(path string, lineList [][]byt
 	if makeLabel == true && e.logFlags&KCurrentNumberOfOidsInTheCGroup == KCurrentNumberOfOidsInTheCGroup {
 		_, err = file.Write([]byte("Linux specific stats, not populated on Windows. Current is the number of pids in the cgroup\t"))
 		if err != nil {
+			log.Printf("writeContainerLogToFile().error: %v", err.Error())
 			util.TraceToLog()
 			return
 		}
 	} else if e.logFlags&KCurrentNumberOfOidsInTheCGroup == KCurrentNumberOfOidsInTheCGroup {
 		_, err = file.Write([]byte(fmt.Sprintf("%v", stats.PidsStats.Current)))
 		if err != nil {
+			log.Printf("writeContainerLogToFile().error: %v", err.Error())
 			util.TraceToLog()
 			return
 		}
 
 		_, err = file.Write([]byte("\t"))
 		if err != nil {
+			log.Printf("writeContainerLogToFile().error: %v", err.Error())
 			util.TraceToLog()
 			return
 		}
@@ -315,18 +518,21 @@ func (e *ContainerBuilder) writeContainerLogToFile(path string, lineList [][]byt
 	if makeLabel == true && e.logFlags&KLimitOnTheNumberOfPidsInTheCGroup == KLimitOnTheNumberOfPidsInTheCGroup {
 		_, err = file.Write([]byte("Linux specific stats, not populated on Windows. Limit is the hard limit on the number of pids in the cgroup. A \"Limit\" of 0 means that there is no limit.\t"))
 		if err != nil {
+			log.Printf("writeContainerLogToFile().error: %v", err.Error())
 			util.TraceToLog()
 			return
 		}
 	} else if e.logFlags&KLimitOnTheNumberOfPidsInTheCGroup == KLimitOnTheNumberOfPidsInTheCGroup {
 		_, err = file.Write([]byte(fmt.Sprintf("%v", stats.PidsStats.Limit)))
 		if err != nil {
+			log.Printf("writeContainerLogToFile().error: %v", err.Error())
 			util.TraceToLog()
 			return
 		}
 
 		_, err = file.Write([]byte("\t"))
 		if err != nil {
+			log.Printf("writeContainerLogToFile().error: %v", err.Error())
 			util.TraceToLog()
 			return
 		}
@@ -338,18 +544,21 @@ func (e *ContainerBuilder) writeContainerLogToFile(path string, lineList [][]byt
 	if makeLabel == true && e.logFlags&KTotalCPUTimeConsumed == KTotalCPUTimeConsumed {
 		_, err = file.Write([]byte("Total CPU time consumed. (Units: nanoseconds on Linux, Units: 100's of nanoseconds on Windows)\t"))
 		if err != nil {
+			log.Printf("writeContainerLogToFile().error: %v", err.Error())
 			util.TraceToLog()
 			return
 		}
 	} else if e.logFlags&KTotalCPUTimeConsumed == KTotalCPUTimeConsumed {
 		_, err = file.Write([]byte(fmt.Sprintf("%v", stats.CPUStats.CPUUsage.TotalUsage)))
 		if err != nil {
+			log.Printf("writeContainerLogToFile().error: %v", err.Error())
 			util.TraceToLog()
 			return
 		}
 
 		_, err = file.Write([]byte("\t"))
 		if err != nil {
+			log.Printf("writeContainerLogToFile().error: %v", err.Error())
 			util.TraceToLog()
 			return
 		}
@@ -367,6 +576,7 @@ func (e *ContainerBuilder) writeContainerLogToFile(path string, lineList [][]byt
 				for cpuNumber := 0; cpuNumber != e.logCpus; cpuNumber += 1 {
 					_, err = file.Write([]byte(fmt.Sprintf("Total CPU time consumed per core (Units: nanoseconds on Linux). Not used on Windows. CPU: %v\t", cpuNumber)))
 					if err != nil {
+						log.Printf("writeContainerLogToFile().error: %v", err.Error())
 						util.TraceToLog()
 						return
 					}
@@ -376,12 +586,14 @@ func (e *ContainerBuilder) writeContainerLogToFile(path string, lineList [][]byt
 				for i := 0; i != e.logCpus; i += 1 {
 					_, err = file.Write([]byte{0x30})
 					if err != nil {
+						log.Printf("writeContainerLogToFile().error: %v", err.Error())
 						util.TraceToLog()
 						return
 					}
 
 					_, err = file.Write([]byte("\t"))
 					if err != nil {
+						log.Printf("writeContainerLogToFile().error: %v", err.Error())
 						util.TraceToLog()
 						return
 					}
@@ -393,18 +605,21 @@ func (e *ContainerBuilder) writeContainerLogToFile(path string, lineList [][]byt
 				if makeLabel == true {
 					_, err = file.Write([]byte(fmt.Sprintf("Total CPU time consumed per core (Units: nanoseconds on Linux). Not used on Windows. CPU: %v\t", cpuNumber)))
 					if err != nil {
+						log.Printf("writeContainerLogToFile().error: %v", err.Error())
 						util.TraceToLog()
 						return
 					}
 				} else {
 					_, err = file.Write([]byte(fmt.Sprintf("%v", cpuTime)))
 					if err != nil {
+						log.Printf("writeContainerLogToFile().error: %v", err.Error())
 						util.TraceToLog()
 						return
 					}
 
 					_, err = file.Write([]byte("\t"))
 					if err != nil {
+						log.Printf("writeContainerLogToFile().error: %v", err.Error())
 						util.TraceToLog()
 						return
 					}
@@ -420,18 +635,21 @@ func (e *ContainerBuilder) writeContainerLogToFile(path string, lineList [][]byt
 	if makeLabel == true && e.logFlags&KTimeSpentByTasksOfTheCGroupInKernelMode == KTimeSpentByTasksOfTheCGroupInKernelMode {
 		_, err = file.Write([]byte("Time spent by tasks of the cgroup in kernel mode (Units: nanoseconds on Linux). Time spent by all container processes in kernel mode (Units: 100's of nanoseconds on Windows.Not populated for Hyper-V Containers.).\t"))
 		if err != nil {
+			log.Printf("writeContainerLogToFile().error: %v", err.Error())
 			util.TraceToLog()
 			return
 		}
 	} else if e.logFlags&KTimeSpentByTasksOfTheCGroupInKernelMode == KTimeSpentByTasksOfTheCGroupInKernelMode {
 		_, err = file.Write([]byte(fmt.Sprintf("%v", stats.CPUStats.CPUUsage.UsageInKernelmode)))
 		if err != nil {
+			log.Printf("writeContainerLogToFile().error: %v", err.Error())
 			util.TraceToLog()
 			return
 		}
 
 		_, err = file.Write([]byte("\t"))
 		if err != nil {
+			log.Printf("writeContainerLogToFile().error: %v", err.Error())
 			util.TraceToLog()
 			return
 		}
@@ -444,18 +662,21 @@ func (e *ContainerBuilder) writeContainerLogToFile(path string, lineList [][]byt
 	if makeLabel == true && e.logFlags&KTimeSpentByTasksOfTheCGroupInUserMode == KTimeSpentByTasksOfTheCGroupInUserMode {
 		_, err = file.Write([]byte("Time spent by tasks of the cgroup in user mode (Units: nanoseconds on Linux). Time spent by all container processes in user mode (Units: 100's of nanoseconds on Windows. Not populated for Hyper-V Containers).\t"))
 		if err != nil {
+			log.Printf("writeContainerLogToFile().error: %v", err.Error())
 			util.TraceToLog()
 			return
 		}
 	} else if e.logFlags&KTimeSpentByTasksOfTheCGroupInUserMode == KTimeSpentByTasksOfTheCGroupInUserMode {
 		_, err = file.Write([]byte(fmt.Sprintf("%v", stats.CPUStats.CPUUsage.UsageInUsermode)))
 		if err != nil {
+			log.Printf("writeContainerLogToFile().error: %v", err.Error())
 			util.TraceToLog()
 			return
 		}
 
 		_, err = file.Write([]byte("\t"))
 		if err != nil {
+			log.Printf("writeContainerLogToFile().error: %v", err.Error())
 			util.TraceToLog()
 			return
 		}
@@ -465,18 +686,21 @@ func (e *ContainerBuilder) writeContainerLogToFile(path string, lineList [][]byt
 	if makeLabel == true && e.logFlags&KSystemUsage == KSystemUsage {
 		_, err = file.Write([]byte("System Usage. Linux only.\t"))
 		if err != nil {
+			log.Printf("writeContainerLogToFile().error: %v", err.Error())
 			util.TraceToLog()
 			return
 		}
 	} else if e.logFlags&KSystemUsage == KSystemUsage {
 		_, err = file.Write([]byte(fmt.Sprintf("%v", stats.CPUStats.SystemUsage)))
 		if err != nil {
+			log.Printf("writeContainerLogToFile().error: %v", err.Error())
 			util.TraceToLog()
 			return
 		}
 
 		_, err = file.Write([]byte("\t"))
 		if err != nil {
+			log.Printf("writeContainerLogToFile().error: %v", err.Error())
 			util.TraceToLog()
 			return
 		}
@@ -486,18 +710,21 @@ func (e *ContainerBuilder) writeContainerLogToFile(path string, lineList [][]byt
 	if makeLabel == true && e.logFlags&KOnlineCPUs == KOnlineCPUs {
 		_, err = file.Write([]byte("Online CPUs. Linux only.\t"))
 		if err != nil {
+			log.Printf("writeContainerLogToFile().error: %v", err.Error())
 			util.TraceToLog()
 			return
 		}
 	} else if e.logFlags&KOnlineCPUs == KOnlineCPUs {
 		_, err = file.Write([]byte(fmt.Sprintf("%v", stats.CPUStats.OnlineCPUs)))
 		if err != nil {
+			log.Printf("writeContainerLogToFile().error: %v", err.Error())
 			util.TraceToLog()
 			return
 		}
 
 		_, err = file.Write([]byte("\t"))
 		if err != nil {
+			log.Printf("writeContainerLogToFile().error: %v", err.Error())
 			util.TraceToLog()
 			return
 		}
@@ -508,18 +735,21 @@ func (e *ContainerBuilder) writeContainerLogToFile(path string, lineList [][]byt
 	if makeLabel == true && e.logFlags&KNumberOfPeriodsWithThrottlingActive == KNumberOfPeriodsWithThrottlingActive {
 		_, err = file.Write([]byte("Throttling Data. Linux only. Number of periods with throttling active.\t"))
 		if err != nil {
+			log.Printf("writeContainerLogToFile().error: %v", err.Error())
 			util.TraceToLog()
 			return
 		}
 	} else if e.logFlags&KNumberOfPeriodsWithThrottlingActive == KNumberOfPeriodsWithThrottlingActive {
 		_, err = file.Write([]byte(fmt.Sprintf("%v", stats.CPUStats.ThrottlingData.Periods)))
 		if err != nil {
+			log.Printf("writeContainerLogToFile().error: %v", err.Error())
 			util.TraceToLog()
 			return
 		}
 
 		_, err = file.Write([]byte("\t"))
 		if err != nil {
+			log.Printf("writeContainerLogToFile().error: %v", err.Error())
 			util.TraceToLog()
 			return
 		}
@@ -530,18 +760,21 @@ func (e *ContainerBuilder) writeContainerLogToFile(path string, lineList [][]byt
 	if makeLabel == true && e.logFlags&KNumberOfPeriodsWhenTheContainerHitsItsThrottlingLimit == KNumberOfPeriodsWhenTheContainerHitsItsThrottlingLimit {
 		_, err = file.Write([]byte("Throttling Data. Linux only. Number of periods when the container hits its throttling limit.\t"))
 		if err != nil {
+			log.Printf("writeContainerLogToFile().error: %v", err.Error())
 			util.TraceToLog()
 			return
 		}
 	} else if e.logFlags&KNumberOfPeriodsWhenTheContainerHitsItsThrottlingLimit == KNumberOfPeriodsWhenTheContainerHitsItsThrottlingLimit {
 		_, err = file.Write([]byte(fmt.Sprintf("%v", stats.CPUStats.ThrottlingData.ThrottledPeriods)))
 		if err != nil {
+			log.Printf("writeContainerLogToFile().error: %v", err.Error())
 			util.TraceToLog()
 			return
 		}
 
 		_, err = file.Write([]byte("\t"))
 		if err != nil {
+			log.Printf("writeContainerLogToFile().error: %v", err.Error())
 			util.TraceToLog()
 			return
 		}
@@ -552,18 +785,21 @@ func (e *ContainerBuilder) writeContainerLogToFile(path string, lineList [][]byt
 	if makeLabel == true && e.logFlags&KAggregateTimeTheContainerWasThrottledForInNanoseconds == KAggregateTimeTheContainerWasThrottledForInNanoseconds {
 		_, err = file.Write([]byte("Throttling Data. Linux only. Aggregate time the container was throttled for in nanoseconds.\t"))
 		if err != nil {
+			log.Printf("writeContainerLogToFile().error: %v", err.Error())
 			util.TraceToLog()
 			return
 		}
 	} else if e.logFlags&KAggregateTimeTheContainerWasThrottledForInNanoseconds == KAggregateTimeTheContainerWasThrottledForInNanoseconds {
 		_, err = file.Write([]byte(fmt.Sprintf("%v", stats.CPUStats.ThrottlingData.ThrottledTime)))
 		if err != nil {
+			log.Printf("writeContainerLogToFile().error: %v", err.Error())
 			util.TraceToLog()
 			return
 		}
 
 		_, err = file.Write([]byte("\t"))
 		if err != nil {
+			log.Printf("writeContainerLogToFile().error: %v", err.Error())
 			util.TraceToLog()
 			return
 		}
@@ -576,18 +812,21 @@ func (e *ContainerBuilder) writeContainerLogToFile(path string, lineList [][]byt
 	if makeLabel == true && e.logFlags&KTotalPreCPUTimeConsumed == KTotalPreCPUTimeConsumed {
 		_, err = file.Write([]byte("Total CPU time consumed. (Units: nanoseconds on Linux. Units: 100's of nanoseconds on Windows)\t"))
 		if err != nil {
+			log.Printf("writeContainerLogToFile().error: %v", err.Error())
 			util.TraceToLog()
 			return
 		}
 	} else if e.logFlags&KTotalPreCPUTimeConsumed == KTotalPreCPUTimeConsumed {
 		_, err = file.Write([]byte(fmt.Sprintf("%v", stats.PreCPUStats.CPUUsage.TotalUsage)))
 		if err != nil {
+			log.Printf("writeContainerLogToFile().error: %v", err.Error())
 			util.TraceToLog()
 			return
 		}
 
 		_, err = file.Write([]byte("\t"))
 		if err != nil {
+			log.Printf("writeContainerLogToFile().error: %v", err.Error())
 			util.TraceToLog()
 			return
 		}
@@ -597,6 +836,7 @@ func (e *ContainerBuilder) writeContainerLogToFile(path string, lineList [][]byt
 		for cpuNumber := 0; cpuNumber != e.logCpus; cpuNumber += 1 {
 			_, err = file.Write([]byte(fmt.Sprintf("Total CPU time consumed per core (Units: nanoseconds on Linux). Not used on Windows. CPU: %v\t", cpuNumber)))
 			if err != nil {
+				log.Printf("writeContainerLogToFile().error: %v", err.Error())
 				util.TraceToLog()
 				return
 			}
@@ -609,12 +849,14 @@ func (e *ContainerBuilder) writeContainerLogToFile(path string, lineList [][]byt
 			for i := 0; i != e.logCpus; i += 1 {
 				_, err = file.Write([]byte{0x30})
 				if err != nil {
+					log.Printf("writeContainerLogToFile().error: %v", err.Error())
 					util.TraceToLog()
 					return
 				}
 
 				_, err = file.Write([]byte("\t"))
 				if err != nil {
+					log.Printf("writeContainerLogToFile().error: %v", err.Error())
 					util.TraceToLog()
 					return
 				}
@@ -624,12 +866,14 @@ func (e *ContainerBuilder) writeContainerLogToFile(path string, lineList [][]byt
 		for _, cpuTime := range stats.PreCPUStats.CPUUsage.PercpuUsage {
 			_, err = file.Write([]byte(fmt.Sprintf("%v", cpuTime)))
 			if err != nil {
+				log.Printf("writeContainerLogToFile().error: %v", err.Error())
 				util.TraceToLog()
 				return
 			}
 
 			_, err = file.Write([]byte("\t"))
 			if err != nil {
+				log.Printf("writeContainerLogToFile().error: %v", err.Error())
 				util.TraceToLog()
 				return
 			}
@@ -644,18 +888,21 @@ func (e *ContainerBuilder) writeContainerLogToFile(path string, lineList [][]byt
 	if makeLabel == true && e.logFlags&KTimeSpentByPreCPUTasksOfTheCGroupInKernelMode == KTimeSpentByPreCPUTasksOfTheCGroupInKernelMode {
 		_, err = file.Write([]byte("Time spent by tasks of the cgroup in kernel mode (Units: nanoseconds on Linux) - Time spent by all container processes in kernel mode (Units: 100's of nanoseconds on Windows - Not populated for Hyper-V Containers.)\t"))
 		if err != nil {
+			log.Printf("writeContainerLogToFile().error: %v", err.Error())
 			util.TraceToLog()
 			return
 		}
 	} else if e.logFlags&KTimeSpentByPreCPUTasksOfTheCGroupInKernelMode == KTimeSpentByPreCPUTasksOfTheCGroupInKernelMode {
 		_, err = file.Write([]byte(fmt.Sprintf("%v", stats.PreCPUStats.CPUUsage.UsageInKernelmode)))
 		if err != nil {
+			log.Printf("writeContainerLogToFile().error: %v", err.Error())
 			util.TraceToLog()
 			return
 		}
 
 		_, err = file.Write([]byte("\t"))
 		if err != nil {
+			log.Printf("writeContainerLogToFile().error: %v", err.Error())
 			util.TraceToLog()
 			return
 		}
@@ -669,18 +916,21 @@ func (e *ContainerBuilder) writeContainerLogToFile(path string, lineList [][]byt
 	if makeLabel == true && e.logFlags&KTimeSpentByPreCPUTasksOfTheCGroupInUserMode == KTimeSpentByPreCPUTasksOfTheCGroupInUserMode {
 		_, err = file.Write([]byte("Time spent by tasks of the cgroup in user mode (Units: nanoseconds on Linux) - Time spent by all container processes in user mode (Units: 100's of nanoseconds on Windows. Not populated for Hyper-V Containers)\t"))
 		if err != nil {
+			log.Printf("writeContainerLogToFile().error: %v", err.Error())
 			util.TraceToLog()
 			return
 		}
 	} else if e.logFlags&KTimeSpentByPreCPUTasksOfTheCGroupInUserMode == KTimeSpentByPreCPUTasksOfTheCGroupInUserMode {
 		_, err = file.Write([]byte(fmt.Sprintf("%v", stats.PreCPUStats.CPUUsage.UsageInUsermode)))
 		if err != nil {
+			log.Printf("writeContainerLogToFile().error: %v", err.Error())
 			util.TraceToLog()
 			return
 		}
 
 		_, err = file.Write([]byte("\t"))
 		if err != nil {
+			log.Printf("writeContainerLogToFile().error: %v", err.Error())
 			util.TraceToLog()
 			return
 		}
@@ -690,18 +940,21 @@ func (e *ContainerBuilder) writeContainerLogToFile(path string, lineList [][]byt
 	if makeLabel == true && e.logFlags&KPreCPUSystemUsage == KPreCPUSystemUsage {
 		_, err = file.Write([]byte("System Usage. (Linux only)\t"))
 		if err != nil {
+			log.Printf("writeContainerLogToFile().error: %v", err.Error())
 			util.TraceToLog()
 			return
 		}
 	} else if e.logFlags&KPreCPUSystemUsage == KPreCPUSystemUsage {
 		_, err = file.Write([]byte(fmt.Sprintf("%v", stats.PreCPUStats.SystemUsage)))
 		if err != nil {
+			log.Printf("writeContainerLogToFile().error: %v", err.Error())
 			util.TraceToLog()
 			return
 		}
 
 		_, err = file.Write([]byte("\t"))
 		if err != nil {
+			log.Printf("writeContainerLogToFile().error: %v", err.Error())
 			util.TraceToLog()
 			return
 		}
@@ -711,18 +964,21 @@ func (e *ContainerBuilder) writeContainerLogToFile(path string, lineList [][]byt
 	if makeLabel == true && e.logFlags&KOnlinePreCPUs == KOnlinePreCPUs {
 		_, err = file.Write([]byte("Online CPUs. (Linux only)\t"))
 		if err != nil {
+			log.Printf("writeContainerLogToFile().error: %v", err.Error())
 			util.TraceToLog()
 			return
 		}
 	} else if e.logFlags&KOnlinePreCPUs == KOnlinePreCPUs {
 		_, err = file.Write([]byte(fmt.Sprintf("%v", stats.PreCPUStats.OnlineCPUs)))
 		if err != nil {
+			log.Printf("writeContainerLogToFile().error: %v", err.Error())
 			util.TraceToLog()
 			return
 		}
 
 		_, err = file.Write([]byte("\t"))
 		if err != nil {
+			log.Printf("writeContainerLogToFile().error: %v", err.Error())
 			util.TraceToLog()
 			return
 		}
@@ -733,18 +989,21 @@ func (e *ContainerBuilder) writeContainerLogToFile(path string, lineList [][]byt
 	if makeLabel == true && e.logFlags&KAggregatePreCPUTimeTheContainerWasThrottled == KAggregatePreCPUTimeTheContainerWasThrottled {
 		_, err = file.Write([]byte("Throttling Data. (Linux only) - Aggregate time the container was throttled for in nanoseconds.\t"))
 		if err != nil {
+			log.Printf("writeContainerLogToFile().error: %v", err.Error())
 			util.TraceToLog()
 			return
 		}
 	} else if e.logFlags&KAggregatePreCPUTimeTheContainerWasThrottled == KAggregatePreCPUTimeTheContainerWasThrottled {
 		_, err = file.Write([]byte(fmt.Sprintf("%v", stats.PreCPUStats.ThrottlingData.ThrottledTime)))
 		if err != nil {
+			log.Printf("writeContainerLogToFile().error: %v", err.Error())
 			util.TraceToLog()
 			return
 		}
 
 		_, err = file.Write([]byte("\t"))
 		if err != nil {
+			log.Printf("writeContainerLogToFile().error: %v", err.Error())
 			util.TraceToLog()
 			return
 		}
@@ -755,18 +1014,21 @@ func (e *ContainerBuilder) writeContainerLogToFile(path string, lineList [][]byt
 	if makeLabel == true && e.logFlags&KNumberOfPeriodsWithPreCPUThrottlingActive == KNumberOfPeriodsWithPreCPUThrottlingActive {
 		_, err = file.Write([]byte("Throttling Data. (Linux only) - Number of periods with throttling active.\t"))
 		if err != nil {
+			log.Printf("writeContainerLogToFile().error: %v", err.Error())
 			util.TraceToLog()
 			return
 		}
 	} else if e.logFlags&KNumberOfPeriodsWithPreCPUThrottlingActive == KNumberOfPeriodsWithPreCPUThrottlingActive {
 		_, err = file.Write([]byte(fmt.Sprintf("%v", stats.PreCPUStats.ThrottlingData.Periods)))
 		if err != nil {
+			log.Printf("writeContainerLogToFile().error: %v", err.Error())
 			util.TraceToLog()
 			return
 		}
 
 		_, err = file.Write([]byte("\t"))
 		if err != nil {
+			log.Printf("writeContainerLogToFile().error: %v", err.Error())
 			util.TraceToLog()
 			return
 		}
@@ -777,18 +1039,21 @@ func (e *ContainerBuilder) writeContainerLogToFile(path string, lineList [][]byt
 	if makeLabel == true && e.logFlags&KNumberOfPeriodsWhenTheContainerPreCPUHitsItsThrottlingLimit == KNumberOfPeriodsWhenTheContainerPreCPUHitsItsThrottlingLimit {
 		_, err = file.Write([]byte("Throttling Data. (Linux only) - Number of periods when the container hits its throttling limit.\t"))
 		if err != nil {
+			log.Printf("writeContainerLogToFile().error: %v", err.Error())
 			util.TraceToLog()
 			return
 		}
 	} else if e.logFlags&KNumberOfPeriodsWhenTheContainerPreCPUHitsItsThrottlingLimit == KNumberOfPeriodsWhenTheContainerPreCPUHitsItsThrottlingLimit {
 		_, err = file.Write([]byte(fmt.Sprintf("%v", stats.PreCPUStats.ThrottlingData.ThrottledPeriods)))
 		if err != nil {
+			log.Printf("writeContainerLogToFile().error: %v", err.Error())
 			util.TraceToLog()
 			return
 		}
 
 		_, err = file.Write([]byte("\t"))
 		if err != nil {
+			log.Printf("writeContainerLogToFile().error: %v", err.Error())
 			util.TraceToLog()
 			return
 		}
@@ -798,18 +1063,21 @@ func (e *ContainerBuilder) writeContainerLogToFile(path string, lineList [][]byt
 	if makeLabel == true && e.logFlags&KCurrentResCounterUsageForMemory == KCurrentResCounterUsageForMemory {
 		_, err = file.Write([]byte("Current res_counter usage for memory\t"))
 		if err != nil {
+			log.Printf("writeContainerLogToFile().error: %v", err.Error())
 			util.TraceToLog()
 			return
 		}
 	} else if e.logFlags&KCurrentResCounterUsageForMemory == KCurrentResCounterUsageForMemory {
 		_, err = file.Write([]byte(fmt.Sprintf("%v", stats.MemoryStats.Usage)))
 		if err != nil {
+			log.Printf("writeContainerLogToFile().error: %v", err.Error())
 			util.TraceToLog()
 			return
 		}
 
 		_, err = file.Write([]byte("\t"))
 		if err != nil {
+			log.Printf("writeContainerLogToFile().error: %v", err.Error())
 			util.TraceToLog()
 			return
 		}
@@ -819,18 +1087,21 @@ func (e *ContainerBuilder) writeContainerLogToFile(path string, lineList [][]byt
 	if makeLabel == true && e.logFlags&KMaximumUsageEverRecorded == KMaximumUsageEverRecorded {
 		_, err = file.Write([]byte("Maximum usage ever recorded.\t"))
 		if err != nil {
+			log.Printf("writeContainerLogToFile().error: %v", err.Error())
 			util.TraceToLog()
 			return
 		}
 	} else if e.logFlags&KMaximumUsageEverRecorded == KMaximumUsageEverRecorded {
 		_, err = file.Write([]byte(fmt.Sprintf("%v", stats.MemoryStats.MaxUsage)))
 		if err != nil {
+			log.Printf("writeContainerLogToFile().error: %v", err.Error())
 			util.TraceToLog()
 			return
 		}
 
 		_, err = file.Write([]byte("\t"))
 		if err != nil {
+			log.Printf("writeContainerLogToFile().error: %v", err.Error())
 			util.TraceToLog()
 			return
 		}
@@ -840,18 +1111,21 @@ func (e *ContainerBuilder) writeContainerLogToFile(path string, lineList [][]byt
 	if makeLabel == true && e.logFlags&KNumberOfTimesMemoryUsageHitsLimits == KNumberOfTimesMemoryUsageHitsLimits {
 		_, err = file.Write([]byte("Number of times memory usage hits limits.\t"))
 		if err != nil {
+			log.Printf("writeContainerLogToFile().error: %v", err.Error())
 			util.TraceToLog()
 			return
 		}
 	} else if e.logFlags&KNumberOfTimesMemoryUsageHitsLimits == KNumberOfTimesMemoryUsageHitsLimits {
 		_, err = file.Write([]byte(fmt.Sprintf("%v", stats.MemoryStats.Failcnt)))
 		if err != nil {
+			log.Printf("writeContainerLogToFile().error: %v", err.Error())
 			util.TraceToLog()
 			return
 		}
 
 		_, err = file.Write([]byte("\t"))
 		if err != nil {
+			log.Printf("writeContainerLogToFile().error: %v", err.Error())
 			util.TraceToLog()
 			return
 		}
@@ -860,18 +1134,21 @@ func (e *ContainerBuilder) writeContainerLogToFile(path string, lineList [][]byt
 	if makeLabel == true && e.logFlags&KMemoryLimit == KMemoryLimit {
 		_, err = file.Write([]byte("Memory limit\t"))
 		if err != nil {
+			log.Printf("writeContainerLogToFile().error: %v", err.Error())
 			util.TraceToLog()
 			return
 		}
 	} else if e.logFlags&KMemoryLimit == KMemoryLimit {
 		_, err = file.Write([]byte(fmt.Sprintf("%v", stats.MemoryStats.Limit)))
 		if err != nil {
+			log.Printf("writeContainerLogToFile().error: %v", err.Error())
 			util.TraceToLog()
 			return
 		}
 
 		_, err = file.Write([]byte("\t"))
 		if err != nil {
+			log.Printf("writeContainerLogToFile().error: %v", err.Error())
 			util.TraceToLog()
 			return
 		}
@@ -881,18 +1158,21 @@ func (e *ContainerBuilder) writeContainerLogToFile(path string, lineList [][]byt
 	if makeLabel == true && e.logFlags&KCommittedBytes == KCommittedBytes {
 		_, err = file.Write([]byte("Committed bytes\t"))
 		if err != nil {
+			log.Printf("writeContainerLogToFile().error: %v", err.Error())
 			util.TraceToLog()
 			return
 		}
 	} else if e.logFlags&KCommittedBytes == KCommittedBytes {
 		_, err = file.Write([]byte(fmt.Sprintf("%v", stats.MemoryStats.Commit)))
 		if err != nil {
+			log.Printf("writeContainerLogToFile().error: %v", err.Error())
 			util.TraceToLog()
 			return
 		}
 
 		_, err = file.Write([]byte("\t"))
 		if err != nil {
+			log.Printf("writeContainerLogToFile().error: %v", err.Error())
 			util.TraceToLog()
 			return
 		}
@@ -902,18 +1182,21 @@ func (e *ContainerBuilder) writeContainerLogToFile(path string, lineList [][]byt
 	if makeLabel == true && e.logFlags&KPeakCommittedBytes == KPeakCommittedBytes {
 		_, err = file.Write([]byte("Peak committed bytes\t"))
 		if err != nil {
+			log.Printf("writeContainerLogToFile().error: %v", err.Error())
 			util.TraceToLog()
 			return
 		}
 	} else if e.logFlags&KPeakCommittedBytes == KPeakCommittedBytes {
 		_, err = file.Write([]byte(fmt.Sprintf("%v", stats.MemoryStats.CommitPeak)))
 		if err != nil {
+			log.Printf("writeContainerLogToFile().error: %v", err.Error())
 			util.TraceToLog()
 			return
 		}
 
 		_, err = file.Write([]byte("\t"))
 		if err != nil {
+			log.Printf("writeContainerLogToFile().error: %v", err.Error())
 			util.TraceToLog()
 			return
 		}
@@ -923,18 +1206,21 @@ func (e *ContainerBuilder) writeContainerLogToFile(path string, lineList [][]byt
 	if makeLabel == true && e.logFlags&KPrivateWorkingSet == KPrivateWorkingSet {
 		_, err = file.Write([]byte("Private working set\n"))
 		if err != nil {
+			log.Printf("writeContainerLogToFile().error: %v", err.Error())
 			util.TraceToLog()
 			return
 		}
 	} else if e.logFlags&KPrivateWorkingSet == KPrivateWorkingSet {
 		_, err = file.Write([]byte(fmt.Sprintf("%v", stats.MemoryStats.PrivateWorkingSet)))
 		if err != nil {
+			log.Printf("writeContainerLogToFile().error: %v", err.Error())
 			util.TraceToLog()
 			return
 		}
 
 		_, err = file.Write([]byte("\t"))
 		if err != nil {
+			log.Printf("writeContainerLogToFile().error: %v", err.Error())
 			util.TraceToLog()
 			return
 		}
@@ -942,6 +1228,7 @@ func (e *ContainerBuilder) writeContainerLogToFile(path string, lineList [][]byt
 
 	_, err = file.Write([]byte("\n"))
 	if err != nil {
+		log.Printf("writeContainerLogToFile().error: %v", err.Error())
 		util.TraceToLog()
 		return
 	}

@@ -49,6 +49,7 @@ func (e *ContainerBuilder) managerChaos() {
 	}
 
 	lineList = e.logsCleaner(logs)
+
 	err = e.writeContainerLogToFile(e.chaos.logPath, lineList)
 	if err != nil {
 		_, lineNumber = e.traceCodeLine()

@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/docker/docker/api/types"
 	"log"
+	"time"
 )
 
 func ExampleContainerBuilder_SetLogPath() {
@@ -24,16 +25,16 @@ func ExampleContainerBuilder_SetLogPath() {
 	// set a folder path to make a new image
 	container.SetBuildFolderPath("./test/counter")
 	// container name container_delete_server_after_test
-	container.SetContainerName("container_delete_counter_after_test")
+	container.SetContainerName("container_counter_delete_after_test")
 	// define o limite de memória
 	container.SetImageBuildOptionsMemory(100 * KMegaByte)
 
-	container.SetLogPath("./counter.log.csv")
+	container.SetLogPath("./test.counter.log.csv")
 	container.AddFilterToSuccess(
 		"done!",
 		"^.*?(?P<valueToGet>\\d+/\\d+/\\d+ \\d+:\\d+:\\d+ done!).*",
-		"",
-		"",
+		"(?P<date>\\d+/\\d+/\\d+)\\s+(?P<hour>\\d+:\\d+:\\d+)\\s+(?P<value>done!).*",
+		"${value}",
 	)
 	container.AddFilterToFail(
 		"counter: 40",
@@ -56,8 +57,8 @@ func ExampleContainerBuilder_SetLogPath() {
 		return
 	}
 
-	fmt.Printf("size: %v", imageInspect.Size)
-	fmt.Printf("os: %v", imageInspect.Os)
+	fmt.Printf("image size: %v\n", container.SizeToString(imageInspect.Size))
+	fmt.Printf("image os: %v\n", imageInspect.Os)
 
 	err = container.ContainerBuildAndStartFromImage()
 	if err != nil {
@@ -66,19 +67,27 @@ func ExampleContainerBuilder_SetLogPath() {
 		return
 	}
 
+	container.StartMonitor(time.NewTicker(2 * time.Second))
+
 	event := container.GetChaosEvent()
 
 	select {
 	case e := <-*event:
-		fmt.Printf("container name: %v", e.ContainerName)
-		fmt.Printf("done: %v", e.Done)
-		fmt.Printf("fail: %v", e.Fail)
-		fmt.Printf("error: %v", e.Error)
-		fmt.Printf("message: %v", e.Message)
+		fmt.Printf("container name: %v\n", e.ContainerName)
+		fmt.Printf("done: %v\n", e.Done)
+		fmt.Printf("fail: %v\n", e.Fail)
+		fmt.Printf("error: %v\n", e.Error)
+		fmt.Printf("message: %v\n", e.Message)
 	}
 
 	GarbageCollector()
 
 	// Output:
-
+	// image size: 1.38 MB
+	// image os: linux
+	// container name: container_counter_delete_after_test
+	// done: true
+	// fail: false
+	// error: false
+	// message: done!
 }
