@@ -7,14 +7,7 @@ import (
 	"time"
 )
 
-// IDE: Goland
-// Test Framework: gotest
-// Test Kind: File
-// Files: /Users/kemper/go/Libraries/src/github.com/helmutkemper/iotmaker.docker.builder/funcSetLogPath_test.go
-// Working Directory: /Users/kemper/go/Libraries/src/github.com/helmutkemper/iotmaker.docker.builder
-// Module: iotmaker.docker.builder
-
-func ExampleContainerBuilder_SetLogPath() {
+func ExampleContainerBuilder_AddFilterToFail() {
 	var err error
 	var imageInspect types.ImageInspect
 

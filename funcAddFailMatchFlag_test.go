@@ -7,14 +7,7 @@ import (
 	"time"
 )
 
-// IDE: Goland
-// Test Framework: gotest
-// Test Kind: File
-// Files: /Users/kemper/go/Libraries/src/github.com/helmutkemper/iotmaker.docker.builder/funcSetLogPath_test.go
-// Working Directory: /Users/kemper/go/Libraries/src/github.com/helmutkemper/iotmaker.docker.builder
-// Module: iotmaker.docker.builder
-
-func ExampleContainerBuilder_SetLogPath() {
+func ExampleContainerBuilder_AddFailMatchFlag() {
 	var err error
 	var imageInspect types.ImageInspect
 
@@ -36,25 +29,8 @@ func ExampleContainerBuilder_SetLogPath() {
 	// define o limite de memória
 	container.SetImageBuildOptionsMemory(100 * KMegaByte)
 
-	container.SetLogPath("./test.counter.log.csv")
-	container.AddFilterToLog(
-		"contador",
-		"counter",
-		"^.*?counter: (?P<valueToGet>[\\d\\.]+)",
-		"\\.",
-		",",
-	)
-	container.AddFilterToSuccess(
-		"done!",
-		"^.*?(?P<valueToGet>\\d+/\\d+/\\d+ \\d+:\\d+:\\d+ done!).*",
-		"(?P<date>\\d+/\\d+/\\d+)\\s+(?P<hour>\\d+:\\d+:\\d+)\\s+(?P<value>done!).*",
-		"${value}",
-	)
-	container.AddFilterToFail(
+	container.AddFailMatchFlag(
 		"counter: 40",
-		"^.*?(?P<valueToGet>\\d+/\\d+/\\d+ \\d+:\\d+:\\d+ counter: [\\d\\.]+).*",
-		"(?P<date>\\d+/\\d+/\\d+)\\s+(?P<hour>\\d+:\\d+:\\d+)\\s+counter:\\s+(?P<value>[\\d\\.]+).*",
-		"Test Fail! Counter Value: ${value} - Hour: ${hour} - Date: ${date}",
 	)
 
 	err = container.Init()
@@ -91,7 +67,6 @@ func ExampleContainerBuilder_SetLogPath() {
 		fmt.Printf("done: %v\n", e.Done)
 		fmt.Printf("fail: %v\n", e.Fail)
 		fmt.Printf("error: %v\n", e.Error)
-		fmt.Printf("message: %v\n", e.Message)
 	}
 
 	container.StopMonitor()
@@ -102,8 +77,7 @@ func ExampleContainerBuilder_SetLogPath() {
 	// image size: 1.38 MB
 	// image os: linux
 	// container name: container_counter_delete_after_test
-	// done: true
-	// fail: false
+	// done: false
+	// fail: true
 	// error: false
-	// message: done!
 }

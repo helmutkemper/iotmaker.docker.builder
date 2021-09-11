@@ -13,12 +13,10 @@ import (
 // Português: Escreve um arquivo csv com dados capturados da saída padrão do container e dados estatísticos do container
 func (e *ContainerBuilder) writeContainerLogToFile(path string, lineList [][]byte) (err error) {
 	if path == "" {
-		util.TraceToLog()
 		return
 	}
 
 	if lineList == nil {
-		util.TraceToLog()
 		return
 	}
 

@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="ExampleContainerBuilder_SetLogPath" type="GoTestRunConfiguration" factoryName="Go Test">
+  <configuration default="false" name="SetLogPath" type="GoTestRunConfiguration" factoryName="Go Test">
     <module name="iotmaker.docker.builder" />
     <working_directory value="$PROJECT_DIR$" />
     <kind value="FILE" />
