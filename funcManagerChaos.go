@@ -7,6 +7,11 @@ import (
 	"time"
 )
 
+// managerChaos
+//
+// English: manages the log and state of the container
+//
+// Português: gerencia o log e o estado do container
 func (e *ContainerBuilder) managerChaos() {
 	var err error
 	var logs []byte
@@ -20,6 +25,8 @@ func (e *ContainerBuilder) managerChaos() {
 
 	var inspect iotmakerdocker.ContainerInspect
 
+	// English: Probability of container restart
+	// Português: Probabilidade do container reiniciar
 	probality = e.getProbalityNumber()
 
 	inspect, err = e.ContainerInspect()

@@ -30,6 +30,13 @@ func ExampleContainerBuilder_SetLogPath() {
 	container.SetImageBuildOptionsMemory(100 * KMegaByte)
 
 	container.SetLogPath("./test.counter.log.csv")
+	container.AddFilterToLog(
+		"contador",
+		"counter",
+		"^.*?counter: (?P<valueToGet>[\\d\\.]+)",
+		"\\.",
+		",",
+	)
 	container.AddFilterToSuccess(
 		"done!",
 		"^.*?(?P<valueToGet>\\d+/\\d+/\\d+ \\d+:\\d+:\\d+ done!).*",
