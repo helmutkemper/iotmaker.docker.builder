@@ -60,29 +60,52 @@ func ExampleContainerBuilder_AddFilterToFail() {
 		// Português: Texto simples procurado na saída padrão do container para ativar o filtro
 		"counter",
 
-		// Regular expression used to filter what goes into the log using the `valueToGet` parameter.
-		// Expressão regular usada para filtrar o que vai para o log usando o parâmetro `valueToGet`.
+		// English: Regular expression used to filter what goes into the log using the `valueToGet` parameter.
+		// Português: Expressão regular usada para filtrar o que vai para o log usando o parâmetro `valueToGet`.
 		"^.*?counter: (?P<valueToGet>[\\d\\.]+)",
 
-		// Regular expression used for search and replacement in the text found in the previous step [optional].
-		// Expressão regular usada para busca e substituição no texto encontrado na etapa anterior [opcional].
+		// English: Regular expression used for search and replacement in the text found in the previous step [optional].
+		// Português: Expressão regular usada para busca e substituição no texto encontrado na etapa anterior [opcional].
 		"\\.",
 		",",
 	)
 
+	// English: Adds a filter to look for a value in the container's standard output indicating the success of the test.
+	// Português: Adiciona um filtro para procurar um valor na saída padrão do container indicando o sucesso do teste.
 	container.AddFilterToSuccess(
+		// English: Simple text searched in the container's standard output to activate the filter
+		// Português: Texto simples procurado na saída padrão do container para ativar o filtro
 		"done!",
+
+		// English: Regular expression used to filter what goes into the log using the `valueToGet` parameter.
+		// Português: Expressão regular usada para filtrar o que vai para o log usando o parâmetro `valueToGet`.
 		"^.*?(?P<valueToGet>\\d+/\\d+/\\d+ \\d+:\\d+:\\d+ done!).*",
+
+		// English: Regular expression used for search and replacement in the text found in the previous step [optional].
+		// Português: Expressão regular usada para busca e substituição no texto encontrado na etapa anterior [opcional].
 		"(?P<date>\\d+/\\d+/\\d+)\\s+(?P<hour>\\d+:\\d+:\\d+)\\s+(?P<value>done!).*",
 		"${value}",
 	)
+
+	// English: Adds a filter to look for a value in the container's standard output indicating the fail of the test.
+	// Português: Adiciona um filtro para procurar um valor na saída padrão do container indicando a falha do teste.
 	container.AddFilterToFail(
+		// English: Simple text searched in the container's standard output to activate the filter
+		// Português: Texto simples procurado na saída padrão do container para ativar o filtro
 		"counter: 40",
+
+		// English: Regular expression used to filter what goes into the log using the `valueToGet` parameter.
+		// Português: Expressão regular usada para filtrar o que vai para o log usando o parâmetro `valueToGet`.
 		"^.*?(?P<valueToGet>\\d+/\\d+/\\d+ \\d+:\\d+:\\d+ counter: [\\d\\.]+).*",
+
+		// English: Regular expression used for search and replacement in the text found in the previous step [optional].
+		// Português: Expressão regular usada para busca e substituição no texto encontrado na etapa anterior [opcional].
 		"(?P<date>\\d+/\\d+/\\d+)\\s+(?P<hour>\\d+:\\d+:\\d+)\\s+counter:\\s+(?P<value>[\\d\\.]+).*",
 		"Test Fail! Counter Value: ${value} - Hour: ${hour} - Date: ${date}",
 	)
 
+	// English: Initializes the container manager object.
+	// Português: Inicializa o objeto gerenciador de container.
 	err = container.Init()
 	if err != nil {
 		fmt.Printf("error: %v", err.Error())
@@ -90,6 +113,8 @@ func ExampleContainerBuilder_AddFilterToFail() {
 		return
 	}
 
+	// English: Creates an image from a project folder.
+	// Português: Cria uma imagem a partir de uma pasta de projeto.
 	imageInspect, err = container.ImageBuildFromFolder()
 	if err != nil {
 		fmt.Printf("error: %v", err.Error())
@@ -100,6 +125,8 @@ func ExampleContainerBuilder_AddFilterToFail() {
 	fmt.Printf("image size: %v\n", container.SizeToString(imageInspect.Size))
 	fmt.Printf("image os: %v\n", imageInspect.Os)
 
+	// English: Creates and initializes the container based on the created image.
+	// Português: Cria e inicializa o container baseado na imagem criada.
 	err = container.ContainerBuildAndStartFromImage()
 	if err != nil {
 		log.Printf("error: %v", err.Error())
@@ -107,8 +134,12 @@ func ExampleContainerBuilder_AddFilterToFail() {
 		return
 	}
 
+	// English: Starts container monitoring at two second intervals. This functionality generates the log and monitors the standard output of the container.
+	// Português: Inicializa o monitoramento do container com intervalos de dois segundos. Esta funcionalidade gera o log e monitora a saída padrão do container.
 	container.StartMonitor(time.NewTicker(2 * time.Second))
 
+	// English: Gets the event channel pointer inside the container.
+	// Português: Pega o ponteiro do canal de eventos dentro do container.
 	event := container.GetChaosEvent()
 
 	select {
@@ -120,8 +151,12 @@ func ExampleContainerBuilder_AddFilterToFail() {
 		fmt.Printf("message: %v\n", e.Message)
 	}
 
+	// English: Stop container monitoring.
+	// Português: Para o monitoramento do container.
 	container.StopMonitor()
 
+	// English: Deletes all docker elements with the term `delete` in the name.
+	// Português: Apaga todos os elementos docker com o termo `delete` no nome.
 	GarbageCollector()
 
 	// Output:

@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-func ExampleContainerBuilder_AddFailMatchFlag() {
+func ExampleContainerBuilder_AddFilterToLog() {
 	var err error
 	var imageInspect types.ImageInspect
 
@@ -45,8 +45,63 @@ func ExampleContainerBuilder_AddFailMatchFlag() {
 	// Português: Define a quantidade máxima de memória a ser usada pelo container docker.
 	container.SetImageBuildOptionsMemory(100 * KMegaByte)
 
-	container.AddFailMatchFlag(
+	// English: Defines the log file path with container statistical data
+	// Português: Define o caminho do arquivo de log com dados estatísticos do container
+	container.SetLogPath("./test.counter.log.csv")
+
+	// English: Adds a search filter to the standard output of the container, to save the information in the log file
+	// Português: Adiciona um filtro de busca na saída padrão do container, para salvar a informação no arquivo de log
+	container.AddFilterToLog(
+		// English: Label to be written to log file
+		// Português: Rótulo a ser escrito no arquivo de log
+		"contador",
+
+		// English: Simple text searched in the container's standard output to activate the filter
+		// Português: Texto simples procurado na saída padrão do container para ativar o filtro
+		"counter",
+
+		// English: Regular expression used to filter what goes into the log using the `valueToGet` parameter.
+		// Português: Expressão regular usada para filtrar o que vai para o log usando o parâmetro `valueToGet`.
+		"^.*?counter: (?P<valueToGet>[\\d\\.]+)",
+
+		// English: Regular expression used for search and replacement in the text found in the previous step [optional].
+		// Português: Expressão regular usada para busca e substituição no texto encontrado na etapa anterior [opcional].
+		"\\.",
+		",",
+	)
+
+	// English: Adds a filter to look for a value in the container's standard output indicating the success of the test.
+	// Português: Adiciona um filtro para procurar um valor na saída padrão do container indicando o sucesso do teste.
+	container.AddFilterToSuccess(
+		// English: Simple text searched in the container's standard output to activate the filter
+		// Português: Texto simples procurado na saída padrão do container para ativar o filtro
+		"done!",
+
+		// English: Regular expression used to filter what goes into the log using the `valueToGet` parameter.
+		// Português: Expressão regular usada para filtrar o que vai para o log usando o parâmetro `valueToGet`.
+		"^.*?(?P<valueToGet>\\d+/\\d+/\\d+ \\d+:\\d+:\\d+ done!).*",
+
+		// English: Regular expression used for search and replacement in the text found in the previous step [optional].
+		// Português: Expressão regular usada para busca e substituição no texto encontrado na etapa anterior [opcional].
+		"(?P<date>\\d+/\\d+/\\d+)\\s+(?P<hour>\\d+:\\d+:\\d+)\\s+(?P<value>done!).*",
+		"${value}",
+	)
+
+	// English: Adds a filter to look for a value in the container's standard output indicating the fail of the test.
+	// Português: Adiciona um filtro para procurar um valor na saída padrão do container indicando a falha do teste.
+	container.AddFilterToFail(
+		// English: Simple text searched in the container's standard output to activate the filter
+		// Português: Texto simples procurado na saída padrão do container para ativar o filtro
 		"counter: 40",
+
+		// English: Regular expression used to filter what goes into the log using the `valueToGet` parameter.
+		// Português: Expressão regular usada para filtrar o que vai para o log usando o parâmetro `valueToGet`.
+		"^.*?(?P<valueToGet>\\d+/\\d+/\\d+ \\d+:\\d+:\\d+ counter: [\\d\\.]+).*",
+
+		// English: Regular expression used for search and replacement in the text found in the previous step [optional].
+		// Português: Expressão regular usada para busca e substituição no texto encontrado na etapa anterior [opcional].
+		"(?P<date>\\d+/\\d+/\\d+)\\s+(?P<hour>\\d+:\\d+:\\d+)\\s+counter:\\s+(?P<value>[\\d\\.]+).*",
+		"Test Fail! Counter Value: ${value} - Hour: ${hour} - Date: ${date}",
 	)
 
 	// English: Initializes the container manager object.
@@ -93,6 +148,7 @@ func ExampleContainerBuilder_AddFailMatchFlag() {
 		fmt.Printf("done: %v\n", e.Done)
 		fmt.Printf("fail: %v\n", e.Fail)
 		fmt.Printf("error: %v\n", e.Error)
+		fmt.Printf("message: %v\n", e.Message)
 	}
 
 	// English: Stop container monitoring.
@@ -107,7 +163,8 @@ func ExampleContainerBuilder_AddFailMatchFlag() {
 	// image size: 1.38 MB
 	// image os: linux
 	// container name: container_counter_delete_after_test
-	// done: false
-	// fail: true
+	// done: true
+	// fail: false
 	// error: false
+	// message: done!
 }
