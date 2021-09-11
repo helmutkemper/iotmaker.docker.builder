@@ -153,6 +153,8 @@ func (e *ContainerBuilder) managerChaos() {
 
 		if e.chaos.containerPaused == true {
 
+			theater.SetContainerUnPaused(e.chaos.sceneName)
+
 			log.Printf("%v: unpause()", e.containerName)
 			e.chaos.containerPaused = false
 			err = e.ContainerUnpause()
@@ -168,6 +170,8 @@ func (e *ContainerBuilder) managerChaos() {
 			e.chaos.eventNext = time.Now().Add(timeToNextEvent)
 
 		} else if e.chaos.containerStopped == true {
+
+			theater.SetContainerUnStopped(e.chaos.sceneName)
 
 			log.Printf("%v: start()", e.containerName)
 			e.chaos.containerStopped = false
@@ -185,6 +189,8 @@ func (e *ContainerBuilder) managerChaos() {
 
 		} else if e.chaos.chaosCanRestartContainer == true && e.chaos.restartProbability != 0.0 && e.chaos.restartProbability >= probality && e.chaos.restartLimit > 0 {
 
+			theater.SetContainerStopped(e.chaos.sceneName)
+
 			log.Printf("%v: stop()", e.containerName)
 			e.chaos.containerStopped = true
 			err = e.ContainerStop()
@@ -201,6 +207,8 @@ func (e *ContainerBuilder) managerChaos() {
 			e.chaos.eventNext = time.Now().Add(timeToNextEvent)
 
 		} else {
+
+			theater.SetContainerPaused(e.chaos.sceneName)
 
 			log.Printf("%v: pause()", e.containerName)
 			e.chaos.containerPaused = true
