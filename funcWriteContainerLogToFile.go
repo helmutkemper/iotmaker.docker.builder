@@ -11,23 +11,6 @@ import (
 // writeContainerLogToFile
 //
 // Português: Escreve um arquivo csv com dados capturados da saída padrão do container e dados estatísticos do container
-//   Entrada:
-//     path: caminho do arquivo a ser salvo.
-//     configuration: configuração do log
-//       Docker: objeto padrão ContainerBuilder
-//       Log: Array de LogFilter
-//         Match: Texto procurado na saída padrão (tudo ou nada) de baixo para cima
-//         Filter: Expressão regular contendo o filtro para isolar o texto procurado
-//           Exemplo:
-//             Saída padrão do container: H2021-08-20T23:46:37.586796376Z 2021/08/20 23:46:37 10.5% concluido
-//             Match:   "% concluido" - Atenção: não é expressão regular
-//             Filter:  "^(.*?)(?P<valueToGet>\d+)(% concluido.*)" - Atenção: Essa é uma expressão regular com nome "?P<valueToGet>"
-//             Search:  "." - Numeros com pontos podem não ser bem exportados em casos como o excel, por isto, "." será substituído por ","
-//             Replace: ","
-//         Fail: Texto simples impresso na saída padrão indicando um erro ou bug no projeto original
-//             Match:   "bug:"
-//         End: Texto simples impresso na saída padrão indicando fim do teste
-//             Match:   "fim!"
 func (e *ContainerBuilder) writeContainerLogToFile(path string, lineList [][]byte) (err error) {
 	if path == "" {
 		util.TraceToLog()
