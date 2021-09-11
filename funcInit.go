@@ -23,7 +23,7 @@ func (e *ContainerBuilder) Init() (err error) {
 		e.logFlags = KAll
 	}
 
-	e.chaos.event = make(chan Event)
+	e.chaos.event = make(chan Event, 1)
 
 	if e.imageCacheName == "" {
 		e.imageCacheName = "cache:latest"

@@ -36,7 +36,9 @@ func (e *ContainerBuilder) managerChaos() {
 		event.ContainerName = e.GetContainerName()
 		event.Message = "[" + strconv.Itoa(lineNumber) + "]: " + err.Error()
 		event.Error = true
-		e.chaos.event <- event
+		go func() {
+			e.chaos.event <- event
+		}()
 		return
 	}
 
@@ -51,7 +53,9 @@ func (e *ContainerBuilder) managerChaos() {
 		event.ContainerName = e.GetContainerName()
 		event.Message = "[" + strconv.Itoa(lineNumber) + "]: " + err.Error()
 		event.Error = true
-		e.chaos.event <- event
+		go func() {
+			e.chaos.event <- event
+		}()
 		return
 	}
 
@@ -64,7 +68,9 @@ func (e *ContainerBuilder) managerChaos() {
 		event.ContainerName = e.GetContainerName()
 		event.Message = "[" + strconv.Itoa(lineNumber) + "]: " + err.Error()
 		event.Error = true
-		e.chaos.event <- event
+		go func() {
+			e.chaos.event <- event
+		}()
 		return
 	}
 
@@ -75,7 +81,9 @@ func (e *ContainerBuilder) managerChaos() {
 		event.ContainerName = e.GetContainerName()
 		event.Message = string(line)
 		event.Fail = true
-		e.chaos.event <- event
+		go func() {
+			e.chaos.event <- event
+		}()
 	}
 
 	line, found = e.logsSearchAndReplaceIntoText(lineList, e.chaos.filterSuccess)
@@ -85,7 +93,9 @@ func (e *ContainerBuilder) managerChaos() {
 		event.ContainerName = e.GetContainerName()
 		event.Message = string(line)
 		event.Done = true
-		e.chaos.event <- event
+		go func() {
+			e.chaos.event <- event
+		}()
 	}
 
 	if e.chaos.enableChaos == false {
@@ -171,6 +181,9 @@ func (e *ContainerBuilder) managerChaos() {
 				event.ContainerName = e.GetContainerName()
 				event.Message = "[" + strconv.Itoa(lineNumber) + "]: " + err.Error()
 				event.Error = true
+				go func() {
+					e.chaos.event <- event
+				}()
 				return
 			}
 			timeToNextEvent = e.selectBetweenMaxAndMin(e.chaos.maximumTimeToPause, e.chaos.minimumTimeToPause)
@@ -189,6 +202,9 @@ func (e *ContainerBuilder) managerChaos() {
 				event.ContainerName = e.GetContainerName()
 				event.Message = "[" + strconv.Itoa(lineNumber) + "]: " + err.Error()
 				event.Error = true
+				go func() {
+					e.chaos.event <- event
+				}()
 				return
 			}
 			timeToNextEvent = e.selectBetweenMaxAndMin(e.chaos.maximumTimeToPause, e.chaos.minimumTimeToPause)
@@ -209,6 +225,9 @@ func (e *ContainerBuilder) managerChaos() {
 				event.ContainerName = e.GetContainerName()
 				event.Message = "[" + strconv.Itoa(lineNumber) + "]: " + err.Error()
 				event.Error = true
+				go func() {
+					e.chaos.event <- event
+				}()
 				return
 			}
 			e.chaos.restartLimit -= 1
@@ -230,6 +249,9 @@ func (e *ContainerBuilder) managerChaos() {
 				event.ContainerName = e.GetContainerName()
 				event.Message = "[" + strconv.Itoa(lineNumber) + "]: " + err.Error()
 				event.Error = true
+				go func() {
+					e.chaos.event <- event
+				}()
 				return
 			}
 			timeToNextEvent = e.selectBetweenMaxAndMin(e.chaos.maximumTimeToUnpause, e.chaos.minimumTimeToUnpause)
