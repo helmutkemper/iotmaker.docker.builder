@@ -197,7 +197,7 @@ func (e *ContainerBuilder) managerChaos() {
 			e.chaos.containerStopped = false
 
 			probality = e.getProbalityNumber()
-			if e.network != nil && e.chaos.restartChangeIpProbability >= probality {
+			if e.network != nil && e.chaos.restartChangeIpProbability > 0.0 && e.chaos.restartChangeIpProbability >= probality {
 				err = e.NetworkChangeIp()
 				if err != nil {
 					_, lineNumber = e.traceCodeLine()
