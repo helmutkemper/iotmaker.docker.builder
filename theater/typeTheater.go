@@ -681,7 +681,9 @@ func (e *Theater) manager() {
 			event.ContainerName = container.Docker.GetContainerName()
 			event.Message = "[" + strconv.Itoa(lineNumber) + "]: " + err.Error()
 			event.Error = true
-			e.event <- event
+			if len(e.event) == 0 {
+				e.event <- event
+			}
 			continue
 		}
 
@@ -691,7 +693,9 @@ func (e *Theater) manager() {
 			event.ContainerName = container.Docker.GetContainerName()
 			event.Message = "[" + strconv.Itoa(lineNumber) + "]: " + "OOMKilled"
 			event.Error = true
-			e.event <- event
+			if len(e.event) == 0 {
+				e.event <- event
+			}
 			continue
 		}
 
@@ -701,7 +705,9 @@ func (e *Theater) manager() {
 			event.ContainerName = container.Docker.GetContainerName()
 			event.Message = "[" + strconv.Itoa(lineNumber) + "]: " + "dead"
 			event.Error = true
-			e.event <- event
+			if len(e.event) == 0 {
+				e.event <- event
+			}
 			continue
 		}
 
@@ -711,7 +717,9 @@ func (e *Theater) manager() {
 			event.ContainerName = container.Docker.GetContainerName()
 			event.Message = "[" + strconv.Itoa(lineNumber) + "]: " + "exit code: " + strconv.Itoa(inspect.State.ExitCode)
 			event.Error = true
-			e.event <- event
+			if len(e.event) == 0 {
+				e.event <- event
+			}
 			continue
 		}
 
@@ -723,7 +731,9 @@ func (e *Theater) manager() {
 				event.ContainerName = container.Docker.GetContainerName()
 				event.Message = "[" + strconv.Itoa(lineNumber) + "]: " + "not running"
 				event.Error = true
-				e.event <- event
+				if len(e.event) == 0 {
+					e.event <- event
+				}
 				continue
 			}
 
@@ -733,7 +743,9 @@ func (e *Theater) manager() {
 				event.ContainerName = container.Docker.GetContainerName()
 				event.Message = "[" + strconv.Itoa(lineNumber) + "]: " + "paused"
 				event.Error = true
-				e.event <- event
+				if len(e.event) == 0 {
+					e.event <- event
+				}
 				continue
 			}
 
@@ -743,7 +755,9 @@ func (e *Theater) manager() {
 				event.ContainerName = container.Docker.GetContainerName()
 				event.Message = "[" + strconv.Itoa(lineNumber) + "]: " + "restarting"
 				event.Error = true
-				e.event <- event
+				if len(e.event) == 0 {
+					e.event <- event
+				}
 				continue
 			}
 
@@ -756,7 +770,9 @@ func (e *Theater) manager() {
 			event.ContainerName = container.Docker.GetContainerName()
 			event.Message = "[" + strconv.Itoa(lineNumber) + "]: " + err.Error()
 			event.Error = true
-			e.event <- event
+			if len(e.event) == 0 {
+				e.event <- event
+			}
 			continue
 		}
 
@@ -768,7 +784,9 @@ func (e *Theater) manager() {
 			event.ContainerName = container.Docker.GetContainerName()
 			event.Message = "[" + strconv.Itoa(lineNumber) + "]: " + err.Error()
 			event.Error = true
-			e.event <- event
+			if len(e.event) == 0 {
+				e.event <- event
+			}
 			continue
 		}
 
@@ -779,7 +797,9 @@ func (e *Theater) manager() {
 			event.ContainerName = container.Docker.GetContainerName()
 			event.Message = string(line)
 			event.Fail = true
-			e.event <- event
+			if len(e.event) == 0 {
+				e.event <- event
+			}
 		}
 
 		line, found = e.logsSearchAndReplaceIntoText(lineList, container.End)
@@ -789,7 +809,9 @@ func (e *Theater) manager() {
 			event.ContainerName = container.Docker.GetContainerName()
 			event.Message = string(line)
 			event.Done = true
-			e.event <- event
+			if len(e.event) == 0 {
+				e.event <- event
+			}
 		}
 
 		if container.linear == true {
@@ -838,6 +860,9 @@ func (e *Theater) manager() {
 					event.ContainerName = container.Docker.GetContainerName()
 					event.Message = "[" + strconv.Itoa(lineNumber) + "]: " + err.Error()
 					event.Error = true
+					if len(e.event) == 0 {
+						e.event <- event
+					}
 					continue
 				}
 				timeToNextEvent = e.selectBetweenMaxAndMin(container.Chaos.TimeToPause.Max, container.Chaos.TimeToPause.Min)
@@ -854,6 +879,9 @@ func (e *Theater) manager() {
 					event.ContainerName = container.Docker.GetContainerName()
 					event.Message = "[" + strconv.Itoa(lineNumber) + "]: " + err.Error()
 					event.Error = true
+					if len(e.event) == 0 {
+						e.event <- event
+					}
 					continue
 				}
 				timeToNextEvent = e.selectBetweenMaxAndMin(container.Chaos.TimeToPause.Max, container.Chaos.TimeToPause.Min)
@@ -870,6 +898,9 @@ func (e *Theater) manager() {
 					event.ContainerName = container.Docker.GetContainerName()
 					event.Message = "[" + strconv.Itoa(lineNumber) + "]: " + err.Error()
 					event.Error = true
+					if len(e.event) == 0 {
+						e.event <- event
+					}
 					continue
 				}
 				container.Chaos.Restart.RestartLimit -= 1
@@ -887,6 +918,9 @@ func (e *Theater) manager() {
 					event.ContainerName = container.Docker.GetContainerName()
 					event.Message = "[" + strconv.Itoa(lineNumber) + "]: " + err.Error()
 					event.Error = true
+					if len(e.event) == 0 {
+						e.event <- event
+					}
 					continue
 				}
 				timeToNextEvent = e.selectBetweenMaxAndMin(container.Chaos.TimeToUnpause.Max, container.Chaos.TimeToUnpause.Min)

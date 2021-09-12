@@ -46,9 +46,9 @@ func (e *ContainerBuilder) ContainerBuildAndStartFromImage() (err error) {
 		}
 	}
 
-	go func() {
+	if len(*e.onContainerReady) == 0 {
 		*e.onContainerReady <- true
-	}()
+	}
 
 	return
 }

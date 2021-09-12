@@ -52,7 +52,7 @@ func (e *ContainerBuilder) ContainerStartAfterBuild() (err error) {
 
 	e.chaos.serviceStartedAt = time.Now()
 	e.startedAfterBuild = true
-	if len(*e.onContainerReady) != 0 {
+	if len(*e.onContainerReady) == 0 {
 		*e.onContainerReady <- true
 	}
 	return

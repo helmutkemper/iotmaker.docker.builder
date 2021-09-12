@@ -36,9 +36,9 @@ func (e *ContainerBuilder) managerChaos() {
 		event.ContainerName = e.GetContainerName()
 		event.Message = "[" + strconv.Itoa(lineNumber) + "]: " + err.Error()
 		event.Error = true
-		go func() {
+		if len(e.chaos.event) == 0 {
 			e.chaos.event <- event
-		}()
+		}
 		return
 	}
 
@@ -53,9 +53,9 @@ func (e *ContainerBuilder) managerChaos() {
 		event.ContainerName = e.GetContainerName()
 		event.Message = "[" + strconv.Itoa(lineNumber) + "]: " + err.Error()
 		event.Error = true
-		go func() {
+		if len(e.chaos.event) == 0 {
 			e.chaos.event <- event
-		}()
+		}
 		return
 	}
 
@@ -68,9 +68,9 @@ func (e *ContainerBuilder) managerChaos() {
 		event.ContainerName = e.GetContainerName()
 		event.Message = "[" + strconv.Itoa(lineNumber) + "]: " + err.Error()
 		event.Error = true
-		go func() {
+		if len(e.chaos.event) == 0 {
 			e.chaos.event <- event
-		}()
+		}
 		return
 	}
 
@@ -81,9 +81,9 @@ func (e *ContainerBuilder) managerChaos() {
 		event.ContainerName = e.GetContainerName()
 		event.Message = string(line)
 		event.Fail = true
-		go func() {
+		if len(e.chaos.event) == 0 {
 			e.chaos.event <- event
-		}()
+		}
 	}
 
 	line, found = e.logsSearchAndReplaceIntoText(lineList, e.chaos.filterSuccess)
@@ -93,9 +93,9 @@ func (e *ContainerBuilder) managerChaos() {
 		event.ContainerName = e.GetContainerName()
 		event.Message = string(line)
 		event.Done = true
-		go func() {
+		if len(e.chaos.event) == 0 {
 			e.chaos.event <- event
-		}()
+		}
 	}
 
 	if e.chaos.enableChaos == false {
@@ -181,9 +181,9 @@ func (e *ContainerBuilder) managerChaos() {
 				event.ContainerName = e.GetContainerName()
 				event.Message = "[" + strconv.Itoa(lineNumber) + "]: " + err.Error()
 				event.Error = true
-				go func() {
+				if len(e.chaos.event) == 0 {
 					e.chaos.event <- event
-				}()
+				}
 				return
 			}
 			timeToNextEvent = e.selectBetweenMaxAndMin(e.chaos.maximumTimeToPause, e.chaos.minimumTimeToPause)
@@ -195,6 +195,23 @@ func (e *ContainerBuilder) managerChaos() {
 
 			log.Printf("%v: start()", e.containerName)
 			e.chaos.containerStopped = false
+
+			probality = e.getProbalityNumber()
+			if e.network != nil && e.chaos.restartChangeIpProbability >= probality {
+				err = e.NetworkChangeIp()
+				if err != nil {
+					_, lineNumber = e.traceCodeLine()
+					event.clear()
+					event.ContainerName = e.GetContainerName()
+					event.Message = "[" + strconv.Itoa(lineNumber) + "]: " + err.Error()
+					event.Error = true
+					if len(e.chaos.event) == 0 {
+						e.chaos.event <- event
+					}
+					return
+				}
+			}
+
 			err = e.ContainerStart()
 			if err != nil {
 				_, lineNumber = e.traceCodeLine()
@@ -202,9 +219,9 @@ func (e *ContainerBuilder) managerChaos() {
 				event.ContainerName = e.GetContainerName()
 				event.Message = "[" + strconv.Itoa(lineNumber) + "]: " + err.Error()
 				event.Error = true
-				go func() {
+				if len(e.chaos.event) == 0 {
 					e.chaos.event <- event
-				}()
+				}
 				return
 			}
 			timeToNextEvent = e.selectBetweenMaxAndMin(e.chaos.maximumTimeToPause, e.chaos.minimumTimeToPause)
@@ -225,9 +242,9 @@ func (e *ContainerBuilder) managerChaos() {
 				event.ContainerName = e.GetContainerName()
 				event.Message = "[" + strconv.Itoa(lineNumber) + "]: " + err.Error()
 				event.Error = true
-				go func() {
+				if len(e.chaos.event) == 0 {
 					e.chaos.event <- event
-				}()
+				}
 				return
 			}
 			e.chaos.restartLimit -= 1
@@ -249,9 +266,9 @@ func (e *ContainerBuilder) managerChaos() {
 				event.ContainerName = e.GetContainerName()
 				event.Message = "[" + strconv.Itoa(lineNumber) + "]: " + err.Error()
 				event.Error = true
-				go func() {
+				if len(e.chaos.event) == 0 {
 					e.chaos.event <- event
-				}()
+				}
 				return
 			}
 			timeToNextEvent = e.selectBetweenMaxAndMin(e.chaos.maximumTimeToUnpause, e.chaos.minimumTimeToUnpause)

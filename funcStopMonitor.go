@@ -5,5 +5,7 @@ func (e *ContainerBuilder) StopMonitor() {
 		return
 	}
 
-	e.chaos.monitorStop <- struct{}{}
+	if len(e.chaos.monitorStop) == 0 {
+		e.chaos.monitorStop <- struct{}{}
+	}
 }

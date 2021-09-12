@@ -6,7 +6,7 @@ import (
 
 func (e *ContainerBuilder) StartMonitor(duration *time.Ticker) {
 	if e.chaos.monitorStop == nil {
-		e.chaos.monitorStop = make(chan struct{})
+		e.chaos.monitorStop = make(chan struct{}, 1)
 	}
 
 	go func() {

@@ -128,7 +128,8 @@ func ExampleContainerBuilder_AddFilterToRestartContainer() {
 		"",
 	)
 
-	container.SetRestartProbability(0.9, 1)
+	// todo: troca de endereço de rede
+	container.SetRestartProbability(0.9, 1.0, 1)
 	container.SetTimeToPause(2*time.Second, 5*time.Second)
 	container.SetTimeToUnpause(2*time.Second, 5*time.Second)
 	container.SetTimeToRestart(2*time.Second, 5*time.Second)
