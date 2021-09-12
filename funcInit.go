@@ -39,10 +39,10 @@ func (e *ContainerBuilder) Init() (err error) {
 		e.environmentVar = make([]string, 0)
 	}
 
-	onStart := make(chan bool, 1)
+	onStart := make(chan bool)
 	e.onContainerReady = &onStart
 
-	onInspect := make(chan bool, 1)
+	onInspect := make(chan bool)
 	e.onContainerInspect = &onInspect
 
 	e.changePointer = *iotmakerdocker.NewImagePullStatusChannel()

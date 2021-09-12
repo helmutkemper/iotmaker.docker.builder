@@ -12,10 +12,11 @@ import "sync"
 // A cena garante algum controle sobre o caos no teste dos container, impedindo que todos os containers de uma cena
 // sejam pausando ou parados ao mesmo tempo.
 type scene struct {
-	StopedContainers    int
-	PausedContainers    int
-	MaxStopedContainers int
-	MaxPausedContainers int
+	StopedContainers                   int
+	PausedContainers                   int
+	MaxStopedContainers                int
+	MaxPausedContainers                int
+	MaxTotalPausedAndStoppedContainers int
 }
 
 // Theater
@@ -53,15 +54,16 @@ func (e *Theater) Init() {
 //     sceneName: nome único da cena
 //     maxStopedContainers: quantidade máxima de containers parados
 //     maxPausedContainers: quantidade máxima de containers pausados
-func (e *Theater) ConfigScene(sceneName string, maxStopedContainers, maxPausedContainers int) {
+func (e *Theater) ConfigScene(sceneName string, maxStopedContainers, maxPausedContainers, maxTotalPausedAndStoppedContainers int) {
 	e.s.Lock()
 	defer e.s.Unlock()
 
 	e.m[sceneName] = scene{
-		StopedContainers:    0,
-		PausedContainers:    0,
-		MaxStopedContainers: maxStopedContainers,
-		MaxPausedContainers: maxPausedContainers,
+		StopedContainers:                   0,
+		PausedContainers:                   0,
+		MaxStopedContainers:                maxStopedContainers,
+		MaxPausedContainers:                maxPausedContainers,
+		MaxTotalPausedAndStoppedContainers: maxTotalPausedAndStoppedContainers,
 	}
 }
 
@@ -112,7 +114,8 @@ func (e *Theater) SetContainerPaused(sceneName string) (IsOnTheEdge bool) {
 	sc.PausedContainers = sc.PausedContainers + 1
 	e.m[sceneName] = sc
 
-	return sc.MaxPausedContainers <= sc.PausedContainers
+	return sc.MaxPausedContainers <= sc.PausedContainers ||
+		sc.MaxTotalPausedAndStoppedContainers <= sc.PausedContainers+sc.StopedContainers
 }
 
 // SetContainerStopped
@@ -140,7 +143,8 @@ func (e *Theater) SetContainerStopped(sceneName string) (IsOnTheEdge bool) {
 	sc.StopedContainers = sc.StopedContainers + 1
 	e.m[sceneName] = sc
 
-	return sc.MaxStopedContainers <= sc.StopedContainers
+	return sc.MaxStopedContainers <= sc.StopedContainers ||
+		sc.MaxTotalPausedAndStoppedContainers <= sc.PausedContainers+sc.StopedContainers
 }
 
 // SetContainerUnStopped

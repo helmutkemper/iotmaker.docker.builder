@@ -1,6 +1,8 @@
 package iotmakerdockerbuilder
 
-import "time"
+import (
+	"time"
+)
 
 func (e *ContainerBuilder) StartMonitor(duration *time.Ticker) {
 	if e.chaos.monitorStop == nil {

@@ -17,7 +17,7 @@ func (e *ContainerBuilder) ContainerBuildAndStartFromImage() (err error) {
 		return
 	}
 
-	err = e.dockerSys.ContainerStart(e.containerID)
+	err = e.ContainerStartAfterBuild()
 	if err != nil {
 		util.TraceToLog()
 		return
@@ -46,6 +46,9 @@ func (e *ContainerBuilder) ContainerBuildAndStartFromImage() (err error) {
 		}
 	}
 
-	*e.onContainerReady <- true
+	go func() {
+		*e.onContainerReady <- true
+	}()
+
 	return
 }
