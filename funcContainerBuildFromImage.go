@@ -5,11 +5,17 @@ import (
 	"log"
 )
 
-// ContainerBuildAndStartFromImage (english): Transforms an image downloaded by
-// ImagePull() or created by ImageBuildFromFolder() into a container and start it.
+// ContainerBuildAndStartFromImage
 //
-// ContainerBuildAndStartFromImage (português): Transforma uma imagem baixada por
-// ImagePull() ou criada por ImageBuildFromFolder() em container e o inicializa.
+// English: Transforms an image downloaded by ImagePull() or created by ImageBuildFromFolder() into a container and
+// start it.
+//   Output:
+//     err: Default object error from golang
+//
+// Português: Transforma uma imagem baixada por ImagePull() ou criada por ImageBuildFromFolder() em container e o
+// inicializa.
+//   Saída:
+//     err: Objeto padrão de erro golang
 func (e *ContainerBuilder) ContainerBuildAndStartFromImage() (err error) {
 	err = e.ContainerBuildWithoutStartingItFromImage()
 	if err != nil {
