@@ -41,6 +41,11 @@ func (e *ContainerBuilder) ImageBuildFromFolder() (inspect types.ImageInspect, e
 		return
 	}
 
+	e.imageID, _ = e.ImageFindIdByName(e.imageName)
+	if e.imageID != "" && e.imageExpirationTimeIsValid() == true {
+		return
+	}
+
 	if e.buildPath == "" {
 		util.TraceToLog()
 		err = errors.New("set build folder path first")

@@ -113,5 +113,6 @@ type ContainerBuilder struct {
 
 	gitPathPrivateRepository string
 
-	buildOptions types.ImageBuildOptions
+	buildOptions        types.ImageBuildOptions
+	imageExpirationTime time.Duration
 }

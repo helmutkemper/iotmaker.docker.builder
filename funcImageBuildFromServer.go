@@ -43,6 +43,11 @@ func (e *ContainerBuilder) ImageBuildFromServer() (inspect types.ImageInspect, e
 		return
 	}
 
+	e.imageID, _ = e.ImageFindIdByName(e.imageName)
+	if e.imageID != "" && e.imageExpirationTimeIsValid() == true {
+		return
+	}
+
 	var tmpDirPath string
 	var publicKeys *ssh.PublicKeys
 	var gitCloneConfig *git.CloneOptions
