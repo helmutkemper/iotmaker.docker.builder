@@ -13,6 +13,7 @@ func (e *ContainerBuilder) StartMonitor(duration *time.Ticker) {
 		for {
 			select {
 			case <-e.chaos.monitorStop:
+				duration.Stop()
 				return
 
 			case <-duration.C:
