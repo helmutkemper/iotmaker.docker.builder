@@ -1,6 +1,11 @@
 package iotmakerdockerbuilder
 
-import "github.com/helmutkemper/util"
+import (
+	"github.com/helmutkemper/util"
+	"log"
+)
+
+// todo: se o ticker estiver rodando, ele vai colocar um flag de stop para parar no próximo evento
 
 func (e *ContainerBuilder) StopMonitor() (err error) {
 	if e.chaos.monitorStop == nil {
@@ -18,6 +23,11 @@ func (e *ContainerBuilder) StopMonitor() (err error) {
 	e.chaos.linear = true
 
 	if e.chaos.containerPaused == true {
+
+		theater.SetContainerUnPaused(e.chaos.sceneName)
+		log.Printf("%v: unpause()", e.containerName)
+		e.chaos.containerPaused = false
+
 		err = e.ContainerUnpause()
 		if err != nil {
 			util.TraceToLog()
@@ -26,7 +36,12 @@ func (e *ContainerBuilder) StopMonitor() (err error) {
 	}
 
 	if e.chaos.containerStopped == true {
-		err = e.ContainerRestart()
+
+		theater.SetContainerUnStopped(e.chaos.sceneName)
+		log.Printf("%v: start()", e.containerName)
+		e.chaos.containerStopped = false
+
+		err = e.ContainerStart()
 		if err != nil {
 			util.TraceToLog()
 			return
