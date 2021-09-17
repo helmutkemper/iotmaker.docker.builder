@@ -21,6 +21,22 @@ func (e *ContainerBuilder) writeFilterIntoLog(file *os.File, filter []LogFilter,
 				continue
 			}
 
+			if makeLabel == true {
+				_, err = file.Write([]byte(filter[filterLine].Label))
+				if err != nil {
+					log.Printf("writeContainerLogToFile().error: %v", err.Error())
+					util.TraceToLog()
+					return
+				}
+
+				_, err = file.Write([]byte("\t"))
+				if err != nil {
+					log.Printf("writeContainerLogToFile().error: %v", err.Error())
+					util.TraceToLog()
+					return
+				}
+			}
+
 			if bytes.Contains((*lineList)[logLine], []byte(filter[filterLine].Match)) == true {
 				skipMatch[filterLine] = true
 
@@ -48,21 +64,7 @@ func (e *ContainerBuilder) writeFilterIntoLog(file *os.File, filter []LogFilter,
 					toFile = re.ReplaceAll(toFile, []byte(filter[filterLine].Replace))
 				}
 
-				if makeLabel == true {
-					_, err = file.Write([]byte(filter[filterLine].Label))
-					if err != nil {
-						log.Printf("writeContainerLogToFile().error: %v", err.Error())
-						util.TraceToLog()
-						return
-					}
-
-					_, err = file.Write([]byte("\t"))
-					if err != nil {
-						log.Printf("writeContainerLogToFile().error: %v", err.Error())
-						util.TraceToLog()
-						return
-					}
-				} else {
+				if makeLabel == false {
 					_, err = file.Write(toFile)
 					if err != nil {
 						log.Printf("writeContainerLogToFile().error: %v", err.Error())
