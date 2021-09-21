@@ -5,14 +5,13 @@ import (
 	"github.com/helmutkemper/util"
 	"log"
 	"os"
-	"strconv"
 )
 
-func (e *ContainerBuilder) writeBlkioSectorsRecursive(file *os.File, stats *types.Stats) (tab bool, err error) {
+func (e *ContainerBuilder) writeConstBlkioSectorsRecursive(file *os.File, stats *types.Stats) (tab bool, err error) {
 	if e.rowsToPrint&KBlkioSectorsRecursive == KBlkioSectorsRecursive {
 		length := len(stats.BlkioStats.SectorsRecursive)
 		for i := 0; i != length; i += 1 {
-			_, err = file.Write([]byte(strconv.FormatUint(stats.BlkioStats.SectorsRecursive[i].Major, 10)))
+			_, err = file.Write([]byte("KBlkioSectorsRecursive"))
 			if err != nil {
 				log.Printf("writeContainerLogToFile().error: %v", err.Error())
 				util.TraceToLog()
@@ -26,7 +25,7 @@ func (e *ContainerBuilder) writeBlkioSectorsRecursive(file *os.File, stats *type
 				return
 			}
 
-			_, err = file.Write([]byte(strconv.FormatUint(stats.BlkioStats.SectorsRecursive[i].Minor, 10)))
+			_, err = file.Write([]byte("KBlkioSectorsRecursive"))
 			if err != nil {
 				log.Printf("writeContainerLogToFile().error: %v", err.Error())
 				util.TraceToLog()
@@ -40,7 +39,7 @@ func (e *ContainerBuilder) writeBlkioSectorsRecursive(file *os.File, stats *type
 				return
 			}
 
-			_, err = file.Write([]byte(stats.BlkioStats.SectorsRecursive[i].Op))
+			_, err = file.Write([]byte("KBlkioSectorsRecursive"))
 			if err != nil {
 				log.Printf("writeContainerLogToFile().error: %v", err.Error())
 				util.TraceToLog()
@@ -54,7 +53,7 @@ func (e *ContainerBuilder) writeBlkioSectorsRecursive(file *os.File, stats *type
 				return
 			}
 
-			_, err = file.Write([]byte(strconv.FormatUint(stats.BlkioStats.SectorsRecursive[i].Value, 10)))
+			_, err = file.Write([]byte("KBlkioSectorsRecursive"))
 			if err != nil {
 				log.Printf("writeContainerLogToFile().error: %v", err.Error())
 				util.TraceToLog()

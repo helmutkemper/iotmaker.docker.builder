@@ -8,16 +8,9 @@ import (
 	"os"
 )
 
-func (e *ContainerBuilder) writePrivateWorkingSet(file *os.File, stats *types.Stats, makeLabel bool) (err error) {
+func (e *ContainerBuilder) writePrivateWorkingSet(file *os.File, stats *types.Stats) (tab bool, err error) {
 	// private working set
-	if makeLabel == true && e.logFlags&KPrivateWorkingSet == KPrivateWorkingSet {
-		_, err = file.Write([]byte("Private working set\n"))
-		if err != nil {
-			log.Printf("writeContainerLogToFile().error: %v", err.Error())
-			util.TraceToLog()
-			return
-		}
-	} else if e.logFlags&KPrivateWorkingSet == KPrivateWorkingSet {
+	if e.rowsToPrint&KPrivateWorkingSet == KPrivateWorkingSet {
 		_, err = file.Write([]byte(fmt.Sprintf("%v", stats.MemoryStats.PrivateWorkingSet)))
 		if err != nil {
 			log.Printf("writeContainerLogToFile().error: %v", err.Error())
@@ -25,12 +18,39 @@ func (e *ContainerBuilder) writePrivateWorkingSet(file *os.File, stats *types.St
 			return
 		}
 
-		_, err = file.Write([]byte("\t"))
+		tab = e.rowsToPrint&KPrivateWorkingSetComa != 0
+	}
+
+	return
+}
+
+func (e *ContainerBuilder) writeLabelPrivateWorkingSet(file *os.File) (tab bool, err error) {
+	// private working set
+	if e.rowsToPrint&KPrivateWorkingSet == KPrivateWorkingSet {
+		_, err = file.Write([]byte("Private working set"))
 		if err != nil {
 			log.Printf("writeContainerLogToFile().error: %v", err.Error())
 			util.TraceToLog()
 			return
 		}
+
+		tab = e.rowsToPrint&KPrivateWorkingSetComa != 0
+	}
+
+	return
+}
+
+func (e *ContainerBuilder) writeConstPrivateWorkingSet(file *os.File) (tab bool, err error) {
+	// private working set
+	if e.rowsToPrint&KPrivateWorkingSet == KPrivateWorkingSet {
+		_, err = file.Write([]byte("KPrivateWorkingSet"))
+		if err != nil {
+			log.Printf("writeContainerLogToFile().error: %v", err.Error())
+			util.TraceToLog()
+			return
+		}
+
+		tab = e.rowsToPrint&KPrivateWorkingSetComa != 0
 	}
 
 	return

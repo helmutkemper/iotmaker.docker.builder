@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func TestContainer_2(t *testing.T) {
+func TestContainer_1(t *testing.T) {
 	var err error
 
 	var dockerSys iotmakerdocker.DockerSystem
@@ -69,7 +69,7 @@ func TestContainer_2(t *testing.T) {
 	}
 }
 
-func TestContainer_3(t *testing.T) {
+func TestContainer_2(t *testing.T) {
 	var err error
 
 	var dockerSys iotmakerdocker.DockerSystem

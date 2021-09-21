@@ -8,17 +8,10 @@ import (
 	"os"
 )
 
-func (e *ContainerBuilder) writeNumberOfPeriodsWithPreCPUThrottlingActive(file *os.File, stats *types.Stats, makeLabel bool) (err error) {
+func (e *ContainerBuilder) writeNumberOfPeriodsWithPreCPUThrottlingActive(file *os.File, stats *types.Stats) (tab bool, err error) {
 	// Throttling Data. Linux only.
 	// Number of periods with throttling active
-	if makeLabel == true && e.logFlags&KNumberOfPeriodsWithPreCPUThrottlingActive == KNumberOfPeriodsWithPreCPUThrottlingActive {
-		_, err = file.Write([]byte("Throttling Data. (Linux only) - Number of periods with throttling active.\t"))
-		if err != nil {
-			log.Printf("writeContainerLogToFile().error: %v", err.Error())
-			util.TraceToLog()
-			return
-		}
-	} else if e.logFlags&KNumberOfPeriodsWithPreCPUThrottlingActive == KNumberOfPeriodsWithPreCPUThrottlingActive {
+	if e.rowsToPrint&KNumberOfPeriodsWithPreCPUThrottlingActive == KNumberOfPeriodsWithPreCPUThrottlingActive {
 		_, err = file.Write([]byte(fmt.Sprintf("%v", stats.PreCPUStats.ThrottlingData.Periods)))
 		if err != nil {
 			log.Printf("writeContainerLogToFile().error: %v", err.Error())
@@ -26,12 +19,41 @@ func (e *ContainerBuilder) writeNumberOfPeriodsWithPreCPUThrottlingActive(file *
 			return
 		}
 
-		_, err = file.Write([]byte("\t"))
+		tab = e.rowsToPrint&KNumberOfPeriodsWithPreCPUThrottlingActiveComa != 0
+	}
+
+	return
+}
+
+func (e *ContainerBuilder) writeLabelNumberOfPeriodsWithPreCPUThrottlingActive(file *os.File) (tab bool, err error) {
+	// Throttling Data. Linux only.
+	// Number of periods with throttling active
+	if e.rowsToPrint&KNumberOfPeriodsWithPreCPUThrottlingActive == KNumberOfPeriodsWithPreCPUThrottlingActive {
+		_, err = file.Write([]byte("Throttling Data. (Linux only) - Number of periods with throttling active."))
 		if err != nil {
 			log.Printf("writeContainerLogToFile().error: %v", err.Error())
 			util.TraceToLog()
 			return
 		}
+
+		tab = e.rowsToPrint&KNumberOfPeriodsWithPreCPUThrottlingActiveComa != 0
+	}
+
+	return
+}
+
+func (e *ContainerBuilder) writeConstNumberOfPeriodsWithPreCPUThrottlingActive(file *os.File) (tab bool, err error) {
+	// Throttling Data. Linux only.
+	// Number of periods with throttling active
+	if e.rowsToPrint&KNumberOfPeriodsWithPreCPUThrottlingActive == KNumberOfPeriodsWithPreCPUThrottlingActive {
+		_, err = file.Write([]byte("KNumberOfPeriodsWithPreCPUThrottlingActive"))
+		if err != nil {
+			log.Printf("writeContainerLogToFile().error: %v", err.Error())
+			util.TraceToLog()
+			return
+		}
+
+		tab = e.rowsToPrint&KNumberOfPeriodsWithPreCPUThrottlingActiveComa != 0
 	}
 
 	return

@@ -1,20 +1,18 @@
 package iotmakerdockerbuilder
 
 import (
-	"fmt"
-	"github.com/docker/docker/api/types"
 	"github.com/helmutkemper/util"
 	"log"
 	"os"
 )
 
-func (e *ContainerBuilder) writeTotalPreCPUTimeConsumed(file *os.File, stats *types.Stats) (tab bool, err error) {
+func (e *ContainerBuilder) writeConstTotalPreCPUTimeConsumed(file *os.File) (tab bool, err error) {
 	// CPU Usage. Linux and Windows.
 	// Total CPU time consumed.
 	// Units: nanoseconds (Linux)
 	// Units: 100's of nanoseconds (Windows)
 	if e.rowsToPrint&KTotalPreCPUTimeConsumed == KTotalPreCPUTimeConsumed {
-		_, err = file.Write([]byte(fmt.Sprintf("%v", stats.PreCPUStats.CPUUsage.TotalUsage)))
+		_, err = file.Write([]byte("KTotalPreCPUTimeConsumed"))
 		if err != nil {
 			log.Printf("writeContainerLogToFile().error: %v", err.Error())
 			util.TraceToLog()

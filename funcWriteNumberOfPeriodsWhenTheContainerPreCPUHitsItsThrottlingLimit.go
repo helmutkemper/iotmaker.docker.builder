@@ -8,17 +8,10 @@ import (
 	"os"
 )
 
-func (e *ContainerBuilder) writeNumberOfPeriodsWhenTheContainerPreCPUHitsItsThrottlingLimit(file *os.File, stats *types.Stats, makeLabel bool) (err error) {
+func (e *ContainerBuilder) writeNumberOfPeriodsWhenTheContainerPreCPUHitsItsThrottlingLimit(file *os.File, stats *types.Stats) (tab bool, err error) {
 	// Throttling Data. Linux only.
 	// Number of periods when the container hits its throttling limit.
-	if makeLabel == true && e.logFlags&KNumberOfPeriodsWhenTheContainerPreCPUHitsItsThrottlingLimit == KNumberOfPeriodsWhenTheContainerPreCPUHitsItsThrottlingLimit {
-		_, err = file.Write([]byte("Throttling Data. (Linux only) - Number of periods when the container hits its throttling limit.\t"))
-		if err != nil {
-			log.Printf("writeContainerLogToFile().error: %v", err.Error())
-			util.TraceToLog()
-			return
-		}
-	} else if e.logFlags&KNumberOfPeriodsWhenTheContainerPreCPUHitsItsThrottlingLimit == KNumberOfPeriodsWhenTheContainerPreCPUHitsItsThrottlingLimit {
+	if e.rowsToPrint&KNumberOfPeriodsWhenTheContainerPreCPUHitsItsThrottlingLimit == KNumberOfPeriodsWhenTheContainerPreCPUHitsItsThrottlingLimit {
 		_, err = file.Write([]byte(fmt.Sprintf("%v", stats.PreCPUStats.ThrottlingData.ThrottledPeriods)))
 		if err != nil {
 			log.Printf("writeContainerLogToFile().error: %v", err.Error())
@@ -26,12 +19,41 @@ func (e *ContainerBuilder) writeNumberOfPeriodsWhenTheContainerPreCPUHitsItsThro
 			return
 		}
 
-		_, err = file.Write([]byte("\t"))
+		tab = e.rowsToPrint&KNumberOfPeriodsWhenTheContainerPreCPUHitsItsThrottlingLimitComa != 0
+	}
+
+	return
+}
+
+func (e *ContainerBuilder) writeLabelNumberOfPeriodsWhenTheContainerPreCPUHitsItsThrottlingLimit(file *os.File) (tab bool, err error) {
+	// Throttling Data. Linux only.
+	// Number of periods when the container hits its throttling limit.
+	if e.rowsToPrint&KNumberOfPeriodsWhenTheContainerPreCPUHitsItsThrottlingLimit == KNumberOfPeriodsWhenTheContainerPreCPUHitsItsThrottlingLimit {
+		_, err = file.Write([]byte("Throttling Data. (Linux only) - Number of periods when the container hits its throttling limit."))
 		if err != nil {
 			log.Printf("writeContainerLogToFile().error: %v", err.Error())
 			util.TraceToLog()
 			return
 		}
+
+		tab = e.rowsToPrint&KNumberOfPeriodsWhenTheContainerPreCPUHitsItsThrottlingLimitComa != 0
+	}
+
+	return
+}
+
+func (e *ContainerBuilder) writeConstNumberOfPeriodsWhenTheContainerPreCPUHitsItsThrottlingLimit(file *os.File) (tab bool, err error) {
+	// Throttling Data. Linux only.
+	// Number of periods when the container hits its throttling limit.
+	if e.rowsToPrint&KNumberOfPeriodsWhenTheContainerPreCPUHitsItsThrottlingLimit == KNumberOfPeriodsWhenTheContainerPreCPUHitsItsThrottlingLimit {
+		_, err = file.Write([]byte("KNumberOfPeriodsWhenTheContainerPreCPUHitsItsThrottlingLimit"))
+		if err != nil {
+			log.Printf("writeContainerLogToFile().error: %v", err.Error())
+			util.TraceToLog()
+			return
+		}
+
+		tab = e.rowsToPrint&KNumberOfPeriodsWhenTheContainerPreCPUHitsItsThrottlingLimitComa != 0
 	}
 
 	return

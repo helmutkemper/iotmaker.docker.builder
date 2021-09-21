@@ -8,7 +8,8 @@ import (
 	"regexp"
 )
 
-func (e *ContainerBuilder) writeFilterIntoLog(file *os.File, filter []LogFilter, lineList *[][]byte, makeLabel bool) (err error) {
+func (e *ContainerBuilder) writeFilterIntoLog(file *os.File, filter []LogFilter, lineList *[][]byte) (tab bool, err error) {
+	var lineToFile = make([]byte, 0)
 	var skipMatch = make([]bool, len(e.chaos.filterLog))
 
 	for logLine := len(*lineList) - 1; logLine >= 0; logLine -= 1 {
@@ -19,22 +20,6 @@ func (e *ContainerBuilder) writeFilterIntoLog(file *os.File, filter []LogFilter,
 
 			if filter[filterLine].Label == "" {
 				continue
-			}
-
-			if makeLabel == true {
-				_, err = file.Write([]byte(filter[filterLine].Label))
-				if err != nil {
-					log.Printf("writeContainerLogToFile().error: %v", err.Error())
-					util.TraceToLog()
-					return
-				}
-
-				_, err = file.Write([]byte("\t"))
-				if err != nil {
-					log.Printf("writeContainerLogToFile().error: %v", err.Error())
-					util.TraceToLog()
-					return
-				}
 			}
 
 			if bytes.Contains((*lineList)[logLine], []byte(filter[filterLine].Match)) == true {
@@ -64,23 +49,70 @@ func (e *ContainerBuilder) writeFilterIntoLog(file *os.File, filter []LogFilter,
 					toFile = re.ReplaceAll(toFile, []byte(filter[filterLine].Replace))
 				}
 
-				if makeLabel == false {
-					_, err = file.Write(toFile)
-					if err != nil {
-						log.Printf("writeContainerLogToFile().error: %v", err.Error())
-						util.TraceToLog()
-						return
-					}
+				lineToFile = append(lineToFile, toFile...)
+				lineToFile = append(lineToFile, []byte(e.csvValueSeparator)...)
 
-					_, err = file.Write([]byte("\t"))
-					if err != nil {
-						log.Printf("writeContainerLogToFile().error: %v", err.Error())
-						util.TraceToLog()
-						return
-					}
-				}
+				tab = e.rowsToPrint&KFilterLogComa != 0
 			}
 		}
+	}
+
+	lineToFile = bytes.TrimSuffix(lineToFile, []byte(e.csvValueSeparator))
+	_, err = file.Write(lineToFile)
+	if err != nil {
+		log.Printf("writeContainerLogToFile().error: %v", err.Error())
+		util.TraceToLog()
+		return
+	}
+
+	return
+}
+
+func (e *ContainerBuilder) writeLabelFilterIntoLog(file *os.File, filter []LogFilter) (tab bool, err error) {
+	var lineToFile = make([]byte, 0)
+
+	for filterLine := 0; filterLine != len(filter); filterLine += 1 {
+		if filter[filterLine].Label == "" {
+			continue
+		}
+
+		lineToFile = append(lineToFile, []byte(filter[filterLine].Label)...)
+		lineToFile = append(lineToFile, []byte(e.csvValueSeparator)...)
+
+		tab = e.rowsToPrint&KFilterLogComa != 0
+	}
+
+	lineToFile = bytes.TrimSuffix(lineToFile, []byte(e.csvValueSeparator))
+	_, err = file.Write(lineToFile)
+	if err != nil {
+		log.Printf("writeContainerLogToFile().error: %v", err.Error())
+		util.TraceToLog()
+		return
+	}
+
+	return
+}
+
+func (e *ContainerBuilder) writeConstFilterIntoLog(file *os.File, filter []LogFilter) (tab bool, err error) {
+	var lineToFile = make([]byte, 0)
+
+	for filterLine := 0; filterLine != len(filter); filterLine += 1 {
+		if filter[filterLine].Label == "" {
+			continue
+		}
+
+		lineToFile = append(lineToFile, []byte("")...)
+		lineToFile = append(lineToFile, []byte(e.csvValueSeparator)...)
+
+		tab = e.rowsToPrint&KFilterLogComa != 0
+	}
+
+	lineToFile = bytes.TrimSuffix(lineToFile, []byte(e.csvValueSeparator))
+	_, err = file.Write(lineToFile)
+	if err != nil {
+		log.Printf("writeContainerLogToFile().error: %v", err.Error())
+		util.TraceToLog()
+		return
 	}
 
 	return

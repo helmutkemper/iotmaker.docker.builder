@@ -35,13 +35,13 @@ type chaos struct {
 	enableChaos                bool
 	event                      chan Event
 	monitorStop                chan struct{}
-	//containerStarted          bool
+	//containerStarted         bool
 	containerPaused          bool
 	containerStopped         bool
 	linear                   bool
 	chaosStarted             bool
 	chaosCanRestartContainer bool
-	//chaosCanRestartEnd        bool
+	//chaosCanRestartEnd       bool
 	eventNext time.Time
 }
 
@@ -51,8 +51,11 @@ type chaos struct {
 //
 // Português: Gerenciador de containers e imagens docker
 type ContainerBuilder struct {
+	csvValueSeparator       string
+	csvRowSeparator         string
+	csvConstHeader          bool
 	logCpus                 int
-	logFlags                int64
+	rowsToPrint             int64
 	chaos                   chaos
 	enableCache             bool
 	network                 isolatedNetwork.ContainerBuilderNetworkInterface

@@ -3,107 +3,15 @@ package iotmakerdockerbuilder
 import (
 	"github.com/docker/docker/api/types"
 	"github.com/helmutkemper/util"
-	"io/fs"
 	"log"
 	"os"
 )
 
-// writeContainerLogToFile
-//
-// Português: Escreve um arquivo csv com dados capturados da saída padrão do container e dados estatísticos do container
-func (e *ContainerBuilder) writeContainerLogToFile(path string, lineList [][]byte) (err error) {
-	if path == "" {
-		return
-	}
-
-	if lineList == nil {
-		return
-	}
-
-	var makeLabel = false
-	_, err = os.Stat(path)
-	if err != nil {
-		makeLabel = true
-	}
-
-	var file *os.File
-	file, err = os.OpenFile(path, os.O_CREATE|os.O_APPEND|os.O_WRONLY, fs.ModePerm)
-	if err != nil {
-		log.Printf("writeContainerLogToFile().error: %v", err.Error())
-		util.TraceToLog()
-		return
-	}
-
-	defer func(file *os.File) {
-		err := file.Close()
-		if err != nil {
-			log.Printf("writeContainerLogToFile().error: %v", err.Error())
-			util.TraceToLog()
-		}
-	}(file)
-
-	var stats = types.Stats{}
-	stats, err = e.ContainerStatisticsOneShot()
-	if err != nil {
-		log.Printf("writeContainerLogToFile().error: %v", err.Error())
-		util.TraceToLog()
-		return
-	}
-
-	if makeLabel == true && e.csvConstHeader == true {
-		err = e.writeContainerConstToFile(file, &stats)
-		if err != nil {
-			log.Printf("writeContainerLogToFile().error: %v", err.Error())
-			util.TraceToLog()
-			return
-		}
-
-		_, err = file.Write([]byte(e.csvRowSeparator))
-		if err != nil {
-			log.Printf("writeContainerLogToFile().error: %v", err.Error())
-			util.TraceToLog()
-			return
-		}
-	}
-
-	if makeLabel == true {
-		err = e.writeContainerLabelToFile(file, &stats)
-		if err != nil {
-			log.Printf("writeContainerLogToFile().error: %v", err.Error())
-			util.TraceToLog()
-			return
-		}
-
-		_, err = file.Write([]byte(e.csvRowSeparator))
-		if err != nil {
-			log.Printf("writeContainerLogToFile().error: %v", err.Error())
-			util.TraceToLog()
-			return
-		}
-	}
-
-	err = e.writeContainerStatsToFile(file, &stats, &lineList)
-	if err != nil {
-		log.Printf("writeContainerLogToFile().error: %v", err.Error())
-		util.TraceToLog()
-		return
-	}
-
-	_, err = file.Write([]byte(e.csvRowSeparator))
-	if err != nil {
-		log.Printf("writeContainerLogToFile().error: %v", err.Error())
-		util.TraceToLog()
-		return
-	}
-
-	return
-}
-
-func (e *ContainerBuilder) writeContainerStatsToFile(file *os.File, stats *types.Stats, lineList *[][]byte) (err error) {
+func (e *ContainerBuilder) writeContainerLabelToFile(file *os.File, stats *types.Stats) (err error) {
 	var tab bool
 
 	// time ok
-	tab, err = e.writeReadingTime(file, stats)
+	tab, err = e.writeLabelReadingTime(file)
 	if err != nil {
 		log.Printf("writeContainerLogToFile().error: %v", err.Error())
 		util.TraceToLog()
@@ -126,7 +34,7 @@ func (e *ContainerBuilder) writeContainerStatsToFile(file *os.File, stats *types
 		}
 	}
 
-	tab, err = e.writeFilterIntoLog(file, e.chaos.filterLog, lineList)
+	tab, err = e.writeLabelFilterIntoLog(file, e.chaos.filterLog)
 	if err != nil {
 		log.Printf("writeContainerLogToFile().error: %v", err.Error())
 		util.TraceToLog()
@@ -142,7 +50,7 @@ func (e *ContainerBuilder) writeContainerStatsToFile(file *os.File, stats *types
 		}
 	}
 
-	tab, err = e.writeCurrentNumberOfOidsInTheCGroup(file, stats)
+	tab, err = e.writeLabelCurrentNumberOfOidsInTheCGroup(file)
 	if err != nil {
 		log.Printf("writeContainerLogToFile().error: %v", err.Error())
 		util.TraceToLog()
@@ -158,7 +66,7 @@ func (e *ContainerBuilder) writeContainerStatsToFile(file *os.File, stats *types
 		}
 	}
 
-	tab, err = e.writeLimitOnTheNumberOfPidsInTheCGroup(file, stats)
+	tab, err = e.writeLabelLimitOnTheNumberOfPidsInTheCGroup(file)
 	if err != nil {
 		log.Printf("writeContainerLogToFile().error: %v", err.Error())
 		util.TraceToLog()
@@ -174,7 +82,7 @@ func (e *ContainerBuilder) writeContainerStatsToFile(file *os.File, stats *types
 		}
 	}
 
-	tab, err = e.writeTotalCPUTimeConsumed(file, stats)
+	tab, err = e.writeLabelTotalCPUTimeConsumed(file)
 	if err != nil {
 		log.Printf("writeContainerLogToFile().error: %v", err.Error())
 		util.TraceToLog()
@@ -194,7 +102,7 @@ func (e *ContainerBuilder) writeContainerStatsToFile(file *os.File, stats *types
 		e.logCpus = len(stats.CPUStats.CPUUsage.PercpuUsage)
 	}
 
-	tab, err = e.writeTotalCPUTimeConsumedPerCore(file, stats)
+	tab, err = e.writeLabelTotalCPUTimeConsumedPerCore(file)
 	if err != nil {
 		log.Printf("writeContainerLogToFile().error: %v", err.Error())
 		util.TraceToLog()
@@ -210,7 +118,7 @@ func (e *ContainerBuilder) writeContainerStatsToFile(file *os.File, stats *types
 		}
 	}
 
-	tab, err = e.writeTimeSpentByTasksOfTheCGroupInKernelMode(file, stats)
+	tab, err = e.writeLabelTimeSpentByTasksOfTheCGroupInKernelMode(file)
 	if err != nil {
 		log.Printf("writeContainerLogToFile().error: %v", err.Error())
 		util.TraceToLog()
@@ -226,7 +134,7 @@ func (e *ContainerBuilder) writeContainerStatsToFile(file *os.File, stats *types
 		}
 	}
 
-	tab, err = e.writeTimeSpentByTasksOfTheCGroupInUserMode(file, stats)
+	tab, err = e.writeLabelTimeSpentByTasksOfTheCGroupInUserMode(file)
 	if err != nil {
 		log.Printf("writeContainerLogToFile().error: %v", err.Error())
 		util.TraceToLog()
@@ -242,7 +150,7 @@ func (e *ContainerBuilder) writeContainerStatsToFile(file *os.File, stats *types
 		}
 	}
 
-	tab, err = e.writeSystemUsage(file, stats)
+	tab, err = e.writeLabelSystemUsage(file)
 	if err != nil {
 		log.Printf("writeContainerLogToFile().error: %v", err.Error())
 		util.TraceToLog()
@@ -258,7 +166,7 @@ func (e *ContainerBuilder) writeContainerStatsToFile(file *os.File, stats *types
 		}
 	}
 
-	tab, err = e.writeOnlineCPUs(file, stats)
+	tab, err = e.writeLabelOnlineCPUs(file)
 	if err != nil {
 		log.Printf("writeContainerLogToFile().error: %v", err.Error())
 		util.TraceToLog()
@@ -274,7 +182,7 @@ func (e *ContainerBuilder) writeContainerStatsToFile(file *os.File, stats *types
 		}
 	}
 
-	tab, err = e.writeNumberOfPeriodsWithThrottlingActive(file, stats)
+	tab, err = e.writeLabelNumberOfPeriodsWithThrottlingActive(file)
 	if err != nil {
 		log.Printf("writeContainerLogToFile().error: %v", err.Error())
 		util.TraceToLog()
@@ -290,7 +198,7 @@ func (e *ContainerBuilder) writeContainerStatsToFile(file *os.File, stats *types
 		}
 	}
 
-	tab, err = e.writeNumberOfPeriodsWhenTheContainerHitsItsThrottlingLimit(file, stats)
+	tab, err = e.writeLabelNumberOfPeriodsWhenTheContainerHitsItsThrottlingLimit(file)
 	if err != nil {
 		log.Printf("writeContainerLogToFile().error: %v", err.Error())
 		util.TraceToLog()
@@ -306,7 +214,7 @@ func (e *ContainerBuilder) writeContainerStatsToFile(file *os.File, stats *types
 		}
 	}
 
-	tab, err = e.writeAggregateTimeTheContainerWasThrottledForInNanoseconds(file, stats)
+	tab, err = e.writeLabelAggregateTimeTheContainerWasThrottledForInNanoseconds(file)
 	if err != nil {
 		log.Printf("writeContainerLogToFile().error: %v", err.Error())
 		util.TraceToLog()
@@ -322,7 +230,7 @@ func (e *ContainerBuilder) writeContainerStatsToFile(file *os.File, stats *types
 		}
 	}
 
-	tab, err = e.writeTotalPreCPUTimeConsumed(file, stats)
+	tab, err = e.writeLabelTotalPreCPUTimeConsumed(file)
 	if err != nil {
 		log.Printf("writeContainerLogToFile().error: %v", err.Error())
 		util.TraceToLog()
@@ -338,7 +246,7 @@ func (e *ContainerBuilder) writeContainerStatsToFile(file *os.File, stats *types
 		}
 	}
 
-	tab, err = e.writeTotalPreCPUTimeConsumedPerCore(file, stats)
+	tab, err = e.writeLabelTotalPreCPUTimeConsumedPerCore(file)
 	if err != nil {
 		log.Printf("writeContainerLogToFile().error: %v", err.Error())
 		util.TraceToLog()
@@ -354,7 +262,7 @@ func (e *ContainerBuilder) writeContainerStatsToFile(file *os.File, stats *types
 		}
 	}
 
-	tab, err = e.writeTimeSpentByPreCPUTasksOfTheCGroupInKernelMode(file, stats)
+	tab, err = e.writeLabelTimeSpentByPreCPUTasksOfTheCGroupInKernelMode(file)
 	if err != nil {
 		log.Printf("writeContainerLogToFile().error: %v", err.Error())
 		util.TraceToLog()
@@ -370,7 +278,7 @@ func (e *ContainerBuilder) writeContainerStatsToFile(file *os.File, stats *types
 		}
 	}
 
-	tab, err = e.writeTimeSpentByPreCPUTasksOfTheCGroupInUserMode(file, stats)
+	tab, err = e.writeLabelTimeSpentByPreCPUTasksOfTheCGroupInUserMode(file)
 	if err != nil {
 		log.Printf("writeContainerLogToFile().error: %v", err.Error())
 		util.TraceToLog()
@@ -386,7 +294,7 @@ func (e *ContainerBuilder) writeContainerStatsToFile(file *os.File, stats *types
 		}
 	}
 
-	tab, err = e.writePreCPUSystemUsage(file, stats)
+	tab, err = e.writeLabelPreCPUSystemUsage(file)
 	if err != nil {
 		log.Printf("writeContainerLogToFile().error: %v", err.Error())
 		util.TraceToLog()
@@ -402,7 +310,7 @@ func (e *ContainerBuilder) writeContainerStatsToFile(file *os.File, stats *types
 		}
 	}
 
-	tab, err = e.writeOnlinePreCPUs(file, stats)
+	tab, err = e.writeLabelOnlinePreCPUs(file)
 	if err != nil {
 		log.Printf("writeContainerLogToFile().error: %v", err.Error())
 		util.TraceToLog()
@@ -418,7 +326,7 @@ func (e *ContainerBuilder) writeContainerStatsToFile(file *os.File, stats *types
 		}
 	}
 
-	tab, err = e.writeAggregatePreCPUTimeTheContainerWasThrottled(file, stats)
+	tab, err = e.writeLabelAggregatePreCPUTimeTheContainerWasThrottled(file)
 	if err != nil {
 		log.Printf("writeContainerLogToFile().error: %v", err.Error())
 		util.TraceToLog()
@@ -434,7 +342,7 @@ func (e *ContainerBuilder) writeContainerStatsToFile(file *os.File, stats *types
 		}
 	}
 
-	tab, err = e.writeNumberOfPeriodsWithPreCPUThrottlingActive(file, stats)
+	tab, err = e.writeLabelNumberOfPeriodsWithPreCPUThrottlingActive(file)
 	if err != nil {
 		log.Printf("writeContainerLogToFile().error: %v", err.Error())
 		util.TraceToLog()
@@ -450,7 +358,7 @@ func (e *ContainerBuilder) writeContainerStatsToFile(file *os.File, stats *types
 		}
 	}
 
-	tab, err = e.writeNumberOfPeriodsWhenTheContainerPreCPUHitsItsThrottlingLimit(file, stats)
+	tab, err = e.writeLabelNumberOfPeriodsWhenTheContainerPreCPUHitsItsThrottlingLimit(file)
 	if err != nil {
 		log.Printf("writeContainerLogToFile().error: %v", err.Error())
 		util.TraceToLog()
@@ -466,7 +374,7 @@ func (e *ContainerBuilder) writeContainerStatsToFile(file *os.File, stats *types
 		}
 	}
 
-	tab, err = e.writeCurrentResCounterUsageForMemory(file, stats)
+	tab, err = e.writeLabelCurrentResCounterUsageForMemory(file)
 	if err != nil {
 		log.Printf("writeContainerLogToFile().error: %v", err.Error())
 		util.TraceToLog()
@@ -482,7 +390,7 @@ func (e *ContainerBuilder) writeContainerStatsToFile(file *os.File, stats *types
 		}
 	}
 
-	tab, err = e.writeMaximumUsageEverRecorded(file, stats)
+	tab, err = e.writeLabelMaximumUsageEverRecorded(file)
 	if err != nil {
 		log.Printf("writeContainerLogToFile().error: %v", err.Error())
 		util.TraceToLog()
@@ -498,7 +406,7 @@ func (e *ContainerBuilder) writeContainerStatsToFile(file *os.File, stats *types
 		}
 	}
 
-	tab, err = e.writeNumberOfTimesMemoryUsageHitsLimits(file, stats)
+	tab, err = e.writeLabelNumberOfTimesMemoryUsageHitsLimits(file)
 	if err != nil {
 		log.Printf("writeContainerLogToFile().error: %v", err.Error())
 		util.TraceToLog()
@@ -514,7 +422,7 @@ func (e *ContainerBuilder) writeContainerStatsToFile(file *os.File, stats *types
 		}
 	}
 
-	tab, err = e.writeMemoryLimit(file, stats)
+	tab, err = e.writeLabelMemoryLimit(file)
 	if err != nil {
 		log.Printf("writeContainerLogToFile().error: %v", err.Error())
 		util.TraceToLog()
@@ -530,7 +438,7 @@ func (e *ContainerBuilder) writeContainerStatsToFile(file *os.File, stats *types
 		}
 	}
 
-	tab, err = e.writeCommittedBytes(file, stats)
+	tab, err = e.writeLabelCommittedBytes(file)
 	if err != nil {
 		log.Printf("writeContainerLogToFile().error: %v", err.Error())
 		util.TraceToLog()
@@ -546,7 +454,7 @@ func (e *ContainerBuilder) writeContainerStatsToFile(file *os.File, stats *types
 		}
 	}
 
-	tab, err = e.writePeakCommittedBytes(file, stats)
+	tab, err = e.writeLabelPeakCommittedBytes(file)
 	if err != nil {
 		log.Printf("writeContainerLogToFile().error: %v", err.Error())
 		util.TraceToLog()
@@ -562,7 +470,7 @@ func (e *ContainerBuilder) writeContainerStatsToFile(file *os.File, stats *types
 		}
 	}
 
-	tab, err = e.writePrivateWorkingSet(file, stats)
+	tab, err = e.writeLabelPrivateWorkingSet(file)
 	if err != nil {
 		log.Printf("writeContainerLogToFile().error: %v", err.Error())
 		util.TraceToLog()
@@ -578,7 +486,7 @@ func (e *ContainerBuilder) writeContainerStatsToFile(file *os.File, stats *types
 		}
 	}
 
-	tab, err = e.writeBlkioIoServiceBytesRecursive(file, stats)
+	tab, err = e.writeLabelBlkioIoServiceBytesRecursive(file, stats)
 	if err != nil {
 		log.Printf("writeContainerLogToFile().error: %v", err.Error())
 		util.TraceToLog()
@@ -594,7 +502,7 @@ func (e *ContainerBuilder) writeContainerStatsToFile(file *os.File, stats *types
 		}
 	}
 
-	tab, err = e.writeBlkioIoServicedRecursive(file, stats)
+	tab, err = e.writeLabelBlkioIoServicedRecursive(file, stats)
 	if err != nil {
 		log.Printf("writeContainerLogToFile().error: %v", err.Error())
 		util.TraceToLog()
@@ -610,7 +518,7 @@ func (e *ContainerBuilder) writeContainerStatsToFile(file *os.File, stats *types
 		}
 	}
 
-	tab, err = e.writeBlkioIoQueuedRecursive(file, stats)
+	tab, err = e.writeLabelBlkioIoQueuedRecursive(file, stats)
 	if err != nil {
 		log.Printf("writeContainerLogToFile().error: %v", err.Error())
 		util.TraceToLog()
@@ -626,7 +534,7 @@ func (e *ContainerBuilder) writeContainerStatsToFile(file *os.File, stats *types
 		}
 	}
 
-	tab, err = e.writeBlkioIoServiceTimeRecursive(file, stats)
+	tab, err = e.writeLabelBlkioIoServiceTimeRecursive(file, stats)
 	if err != nil {
 		log.Printf("writeContainerLogToFile().error: %v", err.Error())
 		util.TraceToLog()
@@ -642,7 +550,7 @@ func (e *ContainerBuilder) writeContainerStatsToFile(file *os.File, stats *types
 		}
 	}
 
-	tab, err = e.writeBlkioIoWaitTimeRecursive(file, stats)
+	tab, err = e.writeLabelBlkioIoWaitTimeRecursive(file, stats)
 	if err != nil {
 		log.Printf("writeContainerLogToFile().error: %v", err.Error())
 		util.TraceToLog()
@@ -658,7 +566,7 @@ func (e *ContainerBuilder) writeContainerStatsToFile(file *os.File, stats *types
 		}
 	}
 
-	tab, err = e.writeBlkioIoMergedRecursive(file, stats)
+	tab, err = e.writeLabelBlkioIoMergedRecursive(file, stats)
 	if err != nil {
 		log.Printf("writeContainerLogToFile().error: %v", err.Error())
 		util.TraceToLog()
@@ -674,7 +582,7 @@ func (e *ContainerBuilder) writeContainerStatsToFile(file *os.File, stats *types
 		}
 	}
 
-	tab, err = e.writeBlkioIoTimeRecursive(file, stats)
+	tab, err = e.writeLabelBlkioIoTimeRecursive(file, stats)
 	if err != nil {
 		log.Printf("writeContainerLogToFile().error: %v", err.Error())
 		util.TraceToLog()
@@ -690,7 +598,7 @@ func (e *ContainerBuilder) writeContainerStatsToFile(file *os.File, stats *types
 		}
 	}
 
-	_, err = e.writeBlkioSectorsRecursive(file, stats)
+	_, err = e.writeLabelBlkioSectorsRecursive(file, stats)
 	if err != nil {
 		log.Printf("writeContainerLogToFile().error: %v", err.Error())
 		util.TraceToLog()

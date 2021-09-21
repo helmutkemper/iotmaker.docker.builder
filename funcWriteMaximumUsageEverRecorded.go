@@ -8,16 +8,9 @@ import (
 	"os"
 )
 
-func (e *ContainerBuilder) writeMaximumUsageEverRecorded(file *os.File, stats *types.Stats, makeLabel bool) (err error) {
+func (e *ContainerBuilder) writeMaximumUsageEverRecorded(file *os.File, stats *types.Stats) (tab bool, err error) {
 	// maximum usage ever recorded.
-	if makeLabel == true && e.logFlags&KMaximumUsageEverRecorded == KMaximumUsageEverRecorded {
-		_, err = file.Write([]byte("Maximum usage ever recorded.\t"))
-		if err != nil {
-			log.Printf("writeContainerLogToFile().error: %v", err.Error())
-			util.TraceToLog()
-			return
-		}
-	} else if e.logFlags&KMaximumUsageEverRecorded == KMaximumUsageEverRecorded {
+	if e.rowsToPrint&KMaximumUsageEverRecorded == KMaximumUsageEverRecorded {
 		_, err = file.Write([]byte(fmt.Sprintf("%v", stats.MemoryStats.MaxUsage)))
 		if err != nil {
 			log.Printf("writeContainerLogToFile().error: %v", err.Error())
@@ -25,12 +18,39 @@ func (e *ContainerBuilder) writeMaximumUsageEverRecorded(file *os.File, stats *t
 			return
 		}
 
-		_, err = file.Write([]byte("\t"))
+		tab = e.rowsToPrint&KMaximumUsageEverRecordedComa != 0
+	}
+
+	return
+}
+
+func (e *ContainerBuilder) writeLabelMaximumUsageEverRecorded(file *os.File) (tab bool, err error) {
+	// maximum usage ever recorded.
+	if e.rowsToPrint&KMaximumUsageEverRecorded == KMaximumUsageEverRecorded {
+		_, err = file.Write([]byte("Maximum usage ever recorded."))
 		if err != nil {
 			log.Printf("writeContainerLogToFile().error: %v", err.Error())
 			util.TraceToLog()
 			return
 		}
+
+		tab = e.rowsToPrint&KMaximumUsageEverRecordedComa != 0
+	}
+
+	return
+}
+
+func (e *ContainerBuilder) writeConstMaximumUsageEverRecorded(file *os.File) (tab bool, err error) {
+	// maximum usage ever recorded.
+	if e.rowsToPrint&KMaximumUsageEverRecorded == KMaximumUsageEverRecorded {
+		_, err = file.Write([]byte("KMaximumUsageEverRecorded"))
+		if err != nil {
+			log.Printf("writeContainerLogToFile().error: %v", err.Error())
+			util.TraceToLog()
+			return
+		}
+
+		tab = e.rowsToPrint&KMaximumUsageEverRecordedComa != 0
 	}
 
 	return

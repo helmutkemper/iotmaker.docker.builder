@@ -8,16 +8,9 @@ import (
 	"os"
 )
 
-func (e *ContainerBuilder) writeCommittedBytes(file *os.File, stats *types.Stats, makeLabel bool) (err error) {
+func (e *ContainerBuilder) writeCommittedBytes(file *os.File, stats *types.Stats) (tab bool, err error) {
 	// committed bytes
-	if makeLabel == true && e.logFlags&KCommittedBytes == KCommittedBytes {
-		_, err = file.Write([]byte("Committed bytes\t"))
-		if err != nil {
-			log.Printf("writeContainerLogToFile().error: %v", err.Error())
-			util.TraceToLog()
-			return
-		}
-	} else if e.logFlags&KCommittedBytes == KCommittedBytes {
+	if e.rowsToPrint&KCommittedBytes == KCommittedBytes {
 		_, err = file.Write([]byte(fmt.Sprintf("%v", stats.MemoryStats.Commit)))
 		if err != nil {
 			log.Printf("writeContainerLogToFile().error: %v", err.Error())
@@ -25,12 +18,39 @@ func (e *ContainerBuilder) writeCommittedBytes(file *os.File, stats *types.Stats
 			return
 		}
 
-		_, err = file.Write([]byte("\t"))
+		tab = e.rowsToPrint&KCommittedBytesComa != 0
+	}
+
+	return
+}
+
+func (e *ContainerBuilder) writeLabelCommittedBytes(file *os.File) (tab bool, err error) {
+	// committed bytes
+	if e.rowsToPrint&KCommittedBytes == KCommittedBytes {
+		_, err = file.Write([]byte("Committed bytes"))
 		if err != nil {
 			log.Printf("writeContainerLogToFile().error: %v", err.Error())
 			util.TraceToLog()
 			return
 		}
+
+		tab = e.rowsToPrint&KCommittedBytesComa != 0
+	}
+
+	return
+}
+
+func (e *ContainerBuilder) writeConstCommittedBytes(file *os.File) (tab bool, err error) {
+	// committed bytes
+	if e.rowsToPrint&KCommittedBytes == KCommittedBytes {
+		_, err = file.Write([]byte("KCommittedBytes"))
+		if err != nil {
+			log.Printf("writeContainerLogToFile().error: %v", err.Error())
+			util.TraceToLog()
+			return
+		}
+
+		tab = e.rowsToPrint&KCommittedBytesComa != 0
 	}
 
 	return

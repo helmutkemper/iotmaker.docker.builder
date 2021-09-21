@@ -8,17 +8,8 @@ import (
 	"os"
 )
 
-func (e *ContainerBuilder) writeTotalPreCPUTimeConsumedPerCore(file *os.File, stats *types.Stats, makeLabel bool) (err error) {
-	if makeLabel == true && e.logFlags&KTotalPreCPUTimeConsumedPerCore == KTotalPreCPUTimeConsumedPerCore {
-		for cpuNumber := 0; cpuNumber != e.logCpus; cpuNumber += 1 {
-			_, err = file.Write([]byte(fmt.Sprintf("Total CPU time consumed per core (Units: nanoseconds on Linux). Not used on Windows. CPU: %v\t", cpuNumber)))
-			if err != nil {
-				log.Printf("writeContainerLogToFile().error: %v", err.Error())
-				util.TraceToLog()
-				return
-			}
-		}
-	} else if e.logFlags&KTotalPreCPUTimeConsumedPerCore == KTotalPreCPUTimeConsumedPerCore {
+func (e *ContainerBuilder) writeTotalPreCPUTimeConsumedPerCore(file *os.File, stats *types.Stats) (tab bool, err error) {
+	if e.rowsToPrint&KTotalPreCPUTimeConsumedPerCore == KTotalPreCPUTimeConsumedPerCore {
 		// CPU Usage. Linux and Windows.
 		// Total CPU time consumed per core (Linux). Not used on Windows.
 		// Units: nanoseconds.
@@ -31,30 +22,36 @@ func (e *ContainerBuilder) writeTotalPreCPUTimeConsumedPerCore(file *os.File, st
 					return
 				}
 
-				_, err = file.Write([]byte("\t"))
+				if i != e.logCpus-1 {
+					_, err = file.Write([]byte(e.csvValueSeparator))
+					if err != nil {
+						log.Printf("writeContainerLogToFile().error: %v", err.Error())
+						util.TraceToLog()
+						return
+					}
+				}
+			}
+		} else {
+			for i, cpuTime := range stats.PreCPUStats.CPUUsage.PercpuUsage {
+				_, err = file.Write([]byte(fmt.Sprintf("%v", cpuTime)))
 				if err != nil {
 					log.Printf("writeContainerLogToFile().error: %v", err.Error())
 					util.TraceToLog()
 					return
 				}
+
+				if i != e.logCpus-1 {
+					_, err = file.Write([]byte(e.csvValueSeparator))
+					if err != nil {
+						log.Printf("writeContainerLogToFile().error: %v", err.Error())
+						util.TraceToLog()
+						return
+					}
+				}
 			}
 		}
 
-		for _, cpuTime := range stats.PreCPUStats.CPUUsage.PercpuUsage {
-			_, err = file.Write([]byte(fmt.Sprintf("%v", cpuTime)))
-			if err != nil {
-				log.Printf("writeContainerLogToFile().error: %v", err.Error())
-				util.TraceToLog()
-				return
-			}
-
-			_, err = file.Write([]byte("\t"))
-			if err != nil {
-				log.Printf("writeContainerLogToFile().error: %v", err.Error())
-				util.TraceToLog()
-				return
-			}
-		}
+		tab = e.rowsToPrint&KTotalPreCPUTimeConsumedPerCoreComa != 0
 	}
 
 	return

@@ -67,7 +67,7 @@ func ExampleContainerBuilder_AddFilterToLog() {
 		// English: Regular expression used for search and replacement in the text found in the previous step [optional].
 		// Português: Expressão regular usada para busca e substituição no texto encontrado na etapa anterior [opcional].
 		"\\.",
-		",",
+		":",
 	)
 
 	// English: Adds a filter to look for a value in the container's standard output indicating the success of the test.

@@ -17,13 +17,23 @@ func (e *ContainerBuilder) Init() (err error) {
 	e.init = true
 
 	var osName = runtime.GOOS
-	if e.logFlags == 0 && osName == "darwin" {
-		e.logFlags = KMacOsLog
-	} else if e.logFlags == 0 {
-		e.logFlags = KAll
+	if e.rowsToPrint == 0 && osName == "darwin" {
+		e.rowsToPrint = KMacOsLog
+	} else if e.rowsToPrint == 0 {
+		e.rowsToPrint = KAll
 	}
 
 	e.chaos.event = make(chan Event, 1)
+
+	if e.csvValueSeparator == "" {
+		e.csvValueSeparator = ","
+	}
+
+	if e.csvRowSeparator == "" {
+		e.csvRowSeparator = "\n"
+	}
+
+	e.csvConstHeader = true //todo: apagar
 
 	if e.imageCacheName == "" {
 		e.imageCacheName = "cache:latest"

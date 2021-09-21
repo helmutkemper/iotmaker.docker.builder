@@ -8,20 +8,13 @@ import (
 	"os"
 )
 
-func (e *ContainerBuilder) writeTimeSpentByPreCPUTasksOfTheCGroupInKernelMode(file *os.File, stats *types.Stats, makeLabel bool) (err error) {
+func (e *ContainerBuilder) writeTimeSpentByPreCPUTasksOfTheCGroupInKernelMode(file *os.File, stats *types.Stats) (tab bool, err error) {
 	// CPU Usage. Linux and Windows.
 	// Time spent by tasks of the cgroup in kernel mode (Linux).
 	// Time spent by all container processes in kernel mode (Windows).
 	// Units: nanoseconds (Linux).
 	// Units: 100's of nanoseconds (Windows). Not populated for Hyper-V Containers.
-	if makeLabel == true && e.logFlags&KTimeSpentByPreCPUTasksOfTheCGroupInKernelMode == KTimeSpentByPreCPUTasksOfTheCGroupInKernelMode {
-		_, err = file.Write([]byte("Time spent by tasks of the cgroup in kernel mode (Units: nanoseconds on Linux) - Time spent by all container processes in kernel mode (Units: 100's of nanoseconds on Windows - Not populated for Hyper-V Containers.)\t"))
-		if err != nil {
-			log.Printf("writeContainerLogToFile().error: %v", err.Error())
-			util.TraceToLog()
-			return
-		}
-	} else if e.logFlags&KTimeSpentByPreCPUTasksOfTheCGroupInKernelMode == KTimeSpentByPreCPUTasksOfTheCGroupInKernelMode {
+	if e.rowsToPrint&KTimeSpentByPreCPUTasksOfTheCGroupInKernelMode == KTimeSpentByPreCPUTasksOfTheCGroupInKernelMode {
 		_, err = file.Write([]byte(fmt.Sprintf("%v", stats.PreCPUStats.CPUUsage.UsageInKernelmode)))
 		if err != nil {
 			log.Printf("writeContainerLogToFile().error: %v", err.Error())
@@ -29,12 +22,47 @@ func (e *ContainerBuilder) writeTimeSpentByPreCPUTasksOfTheCGroupInKernelMode(fi
 			return
 		}
 
-		_, err = file.Write([]byte("\t"))
+		tab = e.rowsToPrint&KTimeSpentByPreCPUTasksOfTheCGroupInKernelModeComa != 0
+	}
+
+	return
+}
+
+func (e *ContainerBuilder) writeLabelTimeSpentByPreCPUTasksOfTheCGroupInKernelMode(file *os.File) (tab bool, err error) {
+	// CPU Usage. Linux and Windows.
+	// Time spent by tasks of the cgroup in kernel mode (Linux).
+	// Time spent by all container processes in kernel mode (Windows).
+	// Units: nanoseconds (Linux).
+	// Units: 100's of nanoseconds (Windows). Not populated for Hyper-V Containers.
+	if e.rowsToPrint&KTimeSpentByPreCPUTasksOfTheCGroupInKernelMode == KTimeSpentByPreCPUTasksOfTheCGroupInKernelMode {
+		_, err = file.Write([]byte("Time spent by tasks of the cgroup in kernel mode (Units: nanoseconds on Linux) - Time spent by all container processes in kernel mode (Units: 100's of nanoseconds on Windows - Not populated for Hyper-V Containers.)"))
 		if err != nil {
 			log.Printf("writeContainerLogToFile().error: %v", err.Error())
 			util.TraceToLog()
 			return
 		}
+
+		tab = e.rowsToPrint&KTimeSpentByPreCPUTasksOfTheCGroupInKernelModeComa != 0
+	}
+
+	return
+}
+
+func (e *ContainerBuilder) writeConstTimeSpentByPreCPUTasksOfTheCGroupInKernelMode(file *os.File) (tab bool, err error) {
+	// CPU Usage. Linux and Windows.
+	// Time spent by tasks of the cgroup in kernel mode (Linux).
+	// Time spent by all container processes in kernel mode (Windows).
+	// Units: nanoseconds (Linux).
+	// Units: 100's of nanoseconds (Windows). Not populated for Hyper-V Containers.
+	if e.rowsToPrint&KTimeSpentByPreCPUTasksOfTheCGroupInKernelMode == KTimeSpentByPreCPUTasksOfTheCGroupInKernelMode {
+		_, err = file.Write([]byte("KTimeSpentByPreCPUTasksOfTheCGroupInKernelMode"))
+		if err != nil {
+			log.Printf("writeContainerLogToFile().error: %v", err.Error())
+			util.TraceToLog()
+			return
+		}
+
+		tab = e.rowsToPrint&KTimeSpentByPreCPUTasksOfTheCGroupInKernelModeComa != 0
 	}
 
 	return

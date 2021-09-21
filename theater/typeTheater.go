@@ -1437,7 +1437,7 @@ func (e *Theater) writeContainerLogToFile(path string, lineList [][]byte, config
 	// Linux specific stats, not populated on Windows.
 	// Current is the number of pids in the cgroup
 	if makeLabel == true && e.logFlags&KCurrentNumberOfOidsInTheCGroup == KCurrentNumberOfOidsInTheCGroup {
-		_, err = file.Write([]byte("Linux specific stats, not populated on Windows. Current is the number of pids in the cgroup\t"))
+		_, err = file.Write([]byte("Linux specific stats. Not populated on Windows. Current is the number of pids in the cgroup\t"))
 		if err != nil {
 			util.TraceToLog()
 			return

@@ -8,15 +8,8 @@ import (
 	"os"
 )
 
-func (e *ContainerBuilder) writeMemoryLimit(file *os.File, stats *types.Stats, makeLabel bool) (err error) {
-	if makeLabel == true && e.logFlags&KMemoryLimit == KMemoryLimit {
-		_, err = file.Write([]byte("Memory limit\t"))
-		if err != nil {
-			log.Printf("writeContainerLogToFile().error: %v", err.Error())
-			util.TraceToLog()
-			return
-		}
-	} else if e.logFlags&KMemoryLimit == KMemoryLimit {
+func (e *ContainerBuilder) writeMemoryLimit(file *os.File, stats *types.Stats) (tab bool, err error) {
+	if e.rowsToPrint&KMemoryLimit == KMemoryLimit {
 		_, err = file.Write([]byte(fmt.Sprintf("%v", stats.MemoryStats.Limit)))
 		if err != nil {
 			log.Printf("writeContainerLogToFile().error: %v", err.Error())
@@ -24,12 +17,37 @@ func (e *ContainerBuilder) writeMemoryLimit(file *os.File, stats *types.Stats, m
 			return
 		}
 
-		_, err = file.Write([]byte("\t"))
+		tab = e.rowsToPrint&KMemoryLimitComa != 0
+	}
+
+	return
+}
+
+func (e *ContainerBuilder) writeLabelMemoryLimit(file *os.File) (tab bool, err error) {
+	if e.rowsToPrint&KMemoryLimit == KMemoryLimit {
+		_, err = file.Write([]byte("Memory limit"))
 		if err != nil {
 			log.Printf("writeContainerLogToFile().error: %v", err.Error())
 			util.TraceToLog()
 			return
 		}
+
+		tab = e.rowsToPrint&KMemoryLimitComa != 0
+	}
+
+	return
+}
+
+func (e *ContainerBuilder) writeConstMemoryLimit(file *os.File) (tab bool, err error) {
+	if e.rowsToPrint&KMemoryLimit == KMemoryLimit {
+		_, err = file.Write([]byte("KMemoryLimit"))
+		if err != nil {
+			log.Printf("writeContainerLogToFile().error: %v", err.Error())
+			util.TraceToLog()
+			return
+		}
+
+		tab = e.rowsToPrint&KMemoryLimitComa != 0
 	}
 
 	return
