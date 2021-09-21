@@ -477,7 +477,25 @@ func (e *ContainerBuilder) writeContainerLabelToFile(file *os.File, stats *types
 		return
 	}
 
-	if tab == true {
+	flagIoServiceBytesRecursive := len(stats.BlkioStats.IoServiceBytesRecursive) != 0
+	flagIoServicedRecursive := len(stats.BlkioStats.IoServicedRecursive) != 0
+	flagIoQueuedRecursive := len(stats.BlkioStats.IoQueuedRecursive) != 0
+	flagIoServiceTimeRecursive := len(stats.BlkioStats.IoServiceTimeRecursive) != 0
+	flagIoWaitTimeRecursive := len(stats.BlkioStats.IoWaitTimeRecursive) != 0
+	flagIoMergedRecursive := len(stats.BlkioStats.IoMergedRecursive) != 0
+	flagIoTimeRecursive := len(stats.BlkioStats.IoTimeRecursive) != 0
+	flagSectorsRecursive := len(stats.BlkioStats.SectorsRecursive) != 0
+
+	condensedFlagIoServiceBytesRecursive := flagIoServiceBytesRecursive || flagIoServicedRecursive || flagIoQueuedRecursive || flagIoServiceTimeRecursive || flagIoWaitTimeRecursive || flagIoMergedRecursive || flagIoTimeRecursive || flagSectorsRecursive
+	condensedFlagIoServicedRecursive := flagIoServicedRecursive || flagIoQueuedRecursive || flagIoServiceTimeRecursive || flagIoWaitTimeRecursive || flagIoMergedRecursive || flagIoTimeRecursive || flagSectorsRecursive
+	condensedFlagIoQueuedRecursive := flagIoQueuedRecursive || flagIoServiceTimeRecursive || flagIoWaitTimeRecursive || flagIoMergedRecursive || flagIoTimeRecursive || flagSectorsRecursive
+	condensedFlagIoServiceTimeRecursive := flagIoServiceTimeRecursive || flagIoWaitTimeRecursive || flagIoMergedRecursive || flagIoTimeRecursive || flagSectorsRecursive
+	condensedFlagIoWaitTimeRecursive := flagIoWaitTimeRecursive || flagIoMergedRecursive || flagIoTimeRecursive || flagSectorsRecursive
+	condensedFlagIoMergedRecursive := flagIoMergedRecursive || flagIoTimeRecursive || flagSectorsRecursive
+	condensedFlagIoTimeRecursive := flagIoTimeRecursive || flagSectorsRecursive
+	condensedFlagSectorsRecursive := flagSectorsRecursive
+
+	if tab == true && condensedFlagIoServiceBytesRecursive == true {
 		_, err = file.Write([]byte(e.csvValueSeparator))
 		if err != nil {
 			log.Printf("writeContainerLogToFile().error: %v", err.Error())
@@ -493,7 +511,7 @@ func (e *ContainerBuilder) writeContainerLabelToFile(file *os.File, stats *types
 		return
 	}
 
-	if tab == true {
+	if tab == true && condensedFlagIoServicedRecursive == true {
 		_, err = file.Write([]byte(e.csvValueSeparator))
 		if err != nil {
 			log.Printf("writeContainerLogToFile().error: %v", err.Error())
@@ -509,7 +527,7 @@ func (e *ContainerBuilder) writeContainerLabelToFile(file *os.File, stats *types
 		return
 	}
 
-	if tab == true {
+	if tab == true && condensedFlagIoQueuedRecursive == true {
 		_, err = file.Write([]byte(e.csvValueSeparator))
 		if err != nil {
 			log.Printf("writeContainerLogToFile().error: %v", err.Error())
@@ -525,7 +543,7 @@ func (e *ContainerBuilder) writeContainerLabelToFile(file *os.File, stats *types
 		return
 	}
 
-	if tab == true {
+	if tab == true && condensedFlagIoServiceTimeRecursive == true {
 		_, err = file.Write([]byte(e.csvValueSeparator))
 		if err != nil {
 			log.Printf("writeContainerLogToFile().error: %v", err.Error())
@@ -541,7 +559,7 @@ func (e *ContainerBuilder) writeContainerLabelToFile(file *os.File, stats *types
 		return
 	}
 
-	if tab == true {
+	if tab == true && condensedFlagIoWaitTimeRecursive == true {
 		_, err = file.Write([]byte(e.csvValueSeparator))
 		if err != nil {
 			log.Printf("writeContainerLogToFile().error: %v", err.Error())
@@ -557,7 +575,7 @@ func (e *ContainerBuilder) writeContainerLabelToFile(file *os.File, stats *types
 		return
 	}
 
-	if tab == true {
+	if tab == true && condensedFlagIoMergedRecursive == true {
 		_, err = file.Write([]byte(e.csvValueSeparator))
 		if err != nil {
 			log.Printf("writeContainerLogToFile().error: %v", err.Error())
@@ -573,7 +591,7 @@ func (e *ContainerBuilder) writeContainerLabelToFile(file *os.File, stats *types
 		return
 	}
 
-	if tab == true {
+	if tab == true && condensedFlagIoTimeRecursive == true {
 		_, err = file.Write([]byte(e.csvValueSeparator))
 		if err != nil {
 			log.Printf("writeContainerLogToFile().error: %v", err.Error())
@@ -589,7 +607,7 @@ func (e *ContainerBuilder) writeContainerLabelToFile(file *os.File, stats *types
 		return
 	}
 
-	if tab == true {
+	if tab == true && condensedFlagSectorsRecursive == true {
 		_, err = file.Write([]byte(e.csvValueSeparator))
 		if err != nil {
 			log.Printf("writeContainerLogToFile().error: %v", err.Error())
