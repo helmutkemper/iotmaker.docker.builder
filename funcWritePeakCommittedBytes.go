@@ -23,35 +23,3 @@ func (e *ContainerBuilder) writePeakCommittedBytes(file *os.File, stats *types.S
 
 	return
 }
-
-func (e *ContainerBuilder) writeLabelPeakCommittedBytes(file *os.File) (tab bool, err error) {
-	// peak committed bytes
-	if e.rowsToPrint&KPeakCommittedBytes == KPeakCommittedBytes {
-		_, err = file.Write([]byte("Peak committed bytes"))
-		if err != nil {
-			log.Printf("writeContainerLogToFile().error: %v", err.Error())
-			util.TraceToLog()
-			return
-		}
-
-		tab = e.rowsToPrint&KPeakCommittedBytesComa != 0
-	}
-
-	return
-}
-
-func (e *ContainerBuilder) writeConstPeakCommittedBytes(file *os.File) (tab bool, err error) {
-	// peak committed bytes
-	if e.rowsToPrint&KPeakCommittedBytes == KPeakCommittedBytes {
-		_, err = file.Write([]byte("KPeakCommittedBytes"))
-		if err != nil {
-			log.Printf("writeContainerLogToFile().error: %v", err.Error())
-			util.TraceToLog()
-			return
-		}
-
-		tab = e.rowsToPrint&KPeakCommittedBytesComa != 0
-	}
-
-	return
-}

@@ -23,35 +23,3 @@ func (e *ContainerBuilder) writeCommittedBytes(file *os.File, stats *types.Stats
 
 	return
 }
-
-func (e *ContainerBuilder) writeLabelCommittedBytes(file *os.File) (tab bool, err error) {
-	// committed bytes
-	if e.rowsToPrint&KCommittedBytes == KCommittedBytes {
-		_, err = file.Write([]byte("Committed bytes"))
-		if err != nil {
-			log.Printf("writeContainerLogToFile().error: %v", err.Error())
-			util.TraceToLog()
-			return
-		}
-
-		tab = e.rowsToPrint&KCommittedBytesComa != 0
-	}
-
-	return
-}
-
-func (e *ContainerBuilder) writeConstCommittedBytes(file *os.File) (tab bool, err error) {
-	// committed bytes
-	if e.rowsToPrint&KCommittedBytes == KCommittedBytes {
-		_, err = file.Write([]byte("KCommittedBytes"))
-		if err != nil {
-			log.Printf("writeContainerLogToFile().error: %v", err.Error())
-			util.TraceToLog()
-			return
-		}
-
-		tab = e.rowsToPrint&KCommittedBytesComa != 0
-	}
-
-	return
-}
