@@ -33,8 +33,6 @@ func TestContainerBuilder_writeTotalCPUTimeConsumed(t *testing.T) {
 		"contador",
 		"counter",
 		"^.*?counter: (?P<valueToGet>[\\d\\.]+)",
-		"",
-		"",
 	)
 	container.AddFilterToSuccess(
 		"done!",

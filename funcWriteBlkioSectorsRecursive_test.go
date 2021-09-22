@@ -33,8 +33,6 @@ func TestContainerBuilder_writeBlkioSectorsRecursive(t *testing.T) {
 		"contador",
 		"counter",
 		"^.*?counter: (?P<valueToGet>[\\d\\.]+)",
-		"",
-		"",
 	)
 	container.AddFilterToSuccess(
 		"done!",

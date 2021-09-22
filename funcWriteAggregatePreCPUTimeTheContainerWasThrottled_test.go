@@ -33,8 +33,6 @@ func TestContainerBuilder_writeAggregatePreCPUTimeTheContainerWasThrottled(t *te
 		"contador",
 		"counter",
 		"^.*?counter: (?P<valueToGet>[\\d\\.]+)",
-		"",
-		"",
 	)
 	container.AddFilterToSuccess(
 		"done!",

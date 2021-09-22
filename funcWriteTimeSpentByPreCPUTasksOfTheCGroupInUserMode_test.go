@@ -33,8 +33,6 @@ func TestContainerBuilder_writeTimeSpentByPreCPUTasksOfTheCGroupInUserMode(t *te
 		"contador",
 		"counter",
 		"^.*?counter: (?P<valueToGet>[\\d\\.]+)",
-		"",
-		"",
 	)
 	container.AddFilterToSuccess(
 		"done!",

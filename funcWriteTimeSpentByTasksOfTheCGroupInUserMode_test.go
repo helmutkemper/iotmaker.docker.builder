@@ -33,8 +33,6 @@ func TestContainerBuilder_writeTimeSpentByTasksOfTheCGroupInUserMode(t *testing.
 		"contador",
 		"counter",
 		"^.*?counter: (?P<valueToGet>[\\d\\.]+)",
-		"",
-		"",
 	)
 	container.AddFilterToSuccess(
 		"done!",

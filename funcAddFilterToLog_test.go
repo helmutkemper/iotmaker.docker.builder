@@ -51,7 +51,7 @@ func ExampleContainerBuilder_AddFilterToLog() {
 
 	// English: Adds a search filter to the standard output of the container, to save the information in the log file
 	// Português: Adiciona um filtro de busca na saída padrão do container, para salvar a informação no arquivo de log
-	container.AddFilterToLog(
+	container.AddFilterAndReplaceToLog(
 		// English: Label to be written to log file
 		// Português: Rótulo a ser escrito no arquivo de log
 		"contador",

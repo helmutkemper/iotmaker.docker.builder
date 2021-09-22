@@ -33,8 +33,6 @@ func TestContainerBuilder_AggregateTimeTheContainerWasThrottledForInNanoseconds(
 		"contador",
 		"counter",
 		"^.*?counter: (?P<valueToGet>[\\d\\.]+)",
-		"",
-		"",
 	)
 	container.AddFilterToSuccess(
 		"done!",

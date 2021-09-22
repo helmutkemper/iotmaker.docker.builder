@@ -37,7 +37,7 @@ func ExampleContainerBuilder_SetLogPath() {
 	container.SetImageBuildOptionsMemory(100 * KMegaByte)
 
 	container.SetLogPath("./test.counter.log.csv")
-	container.AddFilterToLog(
+	container.AddFilterAndReplaceToLog(
 		"contador",
 		"counter",
 		"^.*?counter: (?P<valueToGet>[\\d\\.]+)",
