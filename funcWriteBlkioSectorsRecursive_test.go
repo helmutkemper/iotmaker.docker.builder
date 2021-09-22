@@ -3,10 +3,11 @@ package iotmakerdockerbuilder
 import (
 	"fmt"
 	"log"
+	"testing"
 	"time"
 )
 
-func ExampleContainerBuilder_SetCsvFileRowsToPrint() {
+func TestContainerBuilder_writeBlkioSectorsRecursive(t *testing.T) {
 	var err error
 
 	GarbageCollector()
@@ -48,12 +49,49 @@ func ExampleContainerBuilder_SetCsvFileRowsToPrint() {
 		"Test Fail! Counter Value: ${value} - Hour: ${hour} - Date: ${date}",
 	)
 
-	container.SetCsvFileRowsToPrint(KAll)
+	container.SetCsvFileRowsToPrint(KReadingTime |
+		KCurrentNumberOfOidsInTheCGroup |
+		KLimitOnTheNumberOfPidsInTheCGroup |
+		KTotalCPUTimeConsumed |
+		KTotalCPUTimeConsumedPerCore |
+		KTimeSpentByTasksOfTheCGroupInKernelMode |
+		KTimeSpentByTasksOfTheCGroupInUserMode |
+		KSystemUsage |
+		KOnlineCPUs |
+		KNumberOfPeriodsWithThrottlingActive |
+		KNumberOfPeriodsWhenTheContainerHitsItsThrottlingLimit |
+		KAggregateTimeTheContainerWasThrottledForInNanoseconds |
+		KTotalPreCPUTimeConsumed |
+		KTotalPreCPUTimeConsumedPerCore |
+		KTimeSpentByPreCPUTasksOfTheCGroupInKernelMode |
+		KTimeSpentByPreCPUTasksOfTheCGroupInUserMode |
+		KPreCPUSystemUsage |
+		KOnlinePreCPUs |
+		KAggregatePreCPUTimeTheContainerWasThrottled |
+		KNumberOfPeriodsWithPreCPUThrottlingActive |
+		KNumberOfPeriodsWhenTheContainerPreCPUHitsItsThrottlingLimit |
+		KCurrentResCounterUsageForMemory |
+		KMaximumUsageEverRecorded |
+		KNumberOfTimesMemoryUsageHitsLimits |
+		KMemoryLimit |
+		KCommittedBytes |
+		KPeakCommittedBytes |
+		KPrivateWorkingSet |
+		KBlkioIoServiceBytesRecursive |
+		KBlkioIoServicedRecursive |
+		KBlkioIoQueuedRecursive |
+		KBlkioIoServiceTimeRecursive |
+		KBlkioIoWaitTimeRecursive |
+		KBlkioIoMergedRecursive |
+		KBlkioIoTimeRecursive |
+		KBlkioSectorsRecursive,
+	)
 
 	err = container.Init()
 	if err != nil {
 		fmt.Printf("error: %v", err.Error())
 		GarbageCollector()
+		t.Fail()
 		return
 	}
 
@@ -61,6 +99,7 @@ func ExampleContainerBuilder_SetCsvFileRowsToPrint() {
 	if err != nil {
 		fmt.Printf("error: %v", err.Error())
 		GarbageCollector()
+		t.Fail()
 		return
 	}
 
@@ -68,6 +107,7 @@ func ExampleContainerBuilder_SetCsvFileRowsToPrint() {
 	if err != nil {
 		log.Printf("error: %v", err.Error())
 		GarbageCollector()
+		t.Fail()
 		return
 	}
 
@@ -88,6 +128,7 @@ func ExampleContainerBuilder_SetCsvFileRowsToPrint() {
 	if err != nil {
 		log.Printf("error: %v", err.Error())
 		GarbageCollector()
+		t.Fail()
 		return
 	}
 

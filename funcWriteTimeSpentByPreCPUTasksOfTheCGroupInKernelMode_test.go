@@ -3,10 +3,11 @@ package iotmakerdockerbuilder
 import (
 	"fmt"
 	"log"
+	"testing"
 	"time"
 )
 
-func ExampleContainerBuilder_SetCsvFileRowsToPrint() {
+func TestContainerBuilder_writeTimeSpentByPreCPUTasksOfTheCGroupInKernelMode(t *testing.T) {
 	var err error
 
 	GarbageCollector()
@@ -27,7 +28,7 @@ func ExampleContainerBuilder_SetCsvFileRowsToPrint() {
 	// define o limite de memória
 	container.SetImageBuildOptionsMemory(100 * KMegaByte)
 
-	container.SetLogPath("./test.counter.log.36.csv")
+	container.SetLogPath("./test.counter.log.15.csv")
 	container.AddFilterToLog(
 		"contador",
 		"counter",
@@ -48,12 +49,28 @@ func ExampleContainerBuilder_SetCsvFileRowsToPrint() {
 		"Test Fail! Counter Value: ${value} - Hour: ${hour} - Date: ${date}",
 	)
 
-	container.SetCsvFileRowsToPrint(KAll)
+	container.SetCsvFileRowsToPrint(KReadingTime |
+		KCurrentNumberOfOidsInTheCGroup |
+		KLimitOnTheNumberOfPidsInTheCGroup |
+		KTotalCPUTimeConsumed |
+		KTotalCPUTimeConsumedPerCore |
+		KTimeSpentByTasksOfTheCGroupInKernelMode |
+		KTimeSpentByTasksOfTheCGroupInUserMode |
+		KSystemUsage |
+		KOnlineCPUs |
+		KNumberOfPeriodsWithThrottlingActive |
+		KNumberOfPeriodsWhenTheContainerHitsItsThrottlingLimit |
+		KAggregateTimeTheContainerWasThrottledForInNanoseconds |
+		KTotalPreCPUTimeConsumed |
+		KTotalPreCPUTimeConsumedPerCore |
+		KTimeSpentByPreCPUTasksOfTheCGroupInKernelMode,
+	)
 
 	err = container.Init()
 	if err != nil {
 		fmt.Printf("error: %v", err.Error())
 		GarbageCollector()
+		t.Fail()
 		return
 	}
 
@@ -61,6 +78,7 @@ func ExampleContainerBuilder_SetCsvFileRowsToPrint() {
 	if err != nil {
 		fmt.Printf("error: %v", err.Error())
 		GarbageCollector()
+		t.Fail()
 		return
 	}
 
@@ -68,6 +86,7 @@ func ExampleContainerBuilder_SetCsvFileRowsToPrint() {
 	if err != nil {
 		log.Printf("error: %v", err.Error())
 		GarbageCollector()
+		t.Fail()
 		return
 	}
 
@@ -88,6 +107,7 @@ func ExampleContainerBuilder_SetCsvFileRowsToPrint() {
 	if err != nil {
 		log.Printf("error: %v", err.Error())
 		GarbageCollector()
+		t.Fail()
 		return
 	}
 
