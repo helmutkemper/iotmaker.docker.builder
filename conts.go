@@ -271,14 +271,14 @@ const (
 		KCurrentResCounterUsageForMemory |
 		KMaximumUsageEverRecorded |
 		KMemoryLimit |
-		KBlkioIoServiceBytesRecursive |
-		KBlkioIoServicedRecursive |
-		KBlkioIoQueuedRecursive |
-		KBlkioIoServiceTimeRecursive |
-		KBlkioIoWaitTimeRecursive |
-		KBlkioIoMergedRecursive |
-		KBlkioIoTimeRecursive |
-		KBlkioSectorsRecursive
+		KBlkioIoServiceBytesRecursive | // não aparece no mac
+		KBlkioIoServicedRecursive | // não aparece no mac
+		KBlkioIoQueuedRecursive | // não aparece no mac
+		KBlkioIoServiceTimeRecursive | // não aparece no mac
+		KBlkioIoWaitTimeRecursive | // não aparece no mac
+		KBlkioIoMergedRecursive | // não aparece no mac
+		KBlkioIoTimeRecursive | // não aparece no mac
+		KBlkioSectorsRecursive // não aparece no mac
 
 	// KMacOsLog
 	//
@@ -296,12 +296,12 @@ const (
 		KCurrentResCounterUsageForMemory |
 		KMaximumUsageEverRecorded |
 		KMemoryLimit |
-		KBlkioIoServiceBytesRecursive |
-		KBlkioIoServicedRecursive |
-		KBlkioIoQueuedRecursive |
-		KBlkioIoServiceTimeRecursive |
-		KBlkioIoWaitTimeRecursive |
-		KBlkioIoMergedRecursive |
-		KBlkioIoTimeRecursive |
-		KBlkioSectorsRecursive
+		KBlkioIoServiceBytesRecursive | // não aparece no mac
+		KBlkioIoServicedRecursive | // não aparece no mac
+		KBlkioIoQueuedRecursive | // não aparece no mac
+		KBlkioIoServiceTimeRecursive | // não aparece no mac
+		KBlkioIoWaitTimeRecursive | // não aparece no mac
+		KBlkioIoMergedRecursive | // não aparece no mac
+		KBlkioIoTimeRecursive | // não aparece no mac
+		KBlkioSectorsRecursive // não aparece no mac
 )

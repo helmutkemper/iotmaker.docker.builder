@@ -2,7 +2,10 @@ package iotmakerdockerbuilder
 
 import (
 	"fmt"
+	pb "github.com/helmutkemper/iotmaker.docker.problem"
 	"log"
+	"os"
+	"runtime"
 	"testing"
 	"time"
 )
@@ -11,6 +14,8 @@ func TestContainerBuilder_writeNumberOfPeriodsWhenTheContainerPreCPUHitsItsThrot
 	var err error
 
 	GarbageCollector()
+
+	var logFile = "./test.counter.log.21.csv"
 
 	var container = ContainerBuilder{}
 	// imprime a saída padrão do container
@@ -28,7 +33,7 @@ func TestContainerBuilder_writeNumberOfPeriodsWhenTheContainerPreCPUHitsItsThrot
 	// define o limite de memória
 	container.SetImageBuildOptionsMemory(100 * KMegaByte)
 
-	container.SetLogPath("./test.counter.log.21.csv")
+	container.SetLogPath(logFile)
 	container.AddFilterToLog(
 		"contador",
 		"counter",
@@ -114,6 +119,135 @@ func TestContainerBuilder_writeNumberOfPeriodsWhenTheContainerPreCPUHitsItsThrot
 		t.Fail()
 		return
 	}
+
+	var problem pb.Problem
+	var logTest = TestContainerLog{}
+	var listUnderTest []parserLog
+	var osName = runtime.GOOS
+	switch osName {
+	case "darwin":
+		listUnderTest = []parserLog{
+			{
+				KLogReadingTimeLabel,
+				KLogReadingTimeValue,
+				KLogReadingTimeRegexp,
+			},
+			{
+				KLogCurrentNumberOfOidsInTheCGroupLabel,
+				KLogCurrentNumberOfOidsInTheCGroupValue,
+				KLogCurrentNumberOfOidsInTheCGroupRegexp,
+			},
+			{
+				KLogLimitOnTheNumberOfPidsInTheCGroupLabel,
+				KLogLimitOnTheNumberOfPidsInTheCGroupValue,
+				KLogLimitOnTheNumberOfPidsInTheCGroupRegexp,
+			},
+			{
+				KLogTotalCPUTimeConsumedLabel,
+				KLogTotalCPUTimeConsumedValue,
+				KLogTotalCPUTimeConsumedRegexp,
+			},
+			{
+				KLogTotalCPUTimeConsumedPerCoreLabel,
+				KLogTotalCPUTimeConsumedPerCoreValue,
+				KLogTotalCPUTimeConsumedPerCoreRegexp,
+			},
+			{
+				KLogTimeSpentByTasksOfTheCGroupInKernelModeLabel,
+				KLogTimeSpentByTasksOfTheCGroupInKernelModeValue,
+				KLogTimeSpentByTasksOfTheCGroupInKernelModeRegexp,
+			},
+			{
+				KLogTimeSpentByTasksOfTheCGroupInUserModeLabel,
+				KLogTimeSpentByTasksOfTheCGroupInUserModeValue,
+				KLogTimeSpentByTasksOfTheCGroupInUserModeRegexp,
+			},
+			{
+				KLogSystemUsageLabel,
+				KLogSystemUsageValue,
+				KLogSystemUsageRegexp,
+			},
+			{
+				KLogOnlineCPUsLabel,
+				KLogOnlineCPUsValue,
+				KLogOnlineCPUsRegexp,
+			},
+			{
+				KLogNumberOfPeriodsWithThrottlingActiveLabel,
+				KLogNumberOfPeriodsWithThrottlingActiveValue,
+				KLogNumberOfPeriodsWithThrottlingActiveRegexp,
+			},
+			{
+				KLogNumberOfPeriodsWhenTheContainerHitsItsThrottlingLimitLabel,
+				KLogNumberOfPeriodsWhenTheContainerHitsItsThrottlingLimitValue,
+				KLogNumberOfPeriodsWhenTheContainerHitsItsThrottlingLimitRegexp,
+			},
+			{
+				KLogAggregateTimeTheContainerWasThrottledForInNanosecondsLabel,
+				KLogAggregateTimeTheContainerWasThrottledForInNanosecondsValue,
+				KLogAggregateTimeTheContainerWasThrottledForInNanosecondsRegexp,
+			},
+			{
+				KLogTotalPreCPUTimeConsumedLabel,
+				KLogTotalPreCPUTimeConsumedValue,
+				KLogTotalPreCPUTimeConsumedRegexp,
+			},
+			{
+				KLogTotalPreCPUTimeConsumedPerCoreLabel,
+				KLogTotalPreCPUTimeConsumedPerCoreValue,
+				KLogTotalPreCPUTimeConsumedPerCoreRegexp,
+			},
+			{
+				KLogTimeSpentByPreCPUTasksOfTheCGroupInKernelModeLabel,
+				KLogTimeSpentByPreCPUTasksOfTheCGroupInKernelModeValue,
+				KLogTimeSpentByPreCPUTasksOfTheCGroupInKernelModeRegexp,
+			},
+			{
+				KLogTimeSpentByPreCPUTasksOfTheCGroupInUserModeLabel,
+				KLogTimeSpentByPreCPUTasksOfTheCGroupInUserModeValue,
+				KLogTimeSpentByPreCPUTasksOfTheCGroupInUserModeRegexp,
+			},
+			{
+				KLogPreCPUSystemUsageLabel,
+				KLogPreCPUSystemUsageValue,
+				KLogPreCPUSystemUsageRegexp,
+			},
+			{
+				KLogOnlinePreCPUsLabel,
+				KLogOnlinePreCPUsValue,
+				KLogOnlinePreCPUsRegexp,
+			},
+			{
+				KLogAggregatePreCPUTimeTheContainerWasThrottledLabel,
+				KLogAggregatePreCPUTimeTheContainerWasThrottledValue,
+				KLogAggregatePreCPUTimeTheContainerWasThrottledRegexp,
+			},
+			{
+				KLogNumberOfPeriodsWithPreCPUThrottlingActiveLabel,
+				KLogNumberOfPeriodsWithPreCPUThrottlingActiveValue,
+				KLogNumberOfPeriodsWithPreCPUThrottlingActiveRegexp,
+			},
+			{
+				KLogNumberOfPeriodsWhenTheContainerPreCPUHitsItsThrottlingLimitLabel,
+				KLogNumberOfPeriodsWhenTheContainerPreCPUHitsItsThrottlingLimitValue,
+				KLogNumberOfPeriodsWhenTheContainerPreCPUHitsItsThrottlingLimitRegexp,
+			},
+		}
+	}
+
+	problem = logTest.makeTest(logFile, &listUnderTest, t)
+	if problem != nil {
+		var file, funcName string
+		var line int
+		file, line, funcName, _ = problem.Trace()
+		log.Printf("Error: %v", problem.Error())
+		log.Printf("Cause: %v", problem.Cause())
+		log.Printf("File: %v", file)
+		log.Printf("Function: [%v]: %v", line, funcName)
+		return
+	}
+
+	_ = os.Remove(logFile)
 
 	GarbageCollector()
 }
