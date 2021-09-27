@@ -5,6 +5,9 @@ import (
 )
 
 func (e *ContainerBuilder) StartMonitor(duration *time.Ticker) {
+
+	e.chaos.monitorRunning = true
+
 	if e.chaos.monitorStop == nil {
 		e.chaos.monitorStop = make(chan struct{}, 1)
 	}
@@ -17,6 +20,12 @@ func (e *ContainerBuilder) StartMonitor(duration *time.Ticker) {
 				return
 
 			case <-duration.C:
+
+				if e.chaos.monitorRunning == false {
+					duration.Stop()
+					return
+				}
+
 				e.managerChaos()
 			}
 		}

@@ -10,11 +10,6 @@ func (e *ContainerBuilder) ContainerStatisticsOneShot() (
 	err error,
 ) {
 
-	_, err = e.dockerSys.ContainerFindIdByName(e.containerName)
-	if err != nil {
-		return
-	}
-
 	statsRet, err = e.dockerSys.ContainerStatisticsOneShot(e.containerID)
 	if err != nil {
 		util.TraceToLog()
