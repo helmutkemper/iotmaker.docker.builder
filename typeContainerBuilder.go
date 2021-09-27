@@ -95,6 +95,7 @@ type ContainerBuilder struct {
 	ticker                  *time.Ticker
 	inspect                 iotmakerdocker.ContainerInspect
 	logs                    string
+	logsLastSize            int
 	inspectInterval         time.Duration
 	gitData                 gitData
 	volumes                 []mount.Mount
