@@ -33,8 +33,6 @@ func (e *ContainerBuilder) Init() (err error) {
 		e.csvRowSeparator = "\n"
 	}
 
-	e.csvConstHeader = true //todo: apagar
-
 	if e.imageCacheName == "" {
 		e.imageCacheName = "cache:latest"
 	}

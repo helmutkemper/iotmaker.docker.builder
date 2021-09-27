@@ -5,8 +5,6 @@ import (
 	"log"
 )
 
-// todo: se o ticker estiver rodando, ele vai colocar um flag de stop para parar no próximo evento
-
 func (e *ContainerBuilder) StopMonitor() (err error) {
 
 	e.chaos.monitorRunning = false
