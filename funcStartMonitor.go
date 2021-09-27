@@ -23,7 +23,6 @@ func (e *ContainerBuilder) StartMonitor(duration *time.Ticker) {
 
 				if e.chaos.monitorRunning == false {
 					duration.Stop()
-					return
 				}
 
 				e.managerChaos()
