@@ -52,6 +52,7 @@ type chaos struct {
 //
 // Português: Gerenciador de containers e imagens docker
 type ContainerBuilder struct {
+	problem                 string
 	csvValueSeparator       string
 	csvRowSeparator         string
 	csvConstHeader          bool

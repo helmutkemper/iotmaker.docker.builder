@@ -63,4 +63,6 @@ package iotmakerdockerbuilder
 //   See https://docs.docker.com/engine/reference/run/#user-memory-constraints
 func (e *ContainerBuilder) SetImageBuildOptionsMemory(value int64) {
 	e.buildOptions.Memory = value
+
+	e.addProblem("The SetImageBuildOptionsMemory() function can generate an error when building the image.")
 }

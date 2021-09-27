@@ -62,4 +62,6 @@ package iotmakerdockerbuilder
 //
 func (e *ContainerBuilder) SetImageBuildOptionsMemorySwap(value int64) {
 	e.buildOptions.MemorySwap = value
+
+	e.addProblem("The SetImageBuildOptionsMemorySwap() function can generate an error when building the image.")
 }

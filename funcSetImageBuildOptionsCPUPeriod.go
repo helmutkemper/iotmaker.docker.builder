@@ -11,4 +11,6 @@ package iotmakerdockerbuilder
 // Para a maioria dos casos de uso, --cpus é uma alternativa mais conveniente.
 func (e *ContainerBuilder) SetImageBuildOptionsCPUPeriod(value int64) {
 	e.buildOptions.CPUPeriod = value
+
+	e.addProblem("The SetImageBuildOptionsCPUPeriod() function can generate an error when building the image.")
 }

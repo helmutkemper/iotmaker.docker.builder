@@ -151,6 +151,7 @@ func (e *ContainerBuilder) ImageBuildFromFolder() (inspect types.ImageInspect, e
 	)
 	if err != nil {
 		util.TraceToLog()
+
 		err = errors.New(err.Error() + "\nfolder path: " + e.buildPath)
 		return
 	}

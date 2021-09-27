@@ -20,4 +20,6 @@ package iotmakerdockerbuilder
 // Não garante ou reserva nenhum acesso específico à CPU.
 func (e *ContainerBuilder) SetImageBuildOptionsCPUQuota(value int64) {
 	e.buildOptions.CPUQuota = value
+
+	e.addProblem("The SetImageBuildOptionsCPUQuota() function can generate an error when building the image.")
 }

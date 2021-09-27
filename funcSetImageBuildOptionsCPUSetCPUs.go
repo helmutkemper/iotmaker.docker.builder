@@ -16,4 +16,6 @@ package iotmakerdockerbuilder
 // e a quarta CPU).
 func (e *ContainerBuilder) SetImageBuildOptionsCPUSetCPUs(value string) {
 	e.buildOptions.CPUSetCPUs = value
+
+	e.addProblem("The SetImageBuildOptionsCPUSetCPUs() function can generate an error when building the image.")
 }
