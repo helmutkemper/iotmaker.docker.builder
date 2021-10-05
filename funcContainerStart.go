@@ -32,8 +32,6 @@ import (
 //           ContainerPause e ContainerStop, caso necessite controlar o container.
 func (e *ContainerBuilder) ContainerStart() (err error) {
 
-	e.chaos.chaosCanRestartContainer = false
-
 	if e.startedAfterBuild == false {
 		err = e.ContainerStartAfterBuild()
 		if err != nil {
