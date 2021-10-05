@@ -3,7 +3,9 @@ package iotmakerdockerbuilder
 import (
 	"fmt"
 	"github.com/docker/docker/api/types"
+	"io/ioutil"
 	"log"
+	"os"
 	"time"
 )
 
@@ -35,7 +37,7 @@ func ExampleContainerBuilder_AddFailMatchFlag() {
 
 	// English: Defines the path where the golang code to be transformed into a docker image is located.
 	// Português: Define o caminho onde está o código golang a ser transformado em imagem docker.
-	container.SetBuildFolderPath("./test/counter")
+	container.SetBuildFolderPath("./test/bug")
 
 	// English: Defines the name of the docker container to be created.
 	// Português: Define o nome do container docker a ser criado.
@@ -46,8 +48,18 @@ func ExampleContainerBuilder_AddFailMatchFlag() {
 	container.SetImageBuildOptionsMemory(100 * KMegaByte)
 
 	container.AddFailMatchFlag(
-		"counter: 40",
+		"counter: 400000",
 	)
+
+	err = container.AddFailMatchFlagToFileLog(
+		"bug:",
+		"./log1/log2/log3",
+	)
+	if err != nil {
+		fmt.Printf("error: %v", err.Error())
+		GarbageCollector()
+		return
+	}
 
 	// English: Initializes the container manager object.
 	// Português: Inicializa o objeto gerenciador de container.
@@ -97,11 +109,28 @@ func ExampleContainerBuilder_AddFailMatchFlag() {
 
 	// English: Stop container monitoring.
 	// Português: Para o monitoramento do container.
-	container.StopMonitor()
+	_ = container.StopMonitor()
 
 	// English: Deletes all docker elements with the term `delete` in the name.
 	// Português: Apaga todos os elementos docker com o termo `delete` no nome.
 	GarbageCollector()
+
+	var data []byte
+	data, err = ioutil.ReadFile("./log1/log2/log3/log.0.log")
+	if err != nil {
+		log.Printf("error: %v", err.Error())
+		GarbageCollector()
+		return
+	}
+
+	if len(data) == 0 {
+		fmt.Println("log file error")
+	}
+
+	_ = os.Remove("./log1/log2/log3/log.0.log")
+	_ = os.Remove("./log1/log2/log3/")
+	_ = os.Remove("./log1/log2/")
+	_ = os.Remove("./log1/")
 
 	// Output:
 	// image size: 1.38 MB

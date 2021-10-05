@@ -3,12 +3,17 @@ package iotmakerdockerbuilder
 import (
 	"bytes"
 	"github.com/helmutkemper/util"
+	"io/fs"
+	"io/ioutil"
 	"log"
 	"regexp"
+	"strconv"
 )
 
-func (e *ContainerBuilder) logsSearchAndReplaceIntoText(lineList [][]byte, configuration []LogFilter) (line []byte, found bool) {
+func (e *ContainerBuilder) logsSearchAndReplaceIntoText(logs *[]byte, lineList [][]byte, configuration []LogFilter) (line []byte, found bool) {
 	var err error
+	var dirList []fs.FileInfo
+
 	if configuration == nil {
 		return
 	}
@@ -18,6 +23,22 @@ func (e *ContainerBuilder) logsSearchAndReplaceIntoText(lineList [][]byte, confi
 		for filterLine := 0; filterLine != len(configuration); filterLine += 1 {
 			line = lineList[logLine]
 			if bytes.Contains(line, []byte(configuration[filterLine].Match)) == true {
+
+				if configuration[filterLine].LogPath != "" {
+					dirList, err = ioutil.ReadDir(configuration[filterLine].LogPath)
+					if err != nil {
+						log.Printf("ioutil.ReadDir().error: %v", err.Error())
+						util.TraceToLog()
+						return
+					}
+					var totalOfFiles = strconv.Itoa(len(dirList))
+					err = ioutil.WriteFile(configuration[filterLine].LogPath+"log."+totalOfFiles+".log", *logs, fs.ModePerm)
+					if err != nil {
+						log.Printf("ioutil.WriteFile().error: %v", err.Error())
+						util.TraceToLog()
+						return
+					}
+				}
 
 				if configuration[filterLine].Filter != "" {
 

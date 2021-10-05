@@ -14,4 +14,7 @@ type LogFilter struct {
 	// Ex.: search: "." replace: "," para compatibilizar número com o excel
 	Search  string
 	Replace string
+
+	// path to sabe container default output into file format
+	LogPath string
 }

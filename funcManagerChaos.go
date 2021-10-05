@@ -74,7 +74,7 @@ func (e *ContainerBuilder) managerChaos() {
 		return
 	}
 
-	line, found = e.logsSearchAndReplaceIntoText(lineList, e.chaos.filterFail)
+	line, found = e.logsSearchAndReplaceIntoText(&logs, lineList, e.chaos.filterFail)
 	if found == true {
 		_, lineNumber = e.traceCodeLine()
 		event.clear()
@@ -86,7 +86,7 @@ func (e *ContainerBuilder) managerChaos() {
 		}
 	}
 
-	line, found = e.logsSearchAndReplaceIntoText(lineList, e.chaos.filterSuccess)
+	line, found = e.logsSearchAndReplaceIntoText(&logs, lineList, e.chaos.filterSuccess)
 	if found == true {
 		_, lineNumber = e.traceCodeLine()
 		event.clear()
@@ -108,7 +108,7 @@ func (e *ContainerBuilder) managerChaos() {
 
 		if e.chaos.filterToStart != nil && e.chaos.minimumTimeToStartChaos > 0 {
 
-			_, found = e.logsSearchAndReplaceIntoText(lineList, e.chaos.filterToStart)
+			_, found = e.logsSearchAndReplaceIntoText(&logs, lineList, e.chaos.filterToStart)
 			if found == true {
 				if e.chaos.serviceStartedAt.Add(timeToNextEvent).Before(time.Now()) == true {
 					e.chaos.chaosStarted = true
@@ -117,7 +117,7 @@ func (e *ContainerBuilder) managerChaos() {
 
 		} else if e.chaos.filterToStart != nil {
 
-			_, found = e.logsSearchAndReplaceIntoText(lineList, e.chaos.filterToStart)
+			_, found = e.logsSearchAndReplaceIntoText(&logs, lineList, e.chaos.filterToStart)
 			if found == true {
 				e.chaos.chaosStarted = true
 			}
@@ -140,7 +140,7 @@ func (e *ContainerBuilder) managerChaos() {
 
 		if e.chaos.filterRestart != nil && e.chaos.minimumTimeBeforeRestart > 0 {
 
-			_, found = e.logsSearchAndReplaceIntoText(lineList, e.chaos.filterRestart)
+			_, found = e.logsSearchAndReplaceIntoText(&logs, lineList, e.chaos.filterRestart)
 			if found == true {
 				if e.chaos.serviceStartedAt.Add(timeToNextEvent).Before(time.Now()) == true {
 					e.chaos.chaosCanRestartContainer = true
@@ -149,7 +149,7 @@ func (e *ContainerBuilder) managerChaos() {
 
 		} else if e.chaos.filterRestart != nil {
 
-			_, found = e.logsSearchAndReplaceIntoText(lineList, e.chaos.filterRestart)
+			_, found = e.logsSearchAndReplaceIntoText(&logs, lineList, e.chaos.filterRestart)
 			if found == true {
 				e.chaos.chaosCanRestartContainer = true
 			}
