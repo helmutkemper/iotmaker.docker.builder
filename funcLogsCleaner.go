@@ -2,7 +2,7 @@ package iotmakerdockerbuilder
 
 import "bytes"
 
-func (e ContainerBuilder) logsCleaner(logs []byte) [][]byte {
+func (e *ContainerBuilder) logsCleaner(logs []byte) [][]byte {
 
 	size := len(logs)
 
