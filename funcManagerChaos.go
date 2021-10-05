@@ -2,6 +2,7 @@ package iotmakerdockerbuilder
 
 import (
 	iotmakerdocker "github.com/helmutkemper/iotmaker.docker/v1.0.1"
+	"github.com/helmutkemper/util"
 	"log"
 	"strconv"
 	"time"
@@ -143,6 +144,7 @@ func (e *ContainerBuilder) managerChaos() {
 			_, found = e.logsSearchAndReplaceIntoText(&logs, lineList, e.chaos.filterRestart)
 			if found == true {
 				if e.chaos.serviceStartedAt.Add(timeToNextEvent).Before(time.Now()) == true {
+					util.TraceToLog()
 					e.chaos.chaosCanRestartContainer = true
 				}
 			}
@@ -151,10 +153,12 @@ func (e *ContainerBuilder) managerChaos() {
 
 			_, found = e.logsSearchAndReplaceIntoText(&logs, lineList, e.chaos.filterRestart)
 			if found == true {
+				util.TraceToLog()
 				e.chaos.chaosCanRestartContainer = true
 			}
 
 		} else if e.chaos.serviceStartedAt.Add(timeToNextEvent).Before(time.Now()) == true {
+			util.TraceToLog()
 			e.chaos.chaosCanRestartContainer = true
 		}
 
