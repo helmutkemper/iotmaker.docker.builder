@@ -225,6 +225,7 @@ func (e *ContainerBuilder) managerChaos() {
 				return
 			}
 			e.chaos.chaosCanRestartContainer = false
+			e.chaos.serviceStartedAt = time.Now()
 			timeToNextEvent = e.selectBetweenMaxAndMin(e.chaos.maximumTimeToPause, e.chaos.minimumTimeToPause)
 			e.chaos.eventNext = time.Now().Add(timeToNextEvent)
 
