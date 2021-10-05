@@ -25,6 +25,10 @@ func (e *ContainerBuilder) Init() (err error) {
 
 	e.chaos.event = make(chan Event, 1)
 
+	if e.metadata == nil {
+		e.metadata = make(map[string]interface{})
+	}
+
 	if e.csvValueSeparator == "" {
 		e.csvValueSeparator = ","
 	}
