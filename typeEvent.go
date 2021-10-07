@@ -6,6 +6,7 @@ type Event struct {
 	Error         bool
 	Done          bool
 	Fail          bool
+	Metadata      map[string]interface{}
 }
 
 func (e *Event) clear() {
@@ -14,4 +15,5 @@ func (e *Event) clear() {
 	e.Done = false
 	e.Error = false
 	e.Fail = false
+	e.Metadata = make(map[string]interface{})
 }
