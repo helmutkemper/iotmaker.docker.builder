@@ -1,5 +1,13 @@
 package iotmakerdockerbuilder
 
+// AddRestartFilter
+//
+// English:
+//
+//
+// Português: não tem lógica
+//
+//
 func (e *ContainerBuilder) AddRestartFilter(label, match, filter, search, replace string) {
 	if e.chaos.filterRestart == nil {
 		e.chaos.filterRestart = make([]LogFilter, 0)
