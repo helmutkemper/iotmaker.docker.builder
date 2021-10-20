@@ -11,6 +11,8 @@ import (
 )
 
 type chaos struct {
+	foundSuccess               bool
+	foundFail                  bool
 	filterToStart              []LogFilter
 	filterRestart              []LogFilter
 	filterSuccess              []LogFilter

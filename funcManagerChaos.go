@@ -2,7 +2,6 @@ package iotmakerdockerbuilder
 
 import (
 	iotmakerdocker "github.com/helmutkemper/iotmaker.docker/v1.0.1"
-	"github.com/helmutkemper/util"
 	"log"
 	"strconv"
 	"time"
@@ -34,6 +33,7 @@ func (e *ContainerBuilder) managerChaos() {
 	if err != nil {
 		_, lineNumber = e.traceCodeLine()
 		event.clear()
+		event.Metadata = e.metadata
 		event.ContainerName = e.GetContainerName()
 		event.Message = "[" + strconv.Itoa(lineNumber) + "]: " + err.Error()
 		event.Error = true
@@ -51,6 +51,7 @@ func (e *ContainerBuilder) managerChaos() {
 	if err != nil {
 		_, lineNumber = e.traceCodeLine()
 		event.clear()
+		event.Metadata = e.metadata
 		event.ContainerName = e.GetContainerName()
 		event.Message = "[" + strconv.Itoa(lineNumber) + "]: " + err.Error()
 		event.Error = true
@@ -66,6 +67,7 @@ func (e *ContainerBuilder) managerChaos() {
 	if err != nil {
 		_, lineNumber = e.traceCodeLine()
 		event.clear()
+		event.Metadata = e.metadata
 		event.ContainerName = e.GetContainerName()
 		event.Message = "[" + strconv.Itoa(lineNumber) + "]: " + err.Error()
 		event.Error = true
@@ -75,28 +77,19 @@ func (e *ContainerBuilder) managerChaos() {
 		return
 	}
 
-	line, found = e.logsSearchAndReplaceIntoText(&logs, lineList, e.chaos.filterFail)
-	if found == true {
-		_, lineNumber = e.traceCodeLine()
-		event.clear()
-		event.ContainerName = e.GetContainerName()
+	line, e.chaos.foundSuccess = e.logsSearchAndReplaceIntoText(&logs, lineList, e.chaos.filterSuccess)
+	line, e.chaos.foundFail = e.logsSearchAndReplaceIntoText(&logs, lineList, e.chaos.filterFail)
+	_, lineNumber = e.traceCodeLine()
+	event.clear()
+	if e.chaos.foundFail == true || e.chaos.foundSuccess == true {
 		event.Message = string(line)
-		event.Fail = true
-		if len(e.chaos.event) == 0 {
-			e.chaos.event <- event
-		}
 	}
-
-	line, found = e.logsSearchAndReplaceIntoText(&logs, lineList, e.chaos.filterSuccess)
-	if found == true {
-		_, lineNumber = e.traceCodeLine()
-		event.clear()
-		event.ContainerName = e.GetContainerName()
-		event.Message = string(line)
-		event.Done = true
-		if len(e.chaos.event) == 0 {
-			e.chaos.event <- event
-		}
+	event.Metadata = e.metadata
+	event.ContainerName = e.GetContainerName()
+	event.Fail = e.chaos.foundFail
+	event.Done = e.chaos.foundSuccess
+	if len(e.chaos.event) == 0 {
+		e.chaos.event <- event
 	}
 
 	if e.chaos.enableChaos == false {
@@ -144,7 +137,6 @@ func (e *ContainerBuilder) managerChaos() {
 			_, found = e.logsSearchAndReplaceIntoText(&logs, lineList, e.chaos.filterRestart)
 			if found == true {
 				if e.chaos.serviceStartedAt.Add(timeToNextEvent).Before(time.Now()) == true {
-					util.TraceToLog()
 					e.chaos.chaosCanRestartContainer = true
 				}
 			}
@@ -153,12 +145,10 @@ func (e *ContainerBuilder) managerChaos() {
 
 			_, found = e.logsSearchAndReplaceIntoText(&logs, lineList, e.chaos.filterRestart)
 			if found == true {
-				util.TraceToLog()
 				e.chaos.chaosCanRestartContainer = true
 			}
 
 		} else if e.chaos.serviceStartedAt.Add(timeToNextEvent).Before(time.Now()) == true {
-			util.TraceToLog()
 			e.chaos.chaosCanRestartContainer = true
 		}
 
@@ -182,6 +172,7 @@ func (e *ContainerBuilder) managerChaos() {
 			if err != nil {
 				_, lineNumber = e.traceCodeLine()
 				event.clear()
+				event.Metadata = e.metadata
 				event.ContainerName = e.GetContainerName()
 				event.Message = "[" + strconv.Itoa(lineNumber) + "]: " + err.Error()
 				event.Error = true
@@ -206,6 +197,7 @@ func (e *ContainerBuilder) managerChaos() {
 				if err != nil {
 					_, lineNumber = e.traceCodeLine()
 					event.clear()
+					event.Metadata = e.metadata
 					event.ContainerName = e.GetContainerName()
 					event.Message = "[" + strconv.Itoa(lineNumber) + "]: " + err.Error()
 					event.Error = true
@@ -220,6 +212,7 @@ func (e *ContainerBuilder) managerChaos() {
 			if err != nil {
 				_, lineNumber = e.traceCodeLine()
 				event.clear()
+				event.Metadata = e.metadata
 				event.ContainerName = e.GetContainerName()
 				event.Message = "[" + strconv.Itoa(lineNumber) + "]: " + err.Error()
 				event.Error = true
@@ -229,7 +222,7 @@ func (e *ContainerBuilder) managerChaos() {
 				return
 			}
 			e.chaos.chaosCanRestartContainer = false
-			e.chaos.serviceStartedAt = time.Now()
+			e.chaos.serviceStartedAt = time.Now().Add(e.selectBetweenMaxAndMin(e.chaos.maximumTimeToRestart, e.chaos.minimumTimeToRestart))
 			timeToNextEvent = e.selectBetweenMaxAndMin(e.chaos.maximumTimeToPause, e.chaos.minimumTimeToPause)
 			e.chaos.eventNext = time.Now().Add(timeToNextEvent)
 
@@ -245,6 +238,7 @@ func (e *ContainerBuilder) managerChaos() {
 			if err != nil {
 				_, lineNumber = e.traceCodeLine()
 				event.clear()
+				event.Metadata = e.metadata
 				event.ContainerName = e.GetContainerName()
 				event.Message = "[" + strconv.Itoa(lineNumber) + "]: " + err.Error()
 				event.Error = true
@@ -269,6 +263,7 @@ func (e *ContainerBuilder) managerChaos() {
 			if err != nil {
 				_, lineNumber = e.traceCodeLine()
 				event.clear()
+				event.Metadata = e.metadata
 				event.ContainerName = e.GetContainerName()
 				event.Message = "[" + strconv.Itoa(lineNumber) + "]: " + err.Error()
 				event.Error = true
