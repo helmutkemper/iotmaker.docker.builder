@@ -99,7 +99,7 @@ func TestContainerBuilder_writeTimeSpentByPreCPUTasksOfTheCGroupInUserMode(t *te
 	event := container.GetChaosEvent()
 
 	select {
-	case e := <-*event:
+	case e := <-event:
 		fmt.Printf("container name: %v\n", e.ContainerName)
 		fmt.Printf("done: %v\n", e.Done)
 		fmt.Printf("fail: %v\n", e.Fail)
