@@ -5,7 +5,6 @@ import (
 	iotmakerdocker "github.com/helmutkemper/iotmaker.docker/v1.0.1"
 	"github.com/helmutkemper/util"
 	"log"
-	"os"
 	"runtime"
 	"time"
 )
@@ -20,9 +19,10 @@ func (e *ContainerBuilder) Init() (err error) {
 
 	var osName = runtime.GOOS
 	log.Printf("os name: %v", osName)
-	os.Exit(0)
 	if e.rowsToPrint == 0 && osName == "darwin" {
 		e.rowsToPrint = KMacOsLog
+	} else if e.rowsToPrint == 0 && osName == "windows" {
+		e.rowsToPrint = KWindows
 	} else if e.rowsToPrint == 0 {
 		e.rowsToPrint = KAll
 	}
