@@ -4,7 +4,6 @@ import (
 	dockerfileGolang "github.com/helmutkemper/iotmaker.docker.builder.golang.dockerfile"
 	iotmakerdocker "github.com/helmutkemper/iotmaker.docker/v1.0.1"
 	"github.com/helmutkemper/util"
-	"log"
 	"runtime"
 	"time"
 )
@@ -18,7 +17,6 @@ func (e *ContainerBuilder) Init() (err error) {
 	e.init = true
 
 	var osName = runtime.GOOS
-	log.Printf("os name: %v", osName)
 	if e.rowsToPrint == 0 && osName == "darwin" {
 		e.rowsToPrint = KMacOsLog
 	} else if e.rowsToPrint == 0 && osName == "windows" {
