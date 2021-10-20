@@ -304,4 +304,22 @@ const (
 		KBlkioIoMergedRecursive | // não aparece no mac
 		KBlkioIoTimeRecursive | // não aparece no mac
 		KBlkioSectorsRecursive // não aparece no mac
+
+	KWindows = KReadingTime |
+		KCurrentNumberOfOidsInTheCGroup |
+		KTotalCPUTimeConsumed |
+		KTotalCPUTimeConsumedPerCore |
+		KTimeSpentByTasksOfTheCGroupInKernelMode |
+		KTimeSpentByTasksOfTheCGroupInUserMode |
+		KSystemUsage |
+		KOnlineCPUs |
+		KTotalPreCPUTimeConsumed |
+		KTotalPreCPUTimeConsumedPerCore |
+		KTimeSpentByPreCPUTasksOfTheCGroupInKernelMode |
+		KTimeSpentByPreCPUTasksOfTheCGroupInUserMode |
+		KPreCPUSystemUsage |
+		KOnlinePreCPUs |
+		KCurrentResCounterUsageForMemory |
+		KMaximumUsageEverRecorded |
+		KMemoryLimit
 )

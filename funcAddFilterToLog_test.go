@@ -27,7 +27,7 @@ func ExampleContainerBuilder_AddFilterToLog() {
 
 	// English: Mount a default dockerfile for golang where the `main.go` file and the `go.mod` file should be in the root folder
 	// Português: Monta um dockerfile padrão para o golang onde o arquivo `main.go` e o arquivo `go.mod` devem está na pasta raiz
-	container.MakeDefaultDockerfileForMe()
+	container.MakeDefaultDockerfileForMeWithInstallExtras()
 
 	// English: Name of the new image to be created.
 	// Português: Nome da nova imagem a ser criada.
@@ -36,7 +36,7 @@ func ExampleContainerBuilder_AddFilterToLog() {
 	// English: Defines the path where the golang code to be transformed into a docker image is located.
 	// Português: Define o caminho onde está o código golang a ser transformado em imagem docker.
 	container.SetBuildFolderPath("./test/counter")
-
+	container.SetCsvFileReader(true)
 	// English: Defines the name of the docker container to be created.
 	// Português: Define o nome do container docker a ser criado.
 	container.SetContainerName("container_counter_delete_after_test")
