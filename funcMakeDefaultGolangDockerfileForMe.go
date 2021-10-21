@@ -1,5 +1,7 @@
 package iotmakerdockerbuilder
 
+import iotmakerdocker "github.com/helmutkemper/iotmaker.docker/v1.0.1"
+
 // MakeDefaultDockerfileForMe
 //
 // English: Automatically mount the Dockerfile-iotmaker inside the target folder.
@@ -30,5 +32,19 @@ package iotmakerdockerbuilder
 //   Nota: Caso necessite de um dockerfile feito para outra linguagem de programação, veja a interface
 //   DockerfileAuto e a função SetDockerfileBuilder()
 func (e *ContainerBuilder) MakeDefaultDockerfileForMe() {
+
+	if e.enableCache == true {
+
+		// se a cache foi habilitada e não existe imagem cache, crie o dockerfile completo
+		// isto foi feito devido a falhas nos testes com usuários
+		var id string
+		var dockerSys = iotmakerdocker.DockerSystem{}
+		_ = dockerSys.Init()
+		id, _ = dockerSys.ImageFindIdByName(e.imageCacheName)
+		if id == "" {
+			e.imageInstallExtras = true
+		}
+	}
+
 	e.makeDefaultDockerfile = true
 }
