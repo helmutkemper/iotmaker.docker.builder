@@ -3,7 +3,8 @@ package iotmakerdockerbuilder
 // SetBuildFolderPath
 //
 // English: Defines the path of the folder to be transformed into an image
-//   value: path of the folder to be transformed into an image
+//   Input:
+//     value: path of the folder to be transformed into an image
 //
 //     Note: The folder must contain a dockerfile file, but since different uses can have different dockerfiles, the
 //     following order will be given when searching for the file: "Dockerfile-iotmaker", "Dockerfile", "dockerfile"
@@ -15,7 +16,8 @@ package iotmakerdockerbuilder
 //
 //
 // Português: Define o caminho da pasta a ser transformada em imagem
-//   value: caminho da pasta a ser transformada em imagem
+//   Entrada:
+//     value: caminho da pasta a ser transformada em imagem
 //
 //     Nota: A pasta deve conter um arquivo dockerfile, mas, como diferentes usos podem ter diferentes dockerfiles,
 //     será dada a seguinte ordem na busca pelo arquivo: "Dockerfile-iotmaker", "Dockerfile", "dockerfile" na pasta

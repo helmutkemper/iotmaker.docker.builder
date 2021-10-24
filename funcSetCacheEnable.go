@@ -1,12 +1,14 @@
 package iotmakerdockerbuilder
 
-// SetCacheEnable (english): When true, looks for an image named `chache:latest` as a
-// basis for creating new images when the MakeDefaultDockerfileForMe function is used.
+// SetCacheEnable
+//
+// English: When true, looks for an image named `chache:latest` as a basis for creating new images when the
+// MakeDefaultDockerfileForMe() function is used.
 //
 // This function is extremely useful when developing new applications, reducing the time
 // to create images with each new test.
 //
-//   Entrada:
+//   Input:
 //     value: true to enable the use of image named cache:latest as the basis for new
 //       images if it exists
 //
@@ -56,9 +58,8 @@ package iotmakerdockerbuilder
 //      return
 //    }
 //
-// SetCacheEnable (português): Quando true, procura por uma imagem de nome `chache:latest`
-// como base para a criação de novas imagens quando a função MakeDefaultDockerfileForMe é
-// usada.
+// Português: Quando true, procura por uma imagem de nome `chache:latest` como base para a criação de novas imagens
+// quando a função MakeDefaultDockerfileForMe() é usada.
 //
 // Esta função é extremamente útil no desenvolvimento de novas aplicações,
 // reduzindo o tempo de criação de imagens a cada novo teste.
