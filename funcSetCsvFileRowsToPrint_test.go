@@ -3,7 +3,6 @@ package iotmakerdockerbuilder
 import (
 	"fmt"
 	"log"
-	"time"
 )
 
 func ExampleContainerBuilder_SetCsvFileRowsToPrint() {
@@ -69,7 +68,7 @@ func ExampleContainerBuilder_SetCsvFileRowsToPrint() {
 		return
 	}
 
-	container.StartMonitor(time.NewTicker(2 * time.Second))
+	container.StartMonitor()
 
 	event := container.GetChaosEvent()
 

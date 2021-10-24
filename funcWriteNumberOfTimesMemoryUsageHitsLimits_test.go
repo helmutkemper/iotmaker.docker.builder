@@ -7,7 +7,6 @@ import (
 	"os"
 	"runtime"
 	"testing"
-	"time"
 )
 
 func TestContainerBuilder_writeNumberOfTimesMemoryUsageHitsLimits(t *testing.T) {
@@ -102,7 +101,7 @@ func TestContainerBuilder_writeNumberOfTimesMemoryUsageHitsLimits(t *testing.T) 
 		return
 	}
 
-	container.StartMonitor(time.NewTicker(2 * time.Second))
+	container.StartMonitor()
 
 	event := container.GetChaosEvent()
 

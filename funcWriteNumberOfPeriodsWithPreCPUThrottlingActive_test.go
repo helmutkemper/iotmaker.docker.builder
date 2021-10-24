@@ -7,7 +7,6 @@ import (
 	"os"
 	"runtime"
 	"testing"
-	"time"
 )
 
 func TestContainerBuilder_writeNumberOfPeriodsWithPreCPUThrottlingActive(t *testing.T) {
@@ -98,7 +97,7 @@ func TestContainerBuilder_writeNumberOfPeriodsWithPreCPUThrottlingActive(t *test
 		return
 	}
 
-	container.StartMonitor(time.NewTicker(2 * time.Second))
+	container.StartMonitor()
 
 	event := container.GetChaosEvent()
 

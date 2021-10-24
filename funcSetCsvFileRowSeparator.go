@@ -8,7 +8,7 @@ package iotmakerdockerbuilder
 //
 //   Nota: - Esta função é usada em conjunto com as funções SetCsvLogPath(), StartMonitor(), StopMonitor(),
 //           SetCsvFileRowSeparator(), SetCsvFileReader(), SetCsvFileRowsToPrint(), AddFilterToLog() e
-//           AddFilterAndReplaceToLog();
+//           AddFilterToLogWithReplace();
 //         - As colunas de dados preenchidos varia de acordo com o sistema operacional.
 //
 // Português: Define o separador de linha do arquivo de log, em formato CSV, contendo estatísticas de uso do container.
@@ -17,7 +17,7 @@ package iotmakerdockerbuilder
 //
 //   Nota: - Esta função é usada em conjunto com as funções SetCsvLogPath(), StartMonitor(), StopMonitor(),
 //           SetCsvFileRowSeparator(), SetCsvFileReader(), SetCsvFileRowsToPrint(), AddFilterToLog() e
-//           AddFilterAndReplaceToLog();
+//           AddFilterToLogWithReplace();
 //         - As colunas de dados preenchidos varia de acordo com o sistema operacional.
 func (e *ContainerBuilder) SetCsvFileRowSeparator(value string) {
 	e.csvRowSeparator = value

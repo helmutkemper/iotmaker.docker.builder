@@ -4,7 +4,20 @@ import (
 	"time"
 )
 
-func (e *ContainerBuilder) StartMonitor(duration *time.Ticker) {
+// StartMonitor
+//
+// Português: Habilitar um time.Ticker com a finalidade de colher informações de desempenho do container na forma de um
+// log CSV e gerencia o controle de caos, caso o mesmo tenha sido habilitado.
+//
+//   Nota: - Esta função é usada em conjunto com as funções EnableChaos() e SetCsvLogPath()
+//
+// English: Enable a time.Ticker in order to gather performance information from the container in the form of a CSV log
+// and manage chaos control, if it has been enabled.
+//
+//   Nota: - Esta função é usada em conjunto com as funções EnableChaos() e SetCsvLogPath()
+func (e *ContainerBuilder) StartMonitor() {
+
+	var duration = time.NewTicker(2 * time.Second)
 
 	if e.chaos.monitorRunning == true {
 		return

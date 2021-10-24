@@ -7,7 +7,6 @@ import (
 	"os"
 	"runtime"
 	"testing"
-	"time"
 )
 
 func TestContainerBuilder_writeAggregatePreCPUTimeTheContainerWasThrottled(t *testing.T) {
@@ -97,7 +96,7 @@ func TestContainerBuilder_writeAggregatePreCPUTimeTheContainerWasThrottled(t *te
 		return
 	}
 
-	container.StartMonitor(time.NewTicker(2 * time.Second))
+	container.StartMonitor()
 
 	event := container.GetChaosEvent()
 

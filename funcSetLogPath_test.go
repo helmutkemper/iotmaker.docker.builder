@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"github.com/docker/docker/api/types"
 	"log"
-	"time"
 )
 
 // IDE: Goland
@@ -37,7 +36,7 @@ func ExampleContainerBuilder_SetLogPath() {
 	container.SetImageBuildOptionsMemory(100 * KMegaByte)
 
 	container.SetCsvLogPath("./test.counter.log.csv", true)
-	container.AddFilterAndReplaceToLog(
+	container.AddFilterToLogWithReplace(
 		"contador",
 		"counter",
 		"^.*?counter: (?P<valueToGet>[\\d\\.]+)",
@@ -81,7 +80,7 @@ func ExampleContainerBuilder_SetLogPath() {
 		return
 	}
 
-	container.StartMonitor(time.NewTicker(2 * time.Second))
+	container.StartMonitor()
 
 	event := container.GetChaosEvent()
 

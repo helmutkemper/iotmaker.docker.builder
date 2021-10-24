@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"github.com/docker/docker/api/types"
 	"log"
-	"time"
 )
 
 func ExampleContainerBuilder_AddFilterToLog() {
@@ -51,7 +50,7 @@ func ExampleContainerBuilder_AddFilterToLog() {
 
 	// English: Adds a search filter to the standard output of the container, to save the information in the log file
 	// Português: Adiciona um filtro de busca na saída padrão do container, para salvar a informação no arquivo de log
-	container.AddFilterAndReplaceToLog(
+	container.AddFilterToLogWithReplace(
 		// English: Label to be written to log file
 		// Português: Rótulo a ser escrito no arquivo de log
 		"contador",
@@ -136,7 +135,7 @@ func ExampleContainerBuilder_AddFilterToLog() {
 
 	// English: Starts container monitoring at two second intervals. This functionality generates the log and monitors the standard output of the container.
 	// Português: Inicializa o monitoramento do container com intervalos de dois segundos. Esta funcionalidade gera o log e monitora a saída padrão do container.
-	container.StartMonitor(time.NewTicker(2 * time.Second))
+	container.StartMonitor()
 
 	// English: Gets the event channel pointer inside the container.
 	// Português: Pega o ponteiro do canal de eventos dentro do container.

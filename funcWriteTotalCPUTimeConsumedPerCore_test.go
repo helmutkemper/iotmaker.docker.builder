@@ -7,7 +7,6 @@ import (
 	"os"
 	"runtime"
 	"testing"
-	"time"
 )
 
 func TestContainerBuilder_writeTotalCPUTimeConsumedPerCore(t *testing.T) {
@@ -84,7 +83,7 @@ func TestContainerBuilder_writeTotalCPUTimeConsumedPerCore(t *testing.T) {
 		return
 	}
 
-	container.StartMonitor(time.NewTicker(2 * time.Second))
+	container.StartMonitor()
 
 	event := container.GetChaosEvent()
 

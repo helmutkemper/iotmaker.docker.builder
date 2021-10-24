@@ -7,7 +7,6 @@ import (
 	"os"
 	"runtime"
 	"testing"
-	"time"
 )
 
 func TestContainerBuilder_writeNumberOfPeriodsWhenTheContainerPreCPUHitsItsThrottlingLimit(t *testing.T) {
@@ -99,7 +98,7 @@ func TestContainerBuilder_writeNumberOfPeriodsWhenTheContainerPreCPUHitsItsThrot
 		return
 	}
 
-	container.StartMonitor(time.NewTicker(2 * time.Second))
+	container.StartMonitor()
 
 	event := container.GetChaosEvent()
 

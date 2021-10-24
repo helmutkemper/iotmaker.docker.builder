@@ -81,7 +81,7 @@ func ExampleContainerBuilder_AddFailMatchFlag() {
 	// English: Sets a text search filter on the container's standard output and writes the text to the log defined by SetCsvLogPath()
 	// The container example prints a counter to standard output `log.Printf("counter: %.2f", counter)`. `label` adds the column name; `match` searches for text; `filter` applies a regular expression; `search` and `replace` do a replacement on top of the found value before writing to the log.
 	// [optional/opcional]
-	container.AddFilterAndReplaceToLog(
+	container.AddFilterToLogWithReplace(
 		"contador",
 		"counter",
 		"^.*?counter: (?P<valueToGet>[\\d\\.]+)",
@@ -145,7 +145,7 @@ func ExampleContainerBuilder_AddFailMatchFlag() {
 	// Português: Inicializa o monitoramento do container com intervalos de dois segundos. Esta funcionalidade monitora a saída padrão do container e gera o log definido pela função SetCsvLogPath().
 	// StartMonitor() é usado durante o teste de caos e na geração do log de desempenho do container.
 	// [optional/opcional]
-	container.StartMonitor(time.NewTicker(2 * time.Second))
+	container.StartMonitor()
 
 	// English: Gets the event channel inside the container.
 	// Português: Pega o canal de eventos dentro do container.

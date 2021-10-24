@@ -1,6 +1,8 @@
 package iotmakerdockerbuilder
 
-// AddFilterAndReplaceToLog
+// AddFilterToLogWithReplace
+//
+// Similar: AddFilterToLogWithReplace(), AddFilterToLog()
 //
 // English: Adds a filter to search and convert a textual value to a column in the log file.
 //   Input:
@@ -10,6 +12,8 @@ package iotmakerdockerbuilder
 //     search: Regular expression used for search and replacement in the text found in the previous step [optional].
 //     replace: Regular expression replace element [optional].
 //
+//   Note: - This function is used in conjunction with SetCsvLogPath(), StartMonitor(), StopMonitor().
+//
 // Português: Adiciona um filtro para procurar e converter um valor textual em uma coluna no arquivo de log.
 //   Entrada:
 //     label: Valor do rótulo a ser colocado na coluna do arquivo de log.
@@ -17,7 +21,9 @@ package iotmakerdockerbuilder
 //     filter: Expressão regular usada para filtrar o que vai para o log usando o parâmetro `valueToGet`.
 //     search: Expressão regular usada para busca e substituição no texto encontrado na etapa anterior [opcional].
 //     replace: Elemento da troca da expressão regular [opcional].
-func (e *ContainerBuilder) AddFilterAndReplaceToLog(label, match, filter, search, replace string) {
+//
+//   Nota: - Esta função é usada em conjunto com SetCsvLogPath(), StartMonitor(), StopMonitor()
+func (e *ContainerBuilder) AddFilterToLogWithReplace(label, match, filter, search, replace string) {
 	if e.chaos.filterLog == nil {
 		e.chaos.filterLog = make([]LogFilter, 0)
 	}

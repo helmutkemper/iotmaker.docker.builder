@@ -7,7 +7,6 @@ import (
 	"os"
 	"runtime"
 	"testing"
-	"time"
 )
 
 func TestContainerBuilder_AggregateTimeTheContainerWasThrottledForInNanoseconds(t *testing.T) {
@@ -90,7 +89,7 @@ func TestContainerBuilder_AggregateTimeTheContainerWasThrottledForInNanoseconds(
 		return
 	}
 
-	container.StartMonitor(time.NewTicker(2 * time.Second))
+	container.StartMonitor()
 
 	event := container.GetChaosEvent()
 

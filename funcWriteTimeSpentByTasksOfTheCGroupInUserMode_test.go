@@ -7,7 +7,6 @@ import (
 	"os"
 	"runtime"
 	"testing"
-	"time"
 )
 
 func TestContainerBuilder_writeTimeSpentByTasksOfTheCGroupInUserMode(t *testing.T) {
@@ -85,7 +84,7 @@ func TestContainerBuilder_writeTimeSpentByTasksOfTheCGroupInUserMode(t *testing.
 		return
 	}
 
-	container.StartMonitor(time.NewTicker(2 * time.Second))
+	container.StartMonitor()
 
 	event := container.GetChaosEvent()
 

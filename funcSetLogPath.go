@@ -11,7 +11,7 @@ import "os"
 //
 //   Note: - This function must be used in conjunction with the StartMonitor() and StopMonitor() functions;
 //         - The data columns populated varies by operating system;
-//         - See the SetCsvFileReader(), SetCsvFileRowsToPrint(), AddFilterToLog(), AddFilterAndReplaceToLog(),
+//         - See the SetCsvFileReader(), SetCsvFileRowsToPrint(), AddFilterToLog(), AddFilterToLogWithReplace(),
 //           SetCsvFileValueSeparator() and SetCsvFileRowSeparator() functions to change some log settings.
 //
 // Português: Define o caminho do arquivo de log, em formato CSV, contendo estatísticas de uso do container.
@@ -21,7 +21,7 @@ import "os"
 //
 //   Nota: - Esta função deve ser usada em conjunto com as funções StartMonitor() e StopMonitor();
 //         - As colunas de dados preenchidos varia de acordo com o sistema operacional;
-//         - Veja as funções SetCsvFileReader(), SetCsvFileRowsToPrint(), AddFilterToLog(), AddFilterAndReplaceToLog(),
+//         - Veja as funções SetCsvFileReader(), SetCsvFileRowsToPrint(), AddFilterToLog(), AddFilterToLogWithReplace(),
 //           SetCsvFileValueSeparator() e SetCsvFileRowSeparator() para alterar algumas configurações do log.
 func (e *ContainerBuilder) SetCsvLogPath(path string, removeOldFile bool) {
 

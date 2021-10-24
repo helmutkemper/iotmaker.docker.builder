@@ -7,7 +7,6 @@ import (
 	"os"
 	"runtime"
 	"testing"
-	"time"
 )
 
 func TestContainerBuilder_writeBlkioIoQueuedRecursive(t *testing.T) {
@@ -109,7 +108,7 @@ func TestContainerBuilder_writeBlkioIoQueuedRecursive(t *testing.T) {
 		return
 	}
 
-	container.StartMonitor(time.NewTicker(2 * time.Second))
+	container.StartMonitor()
 
 	event := container.GetChaosEvent()
 
