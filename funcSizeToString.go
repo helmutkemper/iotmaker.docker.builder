@@ -9,15 +9,15 @@ func (e *ContainerBuilder) SizeToString(value int64) string {
 	}
 
 	if value > KGigaByte {
-		return strconv.FormatFloat(float64(value)/KGigaByte, 'f', 2, 64) + " GB"
+		return strconv.FormatFloat(float64(value)/KGigaByte, 'f', 1, 64) + " GB"
 	}
 
 	if value > KMegaByte {
-		return strconv.FormatFloat(float64(value)/KMegaByte, 'f', 2, 64) + " MB"
+		return strconv.FormatFloat(float64(value)/KMegaByte, 'f', 1, 64) + " MB"
 	}
 
 	if value > KKiloByte {
-		return strconv.FormatFloat(float64(value)/KKiloByte, 'f', 2, 64) + " KB"
+		return strconv.FormatFloat(float64(value)/KKiloByte, 'f', 1, 64) + " KB"
 	}
 
 	return strconv.FormatInt(value, 10) + " B"

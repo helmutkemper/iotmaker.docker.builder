@@ -9,6 +9,8 @@ import (
 	"time"
 )
 
+//kemper aqui
+
 func ExampleContainerBuilder_AddFailMatchFlag() {
 	var err error
 	var imageInspect types.ImageInspect
@@ -29,14 +31,14 @@ func ExampleContainerBuilder_AddFailMatchFlag() {
 
 	// English: Mount a default dockerfile for golang where the `main.go` file and the `go.mod` file should be in the root folder
 	// Português: Monta um dockerfile padrão para o golang onde o arquivo `main.go` e o arquivo `go.mod` devem está na pasta raiz
-	container.MakeDefaultDockerfileForMeWithInstallExtras()
+	container.MakeDefaultDockerfileForMe()
 
 	// English: Name of the new image to be created.
 	// Português: Nome da nova imagem a ser criada.
 	container.SetImageName("delete:latest")
 
-	// English: Defines the path where the golang code to be transformed into a docker image is located.
-	// Português: Define o caminho onde está o código golang a ser transformado em imagem docker.
+	// English: Golang project path to be turned into docker image
+	// Português: Caminho do projeto em Golang a ser transformado em imagem docker
 	container.SetBuildFolderPath("./test/bug")
 
 	// English: Defines the name of the docker container to be created.
@@ -47,10 +49,28 @@ func ExampleContainerBuilder_AddFailMatchFlag() {
 	// Português: Define a quantidade máxima de memória a ser usada pelo container docker.
 	container.SetImageBuildOptionsMemory(100 * KMegaByte)
 
-	container.AddFailMatchFlag(
-		"counter: 400000",
+	// Português: Define um log, na forma de arquivo CSV, de desempenho do container, com indicadores de consumo de memória e tempos de acesso. Nota: O formato do log varia de acordo com a plataforma, macos, windows, linux.
+	// English: Defines a log, in the form of a CSV file, of the container's performance, with indicators of memory consumption and access times. Note: The log format varies by platform, macos, windows, linux.
+	container.SetLogPath("./test.counter.log.csv")
+
+	// Português: Define um filtro de busca por texto na saída padrão do container e escreve o texto no log definido por SetLogPath()
+	// English: Sets a text search filter on the container's standard output and writes the text to the log defined by SetLogPath()
+	container.AddFilterAndReplaceToLog(
+		"contador",
+		"counter",
+		"^.*?counter: (?P<valueToGet>[\\d\\.]+)",
+		"\\.",
+		",",
 	)
 
+	// English: Adds a failure indicator to the project. Failure indicator is a text searched for in the container's standard output and indicates something that should not have happened during the test.
+	// Português: Adiciona um indicador de falha ao projeto. Indicador de falha é um texto procurado na saída padrão do container e indica algo que não deveria ter acontecido durante o teste.
+	container.AddFailMatchFlag(
+		"counter: 40",
+	)
+
+	// English: Adds a log file write failure indicator to the project. Failure indicator is a text searched for in the container's standard output and indicates something that should not have happened during the test.
+	// Português: Adiciona um indicador de falha com gravação de arquivo em log ao projeto. Indicador de falha é um texto procurado na saída padrão do container e indica algo que não deveria ter acontecido durante o teste.
 	err = container.AddFailMatchFlagToFileLog(
 		"bug:",
 		"./log1/log2/log3",
@@ -91,24 +111,35 @@ func ExampleContainerBuilder_AddFailMatchFlag() {
 		return
 	}
 
-	// English: Starts container monitoring at two second intervals. This functionality generates the log and monitors the standard output of the container.
-	// Português: Inicializa o monitoramento do container com intervalos de dois segundos. Esta funcionalidade gera o log e monitora a saída padrão do container.
+	// English: Starts container monitoring at two second intervals. This functionality monitors the container's standard output and generates the log defined by the SetLogPath() function.
+	// Português: Inicializa o monitoramento do container com intervalos de dois segundos. Esta funcionalidade monitora a saída padrão do container e gera o log definido pela função SetLogPath().
 	container.StartMonitor(time.NewTicker(2 * time.Second))
 
-	// English: Gets the event channel pointer inside the container.
-	// Português: Pega o ponteiro do canal de eventos dentro do container.
+	// English: Gets the event channel inside the container.
+	// Português: Pega o canal de eventos dentro do container.
 	event := container.GetChaosEvent()
 
-	select {
-	case e := <-event:
-		fmt.Printf("container name: %v\n", e.ContainerName)
-		fmt.Printf("done: %v\n", e.Done)
-		fmt.Printf("fail: %v\n", e.Fail)
-		fmt.Printf("error: %v\n", e.Error)
+	var fail bool
+	for {
+		select {
+		case e := <-event:
+			if e.Fail == true {
+				fmt.Printf("container name: %v\n", e.ContainerName)
+				fmt.Printf("done: %v\n", e.Done)
+				fmt.Printf("fail: %v\n", e.Fail)
+				fmt.Printf("error: %v\n", e.Error)
+
+				fail = e.Fail
+			}
+		}
+
+		if fail == true {
+			break
+		}
 	}
 
-	// English: Stop container monitoring.
-	// Português: Para o monitoramento do container.
+	// English: For container monitoring. Note: This function should be used to avoid trying to read a container that no longer exists, erased by the GarbageCollector() function.
+	// Português: Para o monitoramento do container. Nota: Esta função deve ser usada para evitar tentativa de leitura em um container que não existe mais, apagado pela função GarbageCollector().
 	_ = container.StopMonitor()
 
 	// English: Deletes all docker elements with the term `delete` in the name.
@@ -133,7 +164,7 @@ func ExampleContainerBuilder_AddFailMatchFlag() {
 	_ = os.Remove("./log1/")
 
 	// Output:
-	// image size: 1.38 MB
+	// image size: 1.4 MB
 	// image os: linux
 	// container name: container_counter_delete_after_test
 	// done: false
