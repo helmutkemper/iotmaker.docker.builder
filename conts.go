@@ -280,10 +280,10 @@ const (
 		KLogColumnBlkioIoTimeRecursive | // não aparece no mac
 		KLogColumnBlkioSectorsRecursive // não aparece no mac
 
-	// KLogColumnMacOsLog
+	// KLogColumnMacOs
 	//
 	// English: Mac OS Log
-	KLogColumnMacOsLog = KLogColumnReadingTime |
+	KLogColumnMacOs = KLogColumnReadingTime |
 		KLogColumnCurrentNumberOfOidsInTheCGroup |
 		KLogColumnTotalCPUTimeConsumed |
 		KLogColumnTimeSpentByTasksOfTheCGroupInKernelMode |

@@ -18,7 +18,7 @@ func (e *ContainerBuilder) Init() (err error) {
 
 	var osName = runtime.GOOS
 	if e.rowsToPrint == 0 && osName == "darwin" {
-		e.rowsToPrint = KLogColumnMacOsLog
+		e.rowsToPrint = KLogColumnMacOs
 	} else if e.rowsToPrint == 0 && osName == "windows" {
 		e.rowsToPrint = KLogColumnWindows
 	} else if e.rowsToPrint == 0 {

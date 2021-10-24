@@ -33,7 +33,7 @@ func TestContainerBuilder_writeBlkioIoTimeRecursive(t *testing.T) {
 	// define o limite de memória
 	container.SetImageBuildOptionsMemory(100 * KMegaByte)
 
-	container.SetLogPath(logFile)
+	container.SetCsvLogPath(logFile, true)
 	container.AddFilterToLog(
 		"contador",
 		"counter",

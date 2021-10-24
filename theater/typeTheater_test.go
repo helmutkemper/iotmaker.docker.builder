@@ -72,7 +72,7 @@ func TestTheater_WriteStatsCSV(t *testing.T) {
 	// define o limite de memória
 	container.SetImageBuildOptionsMemory(100 * builder.KMegaByte)
 
-	container.SetLogPath("./counter.log.csv")
+	container.SetCsvLogPath("./counter.log.csv")
 	container.AddFilterToSuccess(
 		"done!",
 		"^.*?(?P<valueToGet>\\d+/\\d+/\\d+ \\d+:\\d+:\\d+ done!).*",

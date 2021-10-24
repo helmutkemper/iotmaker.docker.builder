@@ -27,7 +27,7 @@ func ExampleContainerBuilder_SetCsvFileRowsToPrint() {
 	// define o limite de memória
 	container.SetImageBuildOptionsMemory(100 * KMegaByte)
 
-	container.SetLogPath("./test.counter.log.36.csv")
+	container.SetCsvLogPath("./test.counter.log.36.csv", true)
 	container.AddFilterToLog(
 		"contador",
 		"counter",

@@ -47,7 +47,7 @@ func ExampleContainerBuilder_AddFilterToLog() {
 
 	// English: Defines the log file path with container statistical data
 	// Português: Define o caminho do arquivo de log com dados estatísticos do container
-	container.SetLogPath("./test.counter.log.csv")
+	container.SetCsvLogPath("./test.counter.log.csv", true)
 
 	// English: Adds a search filter to the standard output of the container, to save the information in the log file
 	// Português: Adiciona um filtro de busca na saída padrão do container, para salvar a informação no arquivo de log
