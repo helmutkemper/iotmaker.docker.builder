@@ -52,8 +52,8 @@ func TestContainerBuilder_writeCurrentNumberOfOidsInTheCGroup(t *testing.T) {
 		"Test Fail! Counter Value: ${value} - Hour: ${hour} - Date: ${date}",
 	)
 
-	container.SetCsvFileRowsToPrint(KReadingTime |
-		KCurrentNumberOfOidsInTheCGroup,
+	container.SetCsvFileRowsToPrint(KLogColumnReadingTime |
+		KLogColumnCurrentNumberOfOidsInTheCGroup,
 	)
 
 	err = container.Init()

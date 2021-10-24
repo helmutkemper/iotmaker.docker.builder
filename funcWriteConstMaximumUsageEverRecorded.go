@@ -8,7 +8,7 @@ import (
 
 func (e *ContainerBuilder) writeConstMaximumUsageEverRecorded(file *os.File) (tab bool, err error) {
 	// maximum usage ever recorded.
-	if e.rowsToPrint&KMaximumUsageEverRecorded == KMaximumUsageEverRecorded {
+	if e.rowsToPrint&KLogColumnMaximumUsageEverRecorded == KLogColumnMaximumUsageEverRecorded {
 		_, err = file.Write([]byte("KMaximumUsageEverRecorded"))
 		if err != nil {
 			log.Printf("writeContainerLogToFile().error: %v", err.Error())

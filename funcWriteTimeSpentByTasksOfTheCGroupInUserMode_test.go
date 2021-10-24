@@ -52,13 +52,13 @@ func TestContainerBuilder_writeTimeSpentByTasksOfTheCGroupInUserMode(t *testing.
 		"Test Fail! Counter Value: ${value} - Hour: ${hour} - Date: ${date}",
 	)
 
-	container.SetCsvFileRowsToPrint(KReadingTime |
-		KCurrentNumberOfOidsInTheCGroup |
-		KLimitOnTheNumberOfPidsInTheCGroup |
-		KTotalCPUTimeConsumed |
-		KTotalCPUTimeConsumedPerCore |
-		KTimeSpentByTasksOfTheCGroupInKernelMode |
-		KTimeSpentByTasksOfTheCGroupInUserMode,
+	container.SetCsvFileRowsToPrint(KLogColumnReadingTime |
+		KLogColumnCurrentNumberOfOidsInTheCGroup |
+		KLogColumnLimitOnTheNumberOfPidsInTheCGroup |
+		KLogColumnTotalCPUTimeConsumed |
+		KLogColumnTotalCPUTimeConsumedPerCore |
+		KLogColumnTimeSpentByTasksOfTheCGroupInKernelMode |
+		KLogColumnTimeSpentByTasksOfTheCGroupInUserMode,
 	)
 
 	err = container.Init()

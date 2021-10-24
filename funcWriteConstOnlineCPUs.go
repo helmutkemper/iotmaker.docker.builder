@@ -8,7 +8,7 @@ import (
 
 func (e *ContainerBuilder) writeConstOnlineCPUs(file *os.File) (tab bool, err error) {
 	// Online CPUs. Linux only.
-	if e.rowsToPrint&KOnlineCPUs == KOnlineCPUs {
+	if e.rowsToPrint&KLogColumnOnlineCPUs == KLogColumnOnlineCPUs {
 		_, err = file.Write([]byte("KOnlineCPUs"))
 		if err != nil {
 			log.Printf("writeContainerLogToFile().error: %v", err.Error())

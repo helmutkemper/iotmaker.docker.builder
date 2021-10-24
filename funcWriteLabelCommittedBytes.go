@@ -8,7 +8,7 @@ import (
 
 func (e *ContainerBuilder) writeLabelCommittedBytes(file *os.File) (tab bool, err error) {
 	// committed bytes
-	if e.rowsToPrint&KCommittedBytes == KCommittedBytes {
+	if e.rowsToPrint&KLogColumnCommittedBytes == KLogColumnCommittedBytes {
 		_, err = file.Write([]byte("Committed bytes"))
 		if err != nil {
 			log.Printf("writeContainerLogToFile().error: %v", err.Error())

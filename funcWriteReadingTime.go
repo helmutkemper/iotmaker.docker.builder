@@ -8,7 +8,7 @@ import (
 )
 
 func (e *ContainerBuilder) writeReadingTime(file *os.File, stats *types.Stats) (tab bool, err error) {
-	if e.rowsToPrint&KReadingTime == KReadingTime {
+	if e.rowsToPrint&KLogColumnReadingTime == KLogColumnReadingTime {
 		_, err = file.Write([]byte(stats.Read.String()))
 		if err != nil {
 			log.Printf("writeContainerLogToFile().error: %v", err.Error())

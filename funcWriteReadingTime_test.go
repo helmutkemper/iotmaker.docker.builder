@@ -52,7 +52,7 @@ func TestContainerBuilder_writeReadingTime(t *testing.T) {
 		"Test Fail! Counter Value: ${value} - Hour: ${hour} - Date: ${date}",
 	)
 
-	container.SetCsvFileRowsToPrint(KReadingTime)
+	container.SetCsvFileRowsToPrint(KLogColumnReadingTime)
 
 	err = container.Init()
 	if err != nil {

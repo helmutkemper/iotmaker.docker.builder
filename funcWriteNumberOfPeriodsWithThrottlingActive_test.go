@@ -52,16 +52,16 @@ func TestContainerBuilder_writeNumberOfPeriodsWithThrottlingActive(t *testing.T)
 		"Test Fail! Counter Value: ${value} - Hour: ${hour} - Date: ${date}",
 	)
 
-	container.SetCsvFileRowsToPrint(KReadingTime |
-		KCurrentNumberOfOidsInTheCGroup |
-		KLimitOnTheNumberOfPidsInTheCGroup |
-		KTotalCPUTimeConsumed |
-		KTotalCPUTimeConsumedPerCore |
-		KTimeSpentByTasksOfTheCGroupInKernelMode |
-		KTimeSpentByTasksOfTheCGroupInUserMode |
-		KSystemUsage |
-		KOnlineCPUs |
-		KNumberOfPeriodsWithThrottlingActive,
+	container.SetCsvFileRowsToPrint(KLogColumnReadingTime |
+		KLogColumnCurrentNumberOfOidsInTheCGroup |
+		KLogColumnLimitOnTheNumberOfPidsInTheCGroup |
+		KLogColumnTotalCPUTimeConsumed |
+		KLogColumnTotalCPUTimeConsumedPerCore |
+		KLogColumnTimeSpentByTasksOfTheCGroupInKernelMode |
+		KLogColumnTimeSpentByTasksOfTheCGroupInUserMode |
+		KLogColumnSystemUsage |
+		KLogColumnOnlineCPUs |
+		KLogColumnNumberOfPeriodsWithThrottlingActive,
 	)
 
 	err = container.Init()

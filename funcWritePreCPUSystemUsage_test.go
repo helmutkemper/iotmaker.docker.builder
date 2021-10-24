@@ -52,23 +52,23 @@ func TestContainerBuilder_writePreCPUSystemUsage(t *testing.T) {
 		"Test Fail! Counter Value: ${value} - Hour: ${hour} - Date: ${date}",
 	)
 
-	container.SetCsvFileRowsToPrint(KReadingTime |
-		KCurrentNumberOfOidsInTheCGroup |
-		KLimitOnTheNumberOfPidsInTheCGroup |
-		KTotalCPUTimeConsumed |
-		KTotalCPUTimeConsumedPerCore |
-		KTimeSpentByTasksOfTheCGroupInKernelMode |
-		KTimeSpentByTasksOfTheCGroupInUserMode |
-		KSystemUsage |
-		KOnlineCPUs |
-		KNumberOfPeriodsWithThrottlingActive |
-		KNumberOfPeriodsWhenTheContainerHitsItsThrottlingLimit |
-		KAggregateTimeTheContainerWasThrottledForInNanoseconds |
-		KTotalPreCPUTimeConsumed |
-		KTotalPreCPUTimeConsumedPerCore |
-		KTimeSpentByPreCPUTasksOfTheCGroupInKernelMode |
-		KTimeSpentByPreCPUTasksOfTheCGroupInUserMode |
-		KPreCPUSystemUsage,
+	container.SetCsvFileRowsToPrint(KLogColumnReadingTime |
+		KLogColumnCurrentNumberOfOidsInTheCGroup |
+		KLogColumnLimitOnTheNumberOfPidsInTheCGroup |
+		KLogColumnTotalCPUTimeConsumed |
+		KLogColumnTotalCPUTimeConsumedPerCore |
+		KLogColumnTimeSpentByTasksOfTheCGroupInKernelMode |
+		KLogColumnTimeSpentByTasksOfTheCGroupInUserMode |
+		KLogColumnSystemUsage |
+		KLogColumnOnlineCPUs |
+		KLogColumnNumberOfPeriodsWithThrottlingActive |
+		KLogColumnNumberOfPeriodsWhenTheContainerHitsItsThrottlingLimit |
+		KLogColumnAggregateTimeTheContainerWasThrottledForInNanoseconds |
+		KLogColumnTotalPreCPUTimeConsumed |
+		KLogColumnTotalPreCPUTimeConsumedPerCore |
+		KLogColumnTimeSpentByPreCPUTasksOfTheCGroupInKernelMode |
+		KLogColumnTimeSpentByPreCPUTasksOfTheCGroupInUserMode |
+		KLogColumnPreCPUSystemUsage,
 	)
 
 	err = container.Init()

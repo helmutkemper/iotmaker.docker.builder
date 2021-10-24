@@ -9,7 +9,7 @@ import (
 func (e *ContainerBuilder) writeConstNumberOfPeriodsWithThrottlingActive(file *os.File) (tab bool, err error) {
 	// Throttling Data. Linux only.
 	// Number of periods with throttling active
-	if e.rowsToPrint&KNumberOfPeriodsWithThrottlingActive == KNumberOfPeriodsWithThrottlingActive {
+	if e.rowsToPrint&KLogColumnNumberOfPeriodsWithThrottlingActive == KLogColumnNumberOfPeriodsWithThrottlingActive {
 		_, err = file.Write([]byte("KNumberOfPeriodsWithThrottlingActive"))
 		if err != nil {
 			log.Printf("writeContainerLogToFile().error: %v", err.Error())

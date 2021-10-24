@@ -11,7 +11,7 @@ import (
 func (e *ContainerBuilder) writeNumberOfPeriodsWithThrottlingActive(file *os.File, stats *types.Stats) (tab bool, err error) {
 	// Throttling Data. Linux only.
 	// Number of periods with throttling active
-	if e.rowsToPrint&KNumberOfPeriodsWithThrottlingActive == KNumberOfPeriodsWithThrottlingActive {
+	if e.rowsToPrint&KLogColumnNumberOfPeriodsWithThrottlingActive == KLogColumnNumberOfPeriodsWithThrottlingActive {
 		_, err = file.Write([]byte(fmt.Sprintf("%v", stats.CPUStats.ThrottlingData.Periods)))
 		if err != nil {
 			log.Printf("writeContainerLogToFile().error: %v", err.Error())

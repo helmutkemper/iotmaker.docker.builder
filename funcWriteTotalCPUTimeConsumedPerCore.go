@@ -9,7 +9,7 @@ import (
 )
 
 func (e *ContainerBuilder) writeTotalCPUTimeConsumedPerCore(file *os.File, stats *types.Stats) (tab bool, err error) {
-	if e.rowsToPrint&KTotalCPUTimeConsumedPerCore == KTotalCPUTimeConsumedPerCore {
+	if e.rowsToPrint&KLogColumnTotalCPUTimeConsumedPerCore == KLogColumnTotalCPUTimeConsumedPerCore {
 		// Total CPU time consumed per core (Linux). Not used on Windows.
 		// Units: nanoseconds.
 		if e.logCpus != 0 && len(stats.CPUStats.CPUUsage.PercpuUsage) == 0 {

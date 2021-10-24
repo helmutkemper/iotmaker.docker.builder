@@ -11,7 +11,7 @@ import (
 func (e *ContainerBuilder) writeNumberOfPeriodsWhenTheContainerHitsItsThrottlingLimit(file *os.File, stats *types.Stats) (tab bool, err error) {
 	// Throttling Data. Linux only.
 	// Number of periods when the container hits its throttling limit.
-	if e.rowsToPrint&KNumberOfPeriodsWhenTheContainerHitsItsThrottlingLimit == KNumberOfPeriodsWhenTheContainerHitsItsThrottlingLimit {
+	if e.rowsToPrint&KLogColumnNumberOfPeriodsWhenTheContainerHitsItsThrottlingLimit == KLogColumnNumberOfPeriodsWhenTheContainerHitsItsThrottlingLimit {
 		_, err = file.Write([]byte(fmt.Sprintf("%v", stats.CPUStats.ThrottlingData.ThrottledPeriods)))
 		if err != nil {
 			log.Printf("writeContainerLogToFile().error: %v", err.Error())

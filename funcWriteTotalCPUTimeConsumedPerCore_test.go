@@ -53,11 +53,11 @@ func TestContainerBuilder_writeTotalCPUTimeConsumedPerCore(t *testing.T) {
 	)
 
 	container.SetCsvFileRowsToPrint(
-		KReadingTime |
-			KCurrentNumberOfOidsInTheCGroup |
-			KLimitOnTheNumberOfPidsInTheCGroup |
-			KTotalCPUTimeConsumed |
-			KTotalCPUTimeConsumedPerCore,
+		KLogColumnReadingTime |
+			KLogColumnCurrentNumberOfOidsInTheCGroup |
+			KLogColumnLimitOnTheNumberOfPidsInTheCGroup |
+			KLogColumnTotalCPUTimeConsumed |
+			KLogColumnTotalCPUTimeConsumedPerCore,
 	)
 
 	err = container.Init()

@@ -10,7 +10,7 @@ import (
 
 func (e *ContainerBuilder) writeOnlinePreCPUs(file *os.File, stats *types.Stats) (tab bool, err error) {
 	// Online CPUs. Linux only.
-	if e.rowsToPrint&KOnlinePreCPUs == KOnlinePreCPUs {
+	if e.rowsToPrint&KLogColumnOnlinePreCPUs == KLogColumnOnlinePreCPUs {
 		_, err = file.Write([]byte(fmt.Sprintf("%v", stats.PreCPUStats.OnlineCPUs)))
 		if err != nil {
 			log.Printf("writeContainerLogToFile().error: %v", err.Error())

@@ -53,9 +53,9 @@ func TestContainerBuilder_writeLimitOnTheNumberOfPidsInTheCGroup(t *testing.T) {
 	)
 
 	container.SetCsvFileRowsToPrint(
-		KReadingTime |
-			KCurrentNumberOfOidsInTheCGroup |
-			KLimitOnTheNumberOfPidsInTheCGroup,
+		KLogColumnReadingTime |
+			KLogColumnCurrentNumberOfOidsInTheCGroup |
+			KLogColumnLimitOnTheNumberOfPidsInTheCGroup,
 	)
 
 	err = container.Init()

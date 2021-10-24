@@ -18,11 +18,11 @@ func (e *ContainerBuilder) Init() (err error) {
 
 	var osName = runtime.GOOS
 	if e.rowsToPrint == 0 && osName == "darwin" {
-		e.rowsToPrint = KMacOsLog
+		e.rowsToPrint = KLogColumnMacOsLog
 	} else if e.rowsToPrint == 0 && osName == "windows" {
-		e.rowsToPrint = KWindows
+		e.rowsToPrint = KLogColumnWindows
 	} else if e.rowsToPrint == 0 {
-		e.rowsToPrint = KAll
+		e.rowsToPrint = KLogColumnAll
 	}
 
 	e.chaos.event = make(chan Event, 1)

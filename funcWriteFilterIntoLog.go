@@ -52,7 +52,7 @@ func (e *ContainerBuilder) writeFilterIntoLog(file *os.File, filter []LogFilter,
 				lineToFile = append(lineToFile, toFile...)
 				lineToFile = append(lineToFile, []byte(e.csvValueSeparator)...)
 
-				tab = e.rowsToPrint&KFilterLogComa != 0
+				tab = e.rowsToPrint&KLogColumnFilterLogComa != 0
 			}
 		}
 	}

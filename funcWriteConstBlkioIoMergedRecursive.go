@@ -8,7 +8,7 @@ import (
 )
 
 func (e *ContainerBuilder) writeConstBlkioIoMergedRecursive(file *os.File, stats *types.Stats) (tab bool, err error) {
-	if e.rowsToPrint&KBlkioIoMergedRecursive == KBlkioIoMergedRecursive {
+	if e.rowsToPrint&KLogColumnBlkioIoMergedRecursive == KLogColumnBlkioIoMergedRecursive {
 		length := len(stats.BlkioStats.IoMergedRecursive)
 		for i := 0; i != length; i += 1 {
 			_, err = file.Write([]byte("KBlkioIoMergedRecursive"))

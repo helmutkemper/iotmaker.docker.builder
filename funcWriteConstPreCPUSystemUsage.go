@@ -8,7 +8,7 @@ import (
 
 func (e *ContainerBuilder) writeConstPreCPUSystemUsage(file *os.File) (tab bool, err error) {
 	// System Usage. Linux only.
-	if e.rowsToPrint&KPreCPUSystemUsage == KPreCPUSystemUsage {
+	if e.rowsToPrint&KLogColumnPreCPUSystemUsage == KLogColumnPreCPUSystemUsage {
 		_, err = file.Write([]byte("KPreCPUSystemUsage"))
 		if err != nil {
 			log.Printf("writeContainerLogToFile().error: %v", err.Error())

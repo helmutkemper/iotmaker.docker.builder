@@ -9,7 +9,7 @@ import (
 )
 
 func (e *ContainerBuilder) writeBlkioIoServiceBytesRecursive(file *os.File, stats *types.Stats) (tab bool, err error) {
-	if e.rowsToPrint&KBlkioIoServiceBytesRecursive == KBlkioIoServiceBytesRecursive {
+	if e.rowsToPrint&KLogColumnBlkioIoServiceBytesRecursive == KLogColumnBlkioIoServiceBytesRecursive {
 		length := len(stats.BlkioStats.IoServiceBytesRecursive)
 		for i := 0; i != length; i += 1 {
 			_, err = file.Write([]byte(strconv.FormatUint(stats.BlkioStats.IoServiceBytesRecursive[i].Major, 10)))

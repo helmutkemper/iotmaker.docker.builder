@@ -53,273 +53,273 @@ const (
 	//   5 * KTeraByte = 5 TBytes
 	KTeraByte = 1024 * 1024 * 1024 * 1024
 
-	// KAll
+	// KLogColumnAll
 	//
 	// English: Enable all values to log
-	KAll = 0x7FFFFFFFFFFFFFF
+	KLogColumnAll = 0x7FFFFFFFFFFFFFF
 
-	// KReadingTime
+	// KLogColumnReadingTime
 	//
 	// English: Reading time
-	KReadingTime     = 0b0000000000000000000000000000000000000000000000000000000000000001
-	KReadingTimeComa = 0b0111111111111111111111111111111111111111111111111111111111111110
+	KLogColumnReadingTime = 0b0000000000000000000000000000000000000000000000000000000000000001
+	KReadingTimeComa      = 0b0111111111111111111111111111111111111111111111111111111111111110
 
-	KFilterLog     = 0b0000000000000000000000000000000000000000000000000000000000000010
-	KFilterLogComa = 0b0111111111111111111111111111111111111111111111111111111111111100
+	KFilterLog              = 0b0000000000000000000000000000000000000000000000000000000000000010
+	KLogColumnFilterLogComa = 0b0111111111111111111111111111111111111111111111111111111111111100
 
-	// KCurrentNumberOfOidsInTheCGroup
+	// KLogColumnCurrentNumberOfOidsInTheCGroup
 	//
 	// English: Linux specific stats, not populated on Windows. Current is the number of pids in the cgroup
-	KCurrentNumberOfOidsInTheCGroup     = 0b0000000000000000000000000000000000000000000000000000000000000100
-	KCurrentNumberOfOidsInTheCGroupComa = 0b0111111111111111111111111111111111111111111111111111111111111000
+	KLogColumnCurrentNumberOfOidsInTheCGroup = 0b0000000000000000000000000000000000000000000000000000000000000100
+	KCurrentNumberOfOidsInTheCGroupComa      = 0b0111111111111111111111111111111111111111111111111111111111111000
 
-	// KLimitOnTheNumberOfPidsInTheCGroup
+	// KLogColumnLimitOnTheNumberOfPidsInTheCGroup
 	//
 	// English: Linux specific stats, not populated on Windows. Limit is the hard limit on the number of pids in the cgroup. A "Limit" of 0 means that there is no limit.
-	KLimitOnTheNumberOfPidsInTheCGroup     = 0b0000000000000000000000000000000000000000000000000000000000001000
-	KLimitOnTheNumberOfPidsInTheCGroupComa = 0b0111111111111111111111111111111111111111111111111111111111110000
+	KLogColumnLimitOnTheNumberOfPidsInTheCGroup = 0b0000000000000000000000000000000000000000000000000000000000001000
+	KLimitOnTheNumberOfPidsInTheCGroupComa      = 0b0111111111111111111111111111111111111111111111111111111111110000
 
-	// KTotalCPUTimeConsumed
+	// KLogColumnTotalCPUTimeConsumed
 	//
 	// English: Total CPU time consumed. (Units: nanoseconds on Linux, Units: 100's of nanoseconds on Windows)
-	KTotalCPUTimeConsumed     = 0b0000000000000000000000000000000000000000000000000000000000010000
-	KTotalCPUTimeConsumedComa = 0b0111111111111111111111111111111111111111111111111111111111100000
+	KLogColumnTotalCPUTimeConsumed = 0b0000000000000000000000000000000000000000000000000000000000010000
+	KTotalCPUTimeConsumedComa      = 0b0111111111111111111111111111111111111111111111111111111111100000
 
-	// KTotalCPUTimeConsumedPerCore
+	// KLogColumnTotalCPUTimeConsumedPerCore
 	//
 	// English: Total CPU time consumed. (Units: nanoseconds on Linux, Units: 100's of nanoseconds on Windows)
-	KTotalCPUTimeConsumedPerCore     = 0b0000000000000000000000000000000000000000000000000000000000100000
-	KTotalCPUTimeConsumedPerCoreComa = 0b0111111111111111111111111111111111111111111111111111111111000000
+	KLogColumnTotalCPUTimeConsumedPerCore = 0b0000000000000000000000000000000000000000000000000000000000100000
+	KTotalCPUTimeConsumedPerCoreComa      = 0b0111111111111111111111111111111111111111111111111111111111000000
 
-	// KTimeSpentByTasksOfTheCGroupInKernelMode
+	// KLogColumnTimeSpentByTasksOfTheCGroupInKernelMode
 	//
 	// English: Time spent by tasks of the cgroup in kernel mode (Units: nanoseconds on Linux). Time spent by all container processes in kernel mode (Units: 100's of nanoseconds on Windows.Not populated for Hyper-V Containers.)
-	KTimeSpentByTasksOfTheCGroupInKernelMode     = 0b0000000000000000000000000000000000000000000000000000000001000000
-	KTimeSpentByTasksOfTheCGroupInKernelModeComa = 0b0111111111111111111111111111111111111111111111111111111110000000
+	KLogColumnTimeSpentByTasksOfTheCGroupInKernelMode = 0b0000000000000000000000000000000000000000000000000000000001000000
+	KTimeSpentByTasksOfTheCGroupInKernelModeComa      = 0b0111111111111111111111111111111111111111111111111111111110000000
 
-	// KTimeSpentByTasksOfTheCGroupInUserMode
+	// KLogColumnTimeSpentByTasksOfTheCGroupInUserMode
 	//
 	// English: Time spent by tasks of the cgroup in user mode (Units: nanoseconds on Linux). Time spent by all container processes in user mode (Units: 100's of nanoseconds on Windows. Not populated for Hyper-V Containers)
-	KTimeSpentByTasksOfTheCGroupInUserMode     = 0b0000000000000000000000000000000000000000000000000000000010000000
-	KTimeSpentByTasksOfTheCGroupInUserModeComa = 0b0111111111111111111111111111111111111111111111111111111100000000
+	KLogColumnTimeSpentByTasksOfTheCGroupInUserMode = 0b0000000000000000000000000000000000000000000000000000000010000000
+	KTimeSpentByTasksOfTheCGroupInUserModeComa      = 0b0111111111111111111111111111111111111111111111111111111100000000
 
-	// KSystemUsage
+	// KLogColumnSystemUsage
 	//
 	// English: System Usage. Linux only.
-	KSystemUsage     = 0b0000000000000000000000000000000000000000000000000000000100000000
-	KSystemUsageComa = 0b0111111111111111111111111111111111111111111111111111111000000000
+	KLogColumnSystemUsage = 0b0000000000000000000000000000000000000000000000000000000100000000
+	KSystemUsageComa      = 0b0111111111111111111111111111111111111111111111111111111000000000
 
 	// KOnlineCPUs
 	//
 	// English: Online CPUs. Linux only.
-	KOnlineCPUs     = 0b0000000000000000000000000000000000000000000000000000001000000000
-	KOnlineCPUsComa = 0b0111111111111111111111111111111111111111111111111111110000000000
+	KLogColumnOnlineCPUs = 0b0000000000000000000000000000000000000000000000000000001000000000
+	KOnlineCPUsComa      = 0b0111111111111111111111111111111111111111111111111111110000000000
 
-	// KNumberOfPeriodsWithThrottlingActive
+	// KLogColumnNumberOfPeriodsWithThrottlingActive
 	//
 	// English: Throttling Data. Linux only. Number of periods with throttling active.
-	KNumberOfPeriodsWithThrottlingActive     = 0b0000000000000000000000000000000000000000000000000000010000000000
-	KNumberOfPeriodsWithThrottlingActiveComa = 0b0111111111111111111111111111111111111111111111111111100000000000
+	KLogColumnNumberOfPeriodsWithThrottlingActive = 0b0000000000000000000000000000000000000000000000000000010000000000
+	KNumberOfPeriodsWithThrottlingActiveComa      = 0b0111111111111111111111111111111111111111111111111111100000000000
 
 	// KNumberOfPeriodsWhenTheContainerHitsItsThrottlingLimit
 	//
 	// English: Throttling Data. Linux only. Number of periods when the container hits its throttling limit.
-	KNumberOfPeriodsWhenTheContainerHitsItsThrottlingLimit     = 0b0000000000000000000000000000000000000000000000000000100000000000
-	KNumberOfPeriodsWhenTheContainerHitsItsThrottlingLimitComa = 0b0111111111111111111111111111111111111111111111111111000000000000
+	KLogColumnNumberOfPeriodsWhenTheContainerHitsItsThrottlingLimit = 0b0000000000000000000000000000000000000000000000000000100000000000
+	KNumberOfPeriodsWhenTheContainerHitsItsThrottlingLimitComa      = 0b0111111111111111111111111111111111111111111111111111000000000000
 
 	// KAggregateTimeTheContainerWasThrottledForInNanoseconds
 	//
 	// English: Throttling Data. Linux only. Aggregate time the container was throttled for in nanoseconds.
-	KAggregateTimeTheContainerWasThrottledForInNanoseconds     = 0b0000000000000000000000000000000000000000000000000001000000000000
-	KAggregateTimeTheContainerWasThrottledForInNanosecondsComa = 0b0111111111111111111111111111111111111111111111111110000000000000
+	KLogColumnAggregateTimeTheContainerWasThrottledForInNanoseconds = 0b0000000000000000000000000000000000000000000000000001000000000000
+	KAggregateTimeTheContainerWasThrottledForInNanosecondsComa      = 0b0111111111111111111111111111111111111111111111111110000000000000
 
-	// KTotalPreCPUTimeConsumed
+	// KLogColumnTotalPreCPUTimeConsumed
 	//
 	// English: Total CPU time consumed per core (Units: nanoseconds on Linux). Not used on Windows.
-	KTotalPreCPUTimeConsumed     = 0b0000000000000000000000000000000000000000000000000010000000000000
-	KTotalPreCPUTimeConsumedComa = 0b0111111111111111111111111111111111111111111111111100000000000000
+	KLogColumnTotalPreCPUTimeConsumed = 0b0000000000000000000000000000000000000000000000000010000000000000
+	KTotalPreCPUTimeConsumedComa      = 0b0111111111111111111111111111111111111111111111111100000000000000
 
-	// KTotalPreCPUTimeConsumedPerCore
+	// KLogColumnTotalPreCPUTimeConsumedPerCore
 	//
 	// English: Total CPU time consumed per core (Units: nanoseconds on Linux). Not used on Windows.
-	KTotalPreCPUTimeConsumedPerCore     = 0b0000000000000000000000000000000000000000000000000100000000000000
-	KTotalPreCPUTimeConsumedPerCoreComa = 0b0111111111111111111111111111111111111111111111111000000000000000
+	KLogColumnTotalPreCPUTimeConsumedPerCore = 0b0000000000000000000000000000000000000000000000000100000000000000
+	KTotalPreCPUTimeConsumedPerCoreComa      = 0b0111111111111111111111111111111111111111111111111000000000000000
 
-	// KTimeSpentByPreCPUTasksOfTheCGroupInKernelMode
+	// KLogColumnTimeSpentByPreCPUTasksOfTheCGroupInKernelMode
 	//
 	// English: Time spent by tasks of the cgroup in kernel mode (Units: nanoseconds on Linux) - Time spent by all container processes in kernel mode (Units: 100's of nanoseconds on Windows - Not populated for Hyper-V Containers.)
-	KTimeSpentByPreCPUTasksOfTheCGroupInKernelMode     = 0b0000000000000000000000000000000000000000000000001000000000000000
-	KTimeSpentByPreCPUTasksOfTheCGroupInKernelModeComa = 0b0111111111111111111111111111111111111111111111110000000000000000
+	KLogColumnTimeSpentByPreCPUTasksOfTheCGroupInKernelMode = 0b0000000000000000000000000000000000000000000000001000000000000000
+	KTimeSpentByPreCPUTasksOfTheCGroupInKernelModeComa      = 0b0111111111111111111111111111111111111111111111110000000000000000
 
-	// KTimeSpentByPreCPUTasksOfTheCGroupInUserMode
+	// KLogColumnTimeSpentByPreCPUTasksOfTheCGroupInUserMode
 	//
 	// English: Time spent by tasks of the cgroup in user mode (Units: nanoseconds on Linux) - Time spent by all container processes in user mode (Units: 100's of nanoseconds on Windows. Not populated for Hyper-V Containers)
-	KTimeSpentByPreCPUTasksOfTheCGroupInUserMode     = 0b0000000000000000000000000000000000000000000000010000000000000000
-	KTimeSpentByPreCPUTasksOfTheCGroupInUserModeComa = 0b0111111111111111111111111111111111111111111111100000000000000000
+	KLogColumnTimeSpentByPreCPUTasksOfTheCGroupInUserMode = 0b0000000000000000000000000000000000000000000000010000000000000000
+	KTimeSpentByPreCPUTasksOfTheCGroupInUserModeComa      = 0b0111111111111111111111111111111111111111111111100000000000000000
 
-	// KPreCPUSystemUsage
+	// KLogColumnPreCPUSystemUsage
 	//
 	// English: System Usage. (Linux only)
-	KPreCPUSystemUsage     = 0b0000000000000000000000000000000000000000000000100000000000000000
-	KPreCPUSystemUsageComa = 0b0111111111111111111111111111111111111111111111000000000000000000
+	KLogColumnPreCPUSystemUsage = 0b0000000000000000000000000000000000000000000000100000000000000000
+	KPreCPUSystemUsageComa      = 0b0111111111111111111111111111111111111111111111000000000000000000
 
-	// KOnlinePreCPUs
+	// KLogColumnOnlinePreCPUs
 	//
 	// English: Online CPUs. (Linux only)
-	KOnlinePreCPUs     = 0b0000000000000000000000000000000000000000000001000000000000000000
-	KOnlinePreCPUsComa = 0b0111111111111111111111111111111111111111111110000000000000000000
+	KLogColumnOnlinePreCPUs = 0b0000000000000000000000000000000000000000000001000000000000000000
+	KOnlinePreCPUsComa      = 0b0111111111111111111111111111111111111111111110000000000000000000
 
-	// KAggregatePreCPUTimeTheContainerWasThrottled
+	// KLogColumnAggregatePreCPUTimeTheContainerWasThrottled
 	//
 	// English: Throttling Data. (Linux only) - Aggregate time the container was throttled for in nanoseconds
-	KAggregatePreCPUTimeTheContainerWasThrottled     = 0b0000000000000000000000000000000000000000000010000000000000000000
-	KAggregatePreCPUTimeTheContainerWasThrottledComa = 0b0111111111111111111111111111111111111111111100000000000000000000
+	KLogColumnAggregatePreCPUTimeTheContainerWasThrottled = 0b0000000000000000000000000000000000000000000010000000000000000000
+	KAggregatePreCPUTimeTheContainerWasThrottledComa      = 0b0111111111111111111111111111111111111111111100000000000000000000
 
-	// KNumberOfPeriodsWithPreCPUThrottlingActive
+	// KLogColumnNumberOfPeriodsWithPreCPUThrottlingActive
 	//
 	// English: Throttling Data. (Linux only) - Number of periods with throttling active
-	KNumberOfPeriodsWithPreCPUThrottlingActive     = 0b0000000000000000000000000000000000000000000100000000000000000000
-	KNumberOfPeriodsWithPreCPUThrottlingActiveComa = 0b0111111111111111111111111111111111111111111000000000000000000000
+	KLogColumnNumberOfPeriodsWithPreCPUThrottlingActive = 0b0000000000000000000000000000000000000000000100000000000000000000
+	KNumberOfPeriodsWithPreCPUThrottlingActiveComa      = 0b0111111111111111111111111111111111111111111000000000000000000000
 
-	// KNumberOfPeriodsWhenTheContainerPreCPUHitsItsThrottlingLimit
+	// KLogColumnNumberOfPeriodsWhenTheContainerPreCPUHitsItsThrottlingLimit
 	//
 	// English: Throttling Data. (Linux only) - Number of periods when the container hits its throttling limit.
-	KNumberOfPeriodsWhenTheContainerPreCPUHitsItsThrottlingLimit     = 0b0000000000000000000000000000000000000000001000000000000000000000
-	KNumberOfPeriodsWhenTheContainerPreCPUHitsItsThrottlingLimitComa = 0b0111111111111111111111111111111111111111110000000000000000000000
+	KLogColumnNumberOfPeriodsWhenTheContainerPreCPUHitsItsThrottlingLimit = 0b0000000000000000000000000000000000000000001000000000000000000000
+	KNumberOfPeriodsWhenTheContainerPreCPUHitsItsThrottlingLimitComa      = 0b0111111111111111111111111111111111111111110000000000000000000000
 
-	// KCurrentResCounterUsageForMemory
+	// KLogColumnCurrentResCounterUsageForMemory
 	//
 	// English: Current res_counter usage for memory
-	KCurrentResCounterUsageForMemory     = 0b0000000000000000000000000000000000000000010000000000000000000000
-	KCurrentResCounterUsageForMemoryComa = 0b0111111111111111111111111111111111111111100000000000000000000000
+	KLogColumnCurrentResCounterUsageForMemory = 0b0000000000000000000000000000000000000000010000000000000000000000
+	KCurrentResCounterUsageForMemoryComa      = 0b0111111111111111111111111111111111111111100000000000000000000000
 
-	// KMaximumUsageEverRecorded
+	// KLogColumnMaximumUsageEverRecorded
 	//
 	// English: Maximum usage ever recorded
-	KMaximumUsageEverRecorded     = 0b0000000000000000000000000000000000000000100000000000000000000000
-	KMaximumUsageEverRecordedComa = 0b0111111111111111111111111111111111111111000000000000000000000000
+	KLogColumnMaximumUsageEverRecorded = 0b0000000000000000000000000000000000000000100000000000000000000000
+	KMaximumUsageEverRecordedComa      = 0b0111111111111111111111111111111111111111000000000000000000000000
 
-	// KNumberOfTimesMemoryUsageHitsLimits
+	// KLogColumnNumberOfTimesMemoryUsageHitsLimits
 	//
 	// English: Number of times memory usage hits limits
-	KNumberOfTimesMemoryUsageHitsLimits     = 0b0000000000000000000000000000000000000001000000000000000000000000
-	KNumberOfTimesMemoryUsageHitsLimitsComa = 0b0111111111111111111111111111111111111110000000000000000000000000
+	KLogColumnNumberOfTimesMemoryUsageHitsLimits = 0b0000000000000000000000000000000000000001000000000000000000000000
+	KNumberOfTimesMemoryUsageHitsLimitsComa      = 0b0111111111111111111111111111111111111110000000000000000000000000
 
-	// KMemoryLimit
+	// KLogColumnMemoryLimit
 	//
 	// English: Memory limit
-	KMemoryLimit     = 0b0000000000000000000000000000000000000010000000000000000000000000
-	KMemoryLimitComa = 0b0111111111111111111111111111111111111100000000000000000000000000
+	KLogColumnMemoryLimit = 0b0000000000000000000000000000000000000010000000000000000000000000
+	KMemoryLimitComa      = 0b0111111111111111111111111111111111111100000000000000000000000000
 
-	// KCommittedBytes
+	// KLogColumnCommittedBytes
 	//
 	// English: Committed bytes
-	KCommittedBytes     = 0b0000000000000000000000000000000000000100000000000000000000000000
-	KCommittedBytesComa = 0b0111111111111111111111111111111111111000000000000000000000000000
+	KLogColumnCommittedBytes = 0b0000000000000000000000000000000000000100000000000000000000000000
+	KCommittedBytesComa      = 0b0111111111111111111111111111111111111000000000000000000000000000
 
-	// KPeakCommittedBytes
+	// KLogColumnPeakCommittedBytes
 	//
 	// English: Peak committed bytes
-	KPeakCommittedBytes     = 0b0000000000000000000000000000000000001000000000000000000000000000
-	KPeakCommittedBytesComa = 0b0111111111111111111111111111111111110000000000000000000000000000
+	KLogColumnPeakCommittedBytes = 0b0000000000000000000000000000000000001000000000000000000000000000
+	KPeakCommittedBytesComa      = 0b0111111111111111111111111111111111110000000000000000000000000000
 
-	// KPrivateWorkingSet
+	// KLogColumnPrivateWorkingSet
 	//
 	// English: Private working set
-	KPrivateWorkingSet     = 0b0000000000000000000000000000000000010000000000000000000000000000
-	KPrivateWorkingSetComa = 0b0111111111111111111111111111111111100000000000000000000000000000
+	KLogColumnPrivateWorkingSet = 0b0000000000000000000000000000000000010000000000000000000000000000
+	KPrivateWorkingSetComa      = 0b0111111111111111111111111111111111100000000000000000000000000000
 
-	KBlkioIoServiceBytesRecursive     = 0b0000000000000000000000000000000000100000000000000000000000000000
-	KBlkioIoServiceBytesRecursiveComa = 0b0111111111111111111111111111111111000000000000000000000000000000
+	KLogColumnBlkioIoServiceBytesRecursive = 0b0000000000000000000000000000000000100000000000000000000000000000
+	KBlkioIoServiceBytesRecursiveComa      = 0b0111111111111111111111111111111111000000000000000000000000000000
 
-	KBlkioIoServicedRecursive     = 0b0000000000000000000000000000000001000000000000000000000000000000
-	KBlkioIoServicedRecursiveComa = 0b0111111111111111111111111111111110000000000000000000000000000000
+	KLogColumnBlkioIoServicedRecursive = 0b0000000000000000000000000000000001000000000000000000000000000000
+	KBlkioIoServicedRecursiveComa      = 0b0111111111111111111111111111111110000000000000000000000000000000
 
-	KBlkioIoQueuedRecursive     = 0b0000000000000000000000000000000010000000000000000000000000000000
-	KBlkioIoQueuedRecursiveComa = 0b0111111111111111111111111111111100000000000000000000000000000000
+	KLogColumnBlkioIoQueuedRecursive = 0b0000000000000000000000000000000010000000000000000000000000000000
+	KBlkioIoQueuedRecursiveComa      = 0b0111111111111111111111111111111100000000000000000000000000000000
 
-	KBlkioIoServiceTimeRecursive     = 0b0000000000000000000000000000000100000000000000000000000000000000
-	KBlkioIoServiceTimeRecursiveComa = 0b0111111111111111111111111111111000000000000000000000000000000000
+	KLogColumnBlkioIoServiceTimeRecursive = 0b0000000000000000000000000000000100000000000000000000000000000000
+	KBlkioIoServiceTimeRecursiveComa      = 0b0111111111111111111111111111111000000000000000000000000000000000
 
-	KBlkioIoWaitTimeRecursive     = 0b0000000000000000000000000000001000000000000000000000000000000000
-	KBlkioIoWaitTimeRecursiveComa = 0b0111111111111111111111111111110000000000000000000000000000000000
+	KLogColumnBlkioIoWaitTimeRecursive = 0b0000000000000000000000000000001000000000000000000000000000000000
+	KBlkioIoWaitTimeRecursiveComa      = 0b0111111111111111111111111111110000000000000000000000000000000000
 
-	KBlkioIoMergedRecursive     = 0b0000000000000000000000000000010000000000000000000000000000000000
-	KBlkioIoMergedRecursiveComa = 0b0111111111111111111111111111100000000000000000000000000000000000
+	KLogColumnBlkioIoMergedRecursive = 0b0000000000000000000000000000010000000000000000000000000000000000
+	KBlkioIoMergedRecursiveComa      = 0b0111111111111111111111111111100000000000000000000000000000000000
 
-	KBlkioIoTimeRecursive     = 0b0000000000000000000000000000100000000000000000000000000000000000
-	KBlkioIoTimeRecursiveComa = 0b0111111111111111111111111111000000000000000000000000000000000000
+	KLogColumnBlkioIoTimeRecursive = 0b0000000000000000000000000000100000000000000000000000000000000000
+	KBlkioIoTimeRecursiveComa      = 0b0111111111111111111111111111000000000000000000000000000000000000
 
-	KBlkioSectorsRecursive     = 0b0000000000000000000000000001000000000000000000000000000000000000
-	KBlkioSectorsRecursiveComa = 0b0111111111111111111111111110000000000000000000000000000000000000
+	KLogColumnBlkioSectorsRecursive = 0b0000000000000000000000000001000000000000000000000000000000000000
+	KBlkioSectorsRecursiveComa      = 0b0111111111111111111111111110000000000000000000000000000000000000
 
-	// KMacOsLogWithAllCores
+	// KLogColumnMacOsLogWithAllCores
 	//
 	// English: Mac OS Log
-	KMacOsLogWithAllCores = KReadingTime |
-		KCurrentNumberOfOidsInTheCGroup |
-		KTotalCPUTimeConsumed |
-		KTotalCPUTimeConsumedPerCore |
-		KTimeSpentByTasksOfTheCGroupInKernelMode |
-		KSystemUsage |
-		KOnlineCPUs |
-		KTotalPreCPUTimeConsumed |
-		KTotalPreCPUTimeConsumedPerCore |
-		KTimeSpentByPreCPUTasksOfTheCGroupInKernelMode |
-		KPreCPUSystemUsage |
-		KOnlinePreCPUs |
-		KCurrentResCounterUsageForMemory |
-		KMaximumUsageEverRecorded |
-		KMemoryLimit |
-		KBlkioIoServiceBytesRecursive | // não aparece no mac
-		KBlkioIoServicedRecursive | // não aparece no mac
-		KBlkioIoQueuedRecursive | // não aparece no mac
-		KBlkioIoServiceTimeRecursive | // não aparece no mac
-		KBlkioIoWaitTimeRecursive | // não aparece no mac
-		KBlkioIoMergedRecursive | // não aparece no mac
-		KBlkioIoTimeRecursive | // não aparece no mac
-		KBlkioSectorsRecursive // não aparece no mac
+	KLogColumnMacOsLogWithAllCores = KLogColumnReadingTime |
+		KLogColumnCurrentNumberOfOidsInTheCGroup |
+		KLogColumnTotalCPUTimeConsumed |
+		KLogColumnTotalCPUTimeConsumedPerCore |
+		KLogColumnTimeSpentByTasksOfTheCGroupInKernelMode |
+		KLogColumnSystemUsage |
+		KLogColumnOnlineCPUs |
+		KLogColumnTotalPreCPUTimeConsumed |
+		KLogColumnTotalPreCPUTimeConsumedPerCore |
+		KLogColumnTimeSpentByPreCPUTasksOfTheCGroupInKernelMode |
+		KLogColumnPreCPUSystemUsage |
+		KLogColumnOnlinePreCPUs |
+		KLogColumnCurrentResCounterUsageForMemory |
+		KLogColumnMaximumUsageEverRecorded |
+		KLogColumnMemoryLimit |
+		KLogColumnBlkioIoServiceBytesRecursive | // não aparece no mac
+		KLogColumnBlkioIoServicedRecursive | // não aparece no mac
+		KLogColumnBlkioIoQueuedRecursive | // não aparece no mac
+		KLogColumnBlkioIoServiceTimeRecursive | // não aparece no mac
+		KLogColumnBlkioIoWaitTimeRecursive | // não aparece no mac
+		KLogColumnBlkioIoMergedRecursive | // não aparece no mac
+		KLogColumnBlkioIoTimeRecursive | // não aparece no mac
+		KLogColumnBlkioSectorsRecursive // não aparece no mac
 
-	// KMacOsLog
+	// KLogColumnMacOsLog
 	//
 	// English: Mac OS Log
-	KMacOsLog = KReadingTime |
-		KCurrentNumberOfOidsInTheCGroup |
-		KTotalCPUTimeConsumed |
-		KTimeSpentByTasksOfTheCGroupInKernelMode |
-		KSystemUsage |
-		KOnlineCPUs |
-		KTotalPreCPUTimeConsumed |
-		KTimeSpentByPreCPUTasksOfTheCGroupInKernelMode |
-		KPreCPUSystemUsage |
-		KOnlinePreCPUs |
-		KCurrentResCounterUsageForMemory |
-		KMaximumUsageEverRecorded |
-		KMemoryLimit |
-		KBlkioIoServiceBytesRecursive | // não aparece no mac
-		KBlkioIoServicedRecursive | // não aparece no mac
-		KBlkioIoQueuedRecursive | // não aparece no mac
-		KBlkioIoServiceTimeRecursive | // não aparece no mac
-		KBlkioIoWaitTimeRecursive | // não aparece no mac
-		KBlkioIoMergedRecursive | // não aparece no mac
-		KBlkioIoTimeRecursive | // não aparece no mac
-		KBlkioSectorsRecursive // não aparece no mac
+	KLogColumnMacOsLog = KLogColumnReadingTime |
+		KLogColumnCurrentNumberOfOidsInTheCGroup |
+		KLogColumnTotalCPUTimeConsumed |
+		KLogColumnTimeSpentByTasksOfTheCGroupInKernelMode |
+		KLogColumnSystemUsage |
+		KLogColumnOnlineCPUs |
+		KLogColumnTotalPreCPUTimeConsumed |
+		KLogColumnTimeSpentByPreCPUTasksOfTheCGroupInKernelMode |
+		KLogColumnPreCPUSystemUsage |
+		KLogColumnOnlinePreCPUs |
+		KLogColumnCurrentResCounterUsageForMemory |
+		KLogColumnMaximumUsageEverRecorded |
+		KLogColumnMemoryLimit |
+		KLogColumnBlkioIoServiceBytesRecursive | // não aparece no mac
+		KLogColumnBlkioIoServicedRecursive | // não aparece no mac
+		KLogColumnBlkioIoQueuedRecursive | // não aparece no mac
+		KLogColumnBlkioIoServiceTimeRecursive | // não aparece no mac
+		KLogColumnBlkioIoWaitTimeRecursive | // não aparece no mac
+		KLogColumnBlkioIoMergedRecursive | // não aparece no mac
+		KLogColumnBlkioIoTimeRecursive | // não aparece no mac
+		KLogColumnBlkioSectorsRecursive // não aparece no mac
 
-	KWindows = KReadingTime |
-		KCurrentNumberOfOidsInTheCGroup |
-		KTotalCPUTimeConsumed |
-		KTotalCPUTimeConsumedPerCore |
-		KTimeSpentByTasksOfTheCGroupInKernelMode |
-		KTimeSpentByTasksOfTheCGroupInUserMode |
-		KSystemUsage |
-		KOnlineCPUs |
-		KTotalPreCPUTimeConsumed |
-		KTotalPreCPUTimeConsumedPerCore |
-		KTimeSpentByPreCPUTasksOfTheCGroupInKernelMode |
-		KTimeSpentByPreCPUTasksOfTheCGroupInUserMode |
-		KPreCPUSystemUsage |
-		KOnlinePreCPUs |
-		KCurrentResCounterUsageForMemory |
-		KMaximumUsageEverRecorded |
-		KMemoryLimit
+	KLogColumnWindows = KLogColumnReadingTime |
+		KLogColumnCurrentNumberOfOidsInTheCGroup |
+		KLogColumnTotalCPUTimeConsumed |
+		KLogColumnTotalCPUTimeConsumedPerCore |
+		KLogColumnTimeSpentByTasksOfTheCGroupInKernelMode |
+		KLogColumnTimeSpentByTasksOfTheCGroupInUserMode |
+		KLogColumnSystemUsage |
+		KLogColumnOnlineCPUs |
+		KLogColumnTotalPreCPUTimeConsumed |
+		KLogColumnTotalPreCPUTimeConsumedPerCore |
+		KLogColumnTimeSpentByPreCPUTasksOfTheCGroupInKernelMode |
+		KLogColumnTimeSpentByPreCPUTasksOfTheCGroupInUserMode |
+		KLogColumnPreCPUSystemUsage |
+		KLogColumnOnlinePreCPUs |
+		KLogColumnCurrentResCounterUsageForMemory |
+		KLogColumnMaximumUsageEverRecorded |
+		KLogColumnMemoryLimit
 )

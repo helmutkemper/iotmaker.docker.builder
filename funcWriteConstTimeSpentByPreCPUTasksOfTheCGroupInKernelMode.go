@@ -12,7 +12,7 @@ func (e *ContainerBuilder) writeConstTimeSpentByPreCPUTasksOfTheCGroupInKernelMo
 	// Time spent by all container processes in kernel mode (Windows).
 	// Units: nanoseconds (Linux).
 	// Units: 100's of nanoseconds (Windows). Not populated for Hyper-V Containers.
-	if e.rowsToPrint&KTimeSpentByPreCPUTasksOfTheCGroupInKernelMode == KTimeSpentByPreCPUTasksOfTheCGroupInKernelMode {
+	if e.rowsToPrint&KLogColumnTimeSpentByPreCPUTasksOfTheCGroupInKernelMode == KLogColumnTimeSpentByPreCPUTasksOfTheCGroupInKernelMode {
 		_, err = file.Write([]byte("KTimeSpentByPreCPUTasksOfTheCGroupInKernelMode"))
 		if err != nil {
 			log.Printf("writeContainerLogToFile().error: %v", err.Error())

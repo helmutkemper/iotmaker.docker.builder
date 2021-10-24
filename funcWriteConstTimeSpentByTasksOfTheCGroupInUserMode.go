@@ -11,7 +11,7 @@ func (e *ContainerBuilder) writeConstTimeSpentByTasksOfTheCGroupInUserMode(file 
 	// Time spent by all container processes in user mode (Windows).
 	// Units: nanoseconds (Linux).
 	// Units: 100's of nanoseconds (Windows). Not populated for Hyper-V Containers
-	if e.rowsToPrint&KTimeSpentByTasksOfTheCGroupInUserMode == KTimeSpentByTasksOfTheCGroupInUserMode {
+	if e.rowsToPrint&KLogColumnTimeSpentByTasksOfTheCGroupInUserMode == KLogColumnTimeSpentByTasksOfTheCGroupInUserMode {
 		_, err = file.Write([]byte("KTimeSpentByTasksOfTheCGroupInUserMode"))
 		if err != nil {
 			log.Printf("writeContainerLogToFile().error: %v", err.Error())

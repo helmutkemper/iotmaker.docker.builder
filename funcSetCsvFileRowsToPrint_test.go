@@ -46,7 +46,7 @@ func ExampleContainerBuilder_SetCsvFileRowsToPrint() {
 		"Test Fail! Counter Value: ${value} - Hour: ${hour} - Date: ${date}",
 	)
 
-	container.SetCsvFileRowsToPrint(KAll)
+	container.SetCsvFileRowsToPrint(KLogColumnAll)
 
 	err = container.Init()
 	if err != nil {

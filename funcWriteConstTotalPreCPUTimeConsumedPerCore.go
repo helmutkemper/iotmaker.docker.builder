@@ -7,7 +7,7 @@ import (
 )
 
 func (e *ContainerBuilder) writeConstTotalPreCPUTimeConsumedPerCore(file *os.File) (tab bool, err error) {
-	if e.rowsToPrint&KTotalPreCPUTimeConsumedPerCore == KTotalPreCPUTimeConsumedPerCore {
+	if e.rowsToPrint&KLogColumnTotalPreCPUTimeConsumedPerCore == KLogColumnTotalPreCPUTimeConsumedPerCore {
 		for cpuNumber := 0; cpuNumber != e.logCpus; cpuNumber += 1 {
 			_, err = file.Write([]byte("KTotalPreCPUTimeConsumedPerCore"))
 			if err != nil {

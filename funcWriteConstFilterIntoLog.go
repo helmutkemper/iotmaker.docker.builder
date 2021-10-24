@@ -18,7 +18,7 @@ func (e *ContainerBuilder) writeConstFilterIntoLog(file *os.File, filter []LogFi
 		lineToFile = append(lineToFile, []byte("")...)
 		lineToFile = append(lineToFile, []byte(e.csvValueSeparator)...)
 
-		tab = e.rowsToPrint&KFilterLogComa != 0
+		tab = e.rowsToPrint&KLogColumnFilterLogComa != 0
 	}
 
 	lineToFile = bytes.TrimSuffix(lineToFile, []byte(e.csvValueSeparator))

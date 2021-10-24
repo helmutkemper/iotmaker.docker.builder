@@ -52,18 +52,18 @@ func TestContainerBuilder_AggregateTimeTheContainerWasThrottledForInNanoseconds(
 		"Test Fail! Counter Value: ${value} - Hour: ${hour} - Date: ${date}",
 	)
 
-	container.SetCsvFileRowsToPrint(KReadingTime |
-		KCurrentNumberOfOidsInTheCGroup |
-		KLimitOnTheNumberOfPidsInTheCGroup |
-		KTotalCPUTimeConsumed |
-		KTotalCPUTimeConsumedPerCore |
-		KTimeSpentByTasksOfTheCGroupInKernelMode |
-		KTimeSpentByTasksOfTheCGroupInUserMode |
-		KSystemUsage |
-		KOnlineCPUs |
-		KNumberOfPeriodsWithThrottlingActive |
-		KNumberOfPeriodsWhenTheContainerHitsItsThrottlingLimit |
-		KAggregateTimeTheContainerWasThrottledForInNanoseconds,
+	container.SetCsvFileRowsToPrint(KLogColumnReadingTime |
+		KLogColumnCurrentNumberOfOidsInTheCGroup |
+		KLogColumnLimitOnTheNumberOfPidsInTheCGroup |
+		KLogColumnTotalCPUTimeConsumed |
+		KLogColumnTotalCPUTimeConsumedPerCore |
+		KLogColumnTimeSpentByTasksOfTheCGroupInKernelMode |
+		KLogColumnTimeSpentByTasksOfTheCGroupInUserMode |
+		KLogColumnSystemUsage |
+		KLogColumnOnlineCPUs |
+		KLogColumnNumberOfPeriodsWithThrottlingActive |
+		KLogColumnNumberOfPeriodsWhenTheContainerHitsItsThrottlingLimit |
+		KLogColumnAggregateTimeTheContainerWasThrottledForInNanoseconds,
 	)
 
 	err = container.Init()

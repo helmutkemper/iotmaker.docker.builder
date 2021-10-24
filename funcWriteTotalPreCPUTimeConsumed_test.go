@@ -52,19 +52,19 @@ func TestContainerBuilder_writeTotalPreCPUTimeConsumed(t *testing.T) {
 		"Test Fail! Counter Value: ${value} - Hour: ${hour} - Date: ${date}",
 	)
 
-	container.SetCsvFileRowsToPrint(KReadingTime |
-		KCurrentNumberOfOidsInTheCGroup |
-		KLimitOnTheNumberOfPidsInTheCGroup |
-		KTotalCPUTimeConsumed |
-		KTotalCPUTimeConsumedPerCore |
-		KTimeSpentByTasksOfTheCGroupInKernelMode |
-		KTimeSpentByTasksOfTheCGroupInUserMode |
-		KSystemUsage |
-		KOnlineCPUs |
-		KNumberOfPeriodsWithThrottlingActive |
-		KNumberOfPeriodsWhenTheContainerHitsItsThrottlingLimit |
-		KAggregateTimeTheContainerWasThrottledForInNanoseconds |
-		KTotalPreCPUTimeConsumed,
+	container.SetCsvFileRowsToPrint(KLogColumnReadingTime |
+		KLogColumnCurrentNumberOfOidsInTheCGroup |
+		KLogColumnLimitOnTheNumberOfPidsInTheCGroup |
+		KLogColumnTotalCPUTimeConsumed |
+		KLogColumnTotalCPUTimeConsumedPerCore |
+		KLogColumnTimeSpentByTasksOfTheCGroupInKernelMode |
+		KLogColumnTimeSpentByTasksOfTheCGroupInUserMode |
+		KLogColumnSystemUsage |
+		KLogColumnOnlineCPUs |
+		KLogColumnNumberOfPeriodsWithThrottlingActive |
+		KLogColumnNumberOfPeriodsWhenTheContainerHitsItsThrottlingLimit |
+		KLogColumnAggregateTimeTheContainerWasThrottledForInNanoseconds |
+		KLogColumnTotalPreCPUTimeConsumed,
 	)
 
 	err = container.Init()

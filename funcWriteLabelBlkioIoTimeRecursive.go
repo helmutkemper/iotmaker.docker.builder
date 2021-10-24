@@ -8,7 +8,7 @@ import (
 )
 
 func (e *ContainerBuilder) writeLabelBlkioIoTimeRecursive(file *os.File, stats *types.Stats) (tab bool, err error) {
-	if e.rowsToPrint&KBlkioIoTimeRecursive == KBlkioIoTimeRecursive {
+	if e.rowsToPrint&KLogColumnBlkioIoTimeRecursive == KLogColumnBlkioIoTimeRecursive {
 		length := len(stats.BlkioStats.IoTimeRecursive)
 		for i := 0; i != length; i += 1 {
 			_, err = file.Write([]byte("BlkioStats stores All IO service stats for data read and write. Major. Io Time Recursive."))

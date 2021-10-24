@@ -10,7 +10,7 @@ import (
 
 func (e *ContainerBuilder) writeNumberOfTimesMemoryUsageHitsLimits(file *os.File, stats *types.Stats) (tab bool, err error) {
 	// number of times memory usage hits limits.
-	if e.rowsToPrint&KNumberOfTimesMemoryUsageHitsLimits == KNumberOfTimesMemoryUsageHitsLimits {
+	if e.rowsToPrint&KLogColumnNumberOfTimesMemoryUsageHitsLimits == KLogColumnNumberOfTimesMemoryUsageHitsLimits {
 		_, err = file.Write([]byte(fmt.Sprintf("%v", stats.MemoryStats.Failcnt)))
 		if err != nil {
 			log.Printf("writeContainerLogToFile().error: %v", err.Error())

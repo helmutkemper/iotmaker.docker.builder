@@ -10,7 +10,7 @@ import (
 
 func (e *ContainerBuilder) writeCommittedBytes(file *os.File, stats *types.Stats) (tab bool, err error) {
 	// committed bytes
-	if e.rowsToPrint&KCommittedBytes == KCommittedBytes {
+	if e.rowsToPrint&KLogColumnCommittedBytes == KLogColumnCommittedBytes {
 		_, err = file.Write([]byte(fmt.Sprintf("%v", stats.MemoryStats.Commit)))
 		if err != nil {
 			log.Printf("writeContainerLogToFile().error: %v", err.Error())

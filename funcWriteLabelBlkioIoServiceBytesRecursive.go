@@ -8,7 +8,7 @@ import (
 )
 
 func (e *ContainerBuilder) writeLabelBlkioIoServiceBytesRecursive(file *os.File, stats *types.Stats) (tab bool, err error) {
-	if e.rowsToPrint&KBlkioIoServiceBytesRecursive == KBlkioIoServiceBytesRecursive {
+	if e.rowsToPrint&KLogColumnBlkioIoServiceBytesRecursive == KLogColumnBlkioIoServiceBytesRecursive {
 		length := len(stats.BlkioStats.IoServiceBytesRecursive)
 		for i := 0; i != length; i += 1 {
 			_, err = file.Write([]byte("BlkioStats stores All IO service stats for data read and write. Major. Io ServiceBytes Recursive."))

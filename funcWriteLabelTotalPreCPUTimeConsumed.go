@@ -11,7 +11,7 @@ func (e *ContainerBuilder) writeLabelTotalPreCPUTimeConsumed(file *os.File) (tab
 	// Total CPU time consumed.
 	// Units: nanoseconds (Linux)
 	// Units: 100's of nanoseconds (Windows)
-	if e.rowsToPrint&KTotalPreCPUTimeConsumed == KTotalPreCPUTimeConsumed {
+	if e.rowsToPrint&KLogColumnTotalPreCPUTimeConsumed == KLogColumnTotalPreCPUTimeConsumed {
 		_, err = file.Write([]byte("Total CPU time consumed. (Units: nanoseconds on Linux. Units: 100's of nanoseconds on Windows)"))
 		if err != nil {
 			log.Printf("writeContainerLogToFile().error: %v", err.Error())

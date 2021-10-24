@@ -8,7 +8,7 @@ import (
 )
 
 func (e *ContainerBuilder) writeConstBlkioIoServiceTimeRecursive(file *os.File, stats *types.Stats) (tab bool, err error) {
-	if e.rowsToPrint&KBlkioIoServiceTimeRecursive == KBlkioIoServiceTimeRecursive {
+	if e.rowsToPrint&KLogColumnBlkioIoServiceTimeRecursive == KLogColumnBlkioIoServiceTimeRecursive {
 		length := len(stats.BlkioStats.IoServiceTimeRecursive)
 		for i := 0; i != length; i += 1 {
 			_, err = file.Write([]byte("KBlkioIoServiceTimeRecursive"))

@@ -9,7 +9,7 @@ import (
 )
 
 func (e *ContainerBuilder) writeMemoryLimit(file *os.File, stats *types.Stats) (tab bool, err error) {
-	if e.rowsToPrint&KMemoryLimit == KMemoryLimit {
+	if e.rowsToPrint&KLogColumnMemoryLimit == KLogColumnMemoryLimit {
 		_, err = file.Write([]byte(fmt.Sprintf("%v", stats.MemoryStats.Limit)))
 		if err != nil {
 			log.Printf("writeContainerLogToFile().error: %v", err.Error())

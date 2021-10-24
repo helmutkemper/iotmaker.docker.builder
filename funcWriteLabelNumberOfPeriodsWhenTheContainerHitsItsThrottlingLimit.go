@@ -9,7 +9,7 @@ import (
 func (e *ContainerBuilder) writeLabelNumberOfPeriodsWhenTheContainerHitsItsThrottlingLimit(file *os.File) (tab bool, err error) {
 	// Throttling Data. Linux only.
 	// Number of periods when the container hits its throttling limit.
-	if e.rowsToPrint&KNumberOfPeriodsWhenTheContainerHitsItsThrottlingLimit == KNumberOfPeriodsWhenTheContainerHitsItsThrottlingLimit {
+	if e.rowsToPrint&KLogColumnNumberOfPeriodsWhenTheContainerHitsItsThrottlingLimit == KLogColumnNumberOfPeriodsWhenTheContainerHitsItsThrottlingLimit {
 		_, err = file.Write([]byte("Throttling Data. Linux only. Number of periods when the container hits its throttling limit."))
 		if err != nil {
 			log.Printf("writeContainerLogToFile().error: %v", err.Error())

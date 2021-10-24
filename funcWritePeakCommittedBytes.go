@@ -10,7 +10,7 @@ import (
 
 func (e *ContainerBuilder) writePeakCommittedBytes(file *os.File, stats *types.Stats) (tab bool, err error) {
 	// peak committed bytes
-	if e.rowsToPrint&KPeakCommittedBytes == KPeakCommittedBytes {
+	if e.rowsToPrint&KLogColumnPeakCommittedBytes == KLogColumnPeakCommittedBytes {
 		_, err = file.Write([]byte(fmt.Sprintf("%v", stats.MemoryStats.CommitPeak)))
 		if err != nil {
 			log.Printf("writeContainerLogToFile().error: %v", err.Error())
