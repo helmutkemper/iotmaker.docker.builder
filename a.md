@@ -14,10 +14,11 @@ Como fazer um simples teste para saber se eles se conectam?
 Este módulo tem a finalidade de resolver este problema, adicionando ao código golang de teste a capacidade de criar
 vários elementos docker de forma muito rápida no meio dos testes unitários.
 
-Imagene poder criar uma rede docker, apontar para uma pasta contendo o projeto e subir quantos container quiser, com a
+Imagene poder criar uma rede docker, apontar para uma pasta contendo o projeto e subir quantos containers quiser, com a
 capacidade de gerar relatórios e simular falhas de comunicação aletórias com algumas poucas linhas de código.
 
-### Criando uma rede docker
+## Criando uma rede docker
+---
 
 A rede é opcional e permite controlar melhor o endereço IP de cada instância do serviço em teste, além de permitir 
 isolar a comunicação entre eles.
@@ -62,7 +63,7 @@ de forma transperente.
 Caso queira trocar o IP de uma instância, para simular uma troca de IP aleatória, basta rodar o comando 
 `container.NetworkChangeIp()` e a instância terá o seu IP trocado para o próximo IP da lista.
 
-### Subindo um container baseado em uma imagem pública
+## Subindo um container baseado em uma imagem pública
 
 Imagine que o seu projeto necessita de um container `nats:latest` para rodar, logo temos o código golang:
 
