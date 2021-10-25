@@ -36,6 +36,7 @@ func ExampleContainerBuilder_SetLogPath() {
 	container.SetImageBuildOptionsMemory(100 * KMegaByte)
 
 	container.SetCsvLogPath("./test.counter.log.csv", true)
+	container.SetCsvFileValueSeparator("\t")
 	container.AddFilterToLogWithReplace(
 		"contador",
 		"counter",

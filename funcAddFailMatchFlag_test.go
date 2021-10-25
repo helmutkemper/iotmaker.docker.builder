@@ -64,6 +64,10 @@ func ExampleContainerBuilder_AddFailMatchFlag() {
 	// [optional/opcional]
 	container.SetCsvLogPath("./test.counter.log.csv", true)
 
+	// English: Swaps the comma by tab, making the file compatible with floating-point numbers
+	// Português: Troca a virgula por tabulação, compatibilizando o arquivo com números de ponto flutuante
+	container.SetCsvFileValueSeparator("\t")
+
 	// English: Prints in the header of the file the name of the constant responsible for printing the column in the log.
 	// Português: Imprime no cabeçalho do arquivo o nome da constante responsável por imprimir a coluna no log.
 	// [optional/opcional]
@@ -86,7 +90,7 @@ func ExampleContainerBuilder_AddFailMatchFlag() {
 		"counter",
 		"^.*?counter: (?P<valueToGet>[\\d\\.]+)",
 		"\\.",
-		"#",
+		",",
 	)
 
 	// English: Adds a failure indicator to the project. Failure indicator is a text searched for in the container's standard output and indicates something that should not have happened during the test.
