@@ -68,30 +68,30 @@ Imagine que o seu projeto necessita de um container `nats:latest` para rodar, lo
 	package code
 
 	import (
-	dockerBuilder "github.com/helmutkemper/iotmaker.docker.builder"
-	dockerNetwork "github.com/helmutkemper/iotmaker.docker.builder.network"
+		dockerBuilder "github.com/helmutkemper/iotmaker.docker.builder"
+		dockerNetwork "github.com/helmutkemper/iotmaker.docker.builder.network"
 		"log"
-	"testing"
+		"testing"
 	)
 
 	func TestCode(t *testing.T) {
-	var err error
-	var netDocker = dockerNetwork.ContainerBuilderNetwork{}
-	err = netDocker.Init()
-	if err != nil {
+		var err error
+		var netDocker = dockerNetwork.ContainerBuilderNetwork{}
+		err = netDocker.Init()
+		if err != nil {
 			log.Printf("error: %v", err)
 			t.Fail()
-	}
+		}
 	
-	// Create a network named cache_delete_after_test, subnet 10.0.0.0/16 e gatway 10.0.0.1
-	// Use the term "delete" to enable the function "dockerBuilder.GarbageCollector()", which will search for and remove 
-	// all docker elements with the term "delete" contained in the name. For example, network, image, container and 
-	// volumes.
-	err = netDocker.NetworkCreate("cache_delete_after_test", "10.0.0.0/16", "10.0.0.1")
-	if err != nil {
+		// Create a network named cache_delete_after_test, subnet 10.0.0.0/16 e gatway 10.0.0.1
+		// Use the term "delete" to enable the function "dockerBuilder.GarbageCollector()", which will search for and remove 
+		// all docker elements with the term "delete" contained in the name. For example, network, image, container and 
+		// volumes.
+		err = netDocker.NetworkCreate("cache_delete_after_test", "10.0.0.0/16", "10.0.0.1")
+		if err != nil {
 			log.Printf("error: %v", err)
 			t.Fail()
-	}
+		}
 	
 		// Create a container
 		var container = dockerBuilder.ContainerBuilder{}
@@ -150,30 +150,30 @@ um repositório git privado, protegido com chave `ssh`
 	package code
 
 	import (
-	dockerBuilder "github.com/helmutkemper/iotmaker.docker.builder"
-	dockerNetwork "github.com/helmutkemper/iotmaker.docker.builder.network"
-	"log"
-	"testing"
+		dockerBuilder "github.com/helmutkemper/iotmaker.docker.builder"
+		dockerNetwork "github.com/helmutkemper/iotmaker.docker.builder.network"
+		"log"
+		"testing"
 	)
 
 	func TestCode(t *testing.T) {
-	var err error
-	var netDocker = dockerNetwork.ContainerBuilderNetwork{}
-	err = netDocker.Init()
-	if err != nil {
+		var err error
+		var netDocker = dockerNetwork.ContainerBuilderNetwork{}
+		err = netDocker.Init()
+		if err != nil {
 			log.Printf("error: %v", err)
 			t.Fail()
-	}
+		}
 	
-	// Create a network named cache_delete_after_test, subnet 10.0.0.0/16 e gatway 10.0.0.1
-	// Use the term "delete" to enable the function "dockerBuilder.GarbageCollector()", which will search for and remove 
-	// all docker elements with the term "delete" contained in the name. For example, network, image, container and 
-	// volumes.
-	err = netDocker.NetworkCreate("cache_delete_after_test", "10.0.0.0/16", "10.0.0.1")
-	if err != nil {
+		// Create a network named cache_delete_after_test, subnet 10.0.0.0/16 e gatway 10.0.0.1
+		// Use the term "delete" to enable the function "dockerBuilder.GarbageCollector()", which will search for and remove 
+		// all docker elements with the term "delete" contained in the name. For example, network, image, container and 
+		// volumes.
+		err = netDocker.NetworkCreate("cache_delete_after_test", "10.0.0.0/16", "10.0.0.1")
+		if err != nil {
 			log.Printf("error: %v", err)
 			t.Fail()
-	}
+		}
 	
 		// Create a container
 		container = dockerBuilder.ContainerBuilder{}
@@ -213,8 +213,8 @@ um repositório git privado, protegido com chave `ssh`
 			log.Printf("error: %v", err)
 			t.Fail()
 		}
-	// Set a waits for the text to appear in the standard container output to proceed [optional]
-	container.SetWaitStringWithTimeout("data rand container started", 10*time.Second)
+		// Set a waits for the text to appear in the standard container output to proceed [optional]
+		container.SetWaitStringWithTimeout("data rand container started", 10*time.Second)
 		// It links a folder/file contained on the computer where the test runs and a folder/file contained in the container
 		// [optional]
 		err = container.AddFileOrFolderToLinkBetweenConputerHostAndContainer("./memory/container", "/containerMemory")
@@ -231,7 +231,7 @@ um repositório git privado, protegido com chave `ssh`
 		}
 		// Inialize the container object
 		err = container.Init()
-	if err != nil {
+		if err != nil {
 			log.Printf("error: %v", err)
 			t.Fail()
 		}
@@ -271,13 +271,13 @@ A forma de fazer isto é bem simples, basta criar uma imagem de nome `cache:late
 	package code
 
 	import (
-	dockerBuilder "github.com/helmutkemper/iotmaker.docker.builder"
+		dockerBuilder "github.com/helmutkemper/iotmaker.docker.builder"
 		"log"
-	"testing"
+		"testing"
 	)
 
 	func TestCache(t *testing.T) {
-	var err error
+		var err error
 	
 		// Create a container
 		container = dockerBuilder.ContainerBuilder{}
@@ -295,7 +295,7 @@ A forma de fazer isto é bem simples, basta criar uma imagem de nome `cache:late
 		container.SetBuildFolderPath("./cache_folder")
 		// Inialize the container object
 		err = container.Init()
-	if err != nil {
+		if err != nil {
 			log.Printf("error: %v", err)
 			t.Fail()
 		}
