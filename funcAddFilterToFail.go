@@ -2,6 +2,8 @@ package iotmakerdockerbuilder
 
 // AddFilterToFail
 //
+// Similar: AddFailMatchFlag(), AddFailMatchFlagToFileLog(), AddFilterToFail()
+//
 // English: Adds a filter to the container's standard output to look for a textual value indicating test failure.
 //   Input:
 //     match: Simple text searched in the container's standard output to activate the filter

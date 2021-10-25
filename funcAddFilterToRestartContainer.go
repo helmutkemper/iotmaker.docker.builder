@@ -2,6 +2,8 @@ package iotmakerdockerbuilder
 
 // AddFilterToRestartContainer
 //
+// Similar: AddFilterToRestartContainer(), AddRestartMatchFlag(), AddRestartMatchFlagToFileLog()
+//
 // Português: Adiciona um filtro na saída padrão do container para procurar um valor textual liberando a possibilidade
 // do container ser reinicado durante o teste de caos.
 //   Entrada:

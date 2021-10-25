@@ -2,6 +2,8 @@ package iotmakerdockerbuilder
 
 // AddFailMatchFlag
 //
+// Similar: AddFailMatchFlag(), AddFailMatchFlagToFileLog(), AddFilterToFail()
+//
 // English: Error text searched for in the container's standard output.
 //   Input:
 //     value: Error text
