@@ -1,7 +1,6 @@
 ![./image/docker.png](./image/docker.png)
 
 # Transforme teste unitário em teste de integração usando senário de caos
----
 
 A criação de microsserviços requerem uma nova abordagem de testes, onde nem sempre, os testes unitários são fáceis de
 fazer.
@@ -17,7 +16,6 @@ Imagene poder criar uma rede docker, apontar para uma pasta contendo o projeto e
 capacidade de gerar relatórios e simular falhas de comunicação aletórias com algumas poucas linhas de código.
 
 # Criando uma rede docker
----
 
 A rede é opcional e permite controlar melhor o endereço IP de cada instância do serviço em teste, além de permitir 
 isolar a comunicação entre eles.
