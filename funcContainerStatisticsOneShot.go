@@ -5,6 +5,11 @@ import (
 	"github.com/helmutkemper/util"
 )
 
+// ContainerStatisticsOneShot
+//
+// English: Returns the container's memory and system consumption data at the time of the query.
+//
+// Português: Retorna os dados de consumo de memória e sistema do container no instante da consulta.
 func (e *ContainerBuilder) ContainerStatisticsOneShot() (
 	statsRet types.Stats,
 	err error,
