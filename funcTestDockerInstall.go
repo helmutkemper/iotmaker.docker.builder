@@ -12,5 +12,12 @@ func (e ContainerBuilder) TestDockerInstall() (err error) {
 		util.TraceToLog()
 		return
 	}
+
+	_, err = e.dockerSys.ImageList()
+	if err != nil {
+		util.TraceToLog()
+		return
+	}
+
 	return
 }
