@@ -8,7 +8,7 @@ import (
 
 // ContainerCopyFrom
 //
-// Português: Oopia um arquivo contido no container para uma pasta local
+// Português: Copia um arquivo contido no container para uma pasta local
 //   Entrada:
 //     sourcePath: caminho do arquivo no container
 //   Saída:
