@@ -2597,7 +2597,7 @@ Nota: - Ha duas formas de criar um container:
         ContainerPause e ContainerStop, caso necessite controlar o container.
 ```
 
-### func \(\*ContainerBuilder\) [ContainerStartAfterBuild](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcContainerStartAfterBuild.go#L24>)
+### func \(\*ContainerBuilder\) [ContainerStartAfterBuild](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcContainerStartAfterBuild.go#L25>)
 
 ```go
 func (e *ContainerBuilder) ContainerStartAfterBuild() (err error)
