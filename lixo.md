@@ -2653,7 +2653,7 @@ ContainerStop \(português\): Para o container\. Saída: err: Objeto de erro pad
 
 ```
 Nota: - Ha duas formas de criar um container:
-        ContainerBuildAndStartFromImage, inicializa o oncontainer e inicializa o
+        **ContainerBuildAndStartFromImage**, inicializa o oncontainer e inicializa o
         registro aa rede docker, para que o mesmo funcione de forma correta.
         ContainerBuildWithoutStartingItFromImage apenas cria o container, por isto, a
         primeira vez que o mesmo roda, ele deve ter o seu registro de rede
@@ -3216,7 +3216,7 @@ func (e *ContainerBuilder) ImageBuildFromFolder() (inspect types.ImageInspect, e
 English: transforms the contents of the folder defined in SetBuildFolderPath\(\) into a docker image
 
 ```
-Note: The folder must contain a dockerfile file, but since different uses can have different dockerfiles, the
+The folder must contain a dockerfile file, but since different uses can have different dockerfiles, the
 following order will be given when searching for the file: "Dockerfile-iotmaker", "Dockerfile", "dockerfile"
 in the root folder;
 If not found, a recursive search will be done for "Dockerfile" and "dockerfile";
