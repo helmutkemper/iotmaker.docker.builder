@@ -2630,7 +2630,7 @@ English: Returns the container's memory and system consumption data at the time 
 
 Português: Retorna os dados de consumo de memória e sistema do container no instante da consulta\.
 
-### func \(\*ContainerBuilder\) [ContainerStop](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcContainerStop.go#L32>)
+### func \(\*ContainerBuilder\) [ContainerStop](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcContainerStop.go#L33>)
 
 ```go
 func (e *ContainerBuilder) ContainerStop() (err error)
@@ -2653,11 +2653,12 @@ ContainerStop \(português\): Para o container\. Saída: err: Objeto de erro pad
 
 ```
 Nota: - Ha duas formas de criar um container:
-        *ContainerBuildAndStartFromImage*, inicializa o oncontainer e inicializa o
+        ContainerBuildAndStartFromImage, inicializa o oncontainer e inicializa o
         registro aa rede docker, para que o mesmo funcione de forma correta.
         ContainerBuildWithoutStartingItFromImage apenas cria o container, por isto, a
         primeira vez que o mesmo roda, ele deve ter o seu registro de rede
         inicializado para que possa funcionar de forma correta.
+
       - Apos inicializado a primeira vez, use as funções, ContainerStart,
         ContainerPause e ContainerStop, caso necessite controlar o container.
 ```
