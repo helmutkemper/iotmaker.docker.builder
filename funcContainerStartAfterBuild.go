@@ -9,6 +9,7 @@ import (
 // ContainerStartAfterBuild (english):
 //
 // ContainerStartAfterBuild (português): Inicia um container recem criado.
+//
 //   Saída:
 //     err: Objeto de erro padrão
 //

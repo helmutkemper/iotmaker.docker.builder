@@ -27,6 +27,7 @@ import (
 //           ContainerBuildWithoutStartingItFromImage apenas cria o container, por isto, a
 //           primeira vez que o mesmo roda, ele deve ter o seu registro de rede
 //           inicializado para que possa funcionar de forma correta.
+//
 //         - Apos inicializado a primeira vez, use as funções, ContainerStart,
 //           ContainerPause e ContainerStop, caso necessite controlar o container.
 func (e *ContainerBuilder) ContainerStop() (err error) {

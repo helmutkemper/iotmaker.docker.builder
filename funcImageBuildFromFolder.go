@@ -17,7 +17,7 @@ import (
 //
 // English: transforms the contents of the folder defined in SetBuildFolderPath() into a docker image
 //
-//     Note: The folder must contain a dockerfile file, but since different uses can have different dockerfiles, the
+//     The folder must contain a dockerfile file, but since different uses can have different dockerfiles, the
 //     following order will be given when searching for the file: "Dockerfile-iotmaker", "Dockerfile", "dockerfile"
 //     in the root folder;
 //     If not found, a recursive search will be done for "Dockerfile" and "dockerfile";

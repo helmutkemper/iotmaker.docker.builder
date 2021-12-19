@@ -3,6 +3,7 @@ module github.com/helmutkemper/iotmaker.docker.builder
 go 1.16
 
 require (
+	github.com/dmjones/goreadme v0.1.0 // indirect
 	github.com/docker/docker v20.10.10+incompatible
 	github.com/docker/go-connections v0.4.0
 	github.com/go-git/go-git/v5 v5.4.2
@@ -12,5 +13,7 @@ require (
 	github.com/helmutkemper/iotmaker.docker.builder.network.interface v0.0.0-20210517125728-08218ab31975
 	github.com/helmutkemper/iotmaker.docker.problem v0.9.0
 	github.com/helmutkemper/util v0.0.0-20210420213725-d4fad0e09c93
+	github.com/princjef/gomarkdoc v0.3.0 // indirect
+	github.com/robertkrimen/godocdown v0.0.0-20130622164427-0bfa04905481 // indirect
 	go.mongodb.org/mongo-driver v1.7.4
 )

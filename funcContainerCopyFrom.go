@@ -4,62 +4,31 @@ import (
 	"github.com/docker/docker/api/types"
 	"github.com/helmutkemper/util"
 	"io"
+	"io/ioutil"
 )
 
 // ContainerCopyFrom
 //
 // Português: Copia um arquivo contido no container para uma pasta local
 //   Entrada:
-//     sourcePath: caminho do arquivo no container
+//     containerPathList: lista de arquivos contidos no container
+//     hostPathList:      lista de caminhos dos arquivos a serem salvos no host
 //   Saída:
-//     reader: Reader para o arquivo contido no container. Ex.: fileInBytesArr, err = ioutil.ReadAll(reader)
-//     stats:  Informações do arquivo
-//     err:    Objeto padrão de error do Go
-//
-//   Exemplo:
-//      var reader io.Reader
-//	    var data []byte
-//	    reader, _, err = container.ContainerCopyFrom("/go/bin/golangci-lint")
-//	    if err != nil {
-//		    panic(err)
-//	    }
-//	    data, err = ioutil.ReadAll(reader)
-//	    if err != nil {
-//		    panic(err)
-//	    }
-//      err = ioutil.WriteFile("./alpineFiles/golangci-lint", data, 0777)
-//	    if err != nil {
-//		    panic(err)
-//	    }
+//     statsList: Lista de informações dos arquivos
+//     err:       Objeto padrão de error
 //
 // English: Copy a file contained in the container to a local folder
 //   Input:
-//     sourcePath: file path in container
+//     containerPathList: list of files contained in the container
+//     hostPathList:      list of file paths to be saved on the host
 //   Output:
-//     reader: Reader for the file contained in the container. Eg: fileInBytesArr, err = ioutil.ReadAll(reader)
-//     stats:  file information
-//     err:    Go's default error object
-//
-//   Example
-//      var reader io.Reader
-//	    var data []byte
-//	    reader, _, err = container.ContainerCopyFrom("/go/bin/golangci-lint")
-//	    if err != nil {
-//		    panic(err)
-//	    }
-//	    data, err = ioutil.ReadAll(reader)
-//	    if err != nil {
-//		    panic(err)
-//	    }
-//      err = ioutil.WriteFile("./alpineFiles/golangci-lint", data, 0777)
-//	    if err != nil {
-//		    panic(err)
-//	    }
+//     statsList: List of file information
+//     err:       Default error object
 func (e *ContainerBuilder) ContainerCopyFrom(
-	sourcePath string,
+	containerPathList []string,
+	hostPathList []string,
 ) (
-	reader io.ReadCloser,
-	stats types.ContainerPathStat,
+	statsList []types.ContainerPathStat,
 	err error,
 ) {
 	if e.containerID == "" {
@@ -70,6 +39,28 @@ func (e *ContainerBuilder) ContainerCopyFrom(
 		}
 	}
 
-	reader, stats, err = e.dockerSys.ContainerCopyFrom(e.containerID, sourcePath)
+	var reader io.ReadCloser
+	var stats types.ContainerPathStat
+	var data []byte
+	for k, sourcePath := range containerPathList {
+		reader, stats, err = e.dockerSys.ContainerCopyFrom(e.containerID, sourcePath)
+		if err != nil {
+			util.TraceToLog()
+			return
+		}
+		data, err = ioutil.ReadAll(reader)
+		if err != nil {
+			util.TraceToLog()
+			return
+		}
+		err = ioutil.WriteFile(hostPathList[k], data, 0777)
+		if err != nil {
+			util.TraceToLog()
+			return
+		}
+
+		statsList = append(statsList, stats)
+	}
+
 	return
 }

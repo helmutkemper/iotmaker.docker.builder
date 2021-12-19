@@ -70,10 +70,12 @@ func (e *Theater) ConfigScene(sceneName string, maxStopedContainers, maxPausedCo
 // SetContainerUnPaused
 //
 // English: Decreases the paused containers counter
+//
 //   Input:
 //     sceneName: unique name of the scene
 //
 // Português: Decrementa o contador de containers pausados
+//
 //   Entrada:
 //     sceneName: nome único da cena
 func (e *Theater) SetContainerUnPaused(sceneName string) {
