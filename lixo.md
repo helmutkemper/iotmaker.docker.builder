@@ -2610,7 +2610,11 @@ ContainerStartAfterBuild \(português\): Inicia um container recem criado\.
 ```
 Saída:
   err: Objeto de erro padrão
+```
 
+\.
+
+```
 Nota: - Ha duas formas de criar um container:
         ContainerBuildAndStartFromImage, inicializa o oncontainer e inicializa o
         registro aa rede docker, para que o mesmo funcione de forma correta.
