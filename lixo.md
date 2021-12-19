@@ -2597,7 +2597,7 @@ Nota: - Ha duas formas de criar um container:
         ContainerPause e ContainerStop, caso necessite controlar o container.
 ```
 
-### func \(\*ContainerBuilder\) [ContainerStartAfterBuild](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcContainerStartAfterBuild.go#L25>)
+### func \(\*ContainerBuilder\) [ContainerStartAfterBuild](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcContainerStartAfterBuild.go#L26>)
 
 ```go
 func (e *ContainerBuilder) ContainerStartAfterBuild() (err error)
@@ -2610,11 +2610,7 @@ ContainerStartAfterBuild \(português\): Inicia um container recem criado\.
 ```
 Saída:
   err: Objeto de erro padrão
-```
 
-\.
-
-```
 Nota: - Ha duas formas de criar um container:
         ContainerBuildAndStartFromImage, inicializa o oncontainer e inicializa o
         registro aa rede docker, para que o mesmo funcione de forma correta.
