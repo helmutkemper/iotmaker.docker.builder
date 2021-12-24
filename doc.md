@@ -1815,19 +1815,19 @@ func ContainerBuilderAddFailMatchFlag() {
 	// [optional/opcional]
 	container.SetCsvFileReader(true)
 
-	// Português: Define quais colunas imprimir no log. Para vê todas as colunas, defina SetCsvFileRowsToPrint(KLogColumnAll) e SetCsvFileReader(true).
-	// Abra o arquivo de log, defina as colunas a serem impressas no log e em seguida, use SetCsvFileRowsToPrint(KReadingTime | KCurrentNumberOfOidsInTheCGroup | ...)
-	//
 	// English: Defines which columns to print in the log. To see all columns, set SetCsvFileRowsToPrint(KLogColumnAll) and SetCsvFileReader(true).
 	// Open the log file, define the columns to be printed in the log, and then use SetCsvFileRowsToPrint(KReadingTime | KCurrentNumberOfOidsInTheCGroup | KLimitOnTheNumberOfPidsInTheCGroup | ...)
+	//
+	// Português: Define quais colunas imprimir no log. Para vê todas as colunas, defina SetCsvFileRowsToPrint(KLogColumnAll) e SetCsvFileReader(true).
+	// Abra o arquivo de log, defina as colunas a serem impressas no log e em seguida, use SetCsvFileRowsToPrint(KReadingTime | KCurrentNumberOfOidsInTheCGroup | ...)
 	// [optional/opcional]
 	container.SetCsvFileRowsToPrint(KLogColumnAll)
 
-	// Português: Define um filtro de busca por texto na saída padrão do container e escreve o texto no log definido por SetCsvLogPath()
-	// O container de exemplo imprime um contador na saída padrão `log.Printf("counter: %.2f", counter)`. `label` adiciona o nome da coluna; `match` procura pelo texto; `filter` aplica uma expressão regular; `search` e `replace` fazem uma substuição em cima do valor encontrado antes de escrever no log.
-	//
 	// English: Sets a text search filter on the container's standard output and writes the text to the log defined by SetCsvLogPath()
 	// The container example prints a counter to standard output `log.Printf("counter: %.2f", counter)`. `label` adds the column name; `match` searches for text; `filter` applies a regular expression; `search` and `replace` do a replacement on top of the found value before writing to the log.
+	//
+	// Português: Define um filtro de busca por texto na saída padrão do container e escreve o texto no log definido por SetCsvLogPath()
+	// O container de exemplo imprime um contador na saída padrão `log.Printf("counter: %.2f", counter)`. `label` adiciona o nome da coluna; `match` procura pelo texto; `filter` aplica uma expressão regular; `search` e `replace` fazem uma substuição em cima do valor encontrado antes de escrever no log.
 	// [optional/opcional]
 	container.AddFilterToLogWithReplace(
 		"contador",
@@ -1970,7 +1970,7 @@ func ContainerBuilderAddFailMatchFlag() {
 </p>
 </details>
 
-### func \(\*ContainerBuilder\) [AddFailMatchFlagToFileLog](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcAddFailMatchFlagToFileLog.go#L26>)
+### func \(\*ContainerBuilder\) [AddFailMatchFlagToFileLog](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcAddFailMatchFlagToFileLog.go#L36>)
 
 ```go
 func (e *ContainerBuilder) AddFailMatchFlagToFileLog(value, logDirectoryPath string) (err error)
@@ -1978,11 +1978,37 @@ func (e *ContainerBuilder) AddFailMatchFlagToFileLog(value, logDirectoryPath str
 
 #### AddFailMatchFlagToFileLog
 
-Similar: AddFailMatchFlag\(\)\, AddFailMatchFlagToFileLog\(\)\, AddFilterToFail\(\)
+Similar:
 
-English: Error text searched for in the container's standard output\. Input: value: Error text logDirectoryPath: File path where the container's standard output filed in a \`log\.N\.log\` file will be saved\, where N is an automatically incremented number\. e\.g\.: "\./bug/critical/" Output: err: Default error object
+```
+AddFailMatchFlag(), AddFailMatchFlagToFileLog(), AddFilterToFail()
+```
 
-Português: Texto indicativo de erro procurado na saída padrão do container\. Entrada: value: Texto indicativo de erro logDirectoryPath: Caminho do arquivo onde será salva a saída padrão do container arquivada em um arquivo \`log\.N\.log\`\, onde N é um número incrementado automaticamente\. Ex\.: "\./bug/critical/" Output: err: Objeto de erro padrão
+English:
+
+Error text searched for in the container's standard output\.
+
+```
+Input:
+  value: Error text
+  logDirectoryPath: File path where the container's standard output filed in a `log.N.log` file will be saved, where N is an automatically incremented number. e.g.: "./bug/critical/"
+
+Output:
+  err: Default error object
+```
+
+Português:
+
+Texto indicativo de erro procurado na saída padrão do container\.
+
+```
+Entrada:
+  value: Texto indicativo de erro
+  logDirectoryPath: Caminho do arquivo onde será salva a saída padrão do container arquivada em um arquivo `log.N.log`, onde N é um número incrementado automaticamente. Ex.: "./bug/critical/"
+
+Output:
+  err: Objeto de erro padrão
+```
 
 ### func \(\*ContainerBuilder\) [AddFileOrFolderToLinkBetweenConputerHostAndContainer](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcAddFiileOrFolderToLinkBetweenConputerHostAndContainer.go#L25>)
 
