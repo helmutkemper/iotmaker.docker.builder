@@ -10,8 +10,8 @@ import (
 //
 // Português: Copia um arquivo contido no computador local para dentro do container
 //   Entrada:
-//     hostPathList:      lista de arquivos a serem salvos no computador hospedeiro
-//     containerPathList: lista de arquivos contidos no container
+//     hostPathList:      lista de arquivos a serem salvos no computador hospedeiro (caminho + nome do arquivo)
+//     containerPathList: lista de arquivos contidos no container (apenas o caminho)
 //   Saída:
 //     err: Objeto de erro padrão
 //

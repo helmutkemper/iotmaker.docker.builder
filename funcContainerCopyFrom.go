@@ -11,16 +11,16 @@ import (
 //
 // Português: Copia um arquivo contido no container para uma pasta local
 //   Entrada:
-//     containerPathList: lista de arquivos contidos no container
-//     hostPathList:      lista de caminhos dos arquivos a serem salvos no host
+//     containerPathList: lista de arquivos contidos no container (caminho + nome do arquivo)
+//     hostPathList:      lista de caminhos dos arquivos a serem salvos no host (caminho + nome do arquivo)
 //   Saída:
 //     statsList: Lista de informações dos arquivos
 //     err:       Objeto padrão de error
 //
 // English: Copy a file contained in the container to a local folder
 //   Input:
-//     containerPathList: list of files contained in the container
-//     hostPathList:      list of file paths to be saved on the host
+//     containerPathList: list of files contained in the container (folder path + file name)
+//     hostPathList:      list of file paths to be saved on the host (folder path + file name)
 //   Output:
 //     statsList: List of file information
 //     err:       Default error object
