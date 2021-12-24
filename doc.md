@@ -1607,9 +1607,7 @@ type CPUUsage struct {
 
 English:
 
-```
 Docker manager
-```
 
 Português:
 

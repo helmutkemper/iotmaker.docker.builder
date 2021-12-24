@@ -14,7 +14,7 @@ import (
 //
 // English:
 //
-//   Docker manager
+//  Docker manager
 //
 // Português:
 //
