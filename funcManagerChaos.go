@@ -228,7 +228,7 @@ func (e *ContainerBuilder) managerChaos() {
 
 		} else if e.chaos.chaosCanRestartContainer == true && e.chaos.restartProbability != 0.0 && e.chaos.restartProbability >= probality && e.chaos.restartLimit > 0 {
 
-			if theater.SetContainerStopped(e.chaos.sceneName) == true {
+			if e.chaos.disableStopContainer == true || theater.SetContainerStopped(e.chaos.sceneName) == true {
 				return
 			}
 
@@ -253,7 +253,7 @@ func (e *ContainerBuilder) managerChaos() {
 
 		} else {
 
-			if theater.SetContainerPaused(e.chaos.sceneName) == true {
+			if e.chaos.disablePauseContainer == true || theater.SetContainerPaused(e.chaos.sceneName) == true {
 				return
 			}
 

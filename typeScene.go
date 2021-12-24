@@ -1,6 +1,9 @@
 package iotmakerdockerbuilder
 
-import "sync"
+import (
+	"log"
+	"sync"
+)
 
 // scene
 //
@@ -65,6 +68,9 @@ func (e *Theater) ConfigScene(sceneName string, maxStopedContainers, maxPausedCo
 		MaxPausedContainers:                maxPausedContainers,
 		MaxTotalPausedAndStoppedContainers: maxTotalPausedAndStoppedContainers,
 	}
+
+	log.Print("ConfigScene()")
+	log.Printf("theater: %+v", e)
 }
 
 // SetContainerUnPaused
@@ -89,6 +95,9 @@ func (e *Theater) SetContainerUnPaused(sceneName string) {
 	sc := e.m[sceneName]
 	sc.PausedContainers = sc.PausedContainers - 1
 	e.m[sceneName] = sc
+
+	log.Print("SetContainerUnPaused()")
+	log.Printf("theater.paused: %+v", e.m[sceneName].PausedContainers)
 }
 
 // SetContainerPaused
@@ -97,14 +106,14 @@ func (e *Theater) SetContainerUnPaused(sceneName string) {
 //   Input:
 //     sceneName: unique name of the scene
 //   Output:
-//     IsOnTheEdge: the maximum number of containers has been reached
+//     doNotPauseContainer: the maximum number of containers has been reached
 //
 // Português: Incrementa o contador de containers pausados
 //   Entrada:
 //     sceneName: nome único da cena
 //   Saída:
-//     IsOnTheEdge: a quantidade máxima de containers foi atingida
-func (e *Theater) SetContainerPaused(sceneName string) (IsOnTheEdge bool) {
+//     doNotPauseContainer: a quantidade máxima de containers foi atingida
+func (e *Theater) SetContainerPaused(sceneName string) (doNotPauseContainer bool) {
 	if sceneName == "" {
 		return
 	}
@@ -113,11 +122,19 @@ func (e *Theater) SetContainerPaused(sceneName string) (IsOnTheEdge bool) {
 	defer e.s.Unlock()
 
 	sc := e.m[sceneName]
+
+	if sc.MaxPausedContainers <= sc.PausedContainers ||
+		sc.MaxTotalPausedAndStoppedContainers <= sc.PausedContainers+sc.StopedContainers {
+		return true
+	}
+
 	sc.PausedContainers = sc.PausedContainers + 1
 	e.m[sceneName] = sc
 
-	return sc.MaxPausedContainers <= sc.PausedContainers ||
-		sc.MaxTotalPausedAndStoppedContainers <= sc.PausedContainers+sc.StopedContainers
+	log.Print("SetContainerPaused()")
+	log.Printf("theater.paused: %+v", e.m[sceneName].PausedContainers)
+
+	return false
 }
 
 // SetContainerStopped
@@ -142,11 +159,19 @@ func (e *Theater) SetContainerStopped(sceneName string) (IsOnTheEdge bool) {
 	defer e.s.Unlock()
 
 	sc := e.m[sceneName]
+
+	if sc.MaxStopedContainers <= sc.StopedContainers ||
+		sc.MaxTotalPausedAndStoppedContainers <= sc.PausedContainers+sc.StopedContainers {
+		return true
+	}
+
 	sc.StopedContainers = sc.StopedContainers + 1
 	e.m[sceneName] = sc
 
-	return sc.MaxStopedContainers <= sc.StopedContainers ||
-		sc.MaxTotalPausedAndStoppedContainers <= sc.PausedContainers+sc.StopedContainers
+	log.Print("SetContainerStopped()")
+	log.Printf("theater.stoped: %+v", e.m[sceneName].StopedContainers)
+
+	return false
 }
 
 // SetContainerUnStopped
@@ -169,6 +194,9 @@ func (e *Theater) SetContainerUnStopped(sceneName string) {
 	sc := e.m[sceneName]
 	sc.StopedContainers = sc.StopedContainers - 1
 	e.m[sceneName] = sc
+
+	log.Print("SetContainerUnStopped()")
+	log.Printf("theater.stopd: %+v", e.m[sceneName].StopedContainers)
 }
 
 var theater = Theater{}

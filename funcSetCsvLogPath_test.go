@@ -13,7 +13,7 @@ import (
 // Working Directory: /Users/kemper/go/Libraries/src/github.com/helmutkemper/iotmaker.docker.builder
 // Module: iotmaker.docker.builder
 
-func ExampleContainerBuilder_SetLogPath() {
+func ExampleContainerBuilder_SetCsvLogPath() {
 	var err error
 	var imageInspect types.ImageInspect
 

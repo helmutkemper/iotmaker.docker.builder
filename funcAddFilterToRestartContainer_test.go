@@ -136,27 +136,27 @@ func ExampleContainerBuilder_AddFilterToRestartContainer() {
 
 	// English: Defines a time window used to start chaos testing after container initialized
 	// Português: Define uma janela de tempo usada para começar o teste de caos depois do container inicializado
-	container.SetTimeToStartChaos(2*time.Second, 5*time.Second)
+	container.SetTimeToStartChaosOnChaosScene(2*time.Second, 5*time.Second)
 
 	// English: Sets a time window used to release container restart after the container has been initialized
 	// Português: Define uma janela de tempo usada para liberar o reinício do container depois do container ter sido inicializado
-	container.SetTimeBeforeRestart(2*time.Second, 5*time.Second)
+	container.SetTimeBeforeStartChaosInThisContainerOnChaosScene(2*time.Second, 5*time.Second)
 
 	// English: Defines a time window used to pause the container
 	// Português: Define uma janela de tempo usada para pausar o container
-	container.SetTimeToPause(2*time.Second, 5*time.Second)
+	container.SetTimeOnContainerPausedStateOnChaosScene(2*time.Second, 5*time.Second)
 
 	// English: Defines a time window used to unpause the container
 	// Português: Define uma janela de tempo usada para remover a pausa do container
-	container.SetTimeToUnpause(2*time.Second, 5*time.Second)
+	container.SetTimeOnContainerUnpausedStateOnChaosScene(2*time.Second, 5*time.Second)
 
 	// English: Sets a time window used to restart the container after stopping
 	// Português: Define uma janela de tempo usada para reiniciar o container depois de parado
-	container.SetTimeToRestart(2*time.Second, 5*time.Second)
+	container.SetTimeToRestartThisContainerAfterStopEventOnChaosScene(2*time.Second, 5*time.Second)
 
 	// English: Enable chaos test
 	// Português: Habilita o teste de caos
-	container.EnableChaos(true)
+	container.EnableChaosScene(true)
 
 	// English: Initializes the container manager object.
 	// Português: Inicializa o objeto gerenciador de container.

@@ -46,6 +46,9 @@ type chaos struct {
 	chaosCanRestartContainer bool
 	//chaosCanRestartEnd       bool
 	eventNext time.Time
+
+	disableStopContainer  bool
+	disablePauseContainer bool
 }
 
 // ContainerBuilder
