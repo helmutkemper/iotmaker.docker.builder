@@ -1150,7 +1150,7 @@ const (
 var theater = Theater{}
 ```
 
-## func [ConfigChaosScene](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcConfigChaosScene.go#L56>)
+## func [ConfigChaosScene](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcConfigChaosScene.go#L56-L61>)
 
 ```go
 func ConfigChaosScene(sceneName string, maxStopedContainers, maxPausedContainers, maxTotalPausedAndStoppedContainers int)

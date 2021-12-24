@@ -53,6 +53,11 @@ package iotmakerdockerbuilder
 //       ContainerBuilder.SetSceneNameOnChaosScene()
 //       [opcional] ContainerBuilder.ContainerSetDisabePauseOnChaosScene()
 //       [opcional] ContainerBuilder.ContainerSetDisabeStopOnChaosScene()
-func ConfigChaosScene(sceneName string, maxStopedContainers, maxPausedContainers, maxTotalPausedAndStoppedContainers int) {
+func ConfigChaosScene(
+	sceneName string,
+	maxStopedContainers,
+	maxPausedContainers,
+	maxTotalPausedAndStoppedContainers int,
+) {
 	theater.ConfigScene(sceneName, maxStopedContainers, maxPausedContainers, maxTotalPausedAndStoppedContainers)
 }
