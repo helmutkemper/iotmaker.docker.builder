@@ -14,7 +14,19 @@ package iotmakerdockerbuilder
 //
 // Note:
 //
-//   * Use this function with SetSceneName() function.
+//   * The following functions are used together during chaos testing:
+//       [optional] iotmakerdockerbuilder.ConfigChaosScene()
+//
+//       Mandatory set:
+//       ContainerBuilder.EnableChaosScene()
+//       ContainerBuilder.SetTimeOnContainerUnpausedStateOnChaosScene()
+//       ContainerBuilder.SetTimeToStartChaosOnChaosScene()
+//       ContainerBuilder.SetTimeToRestartThisContainerAfterStopEventOnChaosScene()
+//       ContainerBuilder.SetTimeOnContainerPausedStateOnChaosScene()
+//       ContainerBuilder.SetTimeBeforeStartChaosInThisContainerOnChaosScene()
+//       ContainerBuilder.SetSceneNameOnChaosScene()
+//       [optional] ContainerBuilder.ContainerSetDisabePauseOnChaosScene()
+//       [optional] ContainerBuilder.ContainerSetDisabeStopOnChaosScene()
 //
 // Português:
 //
@@ -28,7 +40,19 @@ package iotmakerdockerbuilder
 //
 // Nota:
 //
-//   * Use esta função em conjunto com a função SetSceneName().
+//   * As funções a seguir são usadas em conjunto durante o teste de caos:
+//       [opcional] iotmakerdockerbuilder.ConfigChaosScene()
+//
+//       Conjunto obrigatório:
+//       ContainerBuilder.EnableChaosScene()
+//       ContainerBuilder.SetTimeOnContainerUnpausedStateOnChaosScene()
+//       ContainerBuilder.SetTimeToStartChaosOnChaosScene()
+//       ContainerBuilder.SetTimeToRestartThisContainerAfterStopEventOnChaosScene()
+//       ContainerBuilder.SetTimeOnContainerPausedStateOnChaosScene()
+//       ContainerBuilder.SetTimeBeforeStartChaosInThisContainerOnChaosScene()
+//       ContainerBuilder.SetSceneNameOnChaosScene()
+//       [opcional] ContainerBuilder.ContainerSetDisabePauseOnChaosScene()
+//       [opcional] ContainerBuilder.ContainerSetDisabeStopOnChaosScene()
 func ConfigChaosScene(sceneName string, maxStopedContainers, maxPausedContainers, maxTotalPausedAndStoppedContainers int) {
 	theater.ConfigScene(sceneName, maxStopedContainers, maxPausedContainers, maxTotalPausedAndStoppedContainers)
 }

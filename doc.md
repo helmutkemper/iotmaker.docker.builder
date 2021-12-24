@@ -1152,7 +1152,7 @@ const (
 var theater = Theater{}
 ```
 
-## func [ConfigChaosScene](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcConfigChaosScene.go#L32>)
+## func [ConfigChaosScene](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcConfigChaosScene.go#L56>)
 
 ```go
 func ConfigChaosScene(sceneName string, maxStopedContainers, maxPausedContainers, maxTotalPausedAndStoppedContainers int)
@@ -1175,7 +1175,19 @@ Input:
 Note:
 
 ```
-* Use this function with SetSceneName() function.
+* The following functions are used together during chaos testing:
+    [optional] iotmakerdockerbuilder.ConfigChaosScene()
+
+    Mandatory set:
+    ContainerBuilder.EnableChaosScene()
+    ContainerBuilder.SetTimeOnContainerUnpausedStateOnChaosScene()
+    ContainerBuilder.SetTimeToStartChaosOnChaosScene()
+    ContainerBuilder.SetTimeToRestartThisContainerAfterStopEventOnChaosScene()
+    ContainerBuilder.SetTimeOnContainerPausedStateOnChaosScene()
+    ContainerBuilder.SetTimeBeforeStartChaosInThisContainerOnChaosScene()
+    ContainerBuilder.SetSceneNameOnChaosScene()
+    [optional] ContainerBuilder.ContainerSetDisabePauseOnChaosScene()
+    [optional] ContainerBuilder.ContainerSetDisabeStopOnChaosScene()
 ```
 
 Português:
@@ -1193,7 +1205,19 @@ Entrada:
 Nota:
 
 ```
-* Use esta função em conjunto com a função SetSceneName().
+* As funções a seguir são usadas em conjunto durante o teste de caos:
+    [opcional] iotmakerdockerbuilder.ConfigChaosScene()
+
+    Conjunto obrigatório:
+    ContainerBuilder.EnableChaosScene()
+    ContainerBuilder.SetTimeOnContainerUnpausedStateOnChaosScene()
+    ContainerBuilder.SetTimeToStartChaosOnChaosScene()
+    ContainerBuilder.SetTimeToRestartThisContainerAfterStopEventOnChaosScene()
+    ContainerBuilder.SetTimeOnContainerPausedStateOnChaosScene()
+    ContainerBuilder.SetTimeBeforeStartChaosInThisContainerOnChaosScene()
+    ContainerBuilder.SetSceneNameOnChaosScene()
+    [opcional] ContainerBuilder.ContainerSetDisabePauseOnChaosScene()
+    [opcional] ContainerBuilder.ContainerSetDisabeStopOnChaosScene()
 ```
 
 <details><summary>Example</summary>
@@ -3304,7 +3328,7 @@ English: Restarts a container stopped by ContainerStop\(\)\. Input: timeout: tim
 
 Português: Reinicia um container parado por ContainerStop\(\)\. Entrada: timeout: tempo limite para reinício do container Saída: err: objeto de erro padrão
 
-### func \(\*ContainerBuilder\) [ContainerSetDisabePauseOnChaosScene](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcContainerSetDisabePauseOnChaosScene.go#L18>)
+### func \(\*ContainerBuilder\) [ContainerSetDisabePauseOnChaosScene](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcContainerSetDisabePauseOnChaosScene.go#L50>)
 
 ```go
 func (e *ContainerBuilder) ContainerSetDisabePauseOnChaosScene(value bool)
@@ -3321,6 +3345,24 @@ Entrada:
   value: true to disable the container pause functionality
 ```
 
+Note:
+
+```
+* The following functions are used together during chaos testing:
+    [optional] iotmakerdockerbuilder.ConfigChaosScene()
+
+    Mandatory set:
+    ContainerBuilder.EnableChaosScene()
+    ContainerBuilder.SetTimeOnContainerUnpausedStateOnChaosScene()
+    ContainerBuilder.SetTimeToStartChaosOnChaosScene()
+    ContainerBuilder.SetTimeToRestartThisContainerAfterStopEventOnChaosScene()
+    ContainerBuilder.SetTimeOnContainerPausedStateOnChaosScene()
+    ContainerBuilder.SetTimeBeforeStartChaosInThisContainerOnChaosScene()
+    ContainerBuilder.SetSceneNameOnChaosScene()
+    [optional] ContainerBuilder.ContainerSetDisabePauseOnChaosScene()
+    [optional] ContainerBuilder.ContainerSetDisabeStopOnChaosScene()
+```
+
 Português:
 
 Define se a funcionalidade de pausar o container será desabilitada quando a cena de chaos estiver em execução
@@ -3330,7 +3372,25 @@ Entrada:
   value: true para desabilitar a funcionalidade de pausar o container
 ```
 
-### func \(\*ContainerBuilder\) [ContainerSetDisabeStopOnChaosScene](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcContainerSetDisabeStopOnChaosScene.go#L18>)
+Nota:
+
+```
+* As funções a seguir são usadas em conjunto durante o teste de caos:
+    [opcional] iotmakerdockerbuilder.ConfigChaosScene()
+
+    Conjunto obrigatório:
+    ContainerBuilder.EnableChaosScene()
+    ContainerBuilder.SetTimeOnContainerUnpausedStateOnChaosScene()
+    ContainerBuilder.SetTimeToStartChaosOnChaosScene()
+    ContainerBuilder.SetTimeToRestartThisContainerAfterStopEventOnChaosScene()
+    ContainerBuilder.SetTimeOnContainerPausedStateOnChaosScene()
+    ContainerBuilder.SetTimeBeforeStartChaosInThisContainerOnChaosScene()
+    ContainerBuilder.SetSceneNameOnChaosScene()
+    [opcional] ContainerBuilder.ContainerSetDisabePauseOnChaosScene()
+    [opcional] ContainerBuilder.ContainerSetDisabeStopOnChaosScene()
+```
+
+### func \(\*ContainerBuilder\) [ContainerSetDisabeStopOnChaosScene](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcContainerSetDisabeStopOnChaosScene.go#L50>)
 
 ```go
 func (e *ContainerBuilder) ContainerSetDisabeStopOnChaosScene(value bool)
@@ -3347,6 +3407,24 @@ Entrada:
   value: true to disable the container stop functionality
 ```
 
+Note:
+
+```
+* The following functions are used together during chaos testing:
+    [optional] iotmakerdockerbuilder.ConfigChaosScene()
+
+    Mandatory set:
+    ContainerBuilder.EnableChaosScene()
+    ContainerBuilder.SetTimeOnContainerUnpausedStateOnChaosScene()
+    ContainerBuilder.SetTimeToStartChaosOnChaosScene()
+    ContainerBuilder.SetTimeToRestartThisContainerAfterStopEventOnChaosScene()
+    ContainerBuilder.SetTimeOnContainerPausedStateOnChaosScene()
+    ContainerBuilder.SetTimeBeforeStartChaosInThisContainerOnChaosScene()
+    ContainerBuilder.SetSceneNameOnChaosScene()
+    [optional] ContainerBuilder.ContainerSetDisabePauseOnChaosScene()
+    [optional] ContainerBuilder.ContainerSetDisabeStopOnChaosScene()
+```
+
 Português:
 
 Define se a funcionalidade de parar o container será desabilitada quando a cena de chaos estiver em execução
@@ -3354,6 +3432,24 @@ Define se a funcionalidade de parar o container será desabilitada quando a cena
 ```
 Entrada:
   value: true para desabilitar a funcionalidade de parar o container
+```
+
+Nota:
+
+```
+* As funções a seguir são usadas em conjunto durante o teste de caos:
+    [opcional] iotmakerdockerbuilder.ConfigChaosScene()
+
+    Conjunto obrigatório:
+    ContainerBuilder.EnableChaosScene()
+    ContainerBuilder.SetTimeOnContainerUnpausedStateOnChaosScene()
+    ContainerBuilder.SetTimeToStartChaosOnChaosScene()
+    ContainerBuilder.SetTimeToRestartThisContainerAfterStopEventOnChaosScene()
+    ContainerBuilder.SetTimeOnContainerPausedStateOnChaosScene()
+    ContainerBuilder.SetTimeBeforeStartChaosInThisContainerOnChaosScene()
+    ContainerBuilder.SetSceneNameOnChaosScene()
+    [opcional] ContainerBuilder.ContainerSetDisabePauseOnChaosScene()
+    [opcional] ContainerBuilder.ContainerSetDisabeStopOnChaosScene()
 ```
 
 ### func \(\*ContainerBuilder\) [ContainerStart](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcContainerStart.go#L33>)
@@ -3463,7 +3559,7 @@ Nota: - Ha duas formas de criar um container:
 func (e *ContainerBuilder) ContainerUnpause() (err error)
 ```
 
-### func \(\*ContainerBuilder\) [EnableChaosScene](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcEnableChaosScene.go#L30>)
+### func \(\*ContainerBuilder\) [EnableChaosScene](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcEnableChaosScene.go#L50>)
 
 ```go
 func (e *ContainerBuilder) EnableChaosScene(enable bool)
@@ -3483,9 +3579,19 @@ Input:
 Note:
 
 ```
-*This function is used in conjunction with the SetRestartProbability(), SetTimeToStartChaosOnChaosScene(),
-SetTimeBeforeStartChaosInThisContainerOnChaosScene(), SetTimeOnContainerPausedStateOnChaosScene(), SetTimeOnContainerUnpausedStateOnChaosScene(), SetTimeToRestartThisContainerAfterStopEventOnChaosScene(), StartMonitor() and
-StopMonitor() functions.
+* The following functions are used together during chaos testing:
+    [optional] iotmakerdockerbuilder.ConfigChaosScene()
+
+    Mandatory set:
+    ContainerBuilder.EnableChaosScene()
+    ContainerBuilder.SetTimeOnContainerUnpausedStateOnChaosScene()
+    ContainerBuilder.SetTimeToStartChaosOnChaosScene()
+    ContainerBuilder.SetTimeToRestartThisContainerAfterStopEventOnChaosScene()
+    ContainerBuilder.SetTimeOnContainerPausedStateOnChaosScene()
+    ContainerBuilder.SetTimeBeforeStartChaosInThisContainerOnChaosScene()
+    ContainerBuilder.SetSceneNameOnChaosScene()
+    [optional] ContainerBuilder.ContainerSetDisabePauseOnChaosScene()
+    [optional] ContainerBuilder.ContainerSetDisabeStopOnChaosScene()
 ```
 
 Português:
@@ -3500,9 +3606,19 @@ Entrada:
 Nota:
 
 ```
-* Esta função é usada em conjunto com as funções SetRestartProbability(), SetTimeToStartChaosOnChaosScene(),
-SetTimeBeforeStartChaosInThisContainerOnChaosScene(), SetTimeOnContainerPausedStateOnChaosScene(), SetTimeOnContainerUnpausedStateOnChaosScene(), SetTimeToRestartThisContainerAfterStopEventOnChaosScene(), StartMonitor() e
-StopMonitor()
+* As funções a seguir são usadas em conjunto durante o teste de caos:
+    [opcional] iotmakerdockerbuilder.ConfigChaosScene()
+
+    Conjunto obrigatório:
+    ContainerBuilder.EnableChaosScene()
+    ContainerBuilder.SetTimeOnContainerUnpausedStateOnChaosScene()
+    ContainerBuilder.SetTimeToStartChaosOnChaosScene()
+    ContainerBuilder.SetTimeToRestartThisContainerAfterStopEventOnChaosScene()
+    ContainerBuilder.SetTimeOnContainerPausedStateOnChaosScene()
+    ContainerBuilder.SetTimeBeforeStartChaosInThisContainerOnChaosScene()
+    ContainerBuilder.SetSceneNameOnChaosScene()
+    [opcional] ContainerBuilder.ContainerSetDisabePauseOnChaosScene()
+    [opcional] ContainerBuilder.ContainerSetDisabeStopOnChaosScene()
 ```
 
 ### func \(\*ContainerBuilder\) [FindCurrentIPV4Address](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcFindCurrentIPV4Address.go#L12>)
@@ -6734,7 +6850,7 @@ Português: Copia o arquivo ssh \~/\.ssh/id\_rsa e o arquivo \~/\.gitconfig para
 func (e *ContainerBuilder) SetRestartProbability(restartProbability, restartChangeIpProbability float64, limit int)
 ```
 
-### func \(\*ContainerBuilder\) [SetSceneNameOnChaosScene](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetSceneName.go#L24>)
+### func \(\*ContainerBuilder\) [SetSceneNameOnChaosScene](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetSceneNameOnChaosScene.go#L48>)
 
 ```go
 func (e *ContainerBuilder) SetSceneNameOnChaosScene(name string)
@@ -6751,7 +6867,19 @@ Scenes help control the maximum amount of container stopped or paused at the sam
 Note:
 
 ```
-* Use this function in conjunction with the ConfigChaosScene() function
+* The following functions are used together during chaos testing:
+    [optional] iotmakerdockerbuilder.ConfigChaosScene()
+
+    Mandatory set:
+    ContainerBuilder.EnableChaosScene()
+    ContainerBuilder.SetTimeOnContainerUnpausedStateOnChaosScene()
+    ContainerBuilder.SetTimeToStartChaosOnChaosScene()
+    ContainerBuilder.SetTimeToRestartThisContainerAfterStopEventOnChaosScene()
+    ContainerBuilder.SetTimeOnContainerPausedStateOnChaosScene()
+    ContainerBuilder.SetTimeBeforeStartChaosInThisContainerOnChaosScene()
+    ContainerBuilder.SetSceneNameOnChaosScene()
+    [optional] ContainerBuilder.ContainerSetDisabePauseOnChaosScene()
+    [optional] ContainerBuilder.ContainerSetDisabeStopOnChaosScene()
 ```
 
 Português:
@@ -6763,7 +6891,19 @@ Cenas ajudam a controlar a quantidade máxima de container parados ou pausados a
 Nota:
 
 ```
-* Use esta função em conjunto com a função ConfigChaosScene()
+* As funções a seguir são usadas em conjunto durante o teste de caos:
+    [opcional] iotmakerdockerbuilder.ConfigChaosScene()
+
+    Conjunto obrigatório:
+    ContainerBuilder.EnableChaosScene()
+    ContainerBuilder.SetTimeOnContainerUnpausedStateOnChaosScene()
+    ContainerBuilder.SetTimeToStartChaosOnChaosScene()
+    ContainerBuilder.SetTimeToRestartThisContainerAfterStopEventOnChaosScene()
+    ContainerBuilder.SetTimeOnContainerPausedStateOnChaosScene()
+    ContainerBuilder.SetTimeBeforeStartChaosInThisContainerOnChaosScene()
+    ContainerBuilder.SetSceneNameOnChaosScene()
+    [opcional] ContainerBuilder.ContainerSetDisabePauseOnChaosScene()
+    [opcional] ContainerBuilder.ContainerSetDisabeStopOnChaosScene()
 ```
 
 ### func \(\*ContainerBuilder\) [SetSshIdRsaFile](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetSshIdRsaFile.go#L44>)
@@ -6870,7 +7010,7 @@ var container = ContainerBuilder{}
 container.SetSshKnownHostsFile(string(file))
 ```
 
-### func \(\*ContainerBuilder\) [SetTimeBeforeStartChaosInThisContainerOnChaosScene](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetTimeBeforeRestart.go#L35>)
+### func \(\*ContainerBuilder\) [SetTimeBeforeStartChaosInThisContainerOnChaosScene](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetTimeBeforeStartChaosInThisContainerOnChaosScene.go#L58>)
 
 ```go
 func (e *ContainerBuilder) SetTimeBeforeStartChaosInThisContainerOnChaosScene(min, max time.Duration)
@@ -6893,7 +7033,19 @@ Input:
 Note:
 
 ```
-* This function is used in conjunction with the AddStartChaosMatchFlag(), AddStartChaosMatchFlagToFileLog() or AddFilterToStartChaos() functions
+* The following functions are used together during chaos testing:
+    [optional] iotmakerdockerbuilder.ConfigChaosScene()
+
+    Mandatory set:
+    ContainerBuilder.EnableChaosScene()
+    ContainerBuilder.SetTimeOnContainerUnpausedStateOnChaosScene()
+    ContainerBuilder.SetTimeToStartChaosOnChaosScene()
+    ContainerBuilder.SetTimeToRestartThisContainerAfterStopEventOnChaosScene()
+    ContainerBuilder.SetTimeOnContainerPausedStateOnChaosScene()
+    ContainerBuilder.SetTimeBeforeStartChaosInThisContainerOnChaosScene()
+    ContainerBuilder.SetSceneNameOnChaosScene()
+    [optional] ContainerBuilder.ContainerSetDisabePauseOnChaosScene()
+    [optional] ContainerBuilder.ContainerSetDisabeStopOnChaosScene()
 ```
 
 Português:
@@ -6911,10 +7063,22 @@ Entrada:
 Nota:
 
 ```
-* Esta função é usada em conjunto com as funções AddStartChaosMatchFlag(), AddStartChaosMatchFlagToFileLog() ou AddFilterToStartChaos()
+* As funções a seguir são usadas em conjunto durante o teste de caos:
+    [opcional] iotmakerdockerbuilder.ConfigChaosScene()
+
+    Conjunto obrigatório:
+    ContainerBuilder.EnableChaosScene()
+    ContainerBuilder.SetTimeOnContainerUnpausedStateOnChaosScene()
+    ContainerBuilder.SetTimeToStartChaosOnChaosScene()
+    ContainerBuilder.SetTimeToRestartThisContainerAfterStopEventOnChaosScene()
+    ContainerBuilder.SetTimeOnContainerPausedStateOnChaosScene()
+    ContainerBuilder.SetTimeBeforeStartChaosInThisContainerOnChaosScene()
+    ContainerBuilder.SetSceneNameOnChaosScene()
+    [opcional] ContainerBuilder.ContainerSetDisabePauseOnChaosScene()
+    [opcional] ContainerBuilder.ContainerSetDisabeStopOnChaosScene()
 ```
 
-### func \(\*ContainerBuilder\) [SetTimeOnContainerPausedStateOnChaosScene](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetTimeToPause.go#L30>)
+### func \(\*ContainerBuilder\) [SetTimeOnContainerPausedStateOnChaosScene](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetTimeOnContainerPausedStateOnChaosScene.go#L54>)
 
 ```go
 func (e *ContainerBuilder) SetTimeOnContainerPausedStateOnChaosScene(min, max time.Duration)
@@ -6935,7 +7099,19 @@ Input:
 Note:
 
 ```
-* This function is used in conjunction with the AddStartChaosMatchFlag(), AddStartChaosMatchFlagToFileLog() or AddFilterToStartChaos() functions
+* The following functions are used together during chaos testing:
+    [optional] iotmakerdockerbuilder.ConfigChaosScene()
+
+    Mandatory set:
+    ContainerBuilder.EnableChaosScene()
+    ContainerBuilder.SetTimeOnContainerUnpausedStateOnChaosScene()
+    ContainerBuilder.SetTimeToStartChaosOnChaosScene()
+    ContainerBuilder.SetTimeToRestartThisContainerAfterStopEventOnChaosScene()
+    ContainerBuilder.SetTimeOnContainerPausedStateOnChaosScene()
+    ContainerBuilder.SetTimeBeforeStartChaosInThisContainerOnChaosScene()
+    ContainerBuilder.SetSceneNameOnChaosScene()
+    [optional] ContainerBuilder.ContainerSetDisabePauseOnChaosScene()
+    [optional] ContainerBuilder.ContainerSetDisabeStopOnChaosScene()
 ```
 
 Português:
@@ -6951,10 +7127,22 @@ Entrada:
 Nota:
 
 ```
-* Esta função é usada em conjunto com as funções AddStartChaosMatchFlag(), AddStartChaosMatchFlagToFileLog() ou AddFilterToStartChaos()
+* As funções a seguir são usadas em conjunto durante o teste de caos:
+    [opcional] iotmakerdockerbuilder.ConfigChaosScene()
+
+    Conjunto obrigatório:
+    ContainerBuilder.EnableChaosScene()
+    ContainerBuilder.SetTimeOnContainerUnpausedStateOnChaosScene()
+    ContainerBuilder.SetTimeToStartChaosOnChaosScene()
+    ContainerBuilder.SetTimeToRestartThisContainerAfterStopEventOnChaosScene()
+    ContainerBuilder.SetTimeOnContainerPausedStateOnChaosScene()
+    ContainerBuilder.SetTimeBeforeStartChaosInThisContainerOnChaosScene()
+    ContainerBuilder.SetSceneNameOnChaosScene()
+    [opcional] ContainerBuilder.ContainerSetDisabePauseOnChaosScene()
+    [opcional] ContainerBuilder.ContainerSetDisabeStopOnChaosScene()
 ```
 
-### func \(\*ContainerBuilder\) [SetTimeOnContainerUnpausedStateOnChaosScene](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetTimeToUnpause.go#L30>)
+### func \(\*ContainerBuilder\) [SetTimeOnContainerUnpausedStateOnChaosScene](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetTimeOnContainerUnpausedStateOnChaosScene.go#L54>)
 
 ```go
 func (e *ContainerBuilder) SetTimeOnContainerUnpausedStateOnChaosScene(min, max time.Duration)
@@ -6975,7 +7163,19 @@ Input:
 Note:
 
 ```
-* This function is used in conjunction with the AddStartChaosMatchFlag(), AddStartChaosMatchFlagToFileLog() or AddFilterToStartChaos() functions
+* The following functions are used together during chaos testing:
+    [optional] iotmakerdockerbuilder.ConfigChaosScene()
+
+    Mandatory set:
+    ContainerBuilder.EnableChaosScene()
+    ContainerBuilder.SetTimeOnContainerUnpausedStateOnChaosScene()
+    ContainerBuilder.SetTimeToStartChaosOnChaosScene()
+    ContainerBuilder.SetTimeToRestartThisContainerAfterStopEventOnChaosScene()
+    ContainerBuilder.SetTimeOnContainerPausedStateOnChaosScene()
+    ContainerBuilder.SetTimeBeforeStartChaosInThisContainerOnChaosScene()
+    ContainerBuilder.SetSceneNameOnChaosScene()
+    [optional] ContainerBuilder.ContainerSetDisabePauseOnChaosScene()
+    [optional] ContainerBuilder.ContainerSetDisabeStopOnChaosScene()
 ```
 
 Português:
@@ -6991,10 +7191,22 @@ Entrada:
 Nota:
 
 ```
-* Esta função é usada em conjunto com as funções AddStartChaosMatchFlag(), AddStartChaosMatchFlagToFileLog() ou AddFilterToStartChaos()
+* As funções a seguir são usadas em conjunto durante o teste de caos:
+    [opcional] iotmakerdockerbuilder.ConfigChaosScene()
+
+    Conjunto obrigatório:
+    ContainerBuilder.EnableChaosScene()
+    ContainerBuilder.SetTimeOnContainerUnpausedStateOnChaosScene()
+    ContainerBuilder.SetTimeToStartChaosOnChaosScene()
+    ContainerBuilder.SetTimeToRestartThisContainerAfterStopEventOnChaosScene()
+    ContainerBuilder.SetTimeOnContainerPausedStateOnChaosScene()
+    ContainerBuilder.SetTimeBeforeStartChaosInThisContainerOnChaosScene()
+    ContainerBuilder.SetSceneNameOnChaosScene()
+    [opcional] ContainerBuilder.ContainerSetDisabePauseOnChaosScene()
+    [opcional] ContainerBuilder.ContainerSetDisabeStopOnChaosScene()
 ```
 
-### func \(\*ContainerBuilder\) [SetTimeToRestartThisContainerAfterStopEventOnChaosScene](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetTimeToRestart.go#L30>)
+### func \(\*ContainerBuilder\) [SetTimeToRestartThisContainerAfterStopEventOnChaosScene](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetTimeToRestartThisContainerAfterStopEventOnChaosScene.go#L54>)
 
 ```go
 func (e *ContainerBuilder) SetTimeToRestartThisContainerAfterStopEventOnChaosScene(min, max time.Duration)
@@ -7015,7 +7227,19 @@ Input:
 Note:
 
 ```
-* This function is used in conjunction with the AddStartChaosMatchFlag(), AddStartChaosMatchFlagToFileLog() or AddFilterToStartChaos() functions
+* The following functions are used together during chaos testing:
+    [optional] iotmakerdockerbuilder.ConfigChaosScene()
+
+    Mandatory set:
+    ContainerBuilder.EnableChaosScene()
+    ContainerBuilder.SetTimeOnContainerUnpausedStateOnChaosScene()
+    ContainerBuilder.SetTimeToStartChaosOnChaosScene()
+    ContainerBuilder.SetTimeToRestartThisContainerAfterStopEventOnChaosScene()
+    ContainerBuilder.SetTimeOnContainerPausedStateOnChaosScene()
+    ContainerBuilder.SetTimeBeforeStartChaosInThisContainerOnChaosScene()
+    ContainerBuilder.SetSceneNameOnChaosScene()
+    [optional] ContainerBuilder.ContainerSetDisabePauseOnChaosScene()
+    [optional] ContainerBuilder.ContainerSetDisabeStopOnChaosScene()
 ```
 
 Português:
@@ -7031,10 +7255,22 @@ Entrada:
 Nota:
 
 ```
-* Esta função é usada em conjunto com as funções AddStartChaosMatchFlag(), AddStartChaosMatchFlagToFileLog() ou AddFilterToStartChaos()
+* As funções a seguir são usadas em conjunto durante o teste de caos:
+    [opcional] iotmakerdockerbuilder.ConfigChaosScene()
+
+    Conjunto obrigatório:
+    ContainerBuilder.EnableChaosScene()
+    ContainerBuilder.SetTimeOnContainerUnpausedStateOnChaosScene()
+    ContainerBuilder.SetTimeToStartChaosOnChaosScene()
+    ContainerBuilder.SetTimeToRestartThisContainerAfterStopEventOnChaosScene()
+    ContainerBuilder.SetTimeOnContainerPausedStateOnChaosScene()
+    ContainerBuilder.SetTimeBeforeStartChaosInThisContainerOnChaosScene()
+    ContainerBuilder.SetSceneNameOnChaosScene()
+    [opcional] ContainerBuilder.ContainerSetDisabePauseOnChaosScene()
+    [opcional] ContainerBuilder.ContainerSetDisabeStopOnChaosScene()
 ```
 
-### func \(\*ContainerBuilder\) [SetTimeToStartChaosOnChaosScene](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetTimeToStartChaos.go#L34>)
+### func \(\*ContainerBuilder\) [SetTimeToStartChaosOnChaosScene](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetTimeToStartChaosOnChaosScene.go#L58>)
 
 ```go
 func (e *ContainerBuilder) SetTimeToStartChaosOnChaosScene(min, max time.Duration)
@@ -7057,7 +7293,19 @@ Basically\, the idea is that you put at some point in the test a text like\, cha
 Note:
 
 ```
-* This function is used in conjunction with the AddStartChaosMatchFlag(), AddStartChaosMatchFlagToFileLog() or AddFilterToStartChaos() functions
+* The following functions are used together during chaos testing:
+    [optional] iotmakerdockerbuilder.ConfigChaosScene()
+
+    Mandatory set:
+    ContainerBuilder.EnableChaosScene()
+    ContainerBuilder.SetTimeOnContainerUnpausedStateOnChaosScene()
+    ContainerBuilder.SetTimeToStartChaosOnChaosScene()
+    ContainerBuilder.SetTimeToRestartThisContainerAfterStopEventOnChaosScene()
+    ContainerBuilder.SetTimeOnContainerPausedStateOnChaosScene()
+    ContainerBuilder.SetTimeBeforeStartChaosInThisContainerOnChaosScene()
+    ContainerBuilder.SetSceneNameOnChaosScene()
+    [optional] ContainerBuilder.ContainerSetDisabePauseOnChaosScene()
+    [optional] ContainerBuilder.ContainerSetDisabeStopOnChaosScene()
 ```
 
 Português:
@@ -7075,7 +7323,19 @@ Basicamente\, a ideia é que você coloque em algum ponto do teste um texto tipo
 Nota:
 
 ```
-* Esta função é usada em conjunto com as funções AddStartChaosMatchFlag(), AddStartChaosMatchFlagToFileLog() ou AddFilterToStartChaos()
+* As funções a seguir são usadas em conjunto durante o teste de caos:
+    [opcional] iotmakerdockerbuilder.ConfigChaosScene()
+
+    Conjunto obrigatório:
+    ContainerBuilder.EnableChaosScene()
+    ContainerBuilder.SetTimeOnContainerUnpausedStateOnChaosScene()
+    ContainerBuilder.SetTimeToStartChaosOnChaosScene()
+    ContainerBuilder.SetTimeToRestartThisContainerAfterStopEventOnChaosScene()
+    ContainerBuilder.SetTimeOnContainerPausedStateOnChaosScene()
+    ContainerBuilder.SetTimeBeforeStartChaosInThisContainerOnChaosScene()
+    ContainerBuilder.SetSceneNameOnChaosScene()
+    [opcional] ContainerBuilder.ContainerSetDisabePauseOnChaosScene()
+    [opcional] ContainerBuilder.ContainerSetDisabeStopOnChaosScene()
 ```
 
 ### func \(\*ContainerBuilder\) [SetWaitString](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetWaitString.go#L14>)

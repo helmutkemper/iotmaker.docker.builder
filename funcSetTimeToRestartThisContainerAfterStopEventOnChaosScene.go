@@ -1,13 +1,16 @@
 package iotmakerdockerbuilder
 
-// EnableChaosScene
+import "time"
+
+// SetTimeToRestartThisContainerAfterStopEventOnChaosScene
 //
-// English:
+// English
 //
-//  Enables chaos functionality in containers.
+//  Defines the minimum and maximum times to restart the container after the container stop event.
 //
 //   Input:
-//     enable: enable chaos manager
+//     min: minimum timeout before restarting container
+//     max: maximum timeout before restarting container
 //
 // Note:
 //
@@ -27,10 +30,11 @@ package iotmakerdockerbuilder
 //
 // Português:
 //
-//  Habilita a funcionalidade de caos nos containers.
+//  Define os tempos mínimos e máximos para reiniciar o container após o evento de parar container.
 //
 //   Entrada:
-//     enable: habilita o gerenciador de caos
+//     min: tempo mínimo de espera antes de reiniciar o container
+//     max: tempo máximo de espera antes de reiniciar o container
 //
 // Nota:
 //
@@ -47,6 +51,7 @@ package iotmakerdockerbuilder
 //       ContainerBuilder.SetSceneNameOnChaosScene()
 //       [opcional] ContainerBuilder.ContainerSetDisabePauseOnChaosScene()
 //       [opcional] ContainerBuilder.ContainerSetDisabeStopOnChaosScene()
-func (e *ContainerBuilder) EnableChaosScene(enable bool) {
-	e.chaos.enableChaos = enable
+func (e *ContainerBuilder) SetTimeToRestartThisContainerAfterStopEventOnChaosScene(min, max time.Duration) {
+	e.chaos.minimumTimeToRestart = min
+	e.chaos.maximumTimeToRestart = max
 }

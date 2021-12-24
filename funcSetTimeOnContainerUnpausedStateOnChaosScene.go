@@ -1,13 +1,16 @@
 package iotmakerdockerbuilder
 
-// EnableChaosScene
+import "time"
+
+// SetTimeOnContainerUnpausedStateOnChaosScene
 //
 // English:
 //
-//  Enables chaos functionality in containers.
+//  Defines the minimum and maximum times where the container is kept out of the paused state
 //
 //   Input:
-//     enable: enable chaos manager
+//     min: minimum time out of sleep state
+//     max: maximum time out of sleep state
 //
 // Note:
 //
@@ -27,10 +30,11 @@ package iotmakerdockerbuilder
 //
 // Português:
 //
-//  Habilita a funcionalidade de caos nos containers.
+//  Define os tempos mínimos e máximos onde o container é mantido fora do estado de pausa
 //
 //   Entrada:
-//     enable: habilita o gerenciador de caos
+//     min: tempo mínimo fora do estado de pausa
+//     max: tempo máximo fora do estado de pausa
 //
 // Nota:
 //
@@ -47,6 +51,7 @@ package iotmakerdockerbuilder
 //       ContainerBuilder.SetSceneNameOnChaosScene()
 //       [opcional] ContainerBuilder.ContainerSetDisabePauseOnChaosScene()
 //       [opcional] ContainerBuilder.ContainerSetDisabeStopOnChaosScene()
-func (e *ContainerBuilder) EnableChaosScene(enable bool) {
-	e.chaos.enableChaos = enable
+func (e *ContainerBuilder) SetTimeOnContainerUnpausedStateOnChaosScene(min, max time.Duration) {
+	e.chaos.minimumTimeToUnpause = min
+	e.chaos.maximumTimeToUnpause = max
 }

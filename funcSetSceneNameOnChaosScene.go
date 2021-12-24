@@ -1,13 +1,12 @@
 package iotmakerdockerbuilder
 
-// EnableChaosScene
+// SetSceneNameOnChaosScene
 //
 // English:
 //
-//  Enables chaos functionality in containers.
+//  Adds the container to a scene
 //
-//   Input:
-//     enable: enable chaos manager
+//  Scenes help control the maximum amount of container stopped or paused at the same time
 //
 // Note:
 //
@@ -27,10 +26,9 @@ package iotmakerdockerbuilder
 //
 // Português:
 //
-//  Habilita a funcionalidade de caos nos containers.
+//  Adiciona o container a uma cena
 //
-//   Entrada:
-//     enable: habilita o gerenciador de caos
+//  Cenas ajudam a controlar a quantidade máxima de container parados ou pausados ao mesmo tempo
 //
 // Nota:
 //
@@ -47,6 +45,6 @@ package iotmakerdockerbuilder
 //       ContainerBuilder.SetSceneNameOnChaosScene()
 //       [opcional] ContainerBuilder.ContainerSetDisabePauseOnChaosScene()
 //       [opcional] ContainerBuilder.ContainerSetDisabeStopOnChaosScene()
-func (e *ContainerBuilder) EnableChaosScene(enable bool) {
-	e.chaos.enableChaos = enable
+func (e *ContainerBuilder) SetSceneNameOnChaosScene(name string) {
+	e.chaos.sceneName = name
 }
