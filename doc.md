@@ -1736,10 +1736,10 @@ import (
 )
 
 func main() {
-	ContainerBuilder_AddFailMatchFlag()
+	ContainerBuilderAddFailMatchFlag()
 }
 
-func ContainerBuilder_AddFailMatchFlag() {
+func ContainerBuilderAddFailMatchFlag() {
 	var err error
 	var imageInspect types.ImageInspect
 

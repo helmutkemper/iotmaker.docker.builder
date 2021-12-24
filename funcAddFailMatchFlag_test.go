@@ -10,10 +10,10 @@ import (
 )
 
 func ExampleContainerBuilder_AddFailMatchFlag() {
-	ContainerBuilder_AddFailMatchFlag()
+	ContainerBuilderAddFailMatchFlag()
 }
 
-func ContainerBuilder_AddFailMatchFlag() {
+func ContainerBuilderAddFailMatchFlag() {
 	var err error
 	var imageInspect types.ImageInspect
 
