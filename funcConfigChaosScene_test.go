@@ -9,7 +9,7 @@ import (
 	"time"
 )
 
-func ExampleConfigScene() {
+func ExampleConfigChaosScene() {
 	var err error
 
 	// English: Deletes all docker elements with the term `delete` in the name.
