@@ -1,6 +1,16 @@
 package iotmakerdockerbuilder
 
 // CPUStats aggregates and wraps all CPU related info of container
+
+// CPUStats
+//
+// English:
+//
+//  Aggregates and wraps all CPU related info of container
+//
+// Português:
+//
+//  Agrega e embrulha todas as informações de CPU do container
 type CPUStats struct {
 	// CPU Usage. Linux and Windows.
 	CPUUsage CPUUsage `json:"cpu_usage"`

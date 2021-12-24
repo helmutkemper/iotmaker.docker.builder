@@ -6,12 +6,16 @@ package iotmakerdockerbuilder
 //
 //   AddFailMatchFlag(), AddFailMatchFlagToFileLog(), AddFilterToFail()
 //
-// English: Error text searched for in the container's standard output.
+// English:
+//
+//  Error text searched for in the container's standard output.
 //
 //   Input:
 //     value: Error text
 //
-// Português: Texto indicativo de erro procurado na saída padrão do container.
+// Português:
+//
+//  Texto indicativo de erro procurado na saída padrão do container.
 //
 //   Entrada:
 //     value: Texto indicativo de erro

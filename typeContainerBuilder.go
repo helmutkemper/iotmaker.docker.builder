@@ -10,52 +10,15 @@ import (
 	"time"
 )
 
-type chaos struct {
-	foundSuccess               bool
-	foundFail                  bool
-	filterToStart              []LogFilter
-	filterRestart              []LogFilter
-	filterSuccess              []LogFilter
-	filterFail                 []LogFilter
-	filterLog                  []LogFilter
-	sceneName                  string
-	logPath                    string
-	serviceStartedAt           time.Time
-	minimumTimeBeforeRestart   time.Duration
-	maximumTimeBeforeRestart   time.Duration
-	minimumTimeToStartChaos    time.Duration
-	maximumTimeToStartChaos    time.Duration
-	minimumTimeToPause         time.Duration
-	maximumTimeToPause         time.Duration
-	minimumTimeToUnpause       time.Duration
-	maximumTimeToUnpause       time.Duration
-	minimumTimeToRestart       time.Duration
-	maximumTimeToRestart       time.Duration
-	restartProbability         float64
-	restartChangeIpProbability float64
-	restartLimit               int
-	enableChaos                bool
-	event                      chan Event
-	monitorStop                chan struct{}
-	monitorRunning             bool
-	//containerStarted         bool
-	containerPaused          bool
-	containerStopped         bool
-	linear                   bool
-	chaosStarted             bool
-	chaosCanRestartContainer bool
-	//chaosCanRestartEnd       bool
-	eventNext time.Time
-
-	disableStopContainer  bool
-	disablePauseContainer bool
-}
-
 // ContainerBuilder
 //
-// English: Docker manager
+// English:
 //
-// Português: Gerenciador de containers e imagens docker
+//   Docker manager
+//
+// Português:
+//
+//  Gerenciador de containers e imagens docker
 type ContainerBuilder struct {
 	metadata                map[string]interface{}
 	problem                 string

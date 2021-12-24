@@ -1,6 +1,14 @@
 package iotmakerdockerbuilder
 
-// CPUUsage stores All CPU stats aggregated since container inception.
+// CPUUsage
+//
+// English:
+//
+//  Stores All CPU stats aggregated since container inception.
+//
+// Português:
+//
+//  Armazena todos os estatísticas de CPU agregadas desde o container.
 type CPUUsage struct {
 	// Total CPU time consumed.
 	// Units: nanoseconds (Linux)
