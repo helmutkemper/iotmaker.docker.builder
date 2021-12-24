@@ -1481,9 +1481,21 @@ English: Launch the test theater
 
 Português: Inicializa o teatro de teste
 
-## type [BlkioStatEntry](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/typeBlkioStatEntry.go#L5-L10>)
+## type [BlkioStatEntry](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/typeBlkioStatEntry.go#L16-L21>)
 
-BlkioStatEntry is one small entity to store a piece of Blkio stats Not used on Windows\.
+### BlkioStatEntry
+
+Português:
+
+Estrutura para armazenar uma peça de estatísticas de Blkio
+
+Não usado no windows\.
+
+English:
+
+Structure to store a piece of Blkio stats
+
+Not used on Windows\.
 
 ```go
 type BlkioStatEntry struct {
@@ -1494,9 +1506,21 @@ type BlkioStatEntry struct {
 }
 ```
 
-## type [BlkioStats](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/typeBlkioStats.go#L7-L17>)
+## type [BlkioStats](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/typeBlkioStats.go#L16-L26>)
 
-BlkioStats stores All IO service stats for data read and write\. This is a Linux specific structure as the differences between expressing block I/O on Windows and Linux are sufficiently significant to make little sense attempting to morph into a combined structure\.
+### BlkioStats
+
+English:
+
+Stores All IO service stats for data read and write\.
+
+This is a Linux specific structure as the differences between expressing block I/O on Windows and Linux are sufficiently significant to make little sense attempting to morph into a combined structure\.
+
+Português:
+
+Armazena todos os estatísticas de serviço de IO para leitura e escrita de dados\.
+
+Este é um estrutura Linux específica devido às diferenças entre expressar o IO de bloco no Windows e Linux são suficientemente significativas para fazer pouco sentido tentar morfar em uma combinação de estrutura\.
 
 ```go
 type BlkioStats struct {
@@ -1512,9 +1536,17 @@ type BlkioStats struct {
 }
 ```
 
-## type [CPUStats](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/typeCPUStats.go#L4-L16>)
+## type [CPUStats](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/typeCPUStats.go#L14-L26>)
 
-CPUStats aggregates and wraps all CPU related info of container
+### CPUStats
+
+English:
+
+Aggregates and wraps all CPU related info of container
+
+Português:
+
+Agrega e embrulha todas as informações de CPU do container
 
 ```go
 type CPUStats struct {
@@ -1532,9 +1564,17 @@ type CPUStats struct {
 }
 ```
 
-## type [CPUUsage](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/typeCPUUsage.go#L4-L25>)
+## type [CPUUsage](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/typeCPUUsage.go#L12-L33>)
 
-CPUUsage stores All CPU stats aggregated since container inception\.
+### CPUUsage
+
+English:
+
+Stores All CPU stats aggregated since container inception\.
+
+Português:
+
+Armazena todos os estatísticas de CPU agregadas desde o container\.
 
 ```go
 type CPUUsage struct {
@@ -1561,13 +1601,19 @@ type CPUUsage struct {
 }
 ```
 
-## type [ContainerBuilder](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/typeContainerBuilder.go#L59-L130>)
+## type [ContainerBuilder](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/typeContainerBuilder.go#L22-L93>)
 
 ### ContainerBuilder
 
-English: Docker manager
+English:
 
-Português: Gerenciador de containers e imagens docker
+```
+Docker manager
+```
+
+Português:
+
+Gerenciador de containers e imagens docker
 
 ```go
 type ContainerBuilder struct {
@@ -1644,7 +1690,7 @@ type ContainerBuilder struct {
 }
 ```
 
-### func \(\*ContainerBuilder\) [AddFailMatchFlag](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcAddFailMatchFlag.go#L18>)
+### func \(\*ContainerBuilder\) [AddFailMatchFlag](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcAddFailMatchFlag.go#L22>)
 
 ```go
 func (e *ContainerBuilder) AddFailMatchFlag(value string)
@@ -1658,14 +1704,18 @@ Similar:
 AddFailMatchFlag(), AddFailMatchFlagToFileLog(), AddFilterToFail()
 ```
 
-English: Error text searched for in the container's standard output\.
+English:
+
+Error text searched for in the container's standard output\.
 
 ```
 Input:
   value: Error text
 ```
 
-Português: Texto indicativo de erro procurado na saída padrão do container\.
+Português:
+
+Texto indicativo de erro procurado na saída padrão do container\.
 
 ```
 Entrada:
@@ -9133,7 +9183,17 @@ type Timers struct {
 }
 ```
 
-## type [chaos](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/typeContainerBuilder.go#L13-L52>)
+## type [chaos](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/typeChaos.go#L14-L53>)
+
+chaos
+
+English:
+
+Object chaos manager
+
+Português:
+
+Objeto gerenciador de caos
 
 ```go
 type chaos struct {
