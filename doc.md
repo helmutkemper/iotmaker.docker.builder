@@ -353,9 +353,7 @@ Para quem não tem prática em processo de build em duas etapas\, na primeira et
 - [Constants](<#constants>)
 - [Variables](<#variables>)
 - [func ConfigChaosScene(sceneName string, maxStopedContainers, maxPausedContainers, maxTotalPausedAndStoppedContainers int)](<#func-configchaosscene>)
-- [func DirCheckExists(path string) (exists bool)](<#func-dircheckexists>)
 - [func GarbageCollector(names ...string)](<#func-garbagecollector>)
-- [func MakeDir(path string) (err error)](<#func-makedir>)
 - [func init()](<#func-init>)
 - [type BlkioStatEntry](<#type-blkiostatentry>)
 - [type BlkioStats](<#type-blkiostats>)
@@ -1246,7 +1244,7 @@ func main() {
 	// English: Create a chaos scene named nats_chaos and control the number of containers stopped at the same time
 	//
 	// Português: Cria uma cena de caos de nome nats_chaos e controla a quantidade de containers parados ao mesmo tempo
-	ConfigChaosScene("nats_chaos", 1, 1, 2)
+	ConfigChaosScene("nats_chaos", 2, 2, 2)
 
 	// English: Create a docker network controler
 	//
@@ -1283,6 +1281,9 @@ func main() {
 		}(i, err)
 	}
 
+	// English: Let the test run for two minutes before closing it
+	//
+	// Português: Deixa o teste rodar por dois minutos antes de o encerrar
 	time.Sleep(2 * 60 * time.Second)
 
 	// English: Deletes all docker elements with the term `delete` in the name.
@@ -1302,8 +1303,6 @@ func mountNatsContainer(loop int, network *dockerNetwork.ContainerBuilderNetwork
 	// [optional/opcional]
 	container.SetPrintBuildOnStrOut()
 
-	//container.ContainerSetDisabeStopOnChaosScene(true)
-
 	// English: Sets a validity time for the image, preventing the same image from being remade for a period of time.
 	// In some tests, the same image is created inside a loop, and adding an expiration date causes the same image to be used without having to redo the same image at each loop iteration.
 	//
@@ -1313,17 +1312,29 @@ func mountNatsContainer(loop int, network *dockerNetwork.ContainerBuilderNetwork
 	// [optional/opcional]
 	container.SetImageExpirationTime(5 * time.Minute)
 
+	// English: Link this container to a chaos scene for greater control
+	//
+	// Português: Vincula este container a uma cena de caos para maior controle
 	container.SetSceneNameOnChaosScene("nats_chaos")
 
-	// set image name for docker pull
+	// English: Set image name for docker pull
+	//
+	// Português: Define o nome da imagem para o docker pull
 	container.SetImageName("nats:latest")
 
-	// set a container name
+	// English: set a container name
+	//
+	// Português: Define o nome do container
 	container.SetContainerName("container_delete_nats_after_test_" + strconv.Itoa(loop))
 
+	// English: Links the container to the previously created network
+	//
+	// Português: Vincula o container a rede criada previamente
 	container.SetNetworkDocker(network)
 
-	// set a waits for the text to appear in the standard container output to proceed [optional]
+	// English: Defines a wait for text, where the text must appear in the container's standard output to proceed [optional]
+	//
+	// Português: Define uma espera por texto, onde o texto deve aparecer na saída padrão do container para prosseguir [opcional]
 	container.SetWaitStringWithTimeout("Listening for route connections on 0.0.0.0:6222", 10*time.Second)
 
 	// English: Defines the probability of the container restarting and changing the IP address in the process.
@@ -1361,7 +1372,9 @@ func mountNatsContainer(loop int, network *dockerNetwork.ContainerBuilderNetwork
 	// Português: Habilita o teste de caos
 	container.EnableChaosScene(true)
 
-	// inialize the container object
+	// English: Initialize the container's control object
+	//
+	// Português: Inicializa o objeto de controle do container
 	err = container.Init()
 	if err != nil {
 		util.TraceToLog()
@@ -1369,7 +1382,7 @@ func mountNatsContainer(loop int, network *dockerNetwork.ContainerBuilderNetwork
 	}
 
 	// image nats:latest pull command [optional]
-	err = container.ImagePull()
+	//err = container.ImagePull()
 	if err != nil {
 		util.TraceToLog()
 		panic(err)
@@ -1424,12 +1437,6 @@ func mountNatsContainer(loop int, network *dockerNetwork.ContainerBuilderNetwork
 </p>
 </details>
 
-## func [DirCheckExists](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcDirCheckExists.go#L5>)
-
-```go
-func DirCheckExists(path string) (exists bool)
-```
-
 ## func [GarbageCollector](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcGarbageCollector.go#L23>)
 
 ```go
@@ -1442,13 +1449,7 @@ English: A great use of this code is to build container during unit testing\, an
 
 Português: Uma grande utilidade desse código é levantar container durante testes unitários\, e nesse caso\, você pode adicionar o termo delete ao nome de todos os elementos docker criado durante o teste\, para que os mesmos sejam apagados de forma simples\. ex\.: network\_to\_delete\_after\_test Entrada: names: Nomes contidos nos elementos docker indicados para remoção\. Ex\.: nats\, remove os elementos de rede\, imagem container e volumes que contenham o termo "nats" no nome\. \[opcional\]
 
-## func [MakeDir](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcMakeDir.go#L11>)
-
-```go
-func MakeDir(path string) (err error)
-```
-
-## func [init](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/typeScene.go#L209>)
+## func [init](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/typeScene.go#L193>)
 
 ```go
 func init()
@@ -8991,7 +8992,7 @@ func (e *TestContainerLog) makeTest(path string, listUnderTest *[]parserLog, t *
 func (e TestContainerLog) proccessKeyList(listUnderTest *[]parserLog, t *testing.T) (problem pb.Problem)
 ```
 
-## type [Theater](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/typeScene.go#L30-L33>)
+## type [Theater](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/typeScene.go#L29-L32>)
 
 ### Theater
 
@@ -9006,7 +9007,7 @@ type Theater struct {
 }
 ```
 
-### func \(\*Theater\) [ConfigScene](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/typeScene.go#L60>)
+### func \(\*Theater\) [ConfigScene](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/typeScene.go#L59>)
 
 ```go
 func (e *Theater) ConfigScene(sceneName string, maxStopedContainers, maxPausedContainers, maxTotalPausedAndStoppedContainers int)
@@ -9018,7 +9019,7 @@ English: Create and configure a new scene\. Input: sceneName: unique name of the
 
 Português: Cria e configura uma cena nova\. Entrada: sceneName: nome único da cena maxStopedContainers: quantidade máxima de containers parados maxPausedContainers: quantidade máxima de containers pausados
 
-### func \(\*Theater\) [Init](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/typeScene.go#L40>)
+### func \(\*Theater\) [Init](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/typeScene.go#L39>)
 
 ```go
 func (e *Theater) Init()
@@ -9030,7 +9031,7 @@ English: Initialization must always be the first function called\.
 
 Português: A inicialização sempre deve ser a primeira função chamada\.
 
-### func \(\*Theater\) [SetContainerPaused](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/typeScene.go#L116>)
+### func \(\*Theater\) [SetContainerPaused](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/typeScene.go#L109>)
 
 ```go
 func (e *Theater) SetContainerPaused(sceneName string) (doNotPauseContainer bool)
@@ -9042,7 +9043,7 @@ English: Increments the paused containers counter Input: sceneName: unique name 
 
 Português: Incrementa o contador de containers pausados Entrada: sceneName: nome único da cena Saída: doNotPauseContainer: a quantidade máxima de containers foi atingida
 
-### func \(\*Theater\) [SetContainerStopped](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/typeScene.go#L153>)
+### func \(\*Theater\) [SetContainerStopped](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/typeScene.go#L143>)
 
 ```go
 func (e *Theater) SetContainerStopped(sceneName string) (IsOnTheEdge bool)
@@ -9054,7 +9055,7 @@ English: Increments the stopped containers counter Input: sceneName: unique name
 
 Português: Incrementa o contador de containers parados Entrada: sceneName: nome único da cena Saída: IsOnTheEdge: a quantidade máxima de containers foi atingida
 
-### func \(\*Theater\) [SetContainerUnPaused](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/typeScene.go#L87>)
+### func \(\*Theater\) [SetContainerUnPaused](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/typeScene.go#L83>)
 
 ```go
 func (e *Theater) SetContainerUnPaused(sceneName string)
@@ -9076,7 +9077,7 @@ Entrada:
   sceneName: nome único da cena
 ```
 
-### func \(\*Theater\) [SetContainerUnStopped](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/typeScene.go#L186>)
+### func \(\*Theater\) [SetContainerUnStopped](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/typeScene.go#L173>)
 
 ```go
 func (e *Theater) SetContainerUnStopped(sceneName string)
@@ -9185,7 +9186,7 @@ type parserLog struct {
 }
 ```
 
-## type [scene](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/typeScene.go#L17-L23>)
+## type [scene](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/typeScene.go#L16-L22>)
 
 scene
 

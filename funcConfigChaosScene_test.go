@@ -20,7 +20,7 @@ func ExampleConfigChaosScene() {
 	// English: Create a chaos scene named nats_chaos and control the number of containers stopped at the same time
 	//
 	// Português: Cria uma cena de caos de nome nats_chaos e controla a quantidade de containers parados ao mesmo tempo
-	ConfigChaosScene("nats_chaos", 1, 1, 2)
+	ConfigChaosScene("nats_chaos", 2, 2, 2)
 
 	// English: Create a docker network controler
 	//
@@ -57,6 +57,9 @@ func ExampleConfigChaosScene() {
 		}(i, err)
 	}
 
+	// English: Let the test run for two minutes before closing it
+	//
+	// Português: Deixa o teste rodar por dois minutos antes de o encerrar
 	time.Sleep(2 * 60 * time.Second)
 
 	// English: Deletes all docker elements with the term `delete` in the name.
@@ -78,8 +81,6 @@ func mountNatsContainer(loop int, network *dockerNetwork.ContainerBuilderNetwork
 	// [optional/opcional]
 	container.SetPrintBuildOnStrOut()
 
-	//container.ContainerSetDisabeStopOnChaosScene(true)
-
 	// English: Sets a validity time for the image, preventing the same image from being remade for a period of time.
 	// In some tests, the same image is created inside a loop, and adding an expiration date causes the same image to be used without having to redo the same image at each loop iteration.
 	//
@@ -89,17 +90,29 @@ func mountNatsContainer(loop int, network *dockerNetwork.ContainerBuilderNetwork
 	// [optional/opcional]
 	container.SetImageExpirationTime(5 * time.Minute)
 
+	// English: Link this container to a chaos scene for greater control
+	//
+	// Português: Vincula este container a uma cena de caos para maior controle
 	container.SetSceneNameOnChaosScene("nats_chaos")
 
-	// set image name for docker pull
+	// English: Set image name for docker pull
+	//
+	// Português: Define o nome da imagem para o docker pull
 	container.SetImageName("nats:latest")
 
-	// set a container name
+	// English: set a container name
+	//
+	// Português: Define o nome do container
 	container.SetContainerName("container_delete_nats_after_test_" + strconv.Itoa(loop))
 
+	// English: Links the container to the previously created network
+	//
+	// Português: Vincula o container a rede criada previamente
 	container.SetNetworkDocker(network)
 
-	// set a waits for the text to appear in the standard container output to proceed [optional]
+	// English: Defines a wait for text, where the text must appear in the container's standard output to proceed [optional]
+	//
+	// Português: Define uma espera por texto, onde o texto deve aparecer na saída padrão do container para prosseguir [opcional]
 	container.SetWaitStringWithTimeout("Listening for route connections on 0.0.0.0:6222", 10*time.Second)
 
 	// English: Defines the probability of the container restarting and changing the IP address in the process.
@@ -137,7 +150,9 @@ func mountNatsContainer(loop int, network *dockerNetwork.ContainerBuilderNetwork
 	// Português: Habilita o teste de caos
 	container.EnableChaosScene(true)
 
-	// inialize the container object
+	// English: Initialize the container's control object
+	//
+	// Português: Inicializa o objeto de controle do container
 	err = container.Init()
 	if err != nil {
 		util.TraceToLog()
@@ -145,7 +160,7 @@ func mountNatsContainer(loop int, network *dockerNetwork.ContainerBuilderNetwork
 	}
 
 	// image nats:latest pull command [optional]
-	err = container.ImagePull()
+	//err = container.ImagePull()
 	if err != nil {
 		util.TraceToLog()
 		panic(err)
