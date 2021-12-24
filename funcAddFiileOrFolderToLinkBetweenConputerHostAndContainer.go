@@ -9,17 +9,25 @@ import (
 
 // AddFileOrFolderToLinkBetweenConputerHostAndContainer
 //
-// English: Links a file or folder between the computer host and the container.
+// English:
+//
+//  Links a file or folder between the computer host and the container.
+//
 //   Input:
 //     computerHostPath:    Path of the file or folder inside the host computer.
 //     insideContainerPath: Path inside the container.
+//
 //   Output:
 //     err: Default error object.
 //
-// Português: Vincula um arquivo ou pasta entre o computador e o container.
+// Português:
+//
+//  Vincula um arquivo ou pasta entre o computador e o container.
+//
 //   Entrada:
 //     computerHostPath:    Caminho do arquivo ou pasta no computador hospedeiro.
 //     insideContainerPath: Caminho dentro do container.
+//
 //   Output:
 //     err: Objeto de erro padrão.
 func (e *ContainerBuilder) AddFileOrFolderToLinkBetweenConputerHostAndContainer(computerHostPath, insideContainerPath string) (err error) {

@@ -2260,7 +2260,7 @@ func ContainerBuilderAddFailMatchFlagToFileLog() {
 </p>
 </details>
 
-### func \(\*ContainerBuilder\) [AddFileOrFolderToLinkBetweenConputerHostAndContainer](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcAddFiileOrFolderToLinkBetweenConputerHostAndContainer.go#L25>)
+### func \(\*ContainerBuilder\) [AddFileOrFolderToLinkBetweenConputerHostAndContainer](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcAddFiileOrFolderToLinkBetweenConputerHostAndContainer.go#L33>)
 
 ```go
 func (e *ContainerBuilder) AddFileOrFolderToLinkBetweenConputerHostAndContainer(computerHostPath, insideContainerPath string) (err error)
@@ -2268,37 +2268,83 @@ func (e *ContainerBuilder) AddFileOrFolderToLinkBetweenConputerHostAndContainer(
 
 #### AddFileOrFolderToLinkBetweenConputerHostAndContainer
 
-English: Links a file or folder between the computer host and the container\. Input: computerHostPath:    Path of the file or folder inside the host computer\. insideContainerPath: Path inside the container\. Output: err: Default error object\.
+English:
 
-Português: Vincula um arquivo ou pasta entre o computador e o container\. Entrada: computerHostPath:    Caminho do arquivo ou pasta no computador hospedeiro\. insideContainerPath: Caminho dentro do container\. Output: err: Objeto de erro padrão\.
+Links a file or folder between the computer host and the container\.
+
+```
+Input:
+  computerHostPath:    Path of the file or folder inside the host computer.
+  insideContainerPath: Path inside the container.
+
+Output:
+  err: Default error object.
+```
+
+Português:
+
+Vincula um arquivo ou pasta entre o computador e o container\.
+
+```
+Entrada:
+  computerHostPath:    Caminho do arquivo ou pasta no computador hospedeiro.
+  insideContainerPath: Caminho dentro do container.
+
+Output:
+  err: Objeto de erro padrão.
+```
 
 <details><summary>Example</summary>
 <p>
 
 ```go
-{
+package main
+
+import (
+	"fmt"
+	"github.com/helmutkemper/util"
+	"io/ioutil"
+	"log"
+	"net/http"
+	"time"
+)
+
+func main() {
+	ContainerBuilderAddFileOrFolderToLinkBetweenConputerHostAndContainer()
+}
+
+func ContainerBuilderAddFileOrFolderToLinkBetweenConputerHostAndContainer() {
 	var err error
 
 	GarbageCollector()
 
 	var container = ContainerBuilder{}
 
+	// new image name delete:latest
 	container.SetImageName("delete:latest")
 
+	// container name container_delete_server_after_test
 	container.SetContainerName("container_delete_server_after_test")
 
+	// git project to clone https://github.com/helmutkemper/iotmaker.docker.util.whaleAquarium.sample.git
 	container.SetGitCloneToBuild("https://github.com/helmutkemper/iotmaker.docker.util.whaleAquarium.sample.git")
 
+	// see SetGitCloneToBuildWithUserPassworh(), SetGitCloneToBuildWithPrivateSshKey() and
+	// SetGitCloneToBuildWithPrivateToken()
+
+	// set a waits for the text to appear in the standard container output to proceed [optional]
 	container.SetWaitStringWithTimeout(
 		"Stating server on port 3000",
 		10*time.Second,
 	)
 
+	// change and open port 3000 to 3030
 	container.AddPortToChange(
 		"3000",
 		"3030",
 	)
 
+	// replace container folder /static to host folder ./test/static
 	err = container.AddFileOrFolderToLinkBetweenConputerHostAndContainer(
 		"./test/static",
 		"/static",
@@ -2309,12 +2355,16 @@ Português: Vincula um arquivo ou pasta entre o computador e o container\. Entra
 		panic(err)
 	}
 
+	// inicialize container object
 	err = container.Init()
 	if err != nil {
 		util.TraceToLog()
 		panic(err)
 	}
 
+	// todo: fazer o inspect
+
+	// builder new image from git project
 	_, err = container.ImageBuildFromServer()
 	if err != nil {
 		util.TraceToLog()
@@ -2322,12 +2372,15 @@ Português: Vincula um arquivo ou pasta entre o computador e o container\. Entra
 		panic(err)
 	}
 
+	// container build from image delete:latest
 	err = container.ContainerBuildAndStartFromImage()
 	if err != nil {
 		util.TraceToLog()
 		log.Printf("container.ContainerBuildAndStartFromImage().error: %v", err.Error())
 		panic(err)
 	}
+
+	// container "container_delete_server_after_test" running and ready for use on this code point on port 3030
 
 	// read server inside a container on address http://localhost:3030/
 	var resp *http.Response
@@ -2346,17 +2399,14 @@ Português: Vincula um arquivo ou pasta entre o computador e o container\. Entra
 		panic(err)
 	}
 
+	// print output
 	fmt.Printf("%s", body)
 
 	GarbageCollector()
 
+	// Output:
+	// <html><body><p>C is life! Golang is a evolution of C</p></body></html>
 }
-```
-
-#### Output
-
-```
-<html><body><p>C is life! Golang is a evolution of C</p></body></html>
 ```
 
 </p>
