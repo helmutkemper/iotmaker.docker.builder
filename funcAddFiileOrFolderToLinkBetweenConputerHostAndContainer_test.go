@@ -10,6 +10,10 @@ import (
 )
 
 func ExampleContainerBuilder_AddFileOrFolderToLinkBetweenConputerHostAndContainer() {
+	AddFileOrFolderToLinkBetweenConputerHostAndContainer()
+}
+
+func AddFileOrFolderToLinkBetweenConputerHostAndContainer() {
 
 	var err error
 

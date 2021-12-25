@@ -1,6 +1,10 @@
 // Package iotmakerdockerbuilder
 //
-// English: Golang and Docker in a simple way.
+// English:
+//
+// Golang and Docker in a simple way
+//
+// Documentation in progress
 //
 // This package facilitates the use of docker containers by golang code, enabling the creation of unit tests involving
 // containers in linear and chaos scenarios, enabling the development of microservices and failure simulation.
