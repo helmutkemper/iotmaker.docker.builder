@@ -7,6 +7,10 @@ import (
 )
 
 func ExampleContainerBuilder_AddFilterToLog() {
+	AddFilterToLog()
+}
+
+func AddFilterToLog() {
 	var err error
 	var imageInspect types.ImageInspect
 
