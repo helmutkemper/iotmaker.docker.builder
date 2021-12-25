@@ -1,6 +1,6 @@
 ![./image/docker.png](./image/docker.png)
 
-# Transforme teste unitário em senário de caos
+# Transforme teste unitário em senário de cáos
 
 A criação de microsserviços requerem uma nova abordagem de testes, onde nem sempre, os testes unitários são fáceis de
 fazer.
@@ -316,20 +316,20 @@ Caso você não tenha prática em criar imagens, use o exemplo abaixo, onde `RUN
 você.
 
 ```dockerfile
-FROM golang:1.17-alpine as builder
-RUN mkdir -p /root/.ssh/ && \
-		apk update && \
-		apk add openssh && \
-		apk add --no-cache build-base && \
-		apk add --no-cache alpine-sdk && \
-		rm -rf /var/cache/apk/*
-ARG CGO_ENABLED=0
-
-RUN go get ...
-RUN go get ...
-RUN go get ...
-RUN go get ...
-RUN go get ...
+	FROM golang:1.17-alpine as builder
+	RUN mkdir -p /root/.ssh/ && \
+			apk update && \
+			apk add openssh && \
+			apk add --no-cache build-base && \
+			apk add --no-cache alpine-sdk && \
+			rm -rf /var/cache/apk/*
+	ARG CGO_ENABLED=0
+	
+	RUN go get ...
+	RUN go get ...
+	RUN go get ...
+	RUN go get ...
+	RUN go get ...
 ```
 
 ### Usando repositórios privados
@@ -347,12 +347,12 @@ Em seguida, devemos informar os repositórios privados com o comando
 Caso você tenha problema em baixar repositórios privados, adicione o cógido abaixo ao arquivo `~/.gitconfig`
 
 ```
-[core]
-				autocrlf = input
-[url "ssh://git@github.com/"]
-				insteadOf = https://github.com/
-[url "git://"]
-				insteadOf = https://
+	[core]
+					autocrlf = input
+	[url "ssh://git@github.com/"]
+					insteadOf = https://github.com/
+	[url "git://"]
+					insteadOf = https://
 ```
 
 Para quem não tem prática em processo de build em duas etapas, na primeira etapa é criada uma imagem grande com todas
@@ -575,6 +575,40 @@ binário gerado na primeira etapa é copiado para uma imagem nova, o que deixa a
 
 
 
+
+## Documentação de código
+
+### Servidor local
+
+Você pode vê a documentação desse módulo instalando o `godoc` da seguinte forma:
+
+```shell
+go get -v  golang.org/x/tools/cmd/godoc
+```
+
+Após instalado, basta usar:
+
+```shell
+godoc -http=:6060
+```
+
+A documentação estará disponível no endereço [http://localhost:6060](http://localhost:6060)
+
+### readme.md
+
+Caso queira uma mão para gerar um arquivo de documentação mais arrumado, nesse estilo, instale o `godocdown`
+
+```shell
+go get github.com/robertkrimen/godocdown/godocdown
+```
+
+Depois, rode o comando:
+
+```shell
+godocdown /path/completo/da/raiz/do/projeto > readme.md
+```
+
+Use este projeto como exemplo de como documentar o seu módulo.
 
 
 
