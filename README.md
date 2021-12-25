@@ -3726,7 +3726,7 @@ Veja https://docs.docker.com/engine/reference/commandline/build/#set-build-time-
     RUN go env -w GOPRIVATE=$GIT_PRIVATE_REPO
 ```
 
-### func \(\*ContainerBuilder\) [AddPortToChange](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcAddPortToChange.go#L30>)
+### func \(\*ContainerBuilder\) [AddPortToChange](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcAddPortToChange.go#L38>)
 
 ```go
 func (e *ContainerBuilder) AddPortToChange(imagePort string, newPort string)
@@ -3734,30 +3734,42 @@ func (e *ContainerBuilder) AddPortToChange(imagePort string, newPort string)
 
 #### AddPortToChange
 
-English: Defines a new port to be exposed on the network and links with the port defined in the image
+English:
+
+Defines a new port to be exposed on the network and links with the port defined in the image
 
 ```
-imagePort: port defined in the image, in the form of a numeric string
-newPort: new port value to be exposed on the network
+Input:
+  imagePort: port defined in the image, in the form of a numeric string
+  newPort: new port value to be exposed on the network
+```
 
-  Nota: The ports exposed in the creation of the container can be defined by SetOpenAllContainersPorts(),
+Nota:
+
+```
+* The ports exposed in the creation of the container can be defined by SetOpenAllContainersPorts(),
   AddPortToChange() e AddPortToExpose();
-  By default, all doors are closed;
-
-  The ImageListExposedPorts() function returns all ports defined in the image to be exposed.
+* By default, all doors are closed;
+* The ImageListExposedPorts() function returns all ports defined in the image to be exposed.
 ```
 
-Português: Define uma nova porta a ser exposta na rede e vincula com a porta definida na imagem
+Português:
+
+Define uma nova porta a ser exposta na rede e vincula com a porta definida na imagem
 
 ```
-imagePort: porta definida na imagem, na forma de string numérica
-newPort: novo valor da porta a se exposta na rede
+Entrada:
+  imagePort: porta definida na imagem, na forma de string numérica
+  newPort: novo valor da porta a se exposta na rede
+```
 
-  Nota: As portas expostas na criação do container pode ser definidas por SetOpenAllContainersPorts(),
+Nota:
+
+```
+* As portas expostas na criação do container pode ser definidas por SetOpenAllContainersPorts(),
   AddPortToChange() e AddPortToExpose();
-  Por padrão, todas as portas ficam fechadas;
-
-  A função ImageListExposedPorts() retorna todas as portas definidas na imagem para serem expostas.
+* Por padrão, todas as portas ficam fechadas;
+* A função ImageListExposedPorts() retorna todas as portas definidas na imagem para serem expostas.
 ```
 
 <details><summary>Example</summary>
