@@ -2,12 +2,16 @@ package iotmakerdockerbuilder
 
 // AddImageBuildOptionsBuildArgs
 //
-// English: Set build-time variables (--build-arg)
+// English:
+//
+//  Set build-time variables (--build-arg)
+//
 //   Input:
 //     key: Argument name
 //     value: Argument value
 //
 // Example:
+//
 //   key:   argument key (e.g. Dockerfile: ARG key)
 //   value: argument value
 //

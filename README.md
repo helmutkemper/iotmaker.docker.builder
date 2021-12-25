@@ -3654,7 +3654,7 @@ English: Adds a filter to the container's standard output to look for a textual 
 
 Português: Adiciona um filtro na saída padrão do container para procurar um valor textual indicador de sucesso do teste\. Entrada: match: Texto simples procurado na saída padrão do container para ativar o filtro filter: Expressão regular usada para filtrar o que vai para o log usando o parâmetro \`valueToGet\`\. search: Expressão regular usada para busca e substituição no texto encontrado na etapa anterior \[opcional\]\. replace: Elemento da troca da expressão regular \[opcional\]\.
 
-### func \(\*ContainerBuilder\) [AddImageBuildOptionsBuildArgs](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcAddImageBuildOptionsBuildArgs.go#L52>)
+### func \(\*ContainerBuilder\) [AddImageBuildOptionsBuildArgs](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcAddImageBuildOptionsBuildArgs.go#L56>)
 
 ```go
 func (e *ContainerBuilder) AddImageBuildOptionsBuildArgs(key string, value *string)
@@ -3662,11 +3662,22 @@ func (e *ContainerBuilder) AddImageBuildOptionsBuildArgs(key string, value *stri
 
 #### AddImageBuildOptionsBuildArgs
 
-English: Set build\-time variables \(\-\-build\-arg\) Input: key: Argument name value: Argument value
+English:
 
-Example: key:   argument key \(e\.g\. Dockerfile: ARG key\) value: argument value
+Set build\-time variables \(\-\-build\-arg\)
 
 ```
+Input:
+  key: Argument name
+  value: Argument value
+```
+
+Example:
+
+```
+key:   argument key (e.g. Dockerfile: ARG key)
+value: argument value
+
 docker build --build-arg HTTP_PROXY=http://10.20.30.2:1234
 see https://docs.docker.com/engine/reference/commandline/build/#set-build-time-variables---build-arg
 
