@@ -2922,7 +2922,7 @@ func AddFilterToLog() {
 </p>
 </details>
 
-### func \(\*ContainerBuilder\) [AddFilterToLogWithReplace](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcAddFilterToLogWithReplace.go#L36>)
+### func \(\*ContainerBuilder\) [AddFilterToLogWithReplace](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcAddFilterToLogWithReplace.go#L38>)
 
 ```go
 func (e *ContainerBuilder) AddFilterToLogWithReplace(label, match, filter, search, replace string)
@@ -2955,7 +2955,9 @@ Note:
 * This function is used in conjunction with SetCsvLogPath(), StartMonitor(), StopMonitor().
 ```
 
-Português: Adiciona um filtro para procurar e converter um valor textual em uma coluna no arquivo de log CSV\.
+Português:
+
+Adiciona um filtro para procurar e converter um valor textual em uma coluna no arquivo de log CSV\.
 
 ```
 Entrada:
@@ -2972,7 +2974,7 @@ Nota:
 * Esta função é usada em conjunto com SetCsvLogPath(), StartMonitor(), StopMonitor()
 ```
 
-### func \(\*ContainerBuilder\) [AddFilterToRestartContainer](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcAddFilterToRestartContainer.go#L30>)
+### func \(\*ContainerBuilder\) [AddFilterToRestartContainer](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcAddFilterToRestartContainer.go#L42>)
 
 ```go
 func (e *ContainerBuilder) AddFilterToRestartContainer(match, filter, search, replace string)
@@ -2980,96 +2982,214 @@ func (e *ContainerBuilder) AddFilterToRestartContainer(match, filter, search, re
 
 #### AddFilterToRestartContainer
 
-Similar: AddFilterToRestartContainer\(\)\, AddRestartMatchFlag\(\)\, AddRestartMatchFlagToFileLog\(\)
-
-Português: Adiciona um filtro na saída padrão do container para procurar um valor textual liberando a possibilidade do container ser reinicado durante o teste de caos\. Entrada: match: Texto simples procurado na saída padrão do container para ativar o filtro filter: Expressão regular usada para filtrar o que vai para o log usando o parâmetro \`valueToGet\`\. search: Expressão regular usada para busca e substituição no texto encontrado na etapa anterior \[opcional\]\. replace: Elemento da troca da expressão regular \[opcional\]\.
+Similar:
 
 ```
-Nota: - Teste de caos é um teste feito quando há a necessidade de simular falhas dos microsserviços envolvidos no projeto.
-        Durante o teste de caos, o container pode ser pausado, para simular um container não respondendo devido a sobrecarga, ou
-        parado e reiniciado, simulando uma queda crítica, onde um microsserviço foi reinicializado depois de um tempo sem resposta.
+AddFilterToRestartContainer(), AddRestartMatchFlag(), AddRestartMatchFlagToFileLog()
 ```
 
-English: Adds a filter to the standard output of the container to look for a textual value releasing the possibility of the container being restarted during the chaos test\. Input: match: Simple text searched in the container's standard output to activate the filter filter: Regular expression used to filter what goes into the log using the \`valueToGet\` parameter\. search: Regular expression used for search and replacement in the text found in the previous step \[optional\]\. replace: Regular expression replace element \[optional\]\.
+Português:
+
+Adiciona um filtro na saída padrão do container para procurar um valor textual liberando a possibilidade do container ser reinicado durante o teste de caos\.
 
 ```
-Note: - Chaos testing is a test performed when there is a need to simulate failures of the microservices involved in the project.
-        During chaos testing, the container can be paused, to simulate a container not responding due to overload, or stopped and
-        restarted, simulating a critical crash, where a microservice was restarted after an unresponsive time.
+Entrada:
+  match: Texto simples procurado na saída padrão do container para ativar o filtro
+  filter: Expressão regular usada para filtrar o que vai para o log usando o parâmetro `valueToGet`.
+  search: Expressão regular usada para busca e substituição no texto encontrado na etapa anterior [opcional].
+  replace: Elemento da troca da expressão regular [opcional].
+```
+
+Nota:
+
+```
+* Teste de caos é um teste feito quando há a necessidade de simular falhas dos microsserviços envolvidos no projeto.
+Durante o teste de caos, o container pode ser pausado, para simular um container não respondendo devido a sobrecarga, ou
+parado e reiniciado, simulando uma queda crítica, onde um microsserviço foi reinicializado depois de um tempo sem resposta.
+```
+
+English:
+
+Adds a filter to the standard output of the container to look for a textual value releasing the possibility of the container being restarted during the chaos test\.
+
+```
+Input:
+  match: Simple text searched in the container's standard output to activate the filter
+  filter: Regular expression used to filter what goes into the log using the `valueToGet` parameter.
+  search: Regular expression used for search and replacement in the text found in the previous step [optional].
+  replace: Regular expression replace element [optional].
+```
+
+Note:
+
+```
+* Chaos testing is a test performed when there is a need to simulate failures of the microservices involved in the project.
+During chaos testing, the container can be paused, to simulate a container not responding due to overload, or stopped and
+restarted, simulating a critical crash, where a microservice was restarted after an unresponsive time.
 ```
 
 <details><summary>Example</summary>
 <p>
 
 ```go
-{
+package main
+
+import (
+	"fmt"
+	"github.com/docker/docker/api/types"
+	"log"
+	"time"
+)
+
+func main() {
+	AddFilterToRestartContainer()
+}
+
+func AddFilterToRestartContainer() {
 	var err error
 	var imageInspect types.ImageInspect
 
+	// English: Deletes all docker elements with the term `delete` in the name.
+	//
+	// Português: Apaga todos os elementos docker com o termo `delete` no nome.
 	GarbageCollector()
 
 	var container = ContainerBuilder{}
 
+	// English: print the standard output of the container
+	//
+	// Português: imprime a saída padrão do container
 	container.SetPrintBuildOnStrOut()
 
+	// English: If there is an image named `cache:latest`, it will be used as a base to create the container.
+	//
+	// Português: Caso exista uma imagem de nome `cache:latest`, ela será usada como base para criar o container.
 	container.SetCacheEnable(true)
 
+	// English: Mount a default dockerfile for golang where the `main.go` file and the `go.mod` file should be in the root folder
+	//
+	// Português: Monta um dockerfile padrão para o golang onde o arquivo `main.go` e o arquivo `go.mod` devem está na pasta raiz
 	container.MakeDefaultDockerfileForMe()
 
+	// English: Name of the new image to be created.
+	//
+	// Português: Nome da nova imagem a ser criada.
 	container.SetImageName("delete:latest")
 
+	// English: Defines the path where the golang code to be transformed into a docker image is located.
+	//
+	// Português: Define o caminho onde está o código golang a ser transformado em imagem docker.
 	container.SetBuildFolderPath("./test/chaos")
 
+	// English: Defines the name of the docker container to be created.
+	//
+	// Português: Define o nome do container docker a ser criado.
 	container.SetContainerName("container_counter_delete_after_test")
 
+	// English: Defines the maximum amount of memory to be used by the docker container.
+	//
+	// Português: Define a quantidade máxima de memória a ser usada pelo container docker.
 	container.SetImageBuildOptionsMemory(100 * KMegaByte)
 
+	// English: Defines the log file path with container statistical data
+	//
+	// Português: Define o caminho do arquivo de log com dados estatísticos do container
 	container.SetCsvLogPath("./test.counter.log.csv", true)
 
 	container.SetCsvFileValueSeparator("\t")
 
+	// English: Adds a search filter to the standard output of the container, to save the information in the log file
+	//
+	// Português: Adiciona um filtro de busca na saída padrão do container, para salvar a informação no arquivo de log
 	container.AddFilterToLogWithReplace(
-
+		// English: Label to be written to log file
+		//
+		// Português: Rótulo a ser escrito no arquivo de log
 		"contador",
 
+		// English: Simple text searched in the container's standard output to activate the filter
+		//
+		// Português: Texto simples procurado na saída padrão do container para ativar o filtro
 		"counter",
 
+		// English: Regular expression used to filter what goes into the log using the `valueToGet` parameter.
+		//
+		// Português: Expressão regular usada para filtrar o que vai para o log usando o parâmetro `valueToGet`.
 		"^.*?counter: (?P<valueToGet>[\\d\\.]+)",
 
+		// English: Regular expression used for search and replacement in the text found in the previous step [optional].
+		//
+		// Português: Expressão regular usada para busca e substituição no texto encontrado na etapa anterior [opcional].
 		"\\.",
 		",",
 	)
 
+	// English: Adds a filter to look for a value in the container's standard output indicating the possibility of restarting the container.
+	//
+	// Português: Adiciona um filtro para procurar um valor na saída padrão do container indicando a possibilidade de reiniciar o container.
 	container.AddFilterToRestartContainer(
-
+		// English: Simple text searched in the container's standard output to activate the filter
+		//
+		// Português: Texto simples procurado na saída padrão do container para ativar o filtro
 		"restart-me!",
 
+		// English: Regular expression used to filter what goes into the log using the `valueToGet` parameter.
+		//
+		// Português: Expressão regular usada para filtrar o que vai para o log usando o parâmetro `valueToGet`.
 		"^.*?(?P<valueToGet>restart-me!)",
 
+		// English: Regular expression used for search and replacement in the text found in the previous step [optional].
+		//
+		// Português: Expressão regular usada para busca e substituição no texto encontrado na etapa anterior [opcional].
 		"",
 		"",
 	)
 
+	// English: Adds a filter to look for a value in the container's standard output indicating the success of the test.
+	//
+	// Português: Adiciona um filtro para procurar um valor na saída padrão do container indicando o sucesso do teste.
 	container.AddFilterToSuccess(
-
+		// English: Simple text searched in the container's standard output to activate the filter
+		//
+		// Português: Texto simples procurado na saída padrão do container para ativar o filtro
 		"done!",
 
+		// English: Regular expression used to filter what goes into the log using the `valueToGet` parameter.
+		//
+		// Português: Expressão regular usada para filtrar o que vai para o log usando o parâmetro `valueToGet`.
 		"^.*?(?P<valueToGet>\\d+/\\d+/\\d+ \\d+:\\d+:\\d+ done!).*",
 
+		// English: Regular expression used for search and replacement in the text found in the previous step [optional].
+		//
+		// Português: Expressão regular usada para busca e substituição no texto encontrado na etapa anterior [opcional].
 		"(?P<date>\\d+/\\d+/\\d+)\\s+(?P<hour>\\d+:\\d+:\\d+)\\s+(?P<value>done!).*",
 		"${value}",
 	)
 
+	// English: Adds a filter to look for a value in the container's standard output indicating the fail of the test.
+	//
+	// Português: Adiciona um filtro para procurar um valor na saída padrão do container indicando a falha do teste.
 	container.AddFilterToFail(
-
+		// English: Simple text searched in the container's standard output to activate the filter
+		//
+		// Português: Texto simples procurado na saída padrão do container para ativar o filtro
 		"counter: 340",
 
+		// English: Regular expression used to filter what goes into the log using the `valueToGet` parameter.
+		//
+		// Português: Expressão regular usada para filtrar o que vai para o log usando o parâmetro `valueToGet`.
 		"^.*?(?P<valueToGet>\\d+/\\d+/\\d+ \\d+:\\d+:\\d+ counter: [\\d\\.]+).*",
 
+		// English: Regular expression used for search and replacement in the text found in the previous step [optional].
+		//
+		// Português: Expressão regular usada para busca e substituição no texto encontrado na etapa anterior [opcional].
 		"(?P<date>\\d+/\\d+/\\d+)\\s+(?P<hour>\\d+:\\d+:\\d+)\\s+counter:\\s+(?P<value>[\\d\\.]+).*",
 		"Test Fail! Counter Value: ${value} - Hour: ${hour} - Date: ${date}",
 	)
 
+	// English: Adds a filter to look for a value in the container's standard output releasing the chaos test to be started
+	//
+	// Português: Adiciona um filtro para procurar um valor na saída padrão do container liberando o início do teste de caos
 	container.AddFilterToStartChaos(
 		"chaos enable",
 		"chaos enable",
@@ -3077,20 +3197,44 @@ Note: - Chaos testing is a test performed when there is a need to simulate failu
 		"",
 	)
 
+	// English: Defines the probability of the container restarting and changing the IP address in the process.
+	//
+	// Português: Define a probalidade do container reiniciar e mudar o endereço IP no processo.
 	container.SetRestartProbability(0.9, 1.0, 1)
 
+	// English: Defines a time window used to start chaos testing after container initialized
+	//
+	// Português: Define uma janela de tempo usada para começar o teste de caos depois do container inicializado
 	container.SetTimeToStartChaosOnChaosScene(2*time.Second, 5*time.Second)
 
+	// English: Sets a time window used to release container restart after the container has been initialized
+	//
+	// Português: Define uma janela de tempo usada para liberar o reinício do container depois do container ter sido inicializado
 	container.SetTimeBeforeStartChaosInThisContainerOnChaosScene(2*time.Second, 5*time.Second)
 
+	// English: Defines a time window used to pause the container
+	//
+	// Português: Define uma janela de tempo usada para pausar o container
 	container.SetTimeOnContainerPausedStateOnChaosScene(2*time.Second, 5*time.Second)
 
+	// English: Defines a time window used to unpause the container
+	//
+	// Português: Define uma janela de tempo usada para remover a pausa do container
 	container.SetTimeOnContainerUnpausedStateOnChaosScene(2*time.Second, 5*time.Second)
 
+	// English: Sets a time window used to restart the container after stopping
+	//
+	// Português: Define uma janela de tempo usada para reiniciar o container depois de parado
 	container.SetTimeToRestartThisContainerAfterStopEventOnChaosScene(2*time.Second, 5*time.Second)
 
+	// English: Enable chaos test
+	//
+	// Português: Habilita o teste de caos
 	container.EnableChaosScene(true)
 
+	// English: Initializes the container manager object.
+	//
+	// Português: Inicializa o objeto gerenciador de container.
 	err = container.Init()
 	if err != nil {
 		fmt.Printf("error: %v", err.Error())
@@ -3098,6 +3242,9 @@ Note: - Chaos testing is a test performed when there is a need to simulate failu
 		return
 	}
 
+	// English: Creates an image from a project folder.
+	//
+	// Português: Cria uma imagem a partir de uma pasta de projeto.
 	imageInspect, err = container.ImageBuildFromFolder()
 	if err != nil {
 		fmt.Printf("error: %v", err.Error())
@@ -3108,6 +3255,9 @@ Note: - Chaos testing is a test performed when there is a need to simulate failu
 	fmt.Printf("image size: %v\n", container.SizeToString(imageInspect.Size))
 	fmt.Printf("image os: %v\n", imageInspect.Os)
 
+	// English: Creates and initializes the container based on the created image.
+	//
+	// Português: Cria e inicializa o container baseado na imagem criada.
 	err = container.ContainerBuildAndStartFromImage()
 	if err != nil {
 		log.Printf("error: %v", err.Error())
@@ -3115,8 +3265,14 @@ Note: - Chaos testing is a test performed when there is a need to simulate failu
 		return
 	}
 
+	// English: Starts container monitoring at two second intervals. This functionality generates the log and monitors the standard output of the container.
+	//
+	// Português: Inicializa o monitoramento do container com intervalos de dois segundos. Esta funcionalidade gera o log e monitora a saída padrão do container.
 	container.StartMonitor()
 
+	// English: Gets the event channel pointer inside the container.
+	//
+	// Português: Pega o ponteiro do canal de eventos dentro do container.
 	event := container.GetChaosEvent()
 
 	select {
@@ -3128,29 +3284,31 @@ Note: - Chaos testing is a test performed when there is a need to simulate failu
 		fmt.Printf("message: %v\n", e.Message)
 	}
 
+	// English: Stop container monitoring.
+	//
+	// Português: Para o monitoramento do container.
 	container.StopMonitor()
 
+	// English: Deletes all docker elements with the term `delete` in the name.
+	//
+	// Português: Apaga todos os elementos docker com o termo `delete` no nome.
 	GarbageCollector()
 
+	// Output:
+	// image size: 1.38 MB
+	// image os: linux
+	// container name: container_counter_delete_after_test
+	// done: true
+	// fail: false
+	// error: false
+	// message: done!
 }
-```
-
-#### Output
-
-```
-image size: 1.38 MB
-image os: linux
-container name: container_counter_delete_after_test
-done: true
-fail: false
-error: false
-message: done!
 ```
 
 </p>
 </details>
 
-### func \(\*ContainerBuilder\) [AddFilterToStartChaos](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcAddFilterToStartChaos.go#L28>)
+### func \(\*ContainerBuilder\) [AddFilterToStartChaos](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcAddFilterToStartChaos.go#L40>)
 
 ```go
 func (e *ContainerBuilder) AddFilterToStartChaos(match, filter, search, replace string)
@@ -3158,23 +3316,331 @@ func (e *ContainerBuilder) AddFilterToStartChaos(match, filter, search, replace 
 
 #### AddFilterToStartChaos
 
-Similar: AddStartChaosMatchFlag\(\)\, AddStartChaosMatchFlagToFileLog\(\)\, AddFilterToStartChaos\(\)
-
-English: Adds a filter to the container's standard output to look for a textual value releasing the start of the chaos test\. Input: match: Simple text searched in the container's standard output to activate the filter filter: Regular expression used to filter what goes into the log using the \`valueToGet\` parameter\. search: Regular expression used for search and replacement in the text found in the previous step \[optional\]\. replace: Regular expression replace element \[optional\]\.
+Similar:
 
 ```
-Note: - Chaos testing is a test performed when there is a need to simulate failures of the microservices involved in the project.
-        During chaos testing, the container can be paused, to simulate a container not responding due to overload, or stopped and
-        restarted, simulating a critical crash, where a microservice was restarted after an unresponsive time.
+AddStartChaosMatchFlag(), AddStartChaosMatchFlagToFileLog(), AddFilterToStartChaos()
 ```
 
-Português: Adiciona um filtro na saída padrão do container para procurar um valor textual liberando o início do teste de caos\. Entrada: match: Texto simples procurado na saída padrão do container para ativar o filtro filter: Expressão regular usada para filtrar o que vai para o log usando o parâmetro \`valueToGet\`\. search: Expressão regular usada para busca e substituição no texto encontrado na etapa anterior \[opcional\]\. replace: Elemento da troca da expressão regular \[opcional\]\.
+English:
+
+Adds a filter to the container's standard output to look for a textual value releasing the start of the chaos test\.
 
 ```
-Nota: - Teste de caos é um teste feito quando há a necessidade de simular falhas dos microsserviços envolvidos no projeto.
-        Durante o teste de caos, o container pode ser pausado, para simular um container não respondendo devido a sobrecarga, ou
-        parado e reiniciado, simulando uma queda crítica, onde um microsserviço foi reinicializado depois de um tempo sem resposta.
+Input:
+  match: Simple text searched in the container's standard output to activate the filter
+  filter: Regular expression used to filter what goes into the log using the `valueToGet` parameter.
+  search: Regular expression used for search and replacement in the text found in the previous step [optional].
+  replace: Regular expression replace element [optional].
 ```
+
+Note:
+
+```
+* Chaos testing is a test performed when there is a need to simulate failures of the microservices involved in the project.
+During chaos testing, the container can be paused, to simulate a container not responding due to overload, or stopped and
+restarted, simulating a critical crash, where a microservice was restarted after an unresponsive time.
+```
+
+Português:
+
+Adiciona um filtro na saída padrão do container para procurar um valor textual liberando o início do teste de caos\.
+
+```
+Entrada:
+  match: Texto simples procurado na saída padrão do container para ativar o filtro
+  filter: Expressão regular usada para filtrar o que vai para o log usando o parâmetro `valueToGet`.
+  search: Expressão regular usada para busca e substituição no texto encontrado na etapa anterior [opcional].
+  replace: Elemento da troca da expressão regular [opcional].
+```
+
+Nota:
+
+```
+* Teste de caos é um teste feito quando há a necessidade de simular falhas dos microsserviços envolvidos no projeto.
+Durante o teste de caos, o container pode ser pausado, para simular um container não respondendo devido a sobrecarga, ou
+parado e reiniciado, simulando uma queda crítica, onde um microsserviço foi reinicializado depois de um tempo sem resposta.
+```
+
+<details><summary>Example</summary>
+<p>
+
+```go
+package main
+
+import (
+	"fmt"
+	"github.com/docker/docker/api/types"
+	"log"
+	"time"
+)
+
+func main() {
+	AddFilterToStartChaos()
+}
+
+func AddFilterToStartChaos() {
+	var err error
+	var imageInspect types.ImageInspect
+
+	// English: Deletes all docker elements with the term `delete` in the name.
+	//
+	// Português: Apaga todos os elementos docker com o termo `delete` no nome.
+	GarbageCollector()
+
+	var container = ContainerBuilder{}
+
+	// English: print the standard output of the container
+	//
+	// Português: imprime a saída padrão do container
+	container.SetPrintBuildOnStrOut()
+
+	// English: If there is an image named `cache:latest`, it will be used as a base to create the container.
+	//
+	// Português: Caso exista uma imagem de nome `cache:latest`, ela será usada como base para criar o container.
+	container.SetCacheEnable(true)
+
+	// English: Mount a default dockerfile for golang where the `main.go` file and the `go.mod` file should be in the root folder
+	//
+	// Português: Monta um dockerfile padrão para o golang onde o arquivo `main.go` e o arquivo `go.mod` devem está na pasta raiz
+	container.MakeDefaultDockerfileForMe()
+
+	// English: Name of the new image to be created.
+	//
+	// Português: Nome da nova imagem a ser criada.
+	container.SetImageName("delete:latest")
+
+	// English: Defines the path where the golang code to be transformed into a docker image is located.
+	//
+	// Português: Define o caminho onde está o código golang a ser transformado em imagem docker.
+	container.SetBuildFolderPath("./test/chaos")
+
+	// English: Defines the name of the docker container to be created.
+	//
+	// Português: Define o nome do container docker a ser criado.
+	container.SetContainerName("container_counter_delete_after_test")
+
+	// English: Defines the maximum amount of memory to be used by the docker container.
+	//
+	// Português: Define a quantidade máxima de memória a ser usada pelo container docker.
+	container.SetImageBuildOptionsMemory(100 * KMegaByte)
+
+	// English: Defines the log file path with container statistical data
+	//
+	// Português: Define o caminho do arquivo de log com dados estatísticos do container
+	container.SetCsvLogPath("./test.counter.log.csv", true)
+
+	container.SetCsvFileValueSeparator("\t")
+
+	// English: Adds a search filter to the standard output of the container, to save the information in the log file
+	//
+	// Português: Adiciona um filtro de busca na saída padrão do container, para salvar a informação no arquivo de log
+	container.AddFilterToLogWithReplace(
+		// English: Label to be written to log file
+		//
+		// Português: Rótulo a ser escrito no arquivo de log
+		"contador",
+
+		// English: Simple text searched in the container's standard output to activate the filter
+		//
+		// Português: Texto simples procurado na saída padrão do container para ativar o filtro
+		"counter",
+
+		// English: Regular expression used to filter what goes into the log using the `valueToGet` parameter.
+		//
+		// Português: Expressão regular usada para filtrar o que vai para o log usando o parâmetro `valueToGet`.
+		"^.*?counter: (?P<valueToGet>[\\d\\.]+)",
+
+		// English: Regular expression used for search and replacement in the text found in the previous step [optional].
+		//
+		// Português: Expressão regular usada para busca e substituição no texto encontrado na etapa anterior [opcional].
+		"\\.",
+		",",
+	)
+
+	// English: Adds a filter to look for a value in the container's standard output indicating the possibility of restarting the container.
+	//
+	// Português: Adiciona um filtro para procurar um valor na saída padrão do container indicando a possibilidade de reiniciar o container.
+	container.AddFilterToRestartContainer(
+		// English: Simple text searched in the container's standard output to activate the filter
+		//
+		// Português: Texto simples procurado na saída padrão do container para ativar o filtro
+		"restart-me!",
+
+		// English: Regular expression used to filter what goes into the log using the `valueToGet` parameter.
+		//
+		// Português: Expressão regular usada para filtrar o que vai para o log usando o parâmetro `valueToGet`.
+		"^.*?(?P<valueToGet>restart-me!)",
+
+		// English: Regular expression used for search and replacement in the text found in the previous step [optional].
+		//
+		// Português: Expressão regular usada para busca e substituição no texto encontrado na etapa anterior [opcional].
+		"",
+		"",
+	)
+
+	// English: Adds a filter to look for a value in the container's standard output indicating the success of the test.
+	//
+	// Português: Adiciona um filtro para procurar um valor na saída padrão do container indicando o sucesso do teste.
+	container.AddFilterToSuccess(
+		// English: Simple text searched in the container's standard output to activate the filter
+		//
+		// Português: Texto simples procurado na saída padrão do container para ativar o filtro
+		"done!",
+
+		// English: Regular expression used to filter what goes into the log using the `valueToGet` parameter.
+		//
+		// Português: Expressão regular usada para filtrar o que vai para o log usando o parâmetro `valueToGet`.
+		"^.*?(?P<valueToGet>\\d+/\\d+/\\d+ \\d+:\\d+:\\d+ done!).*",
+
+		// English: Regular expression used for search and replacement in the text found in the previous step [optional].
+		//
+		// Português: Expressão regular usada para busca e substituição no texto encontrado na etapa anterior [opcional].
+		"(?P<date>\\d+/\\d+/\\d+)\\s+(?P<hour>\\d+:\\d+:\\d+)\\s+(?P<value>done!).*",
+		"${value}",
+	)
+
+	// English: Adds a filter to look for a value in the container's standard output indicating the fail of the test.
+	//
+	// Português: Adiciona um filtro para procurar um valor na saída padrão do container indicando a falha do teste.
+	container.AddFilterToFail(
+		// English: Simple text searched in the container's standard output to activate the filter
+		//
+		// Português: Texto simples procurado na saída padrão do container para ativar o filtro
+		"counter: 340",
+
+		// English: Regular expression used to filter what goes into the log using the `valueToGet` parameter.
+		//
+		// Português: Expressão regular usada para filtrar o que vai para o log usando o parâmetro `valueToGet`.
+		"^.*?(?P<valueToGet>\\d+/\\d+/\\d+ \\d+:\\d+:\\d+ counter: [\\d\\.]+).*",
+
+		// English: Regular expression used for search and replacement in the text found in the previous step [optional].
+		//
+		// Português: Expressão regular usada para busca e substituição no texto encontrado na etapa anterior [opcional].
+		"(?P<date>\\d+/\\d+/\\d+)\\s+(?P<hour>\\d+:\\d+:\\d+)\\s+counter:\\s+(?P<value>[\\d\\.]+).*",
+		"Test Fail! Counter Value: ${value} - Hour: ${hour} - Date: ${date}",
+	)
+
+	// English: Adds a filter to look for a value in the container's standard output releasing the chaos test to be started
+	//
+	// Português: Adiciona um filtro para procurar um valor na saída padrão do container liberando o início do teste de caos
+	container.AddFilterToStartChaos(
+		"chaos enable",
+		"chaos enable",
+		"",
+		"",
+	)
+
+	// English: Defines the probability of the container restarting and changing the IP address in the process.
+	//
+	// Português: Define a probalidade do container reiniciar e mudar o endereço IP no processo.
+	container.SetRestartProbability(0.9, 1.0, 1)
+
+	// English: Defines a time window used to start chaos testing after container initialized
+	//
+	// Português: Define uma janela de tempo usada para começar o teste de caos depois do container inicializado
+	container.SetTimeToStartChaosOnChaosScene(2*time.Second, 5*time.Second)
+
+	// English: Sets a time window used to release container restart after the container has been initialized
+	//
+	// Português: Define uma janela de tempo usada para liberar o reinício do container depois do container ter sido inicializado
+	container.SetTimeBeforeStartChaosInThisContainerOnChaosScene(2*time.Second, 5*time.Second)
+
+	// English: Defines a time window used to pause the container
+	//
+	// Português: Define uma janela de tempo usada para pausar o container
+	container.SetTimeOnContainerPausedStateOnChaosScene(2*time.Second, 5*time.Second)
+
+	// English: Defines a time window used to unpause the container
+	//
+	// Português: Define uma janela de tempo usada para remover a pausa do container
+	container.SetTimeOnContainerUnpausedStateOnChaosScene(2*time.Second, 5*time.Second)
+
+	// English: Sets a time window used to restart the container after stopping
+	//
+	// Português: Define uma janela de tempo usada para reiniciar o container depois de parado
+	container.SetTimeToRestartThisContainerAfterStopEventOnChaosScene(2*time.Second, 5*time.Second)
+
+	// English: Enable chaos test
+	//
+	// Português: Habilita o teste de caos
+	container.EnableChaosScene(true)
+
+	// English: Initializes the container manager object.
+	//
+	// Português: Inicializa o objeto gerenciador de container.
+	err = container.Init()
+	if err != nil {
+		fmt.Printf("error: %v", err.Error())
+		GarbageCollector()
+		return
+	}
+
+	// English: Creates an image from a project folder.
+	//
+	// Português: Cria uma imagem a partir de uma pasta de projeto.
+	imageInspect, err = container.ImageBuildFromFolder()
+	if err != nil {
+		fmt.Printf("error: %v", err.Error())
+		GarbageCollector()
+		return
+	}
+
+	fmt.Printf("image size: %v\n", container.SizeToString(imageInspect.Size))
+	fmt.Printf("image os: %v\n", imageInspect.Os)
+
+	// English: Creates and initializes the container based on the created image.
+	//
+	// Português: Cria e inicializa o container baseado na imagem criada.
+	err = container.ContainerBuildAndStartFromImage()
+	if err != nil {
+		log.Printf("error: %v", err.Error())
+		GarbageCollector()
+		return
+	}
+
+	// English: Starts container monitoring at two second intervals. This functionality generates the log and monitors the standard output of the container.
+	//
+	// Português: Inicializa o monitoramento do container com intervalos de dois segundos. Esta funcionalidade gera o log e monitora a saída padrão do container.
+	container.StartMonitor()
+
+	// English: Gets the event channel pointer inside the container.
+	//
+	// Português: Pega o ponteiro do canal de eventos dentro do container.
+	event := container.GetChaosEvent()
+
+	select {
+	case e := <-event:
+		fmt.Printf("container name: %v\n", e.ContainerName)
+		fmt.Printf("done: %v\n", e.Done)
+		fmt.Printf("fail: %v\n", e.Fail)
+		fmt.Printf("error: %v\n", e.Error)
+		fmt.Printf("message: %v\n", e.Message)
+	}
+
+	// English: Stop container monitoring.
+	//
+	// Português: Para o monitoramento do container.
+	container.StopMonitor()
+
+	// English: Deletes all docker elements with the term `delete` in the name.
+	//
+	// Português: Apaga todos os elementos docker com o termo `delete` no nome.
+	GarbageCollector()
+
+	// Output:
+	// image size: 1.38 MB
+	// image os: linux
+	// container name: container_counter_delete_after_test
+	// done: true
+	// fail: false
+	// error: false
+	// message: done!
+}
+```
+
+</p>
+</details>
 
 ### func \(\*ContainerBuilder\) [AddFilterToSuccess](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcAddFilterToSuccess.go#L18>)
 

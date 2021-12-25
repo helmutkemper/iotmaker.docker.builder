@@ -21,7 +21,9 @@ package iotmakerdockerbuilder
 //
 //   * This function is used in conjunction with SetCsvLogPath(), StartMonitor(), StopMonitor().
 //
-// Português: Adiciona um filtro para procurar e converter um valor textual em uma coluna no arquivo de log CSV.
+// Português:
+//
+//  Adiciona um filtro para procurar e converter um valor textual em uma coluna no arquivo de log CSV.
 //
 //   Entrada:
 //     label: Valor do rótulo a ser colocado na coluna do arquivo de log.

@@ -7,11 +7,11 @@ import (
 	"time"
 )
 
-func ExampleContainerBuilder_AddFilterToRestartContainer() {
-	AddFilterToRestartContainer()
+func ExampleContainerBuilder_AddFilterToStartChaos() {
+	AddFilterToStartChaos()
 }
 
-func AddFilterToRestartContainer() {
+func AddFilterToStartChaos() {
 	var err error
 	var imageInspect types.ImageInspect
 
