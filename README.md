@@ -3654,7 +3654,7 @@ English: Adds a filter to the container's standard output to look for a textual 
 
 Português: Adiciona um filtro na saída padrão do container para procurar um valor textual indicador de sucesso do teste\. Entrada: match: Texto simples procurado na saída padrão do container para ativar o filtro filter: Expressão regular usada para filtrar o que vai para o log usando o parâmetro \`valueToGet\`\. search: Expressão regular usada para busca e substituição no texto encontrado na etapa anterior \[opcional\]\. replace: Elemento da troca da expressão regular \[opcional\]\.
 
-### func \(\*ContainerBuilder\) [AddImageBuildOptionsBuildArgs](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcAddImageBuildOptionsBuildArgs.go#L56>)
+### func \(\*ContainerBuilder\) [AddImageBuildOptionsBuildArgs](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcAddImageBuildOptionsBuildArgs.go#L60>)
 
 ```go
 func (e *ContainerBuilder) AddImageBuildOptionsBuildArgs(key string, value *string)
@@ -3694,11 +3694,22 @@ see https://docs.docker.com/engine/reference/commandline/build/#set-build-time-v
     RUN go env -w GOPRIVATE=$GIT_PRIVATE_REPO
 ```
 
-Português: Adiciona uma variável durante a construção \(\-\-build\-arg\) Input: key: Nome do argumento\. value: Valor do argumento\.
+Português:
 
-Exemplo: key:   chave do argumento \(ex\. Dockerfile: ARG key\) value: valor do argumento
+Adiciona uma variável durante a construção \(\-\-build\-arg\)
 
 ```
+Input:
+  key: Nome do argumento.
+  value: Valor do argumento.
+```
+
+Exemplo:
+
+```
+key:   chave do argumento (ex. Dockerfile: ARG key)
+value: valor do argumento
+
 docker build --build-arg HTTP_PROXY=http://10.20.30.2:1234
 Veja https://docs.docker.com/engine/reference/commandline/build/#set-build-time-variables---build-arg
 
