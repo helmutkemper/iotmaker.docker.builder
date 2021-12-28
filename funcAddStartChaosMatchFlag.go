@@ -2,13 +2,21 @@ package iotmakerdockerbuilder
 
 // AddStartChaosMatchFlag
 //
-// Similar: AddStartChaosMatchFlag(), AddStartChaosMatchFlagToFileLog(), AddFilterToStartChaos()
+// Similar:
 //
-// English: Adds a filter to the container's standard output to look for a textual value releasing the start of the chaos test.
+//   AddStartChaosMatchFlag(), AddStartChaosMatchFlagToFileLog(), AddFilterToStartChaos()
+//
+// English:
+//
+//  Adds a filter to the container's standard output to look for a textual value releasing the start of the chaos test.
+//
 //   Input:
 //     value: Error text
 //
-// Português: Adiciona um filtro na saída padrão do container para procurar um valor textual liberando o início do teste de caos.
+// Português:
+//
+//  Adiciona um filtro na saída padrão do container para procurar um valor textual liberando o início do teste de caos.
+//
 //   Entrada:
 //     value: Texto indicativo de erro
 func (e *ContainerBuilder) AddStartChaosMatchFlag(value string) {

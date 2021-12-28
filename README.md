@@ -2368,7 +2368,7 @@ func ContainerBuilderAddFailMatchFlagToFileLog() {
 </p>
 </details>
 
-### func \(\*ContainerBuilder\) [AddFileOrFolderToLinkBetweenConputerHostAndContainer](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcAddFiileOrFolderToLinkBetweenConputerHostAndContainer.go#L33>)
+### func \(\*ContainerBuilder\) [AddFileOrFolderToLinkBetweenConputerHostAndContainer](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcAddFileOrFolderToLinkBetweenConputerHostAndContainer.go#L33>)
 
 ```go
 func (e *ContainerBuilder) AddFileOrFolderToLinkBetweenConputerHostAndContainer(computerHostPath, insideContainerPath string) (err error)
@@ -2822,7 +2822,7 @@ func AddFilterToFail() {
 </p>
 </details>
 
-### func \(\*ContainerBuilder\) [AddFilterToLog](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcAddFilterToLog.go#L22>)
+### func \(\*ContainerBuilder\) [AddFilterToLog](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcAddFilterToLog.go#L34>)
 
 ```go
 func (e *ContainerBuilder) AddFilterToLog(label, match, filter string)
@@ -2830,18 +2830,44 @@ func (e *ContainerBuilder) AddFilterToLog(label, match, filter string)
 
 #### AddFilterToLog
 
-Similar: AddFilterToLogWithReplace\(\)\, AddFilterToLog\(\)
-
-English: Adds a filter to search and convert a textual value to a column in the log file\. Input: label: Value to be placed in the log file column\. match: Simple text searched in the container's standard output to activate the filter filter: Regular expression used to filter what goes into the log using the \`valueToGet\` parameter\.
+Similar:
 
 ```
-Note: - This function is used in conjunction with SetCsvLogPath(), StartMonitor(), StopMonitor().
+AddFilterToLogWithReplace(), AddFilterToLog()
 ```
 
-Português: Adiciona um filtro para procurar e converter um valor textual em uma coluna no arquivo de log\. Entrada: label: Valor do rótulo a ser colocado na coluna do arquivo de log\. match: Texto simples procurado na saída padrão do container para ativar o filtro filter: Expressão regular usada para filtrar o que vai para o log usando o parâmetro \`valueToGet\`\.
+English:
+
+Adds a filter to search and convert a textual value to a column in the log file\.
 
 ```
-Nota: - Esta função é usada em conjunto com SetCsvLogPath(), StartMonitor(), StopMonitor()
+Input:
+  label: Value to be placed in the log file column.
+  match: Simple text searched in the container's standard output to activate the filter
+  filter: Regular expression used to filter what goes into the log using the `valueToGet` parameter.
+```
+
+Note:
+
+```
+* This function is used in conjunction with SetCsvLogPath(), StartMonitor(), StopMonitor().
+```
+
+Português:
+
+Adiciona um filtro para procurar e converter um valor textual em uma coluna no arquivo de log\.
+
+```
+Entrada:
+  label: Valor do rótulo a ser colocado na coluna do arquivo de log.
+  match: Texto simples procurado na saída padrão do container para ativar o filtro
+  filter: Expressão regular usada para filtrar o que vai para o log usando o parâmetro `valueToGet`.
+```
+
+Nota:
+
+```
+* Esta função é usada em conjunto com SetCsvLogPath(), StartMonitor(), StopMonitor()
 ```
 
 <details><summary>Example</summary>
@@ -4219,7 +4245,9 @@ func (e *ContainerBuilder) AddRestartMatchFlag(value string)
 
 Similar:
 
-AddFilterToRestartContainer\(\)\, AddRestartMatchFlag\(\)\, AddRestartMatchFlagToFileLog\(\)
+```
+AddFilterToRestartContainer(), AddRestartMatchFlag(), AddRestartMatchFlagToFileLog()
+```
 
 Português:
 
@@ -4311,7 +4339,7 @@ Nota:
   foi reinicializado depois de um tempo sem resposta.
 ```
 
-### func \(\*ContainerBuilder\) [AddStartChaosMatchFlag](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcAddStartChaosMatchFlag.go#L14>)
+### func \(\*ContainerBuilder\) [AddStartChaosMatchFlag](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcAddStartChaosMatchFlag.go#L22>)
 
 ```go
 func (e *ContainerBuilder) AddStartChaosMatchFlag(value string)
@@ -4319,11 +4347,29 @@ func (e *ContainerBuilder) AddStartChaosMatchFlag(value string)
 
 #### AddStartChaosMatchFlag
 
-Similar: AddStartChaosMatchFlag\(\)\, AddStartChaosMatchFlagToFileLog\(\)\, AddFilterToStartChaos\(\)
+Similar:
 
-English: Adds a filter to the container's standard output to look for a textual value releasing the start of the chaos test\. Input: value: Error text
+```
+AddStartChaosMatchFlag(), AddStartChaosMatchFlagToFileLog(), AddFilterToStartChaos()
+```
 
-Português: Adiciona um filtro na saída padrão do container para procurar um valor textual liberando o início do teste de caos\. Entrada: value: Texto indicativo de erro
+English:
+
+Adds a filter to the container's standard output to look for a textual value releasing the start of the chaos test\.
+
+```
+Input:
+  value: Error text
+```
+
+Português:
+
+Adiciona um filtro na saída padrão do container para procurar um valor textual liberando o início do teste de caos\.
+
+```
+Entrada:
+  value: Texto indicativo de erro
+```
 
 ### func \(\*ContainerBuilder\) [AddStartChaosMatchFlagToFileLog](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcAddStartChaosMatchFlagToFileLog.go#L40>)
 
@@ -5289,28 +5335,55 @@ Nota:
   caso necessite controlar o container.
 ```
 
-### func \(\*ContainerBuilder\) [ContainerStartAfterBuild](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcContainerStartAfterBuild.go#L24>)
+### func \(\*ContainerBuilder\) [ContainerStartAfterBuild](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcContainerStartAfterBuild.go#L45>)
 
 ```go
 func (e *ContainerBuilder) ContainerStartAfterBuild() (err error)
 ```
 
-ContainerStartAfterBuild \(english\):
+#### ContainerStartAfterBuild
 
-ContainerStartAfterBuild \(português\): Inicia um container recem criado\.
+English:
+
+Starts a newly created container\.
+
+```
+Output:
+  err: standard error object
+```
+
+Note:
+
+```
+* There are two ways to create a container:
+  ContainerBuildAndStartFromImage, initializes the oncontainer and initializes the registry to the
+  docker network, so that it works correctly.
+  ContainerBuildWithoutStartingItFromImage just creates the container, so the first time it runs
+  it must have its network registry initialized so it can work properly.
+* After initializing the first time, use the functions, ContainerStart, ContainerPause and
+  ContainerStop, in case you need to control the container.
+```
+
+Português:
+
+Inicia um container recem criado\.
 
 ```
 Saída:
   err: Objeto de erro padrão
+```
 
-Nota: - Ha duas formas de criar um container:
-        ContainerBuildAndStartFromImage, inicializa o oncontainer e inicializa o
-        registro aa rede docker, para que o mesmo funcione de forma correta.
-        ContainerBuildWithoutStartingItFromImage apenas cria o container, por isto, a
-        primeira vez que o mesmo roda, ele deve ter o seu registro de rede
-        inicializado para que possa funcionar de forma correta.
-      - Apos inicializado a primeira vez, use as funções, ContainerStart,
-        ContainerPause e ContainerStop, caso necessite controlar o container.
+Nota:
+
+```
+* Ha duas formas de criar um container:
+  ContainerBuildAndStartFromImage, inicializa o oncontainer e inicializa o registro aa rede docker,
+  para que o mesmo funcione de forma correta.
+  ContainerBuildWithoutStartingItFromImage apenas cria o container, por isto, a primeira vez que o
+  mesmo roda, ele deve ter o seu registro de rede inicializado para que possa funcionar de forma
+  correta.
+* Apos inicializado a primeira vez, use as funções, ContainerStart, ContainerPause e ContainerStop,
+  caso necessite controlar o container.
 ```
 
 ### func \(\*ContainerBuilder\) [ContainerStatisticsOneShot](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcContainerStatisticsOneShot.go#L26-L29>)
@@ -5663,7 +5736,7 @@ Português:
 
 Canal disparado a cada ciclo do ticker definido em SetInspectInterval\(\)
 
-### func \(\*ContainerBuilder\) [GetChannelOnContainerReady](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcGetChannelOnContainerReady.go#L14>)
+### func \(\*ContainerBuilder\) [GetChannelOnContainerReady](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcGetChannelOnContainerReady.go#L23>)
 
 ```go
 func (e *ContainerBuilder) GetChannelOnContainerReady() (channel *chan bool)
@@ -5671,18 +5744,29 @@ func (e *ContainerBuilder) GetChannelOnContainerReady() (channel *chan bool)
 
 #### GetChannelOnContainerReady
 
-English: Channel fired when the container is ready for use
+English:
+
+Channel fired when the container is ready for use
+
+Note:
 
 ```
-Note: This channel expects the container to signal that it is ready, but it does not take into account whether
-the application contained in the container is ready. For this reason, it is recommended to use SetWaitString()
+* This channel expects the container to signal that it is ready, but it does not take into account
+  whether the application contained in the container is ready. For this reason, it is recommended
+  to use SetWaitString()
 ```
 
-Português: Canal disparado quando o container está pronto para uso
+Português:
 
 ```
-Nota: Este canal espera o container sinalizar que está pronto, mas, ele não considera se a aplicação contida
-no container está pronta. Por isto, é recomendado o uso de SetWaitString()
+Canal disparado quando o container está pronto para uso
+```
+
+Nota:
+
+```
+* Este canal espera o container sinalizar que está pronto, mas, ele não considera se a aplicação
+  contida no container está pronta. Por isto, é recomendado o uso de SetWaitString()
 ```
 
 ### func \(\*ContainerBuilder\) [GetChaosEvent](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcGetChaosEvent.go#L3>)
@@ -5691,7 +5775,7 @@ no container está pronta. Por isto, é recomendado o uso de SetWaitString()
 func (e *ContainerBuilder) GetChaosEvent() (eventChannel chan Event)
 ```
 
-### func \(\*ContainerBuilder\) [GetContainerID](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcGetContainerID.go#L8>)
+### func \(\*ContainerBuilder\) [GetContainerID](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcGetContainerID.go#L18>)
 
 ```go
 func (e *ContainerBuilder) GetContainerID() (ID string)
@@ -5699,9 +5783,23 @@ func (e *ContainerBuilder) GetContainerID() (ID string)
 
 #### GetContainerID
 
-English: Returns the ID of the created container
+English:
 
-Português: Retorna o ID do container criado
+Returns the ID of the created container
+
+```
+Output:
+  ID: ID of the container
+```
+
+Português:
+
+Retorna o ID do container criado
+
+```
+Saída:
+  ID: ID do container
+```
 
 ### func \(\*ContainerBuilder\) [GetContainerInfo](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcGetContainerInfo.go#L7>)
 

@@ -4,7 +4,7 @@ package iotmakerdockerbuilder
 //
 // Similar:
 //
-//  AddFilterToRestartContainer(), AddRestartMatchFlag(), AddRestartMatchFlagToFileLog()
+//   AddFilterToRestartContainer(), AddRestartMatchFlag(), AddRestartMatchFlagToFileLog()
 //
 // Português:
 //
