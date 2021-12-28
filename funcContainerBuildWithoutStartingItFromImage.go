@@ -12,11 +12,17 @@ import (
 
 // ContainerBuildWithoutStartingItFromImage
 //
-// English: Transforms an image downloaded by ImagePull() or created by ImageBuildFromFolder() into a container
+// English:
+//
+//  Transforms an image downloaded by ImagePull() or created by ImageBuildFromFolder() into a container
+//
 //   Output:
 //     err: Default object error from golang
 //
-// Português: Transforma uma imagem baixada por ImagePull() ou criada por ImageBuildFromFolder() em container
+// Português:
+//
+//  Transforma uma imagem baixada por ImagePull() ou criada por ImageBuildFromFolder() em container
+//
 //   Saída:
 //     err: Objeto padrão de erro golang
 func (e *ContainerBuilder) ContainerBuildWithoutStartingItFromImage() (err error) {

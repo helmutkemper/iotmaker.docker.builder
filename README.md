@@ -4325,7 +4325,7 @@ English: Adds a filter to the container's standard output to look for a textual 
 
 Português: Adiciona um filtro na saída padrão do container para procurar um valor textual liberando o início do teste de caos\. Entrada: value: Texto indicativo de erro
 
-### func \(\*ContainerBuilder\) [AddStartChaosMatchFlagToFileLog](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcAddStartChaosMatchFlagToFileLog.go#L26>)
+### func \(\*ContainerBuilder\) [AddStartChaosMatchFlagToFileLog](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcAddStartChaosMatchFlagToFileLog.go#L40>)
 
 ```go
 func (e *ContainerBuilder) AddStartChaosMatchFlagToFileLog(value, logDirectoryPath string) (err error)
@@ -4333,13 +4333,41 @@ func (e *ContainerBuilder) AddStartChaosMatchFlagToFileLog(value, logDirectoryPa
 
 #### AddStartChaosMatchFlagToFileLog
 
-Similar: AddStartChaosMatchFlag\(\)\, AddStartChaosMatchFlagToFileLog\(\)\, AddFilterToStartChaos\(\)
+Similar:
 
-English: Adds a filter to the container's standard output to look for a textual value releasing the start of the chaos test\. Input: value: Error text logDirectoryPath: File path where the container's standard output filed in a \`log\.N\.log\` file will be saved\, where N is an automatically incremented number\. e\.g\.: "\./bug/critical/" Output: err: Default error object
+```
+AddStartChaosMatchFlag(), AddStartChaosMatchFlagToFileLog(), AddFilterToStartChaos()
+```
 
-Português: Adiciona um filtro na saída padrão do container para procurar um valor textual liberando o início do teste de caos\. Entrada: value: Texto indicativo de erro logDirectoryPath: Caminho do arquivo onde será salva a saída padrão do container arquivada em um arquivo \`log\.N\.log\`\, onde N é um número incrementado automaticamente\. Ex\.: "\./bug/critical/" Output: err: Objeto de erro padrão
+English:
 
-### func \(\*ContainerBuilder\) [AddSuccessMatchFlag](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcAddSuccessMatchFlag.go#L12>)
+Adds a filter to the container's standard output to look for a textual value releasing the start of the chaos test\.
+
+```
+Input:
+  value: Error text
+  logDirectoryPath: File path where the container's standard output filed in a `log.N.log` file
+    will be saved, where N is an automatically incremented number. e.g.: "./bug/critical/"
+
+Output:
+  err: Default error object
+```
+
+Português:
+
+Adiciona um filtro na saída padrão do container para procurar um valor textual liberando o início do teste de caos\.
+
+```
+Entrada:
+  value: Texto indicativo de erro
+  logDirectoryPath: Caminho do arquivo onde será salva a saída padrão do container arquivada em um
+    arquivo `log.N.log`, onde N é um número incrementado automaticamente. Ex.: "./bug/critical/"
+
+Output:
+  err: Objeto de erro padrão
+```
+
+### func \(\*ContainerBuilder\) [AddSuccessMatchFlag](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcAddSuccessMatchFlag.go#L18>)
 
 ```go
 func (e *ContainerBuilder) AddSuccessMatchFlag(value string)
@@ -4347,11 +4375,25 @@ func (e *ContainerBuilder) AddSuccessMatchFlag(value string)
 
 #### AddSuccessMatchFlag
 
-English: Adds a text to be searched for in the container's standard output\, indicating test success Input: value: Text searched for in the container's standard output
+English:
 
-Português: Adiciona um texto a ser procurado na saída padrão do conteiner\, indicando sucesso do teste Entrada: value: Texto procurado na saída padrão do container
+Adds a text to be searched for in the container's standard output\, indicating test success
 
-### func \(\*ContainerBuilder\) [ContainerBuildAndStartFromImage](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcContainerBuildFromImage.go#L19>)
+```
+Input:
+  value: Text searched for in the container's standard output
+```
+
+Português:
+
+Adiciona um texto a ser procurado na saída padrão do conteiner\, indicando sucesso do teste
+
+```
+Entrada:
+  value: Texto procurado na saída padrão do container
+```
+
+### func \(\*ContainerBuilder\) [ContainerBuildAndStartFromImage](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcContainerBuildAndStartFromImage.go#L25>)
 
 ```go
 func (e *ContainerBuilder) ContainerBuildAndStartFromImage() (err error)
@@ -4359,9 +4401,23 @@ func (e *ContainerBuilder) ContainerBuildAndStartFromImage() (err error)
 
 #### ContainerBuildAndStartFromImage
 
-English: Transforms an image downloaded by ImagePull\(\) or created by ImageBuildFromFolder\(\) into a container and start it\. Output: err: Default object error from golang
+English:
 
-Português: Transforma uma imagem baixada por ImagePull\(\) ou criada por ImageBuildFromFolder\(\) em container e o inicializa\. Saída: err: Objeto padrão de erro golang
+Transforms an image downloaded by ImagePull\(\) or created by ImageBuildFromFolder\(\) into a container and start it\.
+
+```
+Output:
+  err: Default object error from golang
+```
+
+Português:
+
+Transforma uma imagem baixada por ImagePull\(\) ou criada por ImageBuildFromFolder\(\) em container e o inicializa\.
+
+```
+Saída:
+  err: Objeto padrão de erro golang
+```
 
 <details><summary>Example</summary>
 <p>
@@ -4444,7 +4500,7 @@ Português: Transforma uma imagem baixada por ImagePull\(\) ou criada por ImageB
 </p>
 </details>
 
-### func \(\*ContainerBuilder\) [ContainerBuildWithoutStartingItFromImage](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcContainerBuildWithoutStartingItFromImage.go#L22>)
+### func \(\*ContainerBuilder\) [ContainerBuildWithoutStartingItFromImage](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcContainerBuildWithoutStartingItFromImage.go#L28>)
 
 ```go
 func (e *ContainerBuilder) ContainerBuildWithoutStartingItFromImage() (err error)
@@ -4452,11 +4508,25 @@ func (e *ContainerBuilder) ContainerBuildWithoutStartingItFromImage() (err error
 
 #### ContainerBuildWithoutStartingItFromImage
 
-English: Transforms an image downloaded by ImagePull\(\) or created by ImageBuildFromFolder\(\) into a container Output: err: Default object error from golang
+English:
 
-Português: Transforma uma imagem baixada por ImagePull\(\) ou criada por ImageBuildFromFolder\(\) em container Saída: err: Objeto padrão de erro golang
+Transforms an image downloaded by ImagePull\(\) or created by ImageBuildFromFolder\(\) into a container
 
-### func \(\*ContainerBuilder\) [ContainerCopyFrom](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcContainerCopyFrom.go#L27-L33>)
+```
+Output:
+  err: Default object error from golang
+```
+
+Português:
+
+Transforma uma imagem baixada por ImagePull\(\) ou criada por ImageBuildFromFolder\(\) em container
+
+```
+Saída:
+  err: Objeto padrão de erro golang
+```
+
+### func \(\*ContainerBuilder\) [ContainerCopyFrom](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcContainerCopyFrom.go#L36-L42>)
 
 ```go
 func (e *ContainerBuilder) ContainerCopyFrom(containerPathList []string, hostPathList []string) (statsList []types.ContainerPathStat, err error)
@@ -4464,9 +4534,34 @@ func (e *ContainerBuilder) ContainerCopyFrom(containerPathList []string, hostPat
 
 #### ContainerCopyFrom
 
-Português: Copia um arquivo contido no container para uma pasta local Entrada: containerPathList: lista de arquivos contidos no container \(caminho \+ nome do arquivo\) hostPathList:      lista de caminhos dos arquivos a serem salvos no host \(caminho \+ nome do arquivo\) Saída: statsList: Lista de informações dos arquivos err:       Objeto padrão de error
+Português:
 
-English: Copy a file contained in the container to a local folder Input: containerPathList: list of files contained in the container \(folder path \+ file name\) hostPathList:      list of file paths to be saved on the host \(folder path \+ file name\) Output: statsList: List of file information err:       Default error object
+Copia um arquivo contido no container para uma pasta local
+
+```
+Entrada:
+  containerPathList: lista de arquivos contidos no container (caminho + nome do arquivo)
+  hostPathList:      lista de caminhos dos arquivos a serem salvos no host (caminho + nome do
+    arquivo)
+
+Saída:
+  statsList: Lista de informações dos arquivos
+  err:       Objeto padrão de error
+```
+
+English:
+
+Copy a file contained in the container to a local folder
+
+```
+Input:
+  containerPathList: list of files contained in the container (folder path + file name)
+  hostPathList:      list of file paths to be saved on the host (folder path + file name)
+
+Output:
+  statsList: List of file information
+  err:       Default error object
+```
 
 ### func \(\*ContainerBuilder\) [ContainerCopyTo](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcContainerCopyTo.go#L28-L33>)
 
