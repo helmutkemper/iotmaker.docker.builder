@@ -2096,7 +2096,7 @@ func ContainerBuilderAddFailMatchFlag() {
 </p>
 </details>
 
-### func \(\*ContainerBuilder\) [AddFailMatchFlagToFileLog](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcAddFailMatchFlagToFileLog.go#L38>)
+### func \(\*ContainerBuilder\) [AddFailMatchFlagToFileLog](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcAddFailMatchFlagToFileLog.go#L39>)
 
 ```go
 func (e *ContainerBuilder) AddFailMatchFlagToFileLog(value, logDirectoryPath string) (err error)
@@ -2131,8 +2131,9 @@ Texto indicativo de erro procurado na saída padrão do container\.
 ```
 Entrada:
   value: Texto indicativo de erro
-  logDirectoryPath: Caminho do arquivo onde será salva a saída padrão do container arquivada em um
-    arquivo `log.N.log`, onde N é um número incrementado automaticamente. Ex.: "./bug/critical/"
+  logDirectoryPath: Caminho do arquivo onde será salva a saída padrão do container arquivada em
+    um arquivo `log.N.log`, onde N é um número incrementado automaticamente.
+    Ex.: "./bug/critical/"
 
 Output:
   err: Objeto de erro padrão
@@ -3167,9 +3168,9 @@ Nota:
 ```
 * Teste de caos é um teste feito quando há a necessidade de simular falhas dos microsserviços
   envolvidos no projeto.
-  Durante o teste de caos, o container pode ser pausado, para simular um container não respondendo
-  devido a sobrecarga, ou parado e reiniciado, simulando uma queda crítica, onde um microsserviço
-  foi reinicializado depois de um tempo sem resposta.
+  Durante o teste de caos, o container pode ser pausado, para simular um container não
+  respondendo devido a sobrecarga, ou parado e reiniciado, simulando uma queda crítica, onde um
+  microsserviço foi reinicializado depois de um tempo sem resposta.
 ```
 
 English:
@@ -3189,10 +3190,10 @@ Input:
 Note:
 
 ```
-* Chaos testing is a test performed when there is a need to simulate failures of the microservices
-  involved in the project.
-  During chaos testing, the container can be paused, to simulate a container not responding due to
-  overload, or stopped and restarted, simulating a critical crash, where a microservice was
+* Chaos testing is a test performed when there is a need to simulate failures of the
+  microservices involved in the project.
+  During chaos testing, the container can be paused, to simulate a container not responding due
+  to overload, or stopped and restarted, simulating a critical crash, where a microservice was
   restarted after an unresponsive time.
 ```
 
@@ -3507,10 +3508,10 @@ Input:
 Note:
 
 ```
-* Chaos testing is a test performed when there is a need to simulate failures of the microservices
-  involved in the project.
-  During chaos testing, the container can be paused, to simulate a container not responding due to
-  overload, or stopped and restarted, simulating a critical crash, where a microservice was
+* Chaos testing is a test performed when there is a need to simulate failures of the
+  microservices involved in the project.
+  During chaos testing, the container can be paused, to simulate a container not responding due
+  to overload, or stopped and restarted, simulating a critical crash, where a microservice was
   restarted after an unresponsive time.
 ```
 
@@ -3533,9 +3534,9 @@ Nota:
 ```
 * Teste de caos é um teste feito quando há a necessidade de simular falhas dos microsserviços
   envolvidos no projeto.
-  Durante o teste de caos, o container pode ser pausado, para simular um container não respondendo
-  devido a sobrecarga, ou parado e reiniciado, simulando uma queda crítica, onde um microsserviço
-  foi reinicializado depois de um tempo sem resposta.
+  Durante o teste de caos, o container pode ser pausado, para simular um container não
+  respondendo devido a sobrecarga, ou parado e reiniciado, simulando uma queda crítica, onde um
+  microsserviço foi reinicializado depois de um tempo sem resposta.
 ```
 
 <details><summary>Example</summary>
@@ -3881,8 +3882,8 @@ Example:
 key:   argument key (e.g. Dockerfile: ARG key)
 value: argument value
 
+https://docs.docker.com/engine/reference/commandline/build/#set-build-time-variables---build-arg
 docker build --build-arg HTTP_PROXY=http://10.20.30.2:1234
-see https://docs.docker.com/engine/reference/commandline/build/#set-build-time-variables---build-arg
 
   code:
     var key = "GIT_PRIVATE_REPO"
@@ -3913,8 +3914,8 @@ Exemplo:
 key:   chave do argumento (ex. Dockerfile: ARG key)
 value: valor do argumento
 
+https://docs.docker.com/engine/reference/commandline/build/#set-build-time-variables---build-arg
 docker build --build-arg HTTP_PROXY=http://10.20.30.2:1234
-Veja https://docs.docker.com/engine/reference/commandline/build/#set-build-time-variables---build-arg
 
   code:
     var key = "GIT_PRIVATE_REPO"
@@ -4315,9 +4316,9 @@ Nota:
 ```
 * Teste de caos é um teste feito quando há a necessidade de simular falhas dos microsserviços
   envolvidos no projeto.
-  Durante o teste de caos, o container pode ser pausado, para simular um container não respondendo
-  devido a sobrecarga, ou parado e reiniciado, simulando uma queda crítica, onde um microsserviço
-  foi reinicializado depois de um tempo sem resposta.
+  Durante o teste de caos, o container pode ser pausado, para simular um container não
+  respondendo devido a sobrecarga, ou parado e reiniciado, simulando uma queda crítica, onde um
+  microsserviço foi reinicializado depois de um tempo sem resposta.
 ```
 
 English:
@@ -4332,10 +4333,10 @@ Input:
 Note:
 
 ```
-* Chaos testing is a test performed when there is a need to simulate failures of the microservices
-  involved in the project.
-  During chaos testing, the container can be paused, to simulate a container not responding due to
-  overload, or stopped and restarted, simulating a critical crash, where a microservice was
+* Chaos testing is a test performed when there is a need to simulate failures of the
+  microservices involved in the project.
+  During chaos testing, the container can be paused, to simulate a container not responding due
+  to overload, or stopped and restarted, simulating a critical crash, where a microservice was
   restarted after an unresponsive time.
 ```
 
@@ -4428,7 +4429,7 @@ Entrada:
   value: Texto indicativo de erro
 ```
 
-### func \(\*ContainerBuilder\) [AddStartChaosMatchFlagToFileLog](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcAddStartChaosMatchFlagToFileLog.go#L40>)
+### func \(\*ContainerBuilder\) [AddStartChaosMatchFlagToFileLog](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcAddStartChaosMatchFlagToFileLog.go#L42>)
 
 ```go
 func (e *ContainerBuilder) AddStartChaosMatchFlagToFileLog(value, logDirectoryPath string) (err error)
@@ -4450,7 +4451,8 @@ Adds a filter to the container's standard output to look for a textual value rel
 Input:
   value: Error text
   logDirectoryPath: File path where the container's standard output filed in a `log.N.log` file
-    will be saved, where N is an automatically incremented number. e.g.: "./bug/critical/"
+    will be saved, where N is an automatically incremented number.
+    e.g.: "./bug/critical/"
 
 Output:
   err: Default error object
@@ -4463,8 +4465,9 @@ Adiciona um filtro na saída padrão do container para procurar um valor textual
 ```
 Entrada:
   value: Texto indicativo de erro
-  logDirectoryPath: Caminho do arquivo onde será salva a saída padrão do container arquivada em um
-    arquivo `log.N.log`, onde N é um número incrementado automaticamente. Ex.: "./bug/critical/"
+  logDirectoryPath: Caminho do arquivo onde será salva a saída padrão do container arquivada em
+    um arquivo `log.N.log`, onde N é um número incrementado automaticamente.
+    Ex.: "./bug/critical/"
 
 Output:
   err: Objeto de erro padrão
@@ -4666,7 +4669,7 @@ Output:
   err:       Default error object
 ```
 
-### func \(\*ContainerBuilder\) [ContainerCopyTo](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcContainerCopyTo.go#L32-L37>)
+### func \(\*ContainerBuilder\) [ContainerCopyTo](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcContainerCopyTo.go#L33-L38>)
 
 ```go
 func (e *ContainerBuilder) ContainerCopyTo(hostPathList []string, containerPathList []string) (err error)
@@ -4680,7 +4683,8 @@ Copia um arquivo contido no computador local para dentro do container
 
 ```
 Entrada:
-  hostPathList: lista de arquivos a serem salvos no computador hospedeiro (caminho + nome do arquivo)
+  hostPathList: lista de arquivos a serem salvos no computador hospedeiro (caminho + nome do
+    arquivo)
   containerPathList: lista de arquivos contidos no container (apenas o caminho)
 
 Saída:
@@ -5097,8 +5101,8 @@ Note:
 
 ```
 * There are two ways to create a container:
-  ContainerBuildAndStartFromImage, initializes the oncontainer and initializes the registry to the
-  docker network, so that it works correctly.
+  ContainerBuildAndStartFromImage, initializes the oncontainer and initializes the registry to
+  the docker network, so that it works correctly.
   ContainerBuildWithoutStartingItFromImage just creates the container, so the first time it runs,
   it must have its network registry initialized so it can work properly.
 * After initializing the first time, use the functions, ContainerStart, ContainerPause and
@@ -5120,11 +5124,11 @@ Nota:
 * Ha duas formas de criar um container:
   ContainerBuildAndStartFromImage, inicializa o oncontainer e inicializa o registro aa rede
   docker, para que o mesmo funcione de forma correta.
-  ContainerBuildWithoutStartingItFromImage apenas cria o container, por isto, a primeira vez que o
-  mesmo roda, ele deve ter o seu registro de rede inicializado para que possa funcionar de forma
-  correta.
-* Apos inicializado a primeira vez, use as funções, ContainerStart, ContainerPause e ContainerStop,
-  caso necessite controlar o container.
+  ContainerBuildWithoutStartingItFromImage apenas cria o container, por isto, a primeira vez que
+  o mesmo roda, ele deve ter o seu registro de rede inicializado para que possa funcionar de
+  forma correta.
+* Apos inicializado a primeira vez, use as funções, ContainerStart, ContainerPause e
+  ContainerStop, caso necessite controlar o container.
 ```
 
 ### func \(\*ContainerBuilder\) [ContainerRemove](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcContainerRemove.go#L28>)
@@ -5362,8 +5366,8 @@ Note:
 
 ```
 * There are two ways to create a container:
-  ContainerBuildAndStartFromImage, initializes the oncontainer and initializes the registry to the
-  docker network, so that it works correctly.
+  ContainerBuildAndStartFromImage, initializes the oncontainer and initializes the registry to
+  the docker network, so that it works correctly.
   ContainerBuildWithoutStartingItFromImage just creates the container, so the first time it runs,
   it must have its network registry initialized so it can work properly.
 * After initializing the first time, use the functions, ContainerStart, ContainerPause and
@@ -5383,13 +5387,13 @@ Nota:
 
 ```
 * Ha duas formas de criar um container:
-  ContainerBuildAndStartFromImage, inicializa o oncontainer e inicializa o registro aa rede docker,
-  para que o mesmo funcione de forma correta.
-  ContainerBuildWithoutStartingItFromImage apenas cria o container, por isto, a primeira vez que o
-  mesmo roda, ele deve ter o seu registro de rede inicializado para que possa funcionar de forma
-  correta.
-* Apos inicializado a primeira vez, use as funções, ContainerStart, ContainerPause e ContainerStop,
-  caso necessite controlar o container.
+  ContainerBuildAndStartFromImage, inicializa o oncontainer e inicializa o registro aa rede
+  docker, para que o mesmo funcione de forma correta.
+  ContainerBuildWithoutStartingItFromImage apenas cria o container, por isto, a primeira vez que
+  o mesmo roda, ele deve ter o seu registro de rede inicializado para que possa funcionar de
+  forma correta.
+* Apos inicializado a primeira vez, use as funções, ContainerStart, ContainerPause e
+  ContainerStop, caso necessite controlar o container.
 ```
 
 ### func \(\*ContainerBuilder\) [ContainerStartAfterBuild](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcContainerStartAfterBuild.go#L45>)
@@ -5413,8 +5417,8 @@ Note:
 
 ```
 * There are two ways to create a container:
-  ContainerBuildAndStartFromImage, initializes the oncontainer and initializes the registry to the
-  docker network, so that it works correctly.
+  ContainerBuildAndStartFromImage, initializes the oncontainer and initializes the registry to
+  the docker network, so that it works correctly.
   ContainerBuildWithoutStartingItFromImage just creates the container, so the first time it runs
   it must have its network registry initialized so it can work properly.
 * After initializing the first time, use the functions, ContainerStart, ContainerPause and
@@ -5434,13 +5438,13 @@ Nota:
 
 ```
 * Ha duas formas de criar um container:
-  ContainerBuildAndStartFromImage, inicializa o oncontainer e inicializa o registro aa rede docker,
-  para que o mesmo funcione de forma correta.
-  ContainerBuildWithoutStartingItFromImage apenas cria o container, por isto, a primeira vez que o
-  mesmo roda, ele deve ter o seu registro de rede inicializado para que possa funcionar de forma
-  correta.
-* Apos inicializado a primeira vez, use as funções, ContainerStart, ContainerPause e ContainerStop,
-  caso necessite controlar o container.
+  ContainerBuildAndStartFromImage, inicializa o oncontainer e inicializa o registro aa rede
+  docker, para que o mesmo funcione de forma correta.
+  ContainerBuildWithoutStartingItFromImage apenas cria o container, por isto, a primeira vez que
+  o mesmo roda, ele deve ter o seu registro de rede inicializado para que possa funcionar de
+  forma correta.
+* Apos inicializado a primeira vez, use as funções, ContainerStart, ContainerPause e
+  ContainerStop, caso necessite controlar o container.
 ```
 
 ### func \(\*ContainerBuilder\) [ContainerStatisticsOneShot](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcContainerStatisticsOneShot.go#L26-L29>)
@@ -5493,8 +5497,8 @@ Note:
 
 ```
 * There are two ways to create a container:
-  ContainerBuildAndStartFromImage, initializes the oncontainer and initializes the registry to the
-  docker network, so that it works correctly.
+  ContainerBuildAndStartFromImage, initializes the oncontainer and initializes the registry to
+  the docker network, so that it works correctly.
   ContainerBuildWithoutStartingItFromImage just creates the container, so the first time it runs,
   it must have its network registry initialized, so it can work properly.
 * After initializing the first time, use the functions, ContainerStart, ContainerPause and
@@ -5514,13 +5518,13 @@ Nota:
 
 ```
 * Ha duas formas de criar um container:
-  ContainerBuildAndStartFromImage, inicializa o oncontainer e inicializa o registro aa rede docker,
-  para que o mesmo funcione de forma correta.
-  ContainerBuildWithoutStartingItFromImage apenas cria o container, por isto, a primeira vez que o
-  mesmo roda, ele deve ter o seu registro de rede inicializado para que possa funcionar de forma
-  correta.
-* Apos inicializado a primeira vez, use as funções, ContainerStart, ContainerPause e ContainerStop,
-  caso necessite controlar o container.
+  ContainerBuildAndStartFromImage, inicializa o oncontainer e inicializa o registro aa rede
+  docker, para que o mesmo funcione de forma correta.
+  ContainerBuildWithoutStartingItFromImage apenas cria o container, por isto, a primeira vez que
+  o mesmo roda, ele deve ter o seu registro de rede inicializado para que possa funcionar de
+  forma correta.
+* Apos inicializado a primeira vez, use as funções, ContainerStart, ContainerPause e
+  ContainerStop, caso necessite controlar o container.
 ```
 
 ### func \(\*ContainerBuilder\) [ContainerUnpause](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcContainerUnpause.go#L22>)
@@ -5808,9 +5812,9 @@ Channel fired when the container is ready for use
 Note:
 
 ```
-* This channel expects the container to signal that it is ready, but it does not take into account
-  whether the application contained in the container is ready. For this reason, it is recommended
-  to use SetWaitString()
+* This channel expects the container to signal that it is ready, but it does not take into
+  account whether the application contained in the container is ready. For this reason, it is
+  recommended to use SetWaitString()
 ```
 
 Português:
@@ -5858,10 +5862,32 @@ Saída:
   ID: ID do container
 ```
 
-### func \(\*ContainerBuilder\) [GetContainerInfo](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcGetContainerInfo.go#L7>)
+### func \(\*ContainerBuilder\) [GetContainerInfo](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcGetContainerInfo.go#L24>)
 
 ```go
 func (e *ContainerBuilder) GetContainerInfo() (info types.Info, err error)
+```
+
+#### GetContainerInfo
+
+English:
+
+Returns a series of information about the container\.
+
+```
+Output:
+  info: Container information.
+  err: Standard error object.
+```
+
+Português:
+
+Retorna uma séries de informações sobre o container\.
+
+```
+Saída:
+  info: Informações sobre o container.
+  err: Objeto padrão de erro.
 ```
 
 ### func \(ContainerBuilder\) [GetContainerIsStarted](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcGetContainerIsStarted.go#L3>)
@@ -5900,7 +5926,7 @@ func (e *ContainerBuilder) GetFailFlag() (fail bool)
 func (e *ContainerBuilder) GetGitCloneToBuild() (url string)
 ```
 
-### func \(\*ContainerBuilder\) [GetIPV4Address](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcGetIpAddress.go#L13>)
+### func \(\*ContainerBuilder\) [GetIPV4Address](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcGetIpAddress.go#L22>)
 
 ```go
 func (e *ContainerBuilder) GetIPV4Address() (IP string)
@@ -5908,17 +5934,26 @@ func (e *ContainerBuilder) GetIPV4Address() (IP string)
 
 #### GetIPV4Address
 
-English: Returns the last IP read from the container
+English:
+
+Returns the last IP read from the container
+
+Note:
 
 ```
-Note: If the container is disconnected or connected to another network after creation, this information may
-change
+* If the container is disconnected or connected to another network after creation, this information
+  may change
 ```
 
-Português: Retorna o último IP lido do container
+Português:
+
+Retorna o último IP lido do container
+
+Nota:
 
 ```
-Nota: Caso o container seja desconectado ou conectado a outra rede após a criação, esta informação pode mudar
+* Caso o container seja desconectado ou conectado a outra rede após a criação, esta informação
+  pode mudar
 ```
 
 ### func \(\*ContainerBuilder\) [GetIdByContainerName](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcGetIdByContainerName.go#L12>)

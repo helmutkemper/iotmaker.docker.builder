@@ -30,8 +30,9 @@ import (
 //
 //   Entrada:
 //     value: Texto indicativo de erro
-//     logDirectoryPath: Caminho do arquivo onde será salva a saída padrão do container arquivada em um
-//       arquivo `log.N.log`, onde N é um número incrementado automaticamente. Ex.: "./bug/critical/"
+//     logDirectoryPath: Caminho do arquivo onde será salva a saída padrão do container arquivada em
+//       um arquivo `log.N.log`, onde N é um número incrementado automaticamente.
+//       Ex.: "./bug/critical/"
 //
 //   Output:
 //     err: Objeto de erro padrão

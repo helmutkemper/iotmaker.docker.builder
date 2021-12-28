@@ -18,9 +18,9 @@ package iotmakerdockerbuilder
 //
 //   * Teste de caos é um teste feito quando há a necessidade de simular falhas dos microsserviços
 //     envolvidos no projeto.
-//     Durante o teste de caos, o container pode ser pausado, para simular um container não respondendo
-//     devido a sobrecarga, ou parado e reiniciado, simulando uma queda crítica, onde um microsserviço
-//     foi reinicializado depois de um tempo sem resposta.
+//     Durante o teste de caos, o container pode ser pausado, para simular um container não
+//     respondendo devido a sobrecarga, ou parado e reiniciado, simulando uma queda crítica, onde um
+//     microsserviço foi reinicializado depois de um tempo sem resposta.
 //
 // English:
 //
@@ -32,10 +32,10 @@ package iotmakerdockerbuilder
 //
 // Note:
 //
-//   * Chaos testing is a test performed when there is a need to simulate failures of the microservices
-//     involved in the project.
-//     During chaos testing, the container can be paused, to simulate a container not responding due to
-//     overload, or stopped and restarted, simulating a critical crash, where a microservice was
+//   * Chaos testing is a test performed when there is a need to simulate failures of the
+//     microservices involved in the project.
+//     During chaos testing, the container can be paused, to simulate a container not responding due
+//     to overload, or stopped and restarted, simulating a critical crash, where a microservice was
 //     restarted after an unresponsive time.
 func (e *ContainerBuilder) AddRestartMatchFlag(value string) {
 	if e.chaos.filterRestart == nil {

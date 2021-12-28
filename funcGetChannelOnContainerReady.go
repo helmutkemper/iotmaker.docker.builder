@@ -8,9 +8,9 @@ package iotmakerdockerbuilder
 //
 // Note:
 //
-//   * This channel expects the container to signal that it is ready, but it does not take into account
-//     whether the application contained in the container is ready. For this reason, it is recommended
-//     to use SetWaitString()
+//   * This channel expects the container to signal that it is ready, but it does not take into
+//     account whether the application contained in the container is ready. For this reason, it is
+//     recommended to use SetWaitString()
 //
 // Português:
 //

@@ -15,8 +15,8 @@ package iotmakerdockerbuilder
 //   key:   argument key (e.g. Dockerfile: ARG key)
 //   value: argument value
 //
+//   https://docs.docker.com/engine/reference/commandline/build/#set-build-time-variables---build-arg
 //   docker build --build-arg HTTP_PROXY=http://10.20.30.2:1234
-//   see https://docs.docker.com/engine/reference/commandline/build/#set-build-time-variables---build-arg
 //
 //     code:
 //       var key = "GIT_PRIVATE_REPO"
@@ -43,8 +43,8 @@ package iotmakerdockerbuilder
 //   key:   chave do argumento (ex. Dockerfile: ARG key)
 //   value: valor do argumento
 //
+//   https://docs.docker.com/engine/reference/commandline/build/#set-build-time-variables---build-arg
 //   docker build --build-arg HTTP_PROXY=http://10.20.30.2:1234
-//   Veja https://docs.docker.com/engine/reference/commandline/build/#set-build-time-variables---build-arg
 //
 //     code:
 //       var key = "GIT_PRIVATE_REPO"
