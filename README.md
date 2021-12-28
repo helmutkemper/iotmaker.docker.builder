@@ -1156,7 +1156,7 @@ const (
 var theater = Theater{}
 ```
 
-## func [ConfigChaosScene](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcConfigChaosScene.go#L56-L61>)
+## func [ConfigChaosScene](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcConfigChaosScene.go#L59-L64>)
 
 ```go
 func ConfigChaosScene(sceneName string, maxStopedContainers, maxPausedContainers, maxTotalPausedAndStoppedContainers int)
@@ -1173,7 +1173,8 @@ Input:
   sceneName: unique name for the scene
   maxStopedContainers: Maximum number of stopped containers
   maxPausedContainers: Maximum number of paused containers
-  maxTotalPausedAndStoppedContainers: Maximum number of containers stopped and paused at the same time
+  maxTotalPausedAndStoppedContainers: Maximum number of containers stopped and paused at the same
+    time
 ```
 
 Note:
@@ -1203,7 +1204,8 @@ Entrada:
   sceneName: Nome único para a cena
   maxStopedContainers: Quantidade máxima de containers parados
   maxPausedContainers: Quantidade máxima de containers pausados
-  maxTotalPausedAndStoppedContainers: Quantidade máxima de containers parados e pausados ao mesmo tempo
+  maxTotalPausedAndStoppedContainers: Quantidade máxima de containers parados e pausados ao mesmo
+    tempo
 ```
 
 Nota:
@@ -1443,7 +1445,7 @@ func mountNatsContainer(loop int, network *dockerNetwork.ContainerBuilderNetwork
 </p>
 </details>
 
-## func [GarbageCollector](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcGarbageCollector.go#L28>)
+## func [GarbageCollector](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcGarbageCollector.go#L32>)
 
 ```go
 func GarbageCollector(names ...string)
@@ -1460,7 +1462,8 @@ Eg: network\_to\_delete\_after\_test
 ```
 Input:
   names: Terms contained in the name of docker elements indicated for removal.
-    Eg: nats, removes network, container image, and volume elements that contain the term "nats" in the name. [optional]
+    Eg: nats, removes network, container image, and volume elements that contain the term "nats"
+    in the name. [optional]
 ```
 
 Português:
@@ -1472,7 +1475,8 @@ ex\.: network\_to\_delete\_after\_test
 ```
 Entrada:
   names: Termos contidos no nome dos elementos docker indicados para remoção.
-    Ex.: nats, remove os elementos de rede, imagem container e volumes que contenham o termo "nats" no nome. [opcional]
+    Ex.: nats, remove os elementos de rede, imagem container e volumes que contenham o termo
+    "nats" no nome. [opcional]
 ```
 
 ## func [ImageMakeCache](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcImageMakeCache.go#L45>)

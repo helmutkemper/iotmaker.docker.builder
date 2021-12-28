@@ -10,7 +10,8 @@ package iotmakerdockerbuilder
 //     sceneName: unique name for the scene
 //     maxStopedContainers: Maximum number of stopped containers
 //     maxPausedContainers: Maximum number of paused containers
-//     maxTotalPausedAndStoppedContainers: Maximum number of containers stopped and paused at the same time
+//     maxTotalPausedAndStoppedContainers: Maximum number of containers stopped and paused at the same
+//       time
 //
 // Note:
 //
@@ -30,13 +31,15 @@ package iotmakerdockerbuilder
 //
 // Português:
 //
-//  Adiciona e configura uma cena de teste impedindo que todos os container da cena parem ao mesmo tempo
+//  Adiciona e configura uma cena de teste impedindo que todos os container da cena parem ao mesmo
+// tempo
 //
 //   Entrada:
 //     sceneName: Nome único para a cena
 //     maxStopedContainers: Quantidade máxima de containers parados
 //     maxPausedContainers: Quantidade máxima de containers pausados
-//     maxTotalPausedAndStoppedContainers: Quantidade máxima de containers parados e pausados ao mesmo tempo
+//     maxTotalPausedAndStoppedContainers: Quantidade máxima de containers parados e pausados ao mesmo
+//       tempo
 //
 // Nota:
 //
