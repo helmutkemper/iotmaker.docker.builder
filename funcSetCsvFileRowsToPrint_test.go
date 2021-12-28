@@ -72,13 +72,26 @@ func ExampleContainerBuilder_SetCsvFileRowsToPrint() {
 
 	event := container.GetChaosEvent()
 
-	select {
-	case e := <-event:
-		fmt.Printf("container name: %v\n", e.ContainerName)
-		fmt.Printf("done: %v\n", e.Done)
-		fmt.Printf("fail: %v\n", e.Fail)
-		fmt.Printf("error: %v\n", e.Error)
-		fmt.Printf("message: %v\n", e.Message)
+	for {
+		var end = false
+
+		select {
+		case e := <-event:
+			if e.Done == true || e.Fail == true || e.Error == true {
+				end = true
+
+				fmt.Printf("container name: %v\n", e.ContainerName)
+				fmt.Printf("done: %v\n", e.Done)
+				fmt.Printf("fail: %v\n", e.Fail)
+				fmt.Printf("error: %v\n", e.Error)
+				log.Printf("message: %v\n", e.Message)
+				break
+			}
+		}
+
+		if end == true {
+			break
+		}
 	}
 
 	err = container.StopMonitor()
@@ -89,4 +102,10 @@ func ExampleContainerBuilder_SetCsvFileRowsToPrint() {
 	}
 
 	GarbageCollector()
+
+	//Output:
+	//container name: container_counter_delete_after_test
+	//done: true
+	//fail: false
+	//error: false
 }

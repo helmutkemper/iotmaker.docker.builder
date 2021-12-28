@@ -46,7 +46,7 @@ func ExampleContainerBuilder_SetGitPathPrivateRepository() {
 	}
 
 	// builder new image from git project
-	err = container.ImageBuildFromServer()
+	_, err = container.ImageBuildFromServer()
 	if err != nil {
 		panic(err)
 	}

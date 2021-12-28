@@ -454,6 +454,8 @@ Para quem não tem prática em processo de build em duas etapas\, na primeira et
   - [func (e *ContainerBuilder) ImageInspect() (inspect types.ImageInspect, err error)](<#func-containerbuilder-imageinspect>)
   - [func (e *ContainerBuilder) ImageListExposedPorts() (portList []nat.Port, err error)](<#func-containerbuilder-imagelistexposedports>)
   - [func (e *ContainerBuilder) ImageListExposedVolumes() (list []string, err error)](<#func-containerbuilder-imagelistexposedvolumes>)
+  - [func (e ContainerBuilder) ImageMakeCache(projectPath, cacheName string, expirationDate time.Duration) (err error)](<#func-containerbuilder-imagemakecache>)
+  - [func (e ContainerBuilder) ImageMakeCacheWithDefaultName(projectPath string, expirationDate time.Duration) (err error)](<#func-containerbuilder-imagemakecachewithdefaultname>)
   - [func (e *ContainerBuilder) ImagePull() (err error)](<#func-containerbuilder-imagepull>)
   - [func (e *ContainerBuilder) ImageRemove() (err error)](<#func-containerbuilder-imageremove>)
   - [func (e *ContainerBuilder) ImageRemoveByName(name string) (err error)](<#func-containerbuilder-imageremovebyname>)
@@ -3430,6 +3432,9 @@ func AddFilterToStartChaos() {
 	// Português: Define o caminho do arquivo de log com dados estatísticos do container
 	container.SetCsvLogPath("./test.counter.log.csv", true)
 
+	// English: Defines the separator used in the CSV file
+	//
+	// Português: Define o separador usado no arquivo CSV
 	container.SetCsvFileValueSeparator("\t")
 
 	// English: Adds a search filter to the standard output of the container, to save the information in the log file
@@ -3642,7 +3647,7 @@ func AddFilterToStartChaos() {
 </p>
 </details>
 
-### func \(\*ContainerBuilder\) [AddFilterToSuccess](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcAddFilterToSuccess.go#L18>)
+### func \(\*ContainerBuilder\) [AddFilterToSuccess](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcAddFilterToSuccess.go#L24>)
 
 ```go
 func (e *ContainerBuilder) AddFilterToSuccess(match, filter, search, replace string)
@@ -3650,9 +3655,29 @@ func (e *ContainerBuilder) AddFilterToSuccess(match, filter, search, replace str
 
 #### AddFilterToFail
 
-English: Adds a filter to the container's standard output to look for a textual value indicating test success\. Input: match: Simple text searched in the container's standard output to activate the filter filter: Regular expression used to filter what goes into the log using the \`valueToGet\` parameter\. search: Regular expression used for search and replacement in the text found in the previous step \[optional\]\. replace: Regular expression replace element \[optional\]\.
+English:
 
-Português: Adiciona um filtro na saída padrão do container para procurar um valor textual indicador de sucesso do teste\. Entrada: match: Texto simples procurado na saída padrão do container para ativar o filtro filter: Expressão regular usada para filtrar o que vai para o log usando o parâmetro \`valueToGet\`\. search: Expressão regular usada para busca e substituição no texto encontrado na etapa anterior \[opcional\]\. replace: Elemento da troca da expressão regular \[opcional\]\.
+Adds a filter to the container's standard output to look for a textual value indicating test success\.
+
+```
+Input:
+  match: Simple text searched in the container's standard output to activate the filter
+  filter: Regular expression used to filter what goes into the log using the `valueToGet` parameter.
+  search: Regular expression used for search and replacement in the text found in the previous step [optional].
+  replace: Regular expression replace element [optional].
+```
+
+Português:
+
+Adiciona um filtro na saída padrão do container para procurar um valor textual indicador de sucesso do teste\.
+
+```
+Entrada:
+  match: Texto simples procurado na saída padrão do container para ativar o filtro
+  filter: Expressão regular usada para filtrar o que vai para o log usando o parâmetro `valueToGet`.
+  search: Expressão regular usada para busca e substituição no texto encontrado na etapa anterior [opcional].
+  replace: Elemento da troca da expressão regular [opcional].
+```
 
 ### func \(\*ContainerBuilder\) [AddImageBuildOptionsBuildArgs](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcAddImageBuildOptionsBuildArgs.go#L60>)
 
@@ -3776,23 +3801,47 @@ Nota:
 <p>
 
 ```go
-{
+package main
+
+import (
+	"fmt"
+	"github.com/helmutkemper/util"
+	"io/ioutil"
+	"log"
+	"net/http"
+	"time"
+)
+
+func main() {
+	AddPortToChange()
+}
+
+func AddPortToChange() {
 	var err error
 
 	GarbageCollector()
 
 	var container = ContainerBuilder{}
 
+	// new image name delete:latest
 	container.SetImageName("delete:latest")
 
+	// container name container_delete_server_after_test
 	container.SetContainerName("container_delete_server_after_test")
 
+	// git project to clone https://github.com/helmutkemper/iotmaker.docker.util.whaleAquarium.sample.git
 	container.SetGitCloneToBuild("https://github.com/helmutkemper/iotmaker.docker.util.whaleAquarium.sample.git")
 
+	// see SetGitCloneToBuildWithUserPassworh(), SetGitCloneToBuildWithPrivateSshKey() and
+	// SetGitCloneToBuildWithPrivateToken()
+
+	// set a waits for the text to appear in the standard container output to proceed [optional]
 	container.SetWaitStringWithTimeout("Stating server on port 3000", 10*time.Second)
 
+	// change and open port 3000 to 3030
 	container.AddPortToChange("3000", "3030")
 
+	// replace container folder /static to host folder ./test/static
 	err = container.AddFileOrFolderToLinkBetweenConputerHostAndContainer("./test/static", "/static")
 	if err != nil {
 		log.Printf("container.AddFileOrFolderToLinkBetweenConputerHostAndContainer().error: %v", err.Error())
@@ -3800,12 +3849,16 @@ Nota:
 		panic(err)
 	}
 
+	// inicialize container object
 	err = container.Init()
 	if err != nil {
 		util.TraceToLog()
 		panic(err)
 	}
 
+	// todo: fazer o inspect
+
+	// builder new image from git project
 	_, err = container.ImageBuildFromServer()
 	if err != nil {
 		util.TraceToLog()
@@ -3813,12 +3866,15 @@ Nota:
 		panic(err)
 	}
 
+	// container build from image delete:latest
 	err = container.ContainerBuildAndStartFromImage()
 	if err != nil {
 		util.TraceToLog()
 		log.Printf("container.ContainerBuildAndStartFromImage().error: %v", err.Error())
 		panic(err)
 	}
+
+	// container "container_delete_server_after_test" running and ready for use on this code point on port 3030
 
 	// read server inside a container on address http://localhost:3030/
 	var resp *http.Response
@@ -3837,23 +3893,20 @@ Nota:
 		panic(err)
 	}
 
+	// print output
 	fmt.Printf("%s", body)
 
 	GarbageCollector()
 
+	// Output:
+	// <html><body><p>C is life! Golang is a evolution of C</p></body></html>
 }
-```
-
-#### Output
-
-```
-<html><body><p>C is life! Golang is a evolution of C</p></body></html>
 ```
 
 </p>
 </details>
 
-### func \(\*ContainerBuilder\) [AddPortToDockerfileExpose](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcAddPortToDockerfileExpose.go#L12>)
+### func \(\*ContainerBuilder\) [AddPortToDockerfileExpose](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcAddPortToDockerfileExpose.go#L18>)
 
 ```go
 func (e *ContainerBuilder) AddPortToDockerfileExpose(value string)
@@ -3861,11 +3914,25 @@ func (e *ContainerBuilder) AddPortToDockerfileExpose(value string)
 
 #### AddPortToDockerfileExpose
 
-English: Add ports to dockerfile expose tag\. Input: value: port in string form \(without a colon\, ":"\)
+English:
 
-Português: Adiciona portas a tag expose do dockerfile\. Entrada: value: porta na forma de string \(sem dois pontos\, ":"\)
+Add ports to dockerfile expose tag\.
 
-### func \(\*ContainerBuilder\) [AddPortToExpose](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcAddPortToOpen.go#L24>)
+```
+Input:
+  value: port in string form (without a colon, ":")
+```
+
+Português:
+
+Adiciona portas a tag expose do dockerfile\.
+
+```
+Entrada:
+  value: porta na forma de string (sem dois pontos, ":")
+```
+
+### func \(\*ContainerBuilder\) [AddPortToExpose](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcAddPortToExpose.go#L32>)
 
 ```go
 func (e *ContainerBuilder) AddPortToExpose(value string)
@@ -3873,50 +3940,109 @@ func (e *ContainerBuilder) AddPortToExpose(value string)
 
 #### AddPortToExpose
 
-English: Defines the port to be exposed on the network
+English:
+
+Defines the port to be exposed on the network
 
 ```
-value: port in the form of a numeric string
+Input:
+  value: port in the form of a numeric string
+```
 
-  Note: The ports exposed in the creation of the container can be defined by SetOpenAllContainersPorts(),
+Note:
+
+```
+* The ports exposed in the creation of the container can be defined by SetOpenAllContainersPorts(),
   AddPortToChange() and AddPortToExpose();
-  By default, all doors are closed;
-
-  The ImageListExposedPorts() function returns all ports defined in the image to be exposed.
+* By default, all doors are closed;
+* The ImageListExposedPorts() function returns all ports defined in the image to be exposed.
 ```
 
-Português: Define a porta a ser expostas na rede
+Português:
 
 ```
-value: porta na forma de string numérica
+Define a porta a ser expostas na rede
 
-  Nota: As portas expostas na criação do container pode ser definidas por SetOpenAllContainersPorts(),
+Entrada:
+  value: porta na forma de string numérica
+```
+
+Nota:
+
+```
+* As portas expostas na criação do container pode ser definidas por SetOpenAllContainersPorts(),
   AddPortToChange() e AddPortToExpose();
-  Por padrão, todas as portas ficam fechadas;
-  A função ImageListExposedPorts() retorna todas as portas definidas na imagem para serem expostas.
+* Por padrão, todas as portas ficam fechadas;
+* A função ImageListExposedPorts() retorna todas as portas definidas na imagem para serem expostas.
 ```
 
 <details><summary>Example</summary>
 <p>
 
 ```go
-{
+package main
+
+import (
+	"fmt"
+	"github.com/helmutkemper/util"
+	"io/ioutil"
+	"log"
+	"net/http"
+	"time"
+)
+
+func main() {
+	AddPortToExpose()
+}
+
+func AddPortToExpose() {
 	var err error
 
+	// English: Deletes all docker elements with the term `delete` in the name.
+	//
+	// Português: Apaga todos os elementos docker com o termo `delete` no nome.
 	GarbageCollector()
 
 	var container = ContainerBuilder{}
 
+	// English: print the standard output of the container
+	//
+	// Português: imprime a saída padrão do container
+	container.SetPrintBuildOnStrOut()
+
+	// English: If there is an image named `cache:latest`, it will be used as a base to create the container.
+	//
+	// Português: Caso exista uma imagem de nome `cache:latest`, ela será usada como base para criar o container.
+	container.SetCacheEnable(true)
+
+	// English: Name of the new image to be created.
+	//
+	// Português: Nome da nova imagem a ser criada.
 	container.SetImageName("delete:latest")
 
+	// English: Defines the name of the docker container to be created.
+	//
+	// Português: Define o nome do container docker a ser criado.
 	container.SetContainerName("container_delete_server_after_test")
 
+	//todo: documentar
+	// git project to clone https://github.com/helmutkemper/iotmaker.docker.util.whaleAquarium.sample.git
 	container.SetGitCloneToBuild("https://github.com/helmutkemper/iotmaker.docker.util.whaleAquarium.sample.git")
 
+	// see SetGitCloneToBuildWithUserPassworh(), SetGitCloneToBuildWithPrivateSshKey() and
+	// SetGitCloneToBuildWithPrivateToken()
+
+	// English: Set a waits for the text to appear in the standard container output to proceed [optional]
+	//
+	// Português: Define a espera pelo texto aguardado aparecer na saída padrão do container para prosseguir [opcional]
 	container.SetWaitStringWithTimeout("Stating server on port 3000", 20*time.Second)
 
+	// open port 3000 [optional in this case: default code open all ports]
 	container.AddPortToExpose("3000")
 
+	// English: Replace container folder /static to host folder ./test/static
+	//
+	// Português: Substitua a pasta do container /static para a pasta da máquina ./test/static
 	err = container.AddFileOrFolderToLinkBetweenConputerHostAndContainer("./test/static", "/static")
 	if err != nil {
 		log.Printf("container.AddFileOrFolderToLinkBetweenConputerHostAndContainer().error: %v", err.Error())
@@ -3924,12 +4050,16 @@ value: porta na forma de string numérica
 		panic(err)
 	}
 
+	// English: Initializes the container manager object.
+	//
+	// Português: Inicializa o objeto gerenciador de container.
 	err = container.Init()
 	if err != nil {
 		util.TraceToLog()
 		panic(err)
 	}
 
+	// builder new image from git project
 	_, err = container.ImageBuildFromServer()
 	if err != nil {
 		util.TraceToLog()
@@ -3937,12 +4067,15 @@ value: porta na forma de string numérica
 		panic(err)
 	}
 
+	// container build from image delete:latest
 	err = container.ContainerBuildAndStartFromImage()
 	if err != nil {
 		util.TraceToLog()
 		log.Printf("container.ContainerBuildAndStartFromImage().error: %v", err.Error())
 		panic(err)
 	}
+
+	// container "container_delete_server_after_test" running and ready for use on this code point on port 3030
 
 	// read server inside a container on address http://localhost:3000/
 	var resp *http.Response
@@ -3961,23 +4094,20 @@ value: porta na forma de string numérica
 		panic(err)
 	}
 
+	// print output
 	fmt.Printf("%s", body)
 
 	GarbageCollector()
 
+	// Output:
+	// <html><body><p>C is life! Golang is a evolution of C</p></body></html>
 }
-```
-
-#### Output
-
-```
-<html><body><p>C is life! Golang is a evolution of C</p></body></html>
 ```
 
 </p>
 </details>
 
-### func \(\*ContainerBuilder\) [AddRestartMatchFlag](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcAddRestartMatchFlag.go#L24>)
+### func \(\*ContainerBuilder\) [AddRestartMatchFlag](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcAddRestartMatchFlag.go#L35>)
 
 ```go
 func (e *ContainerBuilder) AddRestartMatchFlag(value string)
@@ -3985,22 +4115,42 @@ func (e *ContainerBuilder) AddRestartMatchFlag(value string)
 
 #### AddRestartMatchFlag
 
-Similar: AddFilterToRestartContainer\(\)\, AddRestartMatchFlag\(\)\, AddRestartMatchFlagToFileLog\(\)
+Similar:
 
-Português: Adiciona um filtro na saída padrão do container para procurar um valor textual liberando a possibilidade do container ser reinicado durante o teste de caos\. Entrada: value: Texto simples procurado na saída padrão do container para ativar o filtro
+AddFilterToRestartContainer\(\)\, AddRestartMatchFlag\(\)\, AddRestartMatchFlagToFileLog\(\)
 
-```
-Nota: - Teste de caos é um teste feito quando há a necessidade de simular falhas dos microsserviços envolvidos no projeto.
-        Durante o teste de caos, o container pode ser pausado, para simular um container não respondendo devido a sobrecarga, ou
-        parado e reiniciado, simulando uma queda crítica, onde um microsserviço foi reinicializado depois de um tempo sem resposta.
-```
+Português:
 
-English: Adds a filter to the standard output of the container to look for a textual value releasing the possibility of the container being restarted during the chaos test\. Input: value: Simple text searched in the container's standard output to activate the filter
+Adiciona um filtro na saída padrão do container para procurar um valor textual liberando a possibilidade do container ser reinicado durante o teste de caos\.
 
 ```
-Note: - Chaos testing is a test performed when there is a need to simulate failures of the microservices involved in the project.
-        During chaos testing, the container can be paused, to simulate a container not responding due to overload, or stopped and
-        restarted, simulating a critical crash, where a microservice was restarted after an unresponsive time.
+Entrada:
+  value: Texto simples procurado na saída padrão do container para ativar o filtro
+```
+
+Nota:
+
+```
+* Teste de caos é um teste feito quando há a necessidade de simular falhas dos microsserviços envolvidos no projeto.
+  Durante o teste de caos, o container pode ser pausado, para simular um container não respondendo devido a sobrecarga, ou
+  parado e reiniciado, simulando uma queda crítica, onde um microsserviço foi reinicializado depois de um tempo sem resposta.
+```
+
+English:
+
+Adds a filter to the standard output of the container to look for a textual value releasing the possibility of the container being restarted during the chaos test\.
+
+```
+Input:
+  value: Simple text searched in the container's standard output to activate the filter
+```
+
+Note:
+
+```
+* Chaos testing is a test performed when there is a need to simulate failures of the microservices involved in the project.
+During chaos testing, the container can be paused, to simulate a container not responding due to overload, or stopped and
+restarted, simulating a critical crash, where a microservice was restarted after an unresponsive time.
 ```
 
 ### func \(\*ContainerBuilder\) [AddRestartMatchFlagToFileLog](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcAddRestartMatchFlagToFileLog.go#L32>)
@@ -5756,6 +5906,42 @@ entre o computador hospedeiro e o container
 </p>
 </details>
 
+### func \(ContainerBuilder\) [ImageMakeCache](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcImageMakeCache.go#L29>)
+
+```go
+func (e ContainerBuilder) ImageMakeCache(projectPath, cacheName string, expirationDate time.Duration) (err error)
+```
+
+#### ImageMakeCache
+
+Português:
+
+Monta uma imagem cache usada como base para a criação de novas imagens\.
+
+A forma de usar esta função é:
+
+Primeira opção:
+
+```
+* Criar uma pasta contendo o arquivo Dockerfile a ser usado como base para a criação de novas imagens;
+* Habilitar o uso da imagem cache nos seus projetos com a função container.SetCacheEnable(true);
+* Definir o nome da imagem cache usada nos seus projetos, com a função container.SetImageCacheName();
+* Usar as funções container.MakeDefaultDockerfileForMeWithInstallExtras() ou container.MakeDefaultDockerfileForMe().
+```
+
+Segunda opção:
+
+```
+* Criar uma pasta contendo o arquivo Dockerfile a ser usado como base para a criação de novas imagens;
+* Criar seu próprio Dockerfile e em vez de usar `FROM golang:1.16-alpine`, usar o nome da cacge, por exemplo, `FROM cache:latest`;
+```
+
+### func \(ContainerBuilder\) [ImageMakeCacheWithDefaultName](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcImageMakeCacheWithDefaultName.go#L5>)
+
+```go
+func (e ContainerBuilder) ImageMakeCacheWithDefaultName(projectPath string, expirationDate time.Duration) (err error)
+```
+
 ### func \(\*ContainerBuilder\) [ImagePull](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcImagePull.go#L15>)
 
 ```go
@@ -6520,13 +6706,26 @@ Nota: - Para vê a lista completa de colunas, use SetCsvFileRowsToPrint(KLogColu
 
 	event := container.GetChaosEvent()
 
-	select {
-	case e := <-event:
-		fmt.Printf("container name: %v\n", e.ContainerName)
-		fmt.Printf("done: %v\n", e.Done)
-		fmt.Printf("fail: %v\n", e.Fail)
-		fmt.Printf("error: %v\n", e.Error)
-		fmt.Printf("message: %v\n", e.Message)
+	for {
+		var end = false
+
+		select {
+		case e := <-event:
+			if e.Done == true || e.Fail == true || e.Error == true {
+				end = true
+
+				fmt.Printf("container name: %v\n", e.ContainerName)
+				fmt.Printf("done: %v\n", e.Done)
+				fmt.Printf("fail: %v\n", e.Fail)
+				fmt.Printf("error: %v\n", e.Error)
+				log.Printf("message: %v\n", e.Message)
+				break
+			}
+		}
+
+		if end == true {
+			break
+		}
 	}
 
 	err = container.StopMonitor()
@@ -6537,7 +6736,17 @@ Nota: - Para vê a lista completa de colunas, use SetCsvFileRowsToPrint(KLogColu
 	}
 
 	GarbageCollector()
+
 }
+```
+
+#### Output
+
+```
+container name: container_counter_delete_after_test
+done: true
+fail: false
+error: false
 ```
 
 </p>
@@ -7387,7 +7596,7 @@ this test only work on my acount \(sorry\)
 		panic(err)
 	}
 
-	err = container.ImageBuildFromServer()
+	_, err = container.ImageBuildFromServer()
 	if err != nil {
 		panic(err)
 	}

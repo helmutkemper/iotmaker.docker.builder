@@ -62,6 +62,9 @@ func AddFilterToStartChaos() {
 	// Português: Define o caminho do arquivo de log com dados estatísticos do container
 	container.SetCsvLogPath("./test.counter.log.csv", true)
 
+	// English: Defines the separator used in the CSV file
+	//
+	// Português: Define o separador usado no arquivo CSV
 	container.SetCsvFileValueSeparator("\t")
 
 	// English: Adds a search filter to the standard output of the container, to save the information in the log file

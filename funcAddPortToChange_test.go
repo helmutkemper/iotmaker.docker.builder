@@ -10,6 +10,10 @@ import (
 )
 
 func ExampleContainerBuilder_AddPortToChange() {
+	AddPortToChange()
+}
+
+func AddPortToChange() {
 	var err error
 
 	GarbageCollector()
