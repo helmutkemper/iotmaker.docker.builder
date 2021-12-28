@@ -6,9 +6,27 @@ import (
 
 // ImageMakeCache
 //
+// English:
+//
+//  Creates a cached image used as a basis for creating new images.
+//
+// The way to use this function is:
+//
+//  First option:
+//
+//   * Create a folder containing the Dockerfile file to be used as a base for creating new images;
+//   * Enable the use of image cache in your projects with the container.SetCacheEnable(true) function;
+//   * Define the name of the cache image used in your projects, with the container.SetImageCacheName() function;
+//   * Use container.MakeDefaultDockerfileForMeWithInstallExtras() or container.MakeDefaultDockerfileForMe() functions.
+//
+//  Second option:
+//
+//   * Create a folder containing the Dockerfile file to be used as a base for creating new images;
+//   * Create your own Dockerfile and instead of using `FROM golang:1.16-alpine`, use the name of the cacge, eg `FROM cache:latest`;
+//
 // Português:
 //
-//  Monta uma imagem cache usada como base para a criação de novas imagens.
+//  Cria uma imagem cache usada como base para a criação de novas imagens.
 //
 // A forma de usar esta função é:
 //
@@ -24,9 +42,7 @@ import (
 //   * Criar uma pasta contendo o arquivo Dockerfile a ser usado como base para a criação de novas imagens;
 //   * Criar seu próprio Dockerfile e em vez de usar `FROM golang:1.16-alpine`, usar o nome da cacge, por exemplo, `FROM cache:latest`;
 //
-//
-//
-func (e ContainerBuilder) ImageMakeCache(projectPath, cacheName string, expirationDate time.Duration) (err error) {
+func ImageMakeCache(projectPath, cacheName string, expirationDate time.Duration) (err error) {
 
 	var container = ContainerBuilder{}
 

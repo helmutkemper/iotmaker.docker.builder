@@ -358,6 +358,7 @@ Para quem não tem prática em processo de build em duas etapas\, na primeira et
 - [Variables](<#variables>)
 - [func ConfigChaosScene(sceneName string, maxStopedContainers, maxPausedContainers, maxTotalPausedAndStoppedContainers int)](<#func-configchaosscene>)
 - [func GarbageCollector(names ...string)](<#func-garbagecollector>)
+- [func ImageMakeCache(projectPath, cacheName string, expirationDate time.Duration) (err error)](<#func-imagemakecache>)
 - [func init()](<#func-init>)
 - [type BlkioStatEntry](<#type-blkiostatentry>)
 - [type BlkioStats](<#type-blkiostats>)
@@ -454,7 +455,6 @@ Para quem não tem prática em processo de build em duas etapas\, na primeira et
   - [func (e *ContainerBuilder) ImageInspect() (inspect types.ImageInspect, err error)](<#func-containerbuilder-imageinspect>)
   - [func (e *ContainerBuilder) ImageListExposedPorts() (portList []nat.Port, err error)](<#func-containerbuilder-imagelistexposedports>)
   - [func (e *ContainerBuilder) ImageListExposedVolumes() (list []string, err error)](<#func-containerbuilder-imagelistexposedvolumes>)
-  - [func (e ContainerBuilder) ImageMakeCache(projectPath, cacheName string, expirationDate time.Duration) (err error)](<#func-containerbuilder-imagemakecache>)
   - [func (e ContainerBuilder) ImageMakeCacheWithDefaultName(projectPath string, expirationDate time.Duration) (err error)](<#func-containerbuilder-imagemakecachewithdefaultname>)
   - [func (e *ContainerBuilder) ImagePull() (err error)](<#func-containerbuilder-imagepull>)
   - [func (e *ContainerBuilder) ImageRemove() (err error)](<#func-containerbuilder-imageremove>)
@@ -1473,6 +1473,58 @@ ex\.: network\_to\_delete\_after\_test
 Entrada:
   names: Termos contidos no nome dos elementos docker indicados para remoção.
     Ex.: nats, remove os elementos de rede, imagem container e volumes que contenham o termo "nats" no nome. [opcional]
+```
+
+## func [ImageMakeCache](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcImageMakeCache.go#L45>)
+
+```go
+func ImageMakeCache(projectPath, cacheName string, expirationDate time.Duration) (err error)
+```
+
+### ImageMakeCache
+
+English:
+
+Creates a cached image used as a basis for creating new images\.
+
+The way to use this function is:
+
+First option:
+
+```
+* Create a folder containing the Dockerfile file to be used as a base for creating new images;
+* Enable the use of image cache in your projects with the container.SetCacheEnable(true) function;
+* Define the name of the cache image used in your projects, with the container.SetImageCacheName() function;
+* Use container.MakeDefaultDockerfileForMeWithInstallExtras() or container.MakeDefaultDockerfileForMe() functions.
+```
+
+Second option:
+
+```
+* Create a folder containing the Dockerfile file to be used as a base for creating new images;
+* Create your own Dockerfile and instead of using `FROM golang:1.16-alpine`, use the name of the cacge, eg `FROM cache:latest`;
+```
+
+Português:
+
+Cria uma imagem cache usada como base para a criação de novas imagens\.
+
+A forma de usar esta função é:
+
+Primeira opção:
+
+```
+* Criar uma pasta contendo o arquivo Dockerfile a ser usado como base para a criação de novas imagens;
+* Habilitar o uso da imagem cache nos seus projetos com a função container.SetCacheEnable(true);
+* Definir o nome da imagem cache usada nos seus projetos, com a função container.SetImageCacheName();
+* Usar as funções container.MakeDefaultDockerfileForMeWithInstallExtras() ou container.MakeDefaultDockerfileForMe().
+```
+
+Segunda opção:
+
+```
+* Criar uma pasta contendo o arquivo Dockerfile a ser usado como base para a criação de novas imagens;
+* Criar seu próprio Dockerfile e em vez de usar `FROM golang:1.16-alpine`, usar o nome da cacge, por exemplo, `FROM cache:latest`;
 ```
 
 ## func [init](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/typeScene.go#L193>)
@@ -5905,36 +5957,6 @@ entre o computador hospedeiro e o container
 
 </p>
 </details>
-
-### func \(ContainerBuilder\) [ImageMakeCache](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcImageMakeCache.go#L29>)
-
-```go
-func (e ContainerBuilder) ImageMakeCache(projectPath, cacheName string, expirationDate time.Duration) (err error)
-```
-
-#### ImageMakeCache
-
-Português:
-
-Monta uma imagem cache usada como base para a criação de novas imagens\.
-
-A forma de usar esta função é:
-
-Primeira opção:
-
-```
-* Criar uma pasta contendo o arquivo Dockerfile a ser usado como base para a criação de novas imagens;
-* Habilitar o uso da imagem cache nos seus projetos com a função container.SetCacheEnable(true);
-* Definir o nome da imagem cache usada nos seus projetos, com a função container.SetImageCacheName();
-* Usar as funções container.MakeDefaultDockerfileForMeWithInstallExtras() ou container.MakeDefaultDockerfileForMe().
-```
-
-Segunda opção:
-
-```
-* Criar uma pasta contendo o arquivo Dockerfile a ser usado como base para a criação de novas imagens;
-* Criar seu próprio Dockerfile e em vez de usar `FROM golang:1.16-alpine`, usar o nome da cacge, por exemplo, `FROM cache:latest`;
-```
 
 ### func \(ContainerBuilder\) [ImageMakeCacheWithDefaultName](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcImageMakeCacheWithDefaultName.go#L5>)
 
