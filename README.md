@@ -4255,7 +4255,7 @@ During chaos testing, the container can be paused, to simulate a container not r
 restarted, simulating a critical crash, where a microservice was restarted after an unresponsive time.
 ```
 
-### func \(\*ContainerBuilder\) [AddRestartMatchFlagToFileLog](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcAddRestartMatchFlagToFileLog.go#L44>)
+### func \(\*ContainerBuilder\) [AddRestartMatchFlagToFileLog](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcAddRestartMatchFlagToFileLog.go#L50>)
 
 ```go
 func (e *ContainerBuilder) AddRestartMatchFlagToFileLog(value, logDirectoryPath string) (err error)
@@ -4276,15 +4276,18 @@ Adds a filter to the standard output of the container to look for a textual valu
 ```
 Input:
   value: Simple text searched in the container's standard output to activate the filter
-  logDirectoryPath: File path where the container's standard output filed in a `log.N.log` file will be saved, where N is an automatically incremented number. e.g.: "./bug/critical/"
+  logDirectoryPath: File path where the container's standard output filed in a `log.N.log` file
+    will be saved, where N is an automatically incremented number. e.g.: "./bug/critical/"
 ```
 
 Note:
 
 ```
-* Chaos testing is a test performed when there is a need to simulate failures of the microservices involved in the project.
-  During chaos testing, the container can be paused, to simulate a container not responding due to overload, or stopped and
-  restarted, simulating a critical crash, where a microservice was restarted after an unresponsive time.
+* Chaos testing is a test performed when there is a need to simulate failures of the microservices
+  involved in the project.
+  During chaos testing, the container can be paused, to simulate a container not responding due to
+  overload, or stopped and restarted, simulating a critical crash, where a microservice was
+  restarted after an unresponsive time.
 ```
 
 Português:
@@ -4294,15 +4297,18 @@ Adiciona um filtro na saída padrão do container para procurar um valor textual
 ```
 Entrada:
   value: Texto simples procurado na saída padrão do container para ativar o filtro
-  logDirectoryPath: Caminho do arquivo onde será salva a saída padrão do container arquivada em um arquivo `log.N.log`, onde N é um número incrementado automaticamente. Ex.: "./bug/critical/"
+  logDirectoryPath: Caminho do arquivo onde será salva a saída padrão do container arquivada em um
+    arquivo `log.N.log`, onde N é um número incrementado automaticamente. Ex.: "./bug/critical/"
 ```
 
 Nota:
 
 ```
-* Teste de caos é um teste feito quando há a necessidade de simular falhas dos microsserviços envolvidos no projeto.
-  Durante o teste de caos, o container pode ser pausado, para simular um container não respondendo devido a sobrecarga, ou
-  parado e reiniciado, simulando uma queda crítica, onde um microsserviço foi reinicializado depois de um tempo sem resposta.
+* Teste de caos é um teste feito quando há a necessidade de simular falhas dos microsserviços
+  envolvidos no projeto.
+  Durante o teste de caos, o container pode ser pausado, para simular um container não respondendo
+  devido a sobrecarga, ou parado e reiniciado, simulando uma queda crítica, onde um microsserviço
+  foi reinicializado depois de um tempo sem resposta.
 ```
 
 ### func \(\*ContainerBuilder\) [AddStartChaosMatchFlag](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcAddStartChaosMatchFlag.go#L14>)
