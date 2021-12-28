@@ -15,9 +15,10 @@ import (
 //  First option:
 //
 //   * Create a folder containing the Dockerfile file to be used as a base for creating new images;
-//   * Enable the use of image cache in your projects with the container.SetCacheEnable(true) function;
-//   * Define the name of the cache image used in your projects, with the container.SetImageCacheName()
+//   * Enable the use of image cache in your projects with the container.SetCacheEnable(true)
 //     function;
+//   * Define the name of the cache image used in your projects, with the
+//     container.SetImageCacheName() function;
 //   * Use container.MakeDefaultDockerfileForMeWithInstallExtras() or
 //     container.MakeDefaultDockerfileForMe() functions.
 //

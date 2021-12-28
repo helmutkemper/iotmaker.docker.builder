@@ -13,7 +13,8 @@ import "time"
 //  First option:
 //
 //   * Create a folder containing the Dockerfile file to be used as a base for creating new images;
-//   * Enable the use of image cache in your projects with the container.SetCacheEnable(true) function;
+//   * Enable the use of image cache in your projects with the container.SetCacheEnable(true)
+//     function;
 //   * Use container.MakeDefaultDockerfileForMeWithInstallExtras() or
 //     container.MakeDefaultDockerfileForMe() functions.
 //

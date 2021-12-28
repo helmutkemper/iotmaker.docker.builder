@@ -1479,7 +1479,7 @@ Entrada:
     "nats" no nome. [opcional]
 ```
 
-## func [ImageMakeCache](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcImageMakeCache.go#L53>)
+## func [ImageMakeCache](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcImageMakeCache.go#L54>)
 
 ```go
 func ImageMakeCache(projectPath, cacheName string, expirationDate time.Duration) (err error)
@@ -1497,9 +1497,10 @@ First option:
 
 ```
 * Create a folder containing the Dockerfile file to be used as a base for creating new images;
-* Enable the use of image cache in your projects with the container.SetCacheEnable(true) function;
-* Define the name of the cache image used in your projects, with the container.SetImageCacheName()
+* Enable the use of image cache in your projects with the container.SetCacheEnable(true)
   function;
+* Define the name of the cache image used in your projects, with the
+  container.SetImageCacheName() function;
 * Use container.MakeDefaultDockerfileForMeWithInstallExtras() or
   container.MakeDefaultDockerfileForMe() functions.
 ```
@@ -1539,7 +1540,7 @@ Segunda opção:
   por exemplo, `FROM cache:latest`;
 ```
 
-## func [ImageMakeCacheWithDefaultName](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcImageMakeCacheWithDefaultName.go#L47>)
+## func [ImageMakeCacheWithDefaultName](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcImageMakeCacheWithDefaultName.go#L48>)
 
 ```go
 func ImageMakeCacheWithDefaultName(projectPath string, expirationDate time.Duration) (err error)
@@ -1557,7 +1558,8 @@ First option:
 
 ```
 * Create a folder containing the Dockerfile file to be used as a base for creating new images;
-* Enable the use of image cache in your projects with the container.SetCacheEnable(true) function;
+* Enable the use of image cache in your projects with the container.SetCacheEnable(true)
+  function;
 * Use container.MakeDefaultDockerfileForMeWithInstallExtras() or
   container.MakeDefaultDockerfileForMe() functions.
 ```
@@ -5830,10 +5832,50 @@ Nota:
   contida no container está pronta. Por isto, é recomendado o uso de SetWaitString()
 ```
 
-### func \(\*ContainerBuilder\) [GetChaosEvent](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcGetChaosEvent.go#L3>)
+### func \(\*ContainerBuilder\) [GetChaosEvent](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcGetChaosEvent.go#L32>)
 
 ```go
 func (e *ContainerBuilder) GetChaosEvent() (eventChannel chan Event)
+```
+
+#### GetChaosEvent
+
+English:
+
+Returns channel of Chaos Winds\.
+
+```
+Output:
+  eventChannel: chaos event channel
+    ContainerName: container name
+```
+
+```
+Message: Error message or event suffered by container, as aborted by system.
+     Error: True if there is an error
+     Done: Trick for when the chaos roll was successful. See the AddSuccessMatchFlag() function
+     Fail: True for when the chaos test failed. See the functions AddFailMatchFlag(),
+           AddFailMatchFlagToFileLog(), AddFilterToFail()
+     Metadata: Data defined by the SetMetadata() function
+```
+
+Português:
+
+Retorna o canal de ventos de caos\.
+
+```
+Saída:
+  eventChannel: canal de eventos de caos
+    ContainerName: Nome do container
+```
+
+```
+Message: Mensagem de erro ou evento sofrido pelo container, como abortado pelo sistema.
+     Error: True se houver erro
+     Done: True para quando o teste de caos foi bem sucessido. Veja a função AddSuccessMatchFlag()
+     Fail: True para quando o teste de caos falhou. Veja as funções AddFailMatchFlag(),
+           AddFailMatchFlagToFileLog(), AddFilterToFail()
+     Metadata: Dados definidos pela função SetMetadata()
 ```
 
 ### func \(\*ContainerBuilder\) [GetContainerID](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcGetContainerID.go#L18>)
@@ -5890,10 +5932,30 @@ Saída:
   err: Objeto padrão de erro.
 ```
 
-### func \(ContainerBuilder\) [GetContainerIsStarted](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcGetContainerIsStarted.go#L3>)
+### func \(ContainerBuilder\) [GetContainerIsStarted](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcGetContainerIsStarted.go#L18>)
 
 ```go
 func (e ContainerBuilder) GetContainerIsStarted() (started bool)
+```
+
+#### GetContainerIsStarted
+
+English:
+
+Returns if the container was initialized after it was generated\.
+
+```
+Output:
+  started: true for container initialized after generated
+```
+
+Português:
+
+Retorna se o container foi inicializado depois de gerado\.
+
+```
+Saída:
+  started: true para container inicializado depois de gerado
 ```
 
 ### func \(\*ContainerBuilder\) [GetContainerLog](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcGetContainerLog.go#L12>)
