@@ -359,6 +359,7 @@ Para quem não tem prática em processo de build em duas etapas\, na primeira et
 - [func ConfigChaosScene(sceneName string, maxStopedContainers, maxPausedContainers, maxTotalPausedAndStoppedContainers int)](<#func-configchaosscene>)
 - [func GarbageCollector(names ...string)](<#func-garbagecollector>)
 - [func ImageMakeCache(projectPath, cacheName string, expirationDate time.Duration) (err error)](<#func-imagemakecache>)
+- [func ImageMakeCacheWithDefaultName(projectPath string, expirationDate time.Duration) (err error)](<#func-imagemakecachewithdefaultname>)
 - [func init()](<#func-init>)
 - [type BlkioStatEntry](<#type-blkiostatentry>)
 - [type BlkioStats](<#type-blkiostats>)
@@ -455,7 +456,6 @@ Para quem não tem prática em processo de build em duas etapas\, na primeira et
   - [func (e *ContainerBuilder) ImageInspect() (inspect types.ImageInspect, err error)](<#func-containerbuilder-imageinspect>)
   - [func (e *ContainerBuilder) ImageListExposedPorts() (portList []nat.Port, err error)](<#func-containerbuilder-imagelistexposedports>)
   - [func (e *ContainerBuilder) ImageListExposedVolumes() (list []string, err error)](<#func-containerbuilder-imagelistexposedvolumes>)
-  - [func (e ContainerBuilder) ImageMakeCacheWithDefaultName(projectPath string, expirationDate time.Duration) (err error)](<#func-containerbuilder-imagemakecachewithdefaultname>)
   - [func (e *ContainerBuilder) ImagePull() (err error)](<#func-containerbuilder-imagepull>)
   - [func (e *ContainerBuilder) ImageRemove() (err error)](<#func-containerbuilder-imageremove>)
   - [func (e *ContainerBuilder) ImageRemoveByName(name string) (err error)](<#func-containerbuilder-imageremovebyname>)
@@ -1517,6 +1517,56 @@ Primeira opção:
 * Criar uma pasta contendo o arquivo Dockerfile a ser usado como base para a criação de novas imagens;
 * Habilitar o uso da imagem cache nos seus projetos com a função container.SetCacheEnable(true);
 * Definir o nome da imagem cache usada nos seus projetos, com a função container.SetImageCacheName();
+* Usar as funções container.MakeDefaultDockerfileForMeWithInstallExtras() ou container.MakeDefaultDockerfileForMe().
+```
+
+Segunda opção:
+
+```
+* Criar uma pasta contendo o arquivo Dockerfile a ser usado como base para a criação de novas imagens;
+* Criar seu próprio Dockerfile e em vez de usar `FROM golang:1.16-alpine`, usar o nome da cacge, por exemplo, `FROM cache:latest`;
+```
+
+## func [ImageMakeCacheWithDefaultName](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcImageMakeCacheWithDefaultName.go#L41>)
+
+```go
+func ImageMakeCacheWithDefaultName(projectPath string, expirationDate time.Duration) (err error)
+```
+
+### ImageMakeCache
+
+English:
+
+Creates a cached image used as a basis for creating new images\.
+
+The way to use this function is:
+
+First option:
+
+```
+* Create a folder containing the Dockerfile file to be used as a base for creating new images;
+* Enable the use of image cache in your projects with the container.SetCacheEnable(true) function;
+* Use container.MakeDefaultDockerfileForMeWithInstallExtras() or container.MakeDefaultDockerfileForMe() functions.
+```
+
+Second option:
+
+```
+* Create a folder containing the Dockerfile file to be used as a base for creating new images;
+* Create your own Dockerfile and instead of using `FROM golang:1.16-alpine`, use the name of the cacge, eg `FROM cache:latest`;
+```
+
+Português:
+
+Cria uma imagem cache usada como base para a criação de novas imagens\.
+
+A forma de usar esta função é:
+
+Primeira opção:
+
+```
+* Criar uma pasta contendo o arquivo Dockerfile a ser usado como base para a criação de novas imagens;
+* Habilitar o uso da imagem cache nos seus projetos com a função container.SetCacheEnable(true);
 * Usar as funções container.MakeDefaultDockerfileForMeWithInstallExtras() ou container.MakeDefaultDockerfileForMe().
 ```
 
@@ -4205,7 +4255,7 @@ During chaos testing, the container can be paused, to simulate a container not r
 restarted, simulating a critical crash, where a microservice was restarted after an unresponsive time.
 ```
 
-### func \(\*ContainerBuilder\) [AddRestartMatchFlagToFileLog](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcAddRestartMatchFlagToFileLog.go#L32>)
+### func \(\*ContainerBuilder\) [AddRestartMatchFlagToFileLog](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcAddRestartMatchFlagToFileLog.go#L44>)
 
 ```go
 func (e *ContainerBuilder) AddRestartMatchFlagToFileLog(value, logDirectoryPath string) (err error)
@@ -4213,22 +4263,46 @@ func (e *ContainerBuilder) AddRestartMatchFlagToFileLog(value, logDirectoryPath 
 
 #### AddRestartMatchFlagToFileLog
 
-Similar: AddFilterToRestartContainer\(\)\, AddRestartMatchFlag\(\)\, AddRestartMatchFlagToFileLog\(\)
-
-English: Adds a filter to the standard output of the container to look for a textual value releasing the possibility of the container being restarted during the chaos test\. Input: value: Simple text searched in the container's standard output to activate the filter logDirectoryPath: File path where the container's standard output filed in a \`log\.N\.log\` file will be saved\, where N is an automatically incremented number\. e\.g\.: "\./bug/critical/"
+Similar:
 
 ```
-Note: - Chaos testing is a test performed when there is a need to simulate failures of the microservices involved in the project.
-        During chaos testing, the container can be paused, to simulate a container not responding due to overload, or stopped and
-        restarted, simulating a critical crash, where a microservice was restarted after an unresponsive time.
+AddFilterToRestartContainer(), AddRestartMatchFlag(), AddRestartMatchFlagToFileLog()
 ```
 
-Português: Adiciona um filtro na saída padrão do container para procurar um valor textual liberando a possibilidade do container ser reinicado durante o teste de caos\. Entrada: value: Texto simples procurado na saída padrão do container para ativar o filtro logDirectoryPath: Caminho do arquivo onde será salva a saída padrão do container arquivada em um arquivo \`log\.N\.log\`\, onde N é um número incrementado automaticamente\. Ex\.: "\./bug/critical/"
+English:
+
+Adds a filter to the standard output of the container to look for a textual value releasing the possibility of the container being restarted during the chaos test\.
 
 ```
-Nota: - Teste de caos é um teste feito quando há a necessidade de simular falhas dos microsserviços envolvidos no projeto.
-        Durante o teste de caos, o container pode ser pausado, para simular um container não respondendo devido a sobrecarga, ou
-        parado e reiniciado, simulando uma queda crítica, onde um microsserviço foi reinicializado depois de um tempo sem resposta.
+Input:
+  value: Simple text searched in the container's standard output to activate the filter
+  logDirectoryPath: File path where the container's standard output filed in a `log.N.log` file will be saved, where N is an automatically incremented number. e.g.: "./bug/critical/"
+```
+
+Note:
+
+```
+* Chaos testing is a test performed when there is a need to simulate failures of the microservices involved in the project.
+  During chaos testing, the container can be paused, to simulate a container not responding due to overload, or stopped and
+  restarted, simulating a critical crash, where a microservice was restarted after an unresponsive time.
+```
+
+Português:
+
+Adiciona um filtro na saída padrão do container para procurar um valor textual liberando a possibilidade do container ser reinicado durante o teste de caos\.
+
+```
+Entrada:
+  value: Texto simples procurado na saída padrão do container para ativar o filtro
+  logDirectoryPath: Caminho do arquivo onde será salva a saída padrão do container arquivada em um arquivo `log.N.log`, onde N é um número incrementado automaticamente. Ex.: "./bug/critical/"
+```
+
+Nota:
+
+```
+* Teste de caos é um teste feito quando há a necessidade de simular falhas dos microsserviços envolvidos no projeto.
+  Durante o teste de caos, o container pode ser pausado, para simular um container não respondendo devido a sobrecarga, ou
+  parado e reiniciado, simulando uma queda crítica, onde um microsserviço foi reinicializado depois de um tempo sem resposta.
 ```
 
 ### func \(\*ContainerBuilder\) [AddStartChaosMatchFlag](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcAddStartChaosMatchFlag.go#L14>)
@@ -5957,12 +6031,6 @@ entre o computador hospedeiro e o container
 
 </p>
 </details>
-
-### func \(ContainerBuilder\) [ImageMakeCacheWithDefaultName](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcImageMakeCacheWithDefaultName.go#L5>)
-
-```go
-func (e ContainerBuilder) ImageMakeCacheWithDefaultName(projectPath string, expirationDate time.Duration) (err error)
-```
 
 ### func \(\*ContainerBuilder\) [ImagePull](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcImagePull.go#L15>)
 
