@@ -16,8 +16,8 @@ import (
 //
 // Nota:
 //
-//   * The ports exposed in the creation of the container can be defined by SetOpenAllContainersPorts(),
-//     AddPortToChange() e AddPortToExpose();
+//   * The ports exposed in the creation of the container can be defined by
+//     SetOpenAllContainersPorts(), AddPortToChange() e AddPortToExpose();
 //   * By default, all doors are closed;
 //   * The ImageListExposedPorts() function returns all ports defined in the image to be exposed.
 //
@@ -34,7 +34,8 @@ import (
 //   * As portas expostas na criação do container pode ser definidas por SetOpenAllContainersPorts(),
 //     AddPortToChange() e AddPortToExpose();
 //   * Por padrão, todas as portas ficam fechadas;
-//   * A função ImageListExposedPorts() retorna todas as portas definidas na imagem para serem expostas.
+//   * A função ImageListExposedPorts() retorna todas as portas definidas na imagem para serem
+//     expostas.
 func (e *ContainerBuilder) AddPortToChange(imagePort string, newPort string) {
 	if e.changePorts == nil {
 		e.changePorts = make([]dockerfileGolang.ChangePort, 0)

@@ -14,12 +14,14 @@ import "time"
 //
 //   * Create a folder containing the Dockerfile file to be used as a base for creating new images;
 //   * Enable the use of image cache in your projects with the container.SetCacheEnable(true) function;
-//   * Use container.MakeDefaultDockerfileForMeWithInstallExtras() or container.MakeDefaultDockerfileForMe() functions.
+//   * Use container.MakeDefaultDockerfileForMeWithInstallExtras() or
+//     container.MakeDefaultDockerfileForMe() functions.
 //
 //  Second option:
 //
 //   * Create a folder containing the Dockerfile file to be used as a base for creating new images;
-//   * Create your own Dockerfile and instead of using `FROM golang:1.16-alpine`, use the name of the cacge, eg `FROM cache:latest`;
+//   * Create your own Dockerfile and instead of using `FROM golang:1.16-alpine`, use the name of the
+//     cacge, eg `FROM cache:latest`;
 //
 // Português:
 //
@@ -29,14 +31,18 @@ import "time"
 //
 //  Primeira opção:
 //
-//   * Criar uma pasta contendo o arquivo Dockerfile a ser usado como base para a criação de novas imagens;
+//   * Criar uma pasta contendo o arquivo Dockerfile a ser usado como base para a criação de novas
+//     imagens;
 //   * Habilitar o uso da imagem cache nos seus projetos com a função container.SetCacheEnable(true);
-//   * Usar as funções container.MakeDefaultDockerfileForMeWithInstallExtras() ou container.MakeDefaultDockerfileForMe().
+//   * Usar as funções container.MakeDefaultDockerfileForMeWithInstallExtras() ou
+//     container.MakeDefaultDockerfileForMe().
 //
 //  Segunda opção:
 //
-//   * Criar uma pasta contendo o arquivo Dockerfile a ser usado como base para a criação de novas imagens;
-//   * Criar seu próprio Dockerfile e em vez de usar `FROM golang:1.16-alpine`, usar o nome da cacge, por exemplo, `FROM cache:latest`;
+//   * Criar uma pasta contendo o arquivo Dockerfile a ser usado como base para a criação de novas
+//     imagens;
+//   * Criar seu próprio Dockerfile e em vez de usar `FROM golang:1.16-alpine`, usar o nome da cacge,
+//     por exemplo, `FROM cache:latest`;
 //
 func ImageMakeCacheWithDefaultName(projectPath string, expirationDate time.Duration) (err error) {
 	return ImageMakeCache(projectPath, "cache:latest", expirationDate)

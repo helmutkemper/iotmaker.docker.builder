@@ -37,16 +37,17 @@ import (
 //
 //   Entrada:
 //     value: Texto simples procurado na saída padrão do container para ativar o filtro
-//     logDirectoryPath: Caminho do arquivo onde será salva a saída padrão do container arquivada em um
-//       arquivo `log.N.log`, onde N é um número incrementado automaticamente. Ex.: "./bug/critical/"
+//     logDirectoryPath: Caminho do arquivo onde será salva a saída padrão do container arquivada em
+//       um arquivo `log.N.log`, onde N é um número incrementado automaticamente.
+//       Ex.: "./bug/critical/"
 //
 // Nota:
 //
 //   * Teste de caos é um teste feito quando há a necessidade de simular falhas dos microsserviços
 //     envolvidos no projeto.
-//     Durante o teste de caos, o container pode ser pausado, para simular um container não respondendo
-//     devido a sobrecarga, ou parado e reiniciado, simulando uma queda crítica, onde um microsserviço
-//     foi reinicializado depois de um tempo sem resposta.
+//     Durante o teste de caos, o container pode ser pausado, para simular um container não
+//     respondendo devido a sobrecarga, ou parado e reiniciado, simulando uma queda crítica, onde um
+//     microsserviço foi reinicializado depois de um tempo sem resposta.
 func (e *ContainerBuilder) AddRestartMatchFlagToFileLog(value, logDirectoryPath string) (err error) {
 	if e.chaos.filterRestart == nil {
 		e.chaos.filterRestart = make([]LogFilter, 0)

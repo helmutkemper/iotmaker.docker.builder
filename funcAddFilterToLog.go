@@ -13,7 +13,8 @@ package iotmakerdockerbuilder
 //   Input:
 //     label: Value to be placed in the log file column.
 //     match: Simple text searched in the container's standard output to activate the filter
-//     filter: Regular expression used to filter what goes into the log using the `valueToGet` parameter.
+//     filter: Regular expression used to filter what goes into the log using the `valueToGet`
+//       parameter.
 //
 // Note:
 //
@@ -26,7 +27,8 @@ package iotmakerdockerbuilder
 //   Entrada:
 //     label: Valor do rótulo a ser colocado na coluna do arquivo de log.
 //     match: Texto simples procurado na saída padrão do container para ativar o filtro
-//     filter: Expressão regular usada para filtrar o que vai para o log usando o parâmetro `valueToGet`.
+//     filter: Expressão regular usada para filtrar o que vai para o log usando o parâmetro
+//       `valueToGet`.
 //
 // Nota:
 //

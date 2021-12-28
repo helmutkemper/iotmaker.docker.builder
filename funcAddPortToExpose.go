@@ -11,8 +11,8 @@ package iotmakerdockerbuilder
 //
 // Note:
 //
-//   * The ports exposed in the creation of the container can be defined by SetOpenAllContainersPorts(),
-//     AddPortToChange() and AddPortToExpose();
+//   * The ports exposed in the creation of the container can be defined by
+//     SetOpenAllContainersPorts(), AddPortToChange() and AddPortToExpose();
 //   * By default, all doors are closed;
 //   * The ImageListExposedPorts() function returns all ports defined in the image to be exposed.
 //
@@ -28,7 +28,8 @@ package iotmakerdockerbuilder
 //   * As portas expostas na criação do container pode ser definidas por SetOpenAllContainersPorts(),
 //     AddPortToChange() e AddPortToExpose();
 //   * Por padrão, todas as portas ficam fechadas;
-//   * A função ImageListExposedPorts() retorna todas as portas definidas na imagem para serem expostas.
+//   * A função ImageListExposedPorts() retorna todas as portas definidas na imagem para serem
+//     expostas.
 func (e *ContainerBuilder) AddPortToExpose(value string) {
 	if e.openPorts == nil {
 		e.openPorts = make([]string, 0)

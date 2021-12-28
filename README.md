@@ -1479,7 +1479,7 @@ Entrada:
     "nats" no nome. [opcional]
 ```
 
-## func [ImageMakeCache](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcImageMakeCache.go#L45>)
+## func [ImageMakeCache](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcImageMakeCache.go#L53>)
 
 ```go
 func ImageMakeCache(projectPath, cacheName string, expirationDate time.Duration) (err error)
@@ -1498,15 +1498,18 @@ First option:
 ```
 * Create a folder containing the Dockerfile file to be used as a base for creating new images;
 * Enable the use of image cache in your projects with the container.SetCacheEnable(true) function;
-* Define the name of the cache image used in your projects, with the container.SetImageCacheName() function;
-* Use container.MakeDefaultDockerfileForMeWithInstallExtras() or container.MakeDefaultDockerfileForMe() functions.
+* Define the name of the cache image used in your projects, with the container.SetImageCacheName()
+  function;
+* Use container.MakeDefaultDockerfileForMeWithInstallExtras() or
+  container.MakeDefaultDockerfileForMe() functions.
 ```
 
 Second option:
 
 ```
 * Create a folder containing the Dockerfile file to be used as a base for creating new images;
-* Create your own Dockerfile and instead of using `FROM golang:1.16-alpine`, use the name of the cacge, eg `FROM cache:latest`;
+* Create your own Dockerfile and instead of using `FROM golang:1.16-alpine`, use the name of the
+  cacge, eg `FROM cache:latest`;
 ```
 
 Português:
@@ -1518,20 +1521,25 @@ A forma de usar esta função é:
 Primeira opção:
 
 ```
-* Criar uma pasta contendo o arquivo Dockerfile a ser usado como base para a criação de novas imagens;
+* Criar uma pasta contendo o arquivo Dockerfile a ser usado como base para a criação de novas
+  imagens;
 * Habilitar o uso da imagem cache nos seus projetos com a função container.SetCacheEnable(true);
-* Definir o nome da imagem cache usada nos seus projetos, com a função container.SetImageCacheName();
-* Usar as funções container.MakeDefaultDockerfileForMeWithInstallExtras() ou container.MakeDefaultDockerfileForMe().
+* Definir o nome da imagem cache usada nos seus projetos, com a função
+  container.SetImageCacheName();
+* Usar as funções container.MakeDefaultDockerfileForMeWithInstallExtras() ou
+  container.MakeDefaultDockerfileForMe().
 ```
 
 Segunda opção:
 
 ```
-* Criar uma pasta contendo o arquivo Dockerfile a ser usado como base para a criação de novas imagens;
-* Criar seu próprio Dockerfile e em vez de usar `FROM golang:1.16-alpine`, usar o nome da cacge, por exemplo, `FROM cache:latest`;
+* Criar uma pasta contendo o arquivo Dockerfile a ser usado como base para a criação de novas
+  imagens;
+* Criar seu próprio Dockerfile e em vez de usar `FROM golang:1.16-alpine`, usar o nome da cacge,
+  por exemplo, `FROM cache:latest`;
 ```
 
-## func [ImageMakeCacheWithDefaultName](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcImageMakeCacheWithDefaultName.go#L41>)
+## func [ImageMakeCacheWithDefaultName](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcImageMakeCacheWithDefaultName.go#L47>)
 
 ```go
 func ImageMakeCacheWithDefaultName(projectPath string, expirationDate time.Duration) (err error)
@@ -1550,14 +1558,16 @@ First option:
 ```
 * Create a folder containing the Dockerfile file to be used as a base for creating new images;
 * Enable the use of image cache in your projects with the container.SetCacheEnable(true) function;
-* Use container.MakeDefaultDockerfileForMeWithInstallExtras() or container.MakeDefaultDockerfileForMe() functions.
+* Use container.MakeDefaultDockerfileForMeWithInstallExtras() or
+  container.MakeDefaultDockerfileForMe() functions.
 ```
 
 Second option:
 
 ```
 * Create a folder containing the Dockerfile file to be used as a base for creating new images;
-* Create your own Dockerfile and instead of using `FROM golang:1.16-alpine`, use the name of the cacge, eg `FROM cache:latest`;
+* Create your own Dockerfile and instead of using `FROM golang:1.16-alpine`, use the name of the
+  cacge, eg `FROM cache:latest`;
 ```
 
 Português:
@@ -1569,16 +1579,20 @@ A forma de usar esta função é:
 Primeira opção:
 
 ```
-* Criar uma pasta contendo o arquivo Dockerfile a ser usado como base para a criação de novas imagens;
+* Criar uma pasta contendo o arquivo Dockerfile a ser usado como base para a criação de novas
+  imagens;
 * Habilitar o uso da imagem cache nos seus projetos com a função container.SetCacheEnable(true);
-* Usar as funções container.MakeDefaultDockerfileForMeWithInstallExtras() ou container.MakeDefaultDockerfileForMe().
+* Usar as funções container.MakeDefaultDockerfileForMeWithInstallExtras() ou
+  container.MakeDefaultDockerfileForMe().
 ```
 
 Segunda opção:
 
 ```
-* Criar uma pasta contendo o arquivo Dockerfile a ser usado como base para a criação de novas imagens;
-* Criar seu próprio Dockerfile e em vez de usar `FROM golang:1.16-alpine`, usar o nome da cacge, por exemplo, `FROM cache:latest`;
+* Criar uma pasta contendo o arquivo Dockerfile a ser usado como base para a criação de novas
+  imagens;
+* Criar seu próprio Dockerfile e em vez de usar `FROM golang:1.16-alpine`, usar o nome da cacge,
+  por exemplo, `FROM cache:latest`;
 ```
 
 ## func [init](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/typeScene.go#L193>)
@@ -2082,7 +2096,7 @@ func ContainerBuilderAddFailMatchFlag() {
 </p>
 </details>
 
-### func \(\*ContainerBuilder\) [AddFailMatchFlagToFileLog](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcAddFailMatchFlagToFileLog.go#L36>)
+### func \(\*ContainerBuilder\) [AddFailMatchFlagToFileLog](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcAddFailMatchFlagToFileLog.go#L38>)
 
 ```go
 func (e *ContainerBuilder) AddFailMatchFlagToFileLog(value, logDirectoryPath string) (err error)
@@ -2103,7 +2117,8 @@ Error text searched for in the container's standard output\.
 ```
 Input:
   value: Error text
-  logDirectoryPath: File path where the container's standard output filed in a `log.N.log` file will be saved, where N is an automatically incremented number. e.g.: "./bug/critical/"
+  logDirectoryPath: File path where the container's standard output filed in a `log.N.log` file
+    will be saved, where N is an automatically incremented number. e.g.: "./bug/critical/"
 
 Output:
   err: Default error object
@@ -2116,7 +2131,8 @@ Texto indicativo de erro procurado na saída padrão do container\.
 ```
 Entrada:
   value: Texto indicativo de erro
-  logDirectoryPath: Caminho do arquivo onde será salva a saída padrão do container arquivada em um arquivo `log.N.log`, onde N é um número incrementado automaticamente. Ex.: "./bug/critical/"
+  logDirectoryPath: Caminho do arquivo onde será salva a saída padrão do container arquivada em um
+    arquivo `log.N.log`, onde N é um número incrementado automaticamente. Ex.: "./bug/critical/"
 
 Output:
   err: Objeto de erro padrão
@@ -2572,7 +2588,7 @@ func AddFileOrFolderToLinkBetweenConputerHostAndContainer() {
 </p>
 </details>
 
-### func \(\*ContainerBuilder\) [AddFilterToFail](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcAddFilterToFail.go#L28>)
+### func \(\*ContainerBuilder\) [AddFilterToFail](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcAddFilterToFail.go#L34>)
 
 ```go
 func (e *ContainerBuilder) AddFilterToFail(match, filter, search, replace string)
@@ -2593,8 +2609,10 @@ Adds a filter to the container's standard output to look for a textual value ind
 ```
 Input:
   match: Simple text searched in the container's standard output to activate the filter
-  filter: Regular expression used to filter what goes into the log using the `valueToGet` parameter.
-  search: Regular expression used for search and replacement in the text found in the previous step [optional].
+  filter: Regular expression used to filter what goes into the log using the `valueToGet`
+    parameter.
+  search: Regular expression used for search and replacement in the text found in the previous
+    step [optional].
   replace: Regular expression replace element [optional].
 ```
 
@@ -2605,8 +2623,10 @@ Adiciona um filtro na saída padrão do container para procurar um valor textual
 ```
 Entrada:
   match: Texto simples procurado na saída padrão do container para ativar o filtro
-  filter: Expressão regular usada para filtrar o que vai para o log usando o parâmetro `valueToGet`.
-  search: Expressão regular usada para busca e substituição no texto encontrado na etapa anterior [opcional].
+  filter: Expressão regular usada para filtrar o que vai para o log usando o parâmetro
+    `valueToGet`.
+  search: Expressão regular usada para busca e substituição no texto encontrado na etapa anterior
+    [opcional].
   replace: Elemento da troca da expressão regular [opcional].
 ```
 
@@ -2826,7 +2846,7 @@ func AddFilterToFail() {
 </p>
 </details>
 
-### func \(\*ContainerBuilder\) [AddFilterToLog](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcAddFilterToLog.go#L34>)
+### func \(\*ContainerBuilder\) [AddFilterToLog](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcAddFilterToLog.go#L36>)
 
 ```go
 func (e *ContainerBuilder) AddFilterToLog(label, match, filter string)
@@ -2848,7 +2868,8 @@ Adds a filter to search and convert a textual value to a column in the log file\
 Input:
   label: Value to be placed in the log file column.
   match: Simple text searched in the container's standard output to activate the filter
-  filter: Regular expression used to filter what goes into the log using the `valueToGet` parameter.
+  filter: Regular expression used to filter what goes into the log using the `valueToGet`
+    parameter.
 ```
 
 Note:
@@ -2865,7 +2886,8 @@ Adiciona um filtro para procurar e converter um valor textual em uma coluna no a
 Entrada:
   label: Valor do rótulo a ser colocado na coluna do arquivo de log.
   match: Texto simples procurado na saída padrão do container para ativar o filtro
-  filter: Expressão regular usada para filtrar o que vai para o log usando o parâmetro `valueToGet`.
+  filter: Expressão regular usada para filtrar o que vai para o log usando o parâmetro
+    `valueToGet`.
 ```
 
 Nota:
@@ -3056,7 +3078,7 @@ func AddFilterToLog() {
 </p>
 </details>
 
-### func \(\*ContainerBuilder\) [AddFilterToLogWithReplace](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcAddFilterToLogWithReplace.go#L38>)
+### func \(\*ContainerBuilder\) [AddFilterToLogWithReplace](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcAddFilterToLogWithReplace.go#L42>)
 
 ```go
 func (e *ContainerBuilder) AddFilterToLogWithReplace(label, match, filter, search, replace string)
@@ -3078,8 +3100,10 @@ Adds a filter to search and convert a textual value to a column in the CSV log f
 Input:
   label: Value to be placed in the log file column.
   match: Simple text searched in the container's standard output to activate the filter
-  filter: Regular expression used to filter what goes into the log using the `valueToGet` parameter.
-  search: Regular expression used for search and replacement in the text found in the previous step [optional].
+  filter: Regular expression used to filter what goes into the log using the `valueToGet`
+    parameter.
+  search: Regular expression used for search and replacement in the text found in the previous
+    step [optional].
   replace: Regular expression replace element [optional].
 ```
 
@@ -3097,8 +3121,10 @@ Adiciona um filtro para procurar e converter um valor textual em uma coluna no a
 Entrada:
   label: Valor do rótulo a ser colocado na coluna do arquivo de log.
   match: Texto simples procurado na saída padrão do container para ativar o filtro
-  filter: Expressão regular usada para filtrar o que vai para o log usando o parâmetro `valueToGet`.
-  search: Expressão regular usada para busca e substituição no texto encontrado na etapa anterior [opcional].
+  filter: Expressão regular usada para filtrar o que vai para o log usando o parâmetro
+    `valueToGet`.
+  search: Expressão regular usada para busca e substituição no texto encontrado na etapa anterior
+    [opcional].
   replace: Elemento da troca da expressão regular [opcional].
 ```
 
@@ -3108,7 +3134,7 @@ Nota:
 * Esta função é usada em conjunto com SetCsvLogPath(), StartMonitor(), StopMonitor()
 ```
 
-### func \(\*ContainerBuilder\) [AddFilterToRestartContainer](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcAddFilterToRestartContainer.go#L42>)
+### func \(\*ContainerBuilder\) [AddFilterToRestartContainer](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcAddFilterToRestartContainer.go#L50>)
 
 ```go
 func (e *ContainerBuilder) AddFilterToRestartContainer(match, filter, search, replace string)
@@ -3129,17 +3155,21 @@ Adiciona um filtro na saída padrão do container para procurar um valor textual
 ```
 Entrada:
   match: Texto simples procurado na saída padrão do container para ativar o filtro
-  filter: Expressão regular usada para filtrar o que vai para o log usando o parâmetro `valueToGet`.
-  search: Expressão regular usada para busca e substituição no texto encontrado na etapa anterior [opcional].
+  filter: Expressão regular usada para filtrar o que vai para o log usando o parâmetro
+    `valueToGet`.
+  search: Expressão regular usada para busca e substituição no texto encontrado na etapa anterior
+    [opcional].
   replace: Elemento da troca da expressão regular [opcional].
 ```
 
 Nota:
 
 ```
-* Teste de caos é um teste feito quando há a necessidade de simular falhas dos microsserviços envolvidos no projeto.
-Durante o teste de caos, o container pode ser pausado, para simular um container não respondendo devido a sobrecarga, ou
-parado e reiniciado, simulando uma queda crítica, onde um microsserviço foi reinicializado depois de um tempo sem resposta.
+* Teste de caos é um teste feito quando há a necessidade de simular falhas dos microsserviços
+  envolvidos no projeto.
+  Durante o teste de caos, o container pode ser pausado, para simular um container não respondendo
+  devido a sobrecarga, ou parado e reiniciado, simulando uma queda crítica, onde um microsserviço
+  foi reinicializado depois de um tempo sem resposta.
 ```
 
 English:
@@ -3149,17 +3179,21 @@ Adds a filter to the standard output of the container to look for a textual valu
 ```
 Input:
   match: Simple text searched in the container's standard output to activate the filter
-  filter: Regular expression used to filter what goes into the log using the `valueToGet` parameter.
-  search: Regular expression used for search and replacement in the text found in the previous step [optional].
+  filter: Regular expression used to filter what goes into the log using the `valueToGet`
+    parameter.
+  search: Regular expression used for search and replacement in the text found in the previous
+    step [optional].
   replace: Regular expression replace element [optional].
 ```
 
 Note:
 
 ```
-* Chaos testing is a test performed when there is a need to simulate failures of the microservices involved in the project.
-During chaos testing, the container can be paused, to simulate a container not responding due to overload, or stopped and
-restarted, simulating a critical crash, where a microservice was restarted after an unresponsive time.
+* Chaos testing is a test performed when there is a need to simulate failures of the microservices
+  involved in the project.
+  During chaos testing, the container can be paused, to simulate a container not responding due to
+  overload, or stopped and restarted, simulating a critical crash, where a microservice was
+  restarted after an unresponsive time.
 ```
 
 <details><summary>Example</summary>
@@ -3442,7 +3476,7 @@ func AddFilterToRestartContainer() {
 </p>
 </details>
 
-### func \(\*ContainerBuilder\) [AddFilterToStartChaos](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcAddFilterToStartChaos.go#L40>)
+### func \(\*ContainerBuilder\) [AddFilterToStartChaos](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcAddFilterToStartChaos.go#L50>)
 
 ```go
 func (e *ContainerBuilder) AddFilterToStartChaos(match, filter, search, replace string)
@@ -3463,17 +3497,21 @@ Adds a filter to the container's standard output to look for a textual value rel
 ```
 Input:
   match: Simple text searched in the container's standard output to activate the filter
-  filter: Regular expression used to filter what goes into the log using the `valueToGet` parameter.
-  search: Regular expression used for search and replacement in the text found in the previous step [optional].
+  filter: Regular expression used to filter what goes into the log using the `valueToGet`
+    parameter.
+  search: Regular expression used for search and replacement in the text found in the previous
+    step [optional].
   replace: Regular expression replace element [optional].
 ```
 
 Note:
 
 ```
-* Chaos testing is a test performed when there is a need to simulate failures of the microservices involved in the project.
-During chaos testing, the container can be paused, to simulate a container not responding due to overload, or stopped and
-restarted, simulating a critical crash, where a microservice was restarted after an unresponsive time.
+* Chaos testing is a test performed when there is a need to simulate failures of the microservices
+  involved in the project.
+  During chaos testing, the container can be paused, to simulate a container not responding due to
+  overload, or stopped and restarted, simulating a critical crash, where a microservice was
+  restarted after an unresponsive time.
 ```
 
 Português:
@@ -3483,17 +3521,21 @@ Adiciona um filtro na saída padrão do container para procurar um valor textual
 ```
 Entrada:
   match: Texto simples procurado na saída padrão do container para ativar o filtro
-  filter: Expressão regular usada para filtrar o que vai para o log usando o parâmetro `valueToGet`.
-  search: Expressão regular usada para busca e substituição no texto encontrado na etapa anterior [opcional].
+  filter: Expressão regular usada para filtrar o que vai para o log usando o parâmetro
+    `valueToGet`.
+  search: Expressão regular usada para busca e substituição no texto encontrado na etapa anterior
+    [opcional].
   replace: Elemento da troca da expressão regular [opcional].
 ```
 
 Nota:
 
 ```
-* Teste de caos é um teste feito quando há a necessidade de simular falhas dos microsserviços envolvidos no projeto.
-Durante o teste de caos, o container pode ser pausado, para simular um container não respondendo devido a sobrecarga, ou
-parado e reiniciado, simulando uma queda crítica, onde um microsserviço foi reinicializado depois de um tempo sem resposta.
+* Teste de caos é um teste feito quando há a necessidade de simular falhas dos microsserviços
+  envolvidos no projeto.
+  Durante o teste de caos, o container pode ser pausado, para simular um container não respondendo
+  devido a sobrecarga, ou parado e reiniciado, simulando uma queda crítica, onde um microsserviço
+  foi reinicializado depois de um tempo sem resposta.
 ```
 
 <details><summary>Example</summary>
@@ -3779,7 +3821,7 @@ func AddFilterToStartChaos() {
 </p>
 </details>
 
-### func \(\*ContainerBuilder\) [AddFilterToSuccess](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcAddFilterToSuccess.go#L24>)
+### func \(\*ContainerBuilder\) [AddFilterToSuccess](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcAddFilterToSuccess.go#L30>)
 
 ```go
 func (e *ContainerBuilder) AddFilterToSuccess(match, filter, search, replace string)
@@ -3794,8 +3836,10 @@ Adds a filter to the container's standard output to look for a textual value ind
 ```
 Input:
   match: Simple text searched in the container's standard output to activate the filter
-  filter: Regular expression used to filter what goes into the log using the `valueToGet` parameter.
-  search: Regular expression used for search and replacement in the text found in the previous step [optional].
+  filter: Regular expression used to filter what goes into the log using the `valueToGet`
+    parameter.
+  search: Regular expression used for search and replacement in the text found in the previous
+    step [optional].
   replace: Regular expression replace element [optional].
 ```
 
@@ -3806,8 +3850,10 @@ Adiciona um filtro na saída padrão do container para procurar um valor textual
 ```
 Entrada:
   match: Texto simples procurado na saída padrão do container para ativar o filtro
-  filter: Expressão regular usada para filtrar o que vai para o log usando o parâmetro `valueToGet`.
-  search: Expressão regular usada para busca e substituição no texto encontrado na etapa anterior [opcional].
+  filter: Expressão regular usada para filtrar o que vai para o log usando o parâmetro
+    `valueToGet`.
+  search: Expressão regular usada para busca e substituição no texto encontrado na etapa anterior
+    [opcional].
   replace: Elemento da troca da expressão regular [opcional].
 ```
 
@@ -3883,7 +3929,7 @@ Veja https://docs.docker.com/engine/reference/commandline/build/#set-build-time-
     RUN go env -w GOPRIVATE=$GIT_PRIVATE_REPO
 ```
 
-### func \(\*ContainerBuilder\) [AddPortToChange](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcAddPortToChange.go#L38>)
+### func \(\*ContainerBuilder\) [AddPortToChange](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcAddPortToChange.go#L39>)
 
 ```go
 func (e *ContainerBuilder) AddPortToChange(imagePort string, newPort string)
@@ -3904,8 +3950,8 @@ Input:
 Nota:
 
 ```
-* The ports exposed in the creation of the container can be defined by SetOpenAllContainersPorts(),
-  AddPortToChange() e AddPortToExpose();
+* The ports exposed in the creation of the container can be defined by
+  SetOpenAllContainersPorts(), AddPortToChange() e AddPortToExpose();
 * By default, all doors are closed;
 * The ImageListExposedPorts() function returns all ports defined in the image to be exposed.
 ```
@@ -3926,7 +3972,8 @@ Nota:
 * As portas expostas na criação do container pode ser definidas por SetOpenAllContainersPorts(),
   AddPortToChange() e AddPortToExpose();
 * Por padrão, todas as portas ficam fechadas;
-* A função ImageListExposedPorts() retorna todas as portas definidas na imagem para serem expostas.
+* A função ImageListExposedPorts() retorna todas as portas definidas na imagem para serem
+  expostas.
 ```
 
 <details><summary>Example</summary>
@@ -4064,7 +4111,7 @@ Entrada:
   value: porta na forma de string (sem dois pontos, ":")
 ```
 
-### func \(\*ContainerBuilder\) [AddPortToExpose](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcAddPortToExpose.go#L32>)
+### func \(\*ContainerBuilder\) [AddPortToExpose](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcAddPortToExpose.go#L33>)
 
 ```go
 func (e *ContainerBuilder) AddPortToExpose(value string)
@@ -4084,8 +4131,8 @@ Input:
 Note:
 
 ```
-* The ports exposed in the creation of the container can be defined by SetOpenAllContainersPorts(),
-  AddPortToChange() and AddPortToExpose();
+* The ports exposed in the creation of the container can be defined by
+  SetOpenAllContainersPorts(), AddPortToChange() and AddPortToExpose();
 * By default, all doors are closed;
 * The ImageListExposedPorts() function returns all ports defined in the image to be exposed.
 ```
@@ -4105,7 +4152,8 @@ Nota:
 * As portas expostas na criação do container pode ser definidas por SetOpenAllContainersPorts(),
   AddPortToChange() e AddPortToExpose();
 * Por padrão, todas as portas ficam fechadas;
-* A função ImageListExposedPorts() retorna todas as portas definidas na imagem para serem expostas.
+* A função ImageListExposedPorts() retorna todas as portas definidas na imagem para serem
+  expostas.
 ```
 
 <details><summary>Example</summary>
@@ -4239,7 +4287,7 @@ func AddPortToExpose() {
 </p>
 </details>
 
-### func \(\*ContainerBuilder\) [AddRestartMatchFlag](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcAddRestartMatchFlag.go#L35>)
+### func \(\*ContainerBuilder\) [AddRestartMatchFlag](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcAddRestartMatchFlag.go#L40>)
 
 ```go
 func (e *ContainerBuilder) AddRestartMatchFlag(value string)
@@ -4265,9 +4313,11 @@ Entrada:
 Nota:
 
 ```
-* Teste de caos é um teste feito quando há a necessidade de simular falhas dos microsserviços envolvidos no projeto.
-  Durante o teste de caos, o container pode ser pausado, para simular um container não respondendo devido a sobrecarga, ou
-  parado e reiniciado, simulando uma queda crítica, onde um microsserviço foi reinicializado depois de um tempo sem resposta.
+* Teste de caos é um teste feito quando há a necessidade de simular falhas dos microsserviços
+  envolvidos no projeto.
+  Durante o teste de caos, o container pode ser pausado, para simular um container não respondendo
+  devido a sobrecarga, ou parado e reiniciado, simulando uma queda crítica, onde um microsserviço
+  foi reinicializado depois de um tempo sem resposta.
 ```
 
 English:
@@ -4282,12 +4332,14 @@ Input:
 Note:
 
 ```
-* Chaos testing is a test performed when there is a need to simulate failures of the microservices involved in the project.
-During chaos testing, the container can be paused, to simulate a container not responding due to overload, or stopped and
-restarted, simulating a critical crash, where a microservice was restarted after an unresponsive time.
+* Chaos testing is a test performed when there is a need to simulate failures of the microservices
+  involved in the project.
+  During chaos testing, the container can be paused, to simulate a container not responding due to
+  overload, or stopped and restarted, simulating a critical crash, where a microservice was
+  restarted after an unresponsive time.
 ```
 
-### func \(\*ContainerBuilder\) [AddRestartMatchFlagToFileLog](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcAddRestartMatchFlagToFileLog.go#L50>)
+### func \(\*ContainerBuilder\) [AddRestartMatchFlagToFileLog](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcAddRestartMatchFlagToFileLog.go#L51>)
 
 ```go
 func (e *ContainerBuilder) AddRestartMatchFlagToFileLog(value, logDirectoryPath string) (err error)
@@ -4329,8 +4381,9 @@ Adiciona um filtro na saída padrão do container para procurar um valor textual
 ```
 Entrada:
   value: Texto simples procurado na saída padrão do container para ativar o filtro
-  logDirectoryPath: Caminho do arquivo onde será salva a saída padrão do container arquivada em um
-    arquivo `log.N.log`, onde N é um número incrementado automaticamente. Ex.: "./bug/critical/"
+  logDirectoryPath: Caminho do arquivo onde será salva a saída padrão do container arquivada em
+    um arquivo `log.N.log`, onde N é um número incrementado automaticamente.
+    Ex.: "./bug/critical/"
 ```
 
 Nota:
@@ -4338,9 +4391,9 @@ Nota:
 ```
 * Teste de caos é um teste feito quando há a necessidade de simular falhas dos microsserviços
   envolvidos no projeto.
-  Durante o teste de caos, o container pode ser pausado, para simular um container não respondendo
-  devido a sobrecarga, ou parado e reiniciado, simulando uma queda crítica, onde um microsserviço
-  foi reinicializado depois de um tempo sem resposta.
+  Durante o teste de caos, o container pode ser pausado, para simular um container não
+  respondendo devido a sobrecarga, ou parado e reiniciado, simulando uma queda crítica, onde um
+  microsserviço foi reinicializado depois de um tempo sem resposta.
 ```
 
 ### func \(\*ContainerBuilder\) [AddStartChaosMatchFlag](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcAddStartChaosMatchFlag.go#L22>)

@@ -32,7 +32,8 @@ import (
 func GarbageCollector(names ...string) {
 	var err error
 
-	// garbage collector delete all containers, images, volumes and networks whose name contains the term "delete"
+	// garbage collector delete all containers, images, volumes and networks whose name contains the term
+	// "delete"
 	var garbageCollector = ContainerBuilder{}
 	err = garbageCollector.Init()
 	if err != nil {
