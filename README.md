@@ -5958,7 +5958,7 @@ Saída:
   started: true para container inicializado depois de gerado
 ```
 
-### func \(\*ContainerBuilder\) [GetContainerLog](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcGetContainerLog.go#L12>)
+### func \(\*ContainerBuilder\) [GetContainerLog](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcGetContainerLog.go#L24>)
 
 ```go
 func (e *ContainerBuilder) GetContainerLog() (log []byte, err error)
@@ -5966,14 +5966,50 @@ func (e *ContainerBuilder) GetContainerLog() (log []byte, err error)
 
 #### GetContainerLog
 
-English: Returns the current standard output of the container\.
+English:
 
-Português: Retorna a saída padrão atual do container\.
+Returns the current standard output of the container\.
 
-### func \(\*ContainerBuilder\) [GetContainerName](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcGetContainerName.go#L3>)
+```
+Output:
+  log: Texts contained in the container's standard output
+  err: Standard error object
+```
+
+Português:
+
+Retorna a saída padrão atual do container\.
+
+```
+Saída:
+  log: Textos contidos na saída padrão do container
+  err: Objeto de erro padrão
+```
+
+### func \(\*ContainerBuilder\) [GetContainerName](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcGetContainerName.go#L18>)
 
 ```go
 func (e *ContainerBuilder) GetContainerName() (containerName string)
+```
+
+#### GetContainerName
+
+English:
+
+Returns container name
+
+```
+Output:
+  containerName: Container name
+```
+
+Português:
+
+Retorna o nome do container
+
+```
+Saída:
+  containerName: Nome do container
 ```
 
 ### func \(\*ContainerBuilder\) [GetFailFlag](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcGetFailFlag.go#L3>)
