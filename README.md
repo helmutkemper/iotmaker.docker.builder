@@ -4283,10 +4283,10 @@ Input:
 Note:
 
 ```
-* Chaos testing is a test performed when there is a need to simulate failures of the microservices
-  involved in the project.
-  During chaos testing, the container can be paused, to simulate a container not responding due to
-  overload, or stopped and restarted, simulating a critical crash, where a microservice was
+* Chaos testing is a test performed when there is a need to simulate failures of the
+  microservices involved in the project.
+  During chaos testing, the container can be paused, to simulate a container not responding due
+  to overload, or stopped and restarted, simulating a critical crash, where a microservice was
   restarted after an unresponsive time.
 ```
 

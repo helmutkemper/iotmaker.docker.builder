@@ -14,8 +14,8 @@ import (
 //
 // English:
 //
-//  Adds a filter to the standard output of the container to look for a textual value releasing the possibility
-//  of the container being restarted during the chaos test.
+//  Adds a filter to the standard output of the container to look for a textual value releasing the
+//  possibility of the container being restarted during the chaos test.
 //
 //   Input:
 //     value: Simple text searched in the container's standard output to activate the filter
@@ -24,16 +24,16 @@ import (
 //
 // Note:
 //
-//   * Chaos testing is a test performed when there is a need to simulate failures of the microservices
-//     involved in the project.
-//     During chaos testing, the container can be paused, to simulate a container not responding due to
-//     overload, or stopped and restarted, simulating a critical crash, where a microservice was
+//   * Chaos testing is a test performed when there is a need to simulate failures of the
+//     microservices involved in the project.
+//     During chaos testing, the container can be paused, to simulate a container not responding due
+//     to overload, or stopped and restarted, simulating a critical crash, where a microservice was
 //     restarted after an unresponsive time.
 //
 // Português:
 //
-//  Adiciona um filtro na saída padrão do container para procurar um valor textual liberando a possibilidade
-//  do container ser reinicado durante o teste de caos.
+//  Adiciona um filtro na saída padrão do container para procurar um valor textual liberando a
+//  possibilidade do container ser reinicado durante o teste de caos.
 //
 //   Entrada:
 //     value: Texto simples procurado na saída padrão do container para ativar o filtro
