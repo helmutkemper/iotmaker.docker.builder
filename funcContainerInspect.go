@@ -7,9 +7,21 @@ import (
 
 // ContainerInspect
 //
-// English: inspects the container
+// English:
 //
-// Português: inspeciona o container
+//  Inspects the container
+//
+//   Output:
+//     inspect: Contains information about the container, such as ID, name, status, volumes, etc.
+//     err: Standard error object.
+//
+// Português:
+//
+//  Inspeciona o container
+//
+//   Saída:
+//     inspect: Contém informações sobre o container, como ID, nome, status, volumes, etc.
+//     err: Objeto de erro padrão.
 func (e *ContainerBuilder) ContainerInspect() (inspect iotmakerdocker.ContainerInspect, err error) {
 	if e.containerID == "" {
 		err = e.GetIdByContainerName()

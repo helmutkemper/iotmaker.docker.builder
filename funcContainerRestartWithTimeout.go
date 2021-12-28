@@ -7,15 +7,23 @@ import (
 
 // ContainerRestartWithTimeout
 //
-// English: Restarts a container stopped by ContainerStop().
+// English:
+//
+//  Restarts a container stopped by ContainerStop().
+//
 //   Input:
 //     timeout: timeout to restar container
+//
 //   Output:
 //     err: standard error object
 //
-// Português: Reinicia um container parado por ContainerStop().
+// Português:
+//
+//  Reinicia um container parado por ContainerStop().
+//
 //   Entrada:
 //     timeout: tempo limite para reinício do container
+//
 //   Saída:
 //     err: objeto de erro padrão
 func (e *ContainerBuilder) ContainerRestartWithTimeout(timeout time.Duration) (err error) {

@@ -17,8 +17,8 @@ import (
 //
 // Português:
 //
-// Transforma uma imagem baixada por ImagePull() ou criada por ImageBuildFromFolder() em container e o
-// inicializa.
+//  Transforma uma imagem baixada por ImagePull() ou criada por ImageBuildFromFolder() em container e o
+//  inicializa.
 //
 //   Saída:
 //     err: Objeto padrão de erro golang

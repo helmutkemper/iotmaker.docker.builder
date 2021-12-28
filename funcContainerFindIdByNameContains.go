@@ -7,18 +7,28 @@ import (
 
 // ContainerFindIdByNameContains
 //
-// Similar: ContainerFindIdByName(), ContainerFindIdByNameContains()
+// Similar:
 //
-// English: Searches and returns the ID list of the container name
+//   ContainerFindIdByName(), ContainerFindIdByNameContains()
+//
+// English:
+//
+//  Searches and returns the ID list of the container name
+//
 //   Input:
 //     name: name of the container.
+//
 //   Output:
 //     id: list of containers ID
 //     err: standard error object
 //
-// Português: Procura e retorna uma lista de IDs de containers
+// Português:
+//
+//  Procura e retorna uma lista de IDs de containers
+//
 //   Entrada:
 //     name: Nome do container.
+//
 //   Saída:
 //     id: lista de IDs dos containers
 //     err: Objeto de erro padrão

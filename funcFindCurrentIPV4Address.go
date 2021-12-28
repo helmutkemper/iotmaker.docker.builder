@@ -6,9 +6,21 @@ import (
 
 // FindCurrentIPV4Address
 //
-// English: Inspects the docker's network and returns the current IP of the container
+// English:
 //
-// Português: Inspeciona a rede do docker e devolve o IP atual do container
+//  Inspects the docker's network and returns the current IP of the container
+//
+//   Output:
+//     IP: container IP address IPV4
+//     err: standard error object
+//
+// Português:
+//
+//  Inspeciona a rede do docker e devolve o IP atual do container
+//
+//   Saída:
+//     IP: endereço IP do container IPV4
+//     err: objeto de erro padrão
 func (e *ContainerBuilder) FindCurrentIPV4Address() (IP string, err error) {
 	var id string
 	if e.network == nil {

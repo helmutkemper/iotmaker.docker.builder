@@ -6,7 +6,7 @@ package iotmakerdockerbuilder
 //
 //  Set the container pause functionality to be disabled when the chaos scene is running
 //
-//   Entrada:
+//   Input:
 //     value: true to disable the container pause functionality
 //
 // Note:

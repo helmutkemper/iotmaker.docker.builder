@@ -7,22 +7,31 @@ import (
 
 // ContainerFindIdByName
 //
-// Similar: ContainerFindIdByName(), ContainerFindIdByNameContains()
+// Similar:
 //
-// English: Searches and returns the ID of the container, if it exists
+//   ContainerFindIdByName(), ContainerFindIdByNameContains()
+//
+// English:
+//
+//  Searches and returns the ID of the container, if it exists
+//
 //   Input:
 //     name: Full name of the container.
+//
 //   Output:
 //     id: container ID
 //     err: standard error object
 //
-// Português: Procura e retorna o ID do container, caso o mesmo exista
+// Português:
+//
+//  Procura e retorna o ID do container, caso o mesmo exista
+//
 //   Entrada:
 //     name: Nome completo do container.
+//
 //   Saída:
 //     id: ID do container
 //     err: Objeto de erro padrão
-//
 func (e *ContainerBuilder) ContainerFindIdByName(name string) (id string, err error) {
 	e.dockerSys = iotmakerdocker.DockerSystem{}
 	err = e.dockerSys.Init()

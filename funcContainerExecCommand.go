@@ -4,7 +4,9 @@ import "github.com/helmutkemper/util"
 
 // ContainerExecCommand
 //
-// Português: Executa comandos dentro do container.
+// Português:
+//
+//  Executa comandos dentro do container.
 //
 //   Entrada:
 //     commands: lista de comandos. Ex.: []string{"ls", "-l"}
@@ -16,7 +18,9 @@ import "github.com/helmutkemper/util"
 //     stdError: saída de erro do comando.
 //     err: objeto de erro padrão.
 //
-// English: Execute commands inside the container.
+// English:
+//
+//  Execute commands inside the container.
 //
 //   Input:
 //     commands: command list. Eg: []string{"ls", "-l"}

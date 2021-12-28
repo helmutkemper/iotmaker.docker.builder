@@ -400,7 +400,7 @@ Para quem não tem prática em processo de build em duas etapas\, na primeira et
   - [func (e *ContainerBuilder) ContainerSetDisabeStopOnChaosScene(value bool)](<#func-containerbuilder-containersetdisabestoponchaosscene>)
   - [func (e *ContainerBuilder) ContainerStart() (err error)](<#func-containerbuilder-containerstart>)
   - [func (e *ContainerBuilder) ContainerStartAfterBuild() (err error)](<#func-containerbuilder-containerstartafterbuild>)
-  - [func (e *ContainerBuilder) ContainerStatisticsOneShot() (statsRet types.Stats, err error)](<#func-containerbuilder-containerstatisticsoneshot>)
+  - [func (e *ContainerBuilder) ContainerStatisticsOneShot() (stats types.Stats, err error)](<#func-containerbuilder-containerstatisticsoneshot>)
   - [func (e *ContainerBuilder) ContainerStop() (err error)](<#func-containerbuilder-containerstop>)
   - [func (e *ContainerBuilder) ContainerUnpause() (err error)](<#func-containerbuilder-containerunpause>)
   - [func (e *ContainerBuilder) EnableChaosScene(enable bool)](<#func-containerbuilder-enablechaosscene>)
@@ -4563,7 +4563,7 @@ Output:
   err:       Default error object
 ```
 
-### func \(\*ContainerBuilder\) [ContainerCopyTo](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcContainerCopyTo.go#L28-L33>)
+### func \(\*ContainerBuilder\) [ContainerCopyTo](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcContainerCopyTo.go#L32-L37>)
 
 ```go
 func (e *ContainerBuilder) ContainerCopyTo(hostPathList []string, containerPathList []string) (err error)
@@ -4571,23 +4571,27 @@ func (e *ContainerBuilder) ContainerCopyTo(hostPathList []string, containerPathL
 
 #### ContainerCopyTo
 
-Português: Copia um arquivo contido no computador local para dentro do container
+Português:
+
+Copia um arquivo contido no computador local para dentro do container
 
 ```
 Entrada:
-  hostPathList:      lista de arquivos a serem salvos no computador hospedeiro (caminho + nome do arquivo)
+  hostPathList: lista de arquivos a serem salvos no computador hospedeiro (caminho + nome do arquivo)
   containerPathList: lista de arquivos contidos no container (apenas o caminho)
 
 Saída:
   err: Objeto de erro padrão
 ```
 
-English: Copy a file contained on the local computer into the container
+English:
+
+Copy a file contained on the local computer into the container
 
 ```
 Input:
-  content: Reader for the file contained on the computer. Eg: err, content = os.Open("/home/user/file.txt")
-  destinationPath: file path in container
+  hostPathList: list of files to be saved on the host computer (path + filename)
+  containerPathList: list of files contained in the container (path only)
 
 Output:
   err: standard error object
@@ -4821,7 +4825,7 @@ error: false
 </p>
 </details>
 
-### func \(\*ContainerBuilder\) [ContainerExecCommand](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcContainerExecCommand.go#L30-L38>)
+### func \(\*ContainerBuilder\) [ContainerExecCommand](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcContainerExecCommand.go#L34-L42>)
 
 ```go
 func (e *ContainerBuilder) ContainerExecCommand(commands []string) (exitCode int, runing bool, stdOutput []byte, stdError []byte, err error)
@@ -4829,7 +4833,9 @@ func (e *ContainerBuilder) ContainerExecCommand(commands []string) (exitCode int
 
 #### ContainerExecCommand
 
-Português: Executa comandos dentro do container\.
+Português:
+
+Executa comandos dentro do container\.
 
 ```
 Entrada:
@@ -4843,7 +4849,9 @@ Saída:
   err: objeto de erro padrão.
 ```
 
-English: Execute commands inside the container\.
+English:
+
+Execute commands inside the container\.
 
 ```
 Input:
@@ -4857,7 +4865,7 @@ Output:
   err: standard error object.
 ```
 
-### func \(\*ContainerBuilder\) [ContainerFindIdByName](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcContainerFindIdByName.go#L26>)
+### func \(\*ContainerBuilder\) [ContainerFindIdByName](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcContainerFindIdByName.go#L35>)
 
 ```go
 func (e *ContainerBuilder) ContainerFindIdByName(name string) (id string, err error)
@@ -4865,13 +4873,39 @@ func (e *ContainerBuilder) ContainerFindIdByName(name string) (id string, err er
 
 #### ContainerFindIdByName
 
-Similar: ContainerFindIdByName\(\)\, ContainerFindIdByNameContains\(\)
+Similar:
 
-English: Searches and returns the ID of the container\, if it exists Input: name: Full name of the container\. Output: id: container ID err: standard error object
+```
+ContainerFindIdByName(), ContainerFindIdByNameContains()
+```
 
-Português: Procura e retorna o ID do container\, caso o mesmo exista Entrada: name: Nome completo do container\. Saída: id: ID do container err: Objeto de erro padrão
+English:
 
-### func \(\*ContainerBuilder\) [ContainerFindIdByNameContains](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcContainerFindIdByNameContains.go#L25>)
+Searches and returns the ID of the container\, if it exists
+
+```
+Input:
+  name: Full name of the container.
+
+Output:
+  id: container ID
+  err: standard error object
+```
+
+Português:
+
+Procura e retorna o ID do container\, caso o mesmo exista
+
+```
+Entrada:
+  name: Nome completo do container.
+
+Saída:
+  id: ID do container
+  err: Objeto de erro padrão
+```
+
+### func \(\*ContainerBuilder\) [ContainerFindIdByNameContains](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcContainerFindIdByNameContains.go#L35>)
 
 ```go
 func (e *ContainerBuilder) ContainerFindIdByNameContains(containsName string) (list []NameAndId, err error)
@@ -4879,13 +4913,39 @@ func (e *ContainerBuilder) ContainerFindIdByNameContains(containsName string) (l
 
 #### ContainerFindIdByNameContains
 
-Similar: ContainerFindIdByName\(\)\, ContainerFindIdByNameContains\(\)
+Similar:
 
-English: Searches and returns the ID list of the container name Input: name: name of the container\. Output: id: list of containers ID err: standard error object
+```
+ContainerFindIdByName(), ContainerFindIdByNameContains()
+```
 
-Português: Procura e retorna uma lista de IDs de containers Entrada: name: Nome do container\. Saída: id: lista de IDs dos containers err: Objeto de erro padrão
+English:
 
-### func \(\*ContainerBuilder\) [ContainerInspect](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcContainerInspect.go#L13>)
+Searches and returns the ID list of the container name
+
+```
+Input:
+  name: name of the container.
+
+Output:
+  id: list of containers ID
+  err: standard error object
+```
+
+Português:
+
+Procura e retorna uma lista de IDs de containers
+
+```
+Entrada:
+  name: Nome do container.
+
+Saída:
+  id: lista de IDs dos containers
+  err: Objeto de erro padrão
+```
+
+### func \(\*ContainerBuilder\) [ContainerInspect](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcContainerInspect.go#L25>)
 
 ```go
 func (e *ContainerBuilder) ContainerInspect() (inspect iotmakerdocker.ContainerInspect, err error)
@@ -4893,43 +4953,78 @@ func (e *ContainerBuilder) ContainerInspect() (inspect iotmakerdocker.ContainerI
 
 #### ContainerInspect
 
-English: inspects the container
+English:
 
-Português: inspeciona o container
+Inspects the container
 
-### func \(\*ContainerBuilder\) [ContainerPause](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcContainerPause.go#L32>)
+```
+Output:
+  inspect: Contains information about the container, such as ID, name, status, volumes, etc.
+  err: Standard error object.
+```
+
+Português:
+
+Inspeciona o container
+
+```
+Saída:
+  inspect: Contém informações sobre o container, como ID, nome, status, volumes, etc.
+  err: Objeto de erro padrão.
+```
+
+### func \(\*ContainerBuilder\) [ContainerPause](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcContainerPause.go#L43>)
 
 ```go
 func (e *ContainerBuilder) ContainerPause() (err error)
 ```
 
-ContainerPause \(english\): Pause the container\. Output: err: Default error object\.
+#### ContainerPause
+
+English:
+
+Pause the container\.
 
 ```
-Note: - There are two ways to create a container:
-        ContainerBuildAndStartFromImage, initializes the oncontainer and initializes
-        the registry to the docker network, so that it works correctly.
-        ContainerBuildWithoutStartingItFromImage just creates the container, so the
-        first time it runs, it must have its network registry initialized so it can
-        work properly.
-      - After initializing the first time, use the functions, ContainerStart,
-        ContainerPause and ContainerStop, if you need to control the container.
+Output:
+  err: Default error object.
 ```
 
-ContainerPause \(português\): Pausa o container\. Saída: err: Objeto de erro padrão\.
+Note:
 
 ```
-Nota: - Ha duas formas de criar um container:
-        ContainerBuildAndStartFromImage, inicializa o oncontainer e inicializa o
-        registro aa rede docker, para que o mesmo funcione de forma correta.
-        ContainerBuildWithoutStartingItFromImage apenas cria o container, por isto, a
-        primeira vez que o mesmo roda, ele deve ter o seu registro de rede
-        inicializado para que possa funcionar de forma correta.
-      - Apos inicializado a primeira vez, use as funções, ContainerStart,
-        ContainerPause e ContainerStop, caso necessite controlar o container.
+* There are two ways to create a container:
+  ContainerBuildAndStartFromImage, initializes the oncontainer and initializes the registry to the
+  docker network, so that it works correctly.
+  ContainerBuildWithoutStartingItFromImage just creates the container, so the first time it runs,
+  it must have its network registry initialized so it can work properly.
+* After initializing the first time, use the functions, ContainerStart, ContainerPause and
+  ContainerStop, if you need to control the container.
 ```
 
-### func \(\*ContainerBuilder\) [ContainerRemove](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcContainerRemove.go#L20>)
+Português:
+
+Pausa o container\.
+
+```
+Saída:
+  err: Objeto de erro padrão.
+```
+
+Nota:
+
+```
+* Ha duas formas de criar um container:
+  ContainerBuildAndStartFromImage, inicializa o oncontainer e inicializa o registro aa rede
+  docker, para que o mesmo funcione de forma correta.
+  ContainerBuildWithoutStartingItFromImage apenas cria o container, por isto, a primeira vez que o
+  mesmo roda, ele deve ter o seu registro de rede inicializado para que possa funcionar de forma
+  correta.
+* Apos inicializado a primeira vez, use as funções, ContainerStart, ContainerPause e ContainerStop,
+  caso necessite controlar o container.
+```
+
+### func \(\*ContainerBuilder\) [ContainerRemove](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcContainerRemove.go#L28>)
 
 ```go
 func (e *ContainerBuilder) ContainerRemove(removeVolumes bool) (err error)
@@ -4937,11 +5032,31 @@ func (e *ContainerBuilder) ContainerRemove(removeVolumes bool) (err error)
 
 #### ContainerRemove
 
-English: stop and remove the container Input: removeVolumes: removes docker volumes linked to the container Output: err: standard error object
+English:
 
-Português: parar e remover o container Entrada: removeVolumes: remove os volumes docker vinculados ao container Saída: err: Objeto de erro padrão
+Stop and remove the container
 
-### func \(\*ContainerBuilder\) [ContainerRestart](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcContainerRestart.go#L16>)
+```
+Input:
+  removeVolumes: removes docker volumes linked to the container
+
+Output:
+  err: standard error object
+```
+
+Português:
+
+Parar e remover o container
+
+```
+Entrada:
+  removeVolumes: remove os volumes docker vinculados ao container
+
+Saída:
+  err: Objeto de erro padrão
+```
+
+### func \(\*ContainerBuilder\) [ContainerRestart](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcContainerRestart.go#L22>)
 
 ```go
 func (e *ContainerBuilder) ContainerRestart() (err error)
@@ -4949,11 +5064,25 @@ func (e *ContainerBuilder) ContainerRestart() (err error)
 
 #### ContainerRestart
 
-English: Restarts a container stopped by ContainerStop\(\)\. Output: err: standard error object
+English:
 
-Português: Reinicia um container parado por ContainerStop\(\)\. Saída: err: objeto de erro padrão
+Restarts a container stopped by ContainerStop\(\)\.
 
-### func \(\*ContainerBuilder\) [ContainerRestartWithTimeout](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcContainerRestartWithTimeout.go#L21>)
+```
+Output:
+  err: standard error object
+```
+
+Português:
+
+Reinicia um container parado por ContainerStop\(\)\.
+
+```
+Saída:
+  err: objeto de erro padrão
+```
+
+### func \(\*ContainerBuilder\) [ContainerRestartWithTimeout](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcContainerRestartWithTimeout.go#L29>)
 
 ```go
 func (e *ContainerBuilder) ContainerRestartWithTimeout(timeout time.Duration) (err error)
@@ -4961,9 +5090,29 @@ func (e *ContainerBuilder) ContainerRestartWithTimeout(timeout time.Duration) (e
 
 #### ContainerRestartWithTimeout
 
-English: Restarts a container stopped by ContainerStop\(\)\. Input: timeout: timeout to restar container Output: err: standard error object
+English:
 
-Português: Reinicia um container parado por ContainerStop\(\)\. Entrada: timeout: tempo limite para reinício do container Saída: err: objeto de erro padrão
+Restarts a container stopped by ContainerStop\(\)\.
+
+```
+Input:
+  timeout: timeout to restar container
+
+Output:
+  err: standard error object
+```
+
+Português:
+
+Reinicia um container parado por ContainerStop\(\)\.
+
+```
+Entrada:
+  timeout: tempo limite para reinício do container
+
+Saída:
+  err: objeto de erro padrão
+```
 
 ### func \(\*ContainerBuilder\) [ContainerSetDisabePauseOnChaosScene](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcContainerSetDisabePauseOnChaosScene.go#L50>)
 
@@ -4978,7 +5127,7 @@ English:
 Set the container pause functionality to be disabled when the chaos scene is running
 
 ```
-Entrada:
+Input:
   value: true to disable the container pause functionality
 ```
 
@@ -5040,7 +5189,7 @@ English:
 Set the container stop functionality to be disabled when the chaos scene is running
 
 ```
-Entrada:
+Input:
   value: true to disable the container stop functionality
 ```
 
@@ -5089,36 +5238,55 @@ Nota:
     [opcional] ContainerBuilder.ContainerSetDisabeStopOnChaosScene()
 ```
 
-### func \(\*ContainerBuilder\) [ContainerStart](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcContainerStart.go#L33>)
+### func \(\*ContainerBuilder\) [ContainerStart](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcContainerStart.go#L43>)
 
 ```go
 func (e *ContainerBuilder) ContainerStart() (err error)
 ```
 
-ContainerStart \(english\): Initialize a paused or stoped container Output: err: Default error object\.
+#### ContainerStart
+
+English:
+
+Initialize a paused or stoped container
 
 ```
-Note: - There are two ways to create a container:
-        ContainerBuildAndStartFromImage, initializes the oncontainer and initializes
-        the registry to the docker network, so that it works correctly.
-        ContainerBuildWithoutStartingItFromImage just creates the container, so the
-        first time it runs, it must have its network registry initialized so it can
-        work properly.
-      - After initializing the first time, use the functions, ContainerStart,
-        ContainerPause and ContainerStop, if you need to control the container.
+Output:
+  err: Default error object.
 ```
 
-ContainerStart \(português\): Inicializar um container pausado ou parado\. Saída: err: Objeto de erro padrão\.
+Note:
 
 ```
-Nota: - Ha duas formas de criar um container:
-        ContainerBuildAndStartFromImage, inicializa o oncontainer e inicializa o
-        registro aa rede docker, para que o mesmo funcione de forma correta.
-        ContainerBuildWithoutStartingItFromImage apenas cria o container, por isto, a
-        primeira vez que o mesmo roda, ele deve ter o seu registro de rede
-        inicializado para que possa funcionar de forma correta.
-      - Apos inicializado a primeira vez, use as funções, ContainerStart,
-        ContainerPause e ContainerStop, caso necessite controlar o container.
+* There are two ways to create a container:
+  ContainerBuildAndStartFromImage, initializes the oncontainer and initializes the registry to the
+  docker network, so that it works correctly.
+  ContainerBuildWithoutStartingItFromImage just creates the container, so the first time it runs,
+  it must have its network registry initialized so it can work properly.
+* After initializing the first time, use the functions, ContainerStart, ContainerPause and
+  ContainerStop, if you need to control the container.
+```
+
+Português:
+
+Inicializar um container pausado ou parado\.
+
+```
+Saída:
+  err: Objeto de erro padrão.
+```
+
+Nota:
+
+```
+* Ha duas formas de criar um container:
+  ContainerBuildAndStartFromImage, inicializa o oncontainer e inicializa o registro aa rede docker,
+  para que o mesmo funcione de forma correta.
+  ContainerBuildWithoutStartingItFromImage apenas cria o container, por isto, a primeira vez que o
+  mesmo roda, ele deve ter o seu registro de rede inicializado para que possa funcionar de forma
+  correta.
+* Apos inicializado a primeira vez, use as funções, ContainerStart, ContainerPause e ContainerStop,
+  caso necessite controlar o container.
 ```
 
 ### func \(\*ContainerBuilder\) [ContainerStartAfterBuild](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcContainerStartAfterBuild.go#L24>)
@@ -5145,55 +5313,110 @@ Nota: - Ha duas formas de criar um container:
         ContainerPause e ContainerStop, caso necessite controlar o container.
 ```
 
-### func \(\*ContainerBuilder\) [ContainerStatisticsOneShot](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcContainerStatisticsOneShot.go#L13-L16>)
+### func \(\*ContainerBuilder\) [ContainerStatisticsOneShot](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcContainerStatisticsOneShot.go#L26-L29>)
 
 ```go
-func (e *ContainerBuilder) ContainerStatisticsOneShot() (statsRet types.Stats, err error)
+func (e *ContainerBuilder) ContainerStatisticsOneShot() (stats types.Stats, err error)
 ```
 
 #### ContainerStatisticsOneShot
 
-English: Returns the container's memory and system consumption data at the time of the query\.
+English:
 
-Português: Retorna os dados de consumo de memória e sistema do container no instante da consulta\.
+Returns the container's memory and system consumption data at the time of the query\.
 
-### func \(\*ContainerBuilder\) [ContainerStop](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcContainerStop.go#L33>)
+```
+Output:
+  stats: Container statistics such as memory, bytes read/written, CPUs, access times, etc.
+  err: standard error object
+```
+
+Português:
+
+Retorna os dados de consumo de memória e sistema do container no instante da consulta\.
+
+```
+Saída:
+  stats: Estatísticas do conbtainer, como memória, bytes lidos/escritos, CPUs, tempos de acesso,
+    etc.
+  err: Objeto de erro padrão
+```
+
+### func \(\*ContainerBuilder\) [ContainerStop](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcContainerStop.go#L43>)
 
 ```go
 func (e *ContainerBuilder) ContainerStop() (err error)
 ```
 
-ContainerStop \(english\): stop the container Output: err: Default error object\.
+#### ContainerStop
+
+English:
+
+Stop the container
 
 ```
-Note: - There are two ways to create a container:
-        ContainerBuildAndStartFromImage, initializes the oncontainer and initializes
-        the registry to the docker network, so that it works correctly.
-        ContainerBuildWithoutStartingItFromImage just creates the container, so the
-        first time it runs, it must have its network registry initialized, so it can
-        work properly.
-      - After initializing the first time, use the functions, ContainerStart,
-        ContainerPause and ContainerStop, if you need to control the container.
+Output:
+  err: Default error object.
 ```
 
-ContainerStop \(português\): Para o container\. Saída: err: Objeto de erro padrão\.
+Note:
 
 ```
-Nota: - Ha duas formas de criar um container:
-        ContainerBuildAndStartFromImage, inicializa o oncontainer e inicializa o
-        registro aa rede docker, para que o mesmo funcione de forma correta.
-        ContainerBuildWithoutStartingItFromImage apenas cria o container, por isto, a
-        primeira vez que o mesmo roda, ele deve ter o seu registro de rede
-        inicializado para que possa funcionar de forma correta.
-
-      - Apos inicializado a primeira vez, use as funções, ContainerStart,
-        ContainerPause e ContainerStop, caso necessite controlar o container.
+* There are two ways to create a container:
+  ContainerBuildAndStartFromImage, initializes the oncontainer and initializes the registry to the
+  docker network, so that it works correctly.
+  ContainerBuildWithoutStartingItFromImage just creates the container, so the first time it runs,
+  it must have its network registry initialized, so it can work properly.
+* After initializing the first time, use the functions, ContainerStart, ContainerPause and
+  ContainerStop, if you need to control the container.
 ```
 
-### func \(\*ContainerBuilder\) [ContainerUnpause](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcContainerUnpause.go#L7>)
+Português:
+
+Para o container\.
+
+```
+Saída:
+  err: Objeto de erro padrão.
+```
+
+Nota:
+
+```
+* Ha duas formas de criar um container:
+  ContainerBuildAndStartFromImage, inicializa o oncontainer e inicializa o registro aa rede docker,
+  para que o mesmo funcione de forma correta.
+  ContainerBuildWithoutStartingItFromImage apenas cria o container, por isto, a primeira vez que o
+  mesmo roda, ele deve ter o seu registro de rede inicializado para que possa funcionar de forma
+  correta.
+* Apos inicializado a primeira vez, use as funções, ContainerStart, ContainerPause e ContainerStop,
+  caso necessite controlar o container.
+```
+
+### func \(\*ContainerBuilder\) [ContainerUnpause](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcContainerUnpause.go#L22>)
 
 ```go
 func (e *ContainerBuilder) ContainerUnpause() (err error)
+```
+
+#### ContainerUnpause
+
+English:
+
+Remove the pause from the previously paused container with the container\.Pause\(\) command
+
+```
+Output:
+  err: Standard error object.
+```
+
+Português:
+
+Remove a pausa do container previamente pausado com o comando container\.Pause\(\)
+
+```
+Saída:
+  err: Objeto de erro padrão.
 ```
 
 ### func \(\*ContainerBuilder\) [EnableChaosScene](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcEnableChaosScene.go#L50>)
@@ -5258,7 +5481,7 @@ Nota:
     [opcional] ContainerBuilder.ContainerSetDisabeStopOnChaosScene()
 ```
 
-### func \(\*ContainerBuilder\) [FindCurrentIPV4Address](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcFindCurrentIPV4Address.go#L12>)
+### func \(\*ContainerBuilder\) [FindCurrentIPV4Address](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcFindCurrentIPV4Address.go#L24>)
 
 ```go
 func (e *ContainerBuilder) FindCurrentIPV4Address() (IP string, err error)
@@ -5266,9 +5489,25 @@ func (e *ContainerBuilder) FindCurrentIPV4Address() (IP string, err error)
 
 #### FindCurrentIPV4Address
 
-English: Inspects the docker's network and returns the current IP of the container
+English:
 
-Português: Inspeciona a rede do docker e devolve o IP atual do container
+Inspects the docker's network and returns the current IP of the container
+
+```
+Output:
+  IP: container IP address IPV4
+  err: standard error object
+```
+
+Português:
+
+Inspeciona a rede do docker e devolve o IP atual do container
+
+```
+Saída:
+  IP: endereço IP do container IPV4
+  err: objeto de erro padrão
+```
 
 <details><summary>Example</summary>
 <p>
@@ -5338,7 +5577,7 @@ Português: Inspeciona a rede do docker e devolve o IP atual do container
 </p>
 </details>
 
-### func \(\*ContainerBuilder\) [FindTextInsideContainerLog](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcFindTextInsideContainerLog.go#L17>)
+### func \(\*ContainerBuilder\) [FindTextInsideContainerLog](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcFindTextInsideContainerLog.go#L31>)
 
 ```go
 func (e *ContainerBuilder) FindTextInsideContainerLog(value string) (contains bool, err error)
@@ -5346,22 +5585,56 @@ func (e *ContainerBuilder) FindTextInsideContainerLog(value string) (contains bo
 
 #### FindTextInsideContainerLog
 
-English: search for text in standard container output\.
+English:
+
+Search for text in standard container output\.
 
 ```
-value: searched text
+Input:
+  value: searched text
+
+Output:
+  contains: true if text was found
+  err: standard error object
 ```
 
-Português: procurar por um texto na saída padrão do container\.
+Português:
+
+Procurar por um texto na saída padrão do container\.
 
 ```
-value: texto procurado
+Entrada:
+  value: texto procurado
+
+Saída:
+  contains: true se o texto foi encontrado
+  err: objeto de erro padrão
 ```
 
-### func \(\*ContainerBuilder\) [GetBuildFolderPath](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcGetBuildFolderPath.go#L3>)
+### func \(\*ContainerBuilder\) [GetBuildFolderPath](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcGetBuildFolderPath.go#L19>)
 
 ```go
 func (e *ContainerBuilder) GetBuildFolderPath() (buildPath string)
+```
+
+#### GetBuildFolderPath
+
+English:
+
+Returns the project path used to mount the image
+
+```
+Output:
+  buildPath: string with the project path
+```
+
+Português:
+
+Retorna o caminho do projeto usado para montar a imagem
+
+```
+Saída:
+  buildPath: string com o caminho do projeto
 ```
 
 ### func \(\*ContainerBuilder\) [GetChannelEvent](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcGetChannelEvent.go#L32>)
@@ -5374,7 +5647,7 @@ GetChannelEvent \(english\):
 
 GetChannelEvent \(português\): Canal disparado durante o processo de image build ou container build e retorna informações como andamento do download da imagem\, processo de extração da mesma entre outras informações Waiting: Esperando o processo ser iniciado pelo docker Downloading: Estado do download da imagem\, caso a mesma não exista na máquina host Count: Quantidade de blocos a serem baixados Current: Total de bytes baixados até o momento Total: Total de bytes a serem baixados Percent: Percentual atual do processo com uma casa decimal de precisão DownloadComplete: todo: fazer Extracting: Estado da extração da imagem baixada Count: Quantidade de blocos a serem extraídos Current: Total de bytes extraídos até o momento Total: Total de bytes a serem extraídos Percent: Percentual atual do processo com uma casa decimal de precisão PullComplete: todo: fazer ImageName: nome da imagem baixada ImageID: ID da imagem baixada\. \(Cuidado: este valor só é definido ao final do processo\) ContainerID: ID do container criado\. \(Cuidado: este valor só é definido ao final do processo\) Closed: todo: fazer Stream: saída padrão do container durante o processo de build SuccessfullyBuildContainer: sucesso ao fim do processo de build do container SuccessfullyBuildImage: sucesso ao fim do processo de build da imagem IdAuxiliaryImages: usado pelo coletor de lixo para apagar as imagens axiliares ao fim do processo de build
 
-### func \(\*ContainerBuilder\) [GetChannelOnContainerInspect](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcGetChannelOnContainerInspect.go#L8>)
+### func \(\*ContainerBuilder\) [GetChannelOnContainerInspect](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcGetChannelOnContainerInspect.go#L12>)
 
 ```go
 func (e *ContainerBuilder) GetChannelOnContainerInspect() (channel *chan bool)
@@ -5382,9 +5655,13 @@ func (e *ContainerBuilder) GetChannelOnContainerInspect() (channel *chan bool)
 
 #### GetChannelOnContainerInspect
 
-English: Channel triggered at each ticker cycle defined in SetInspectInterval\(\)
+English:
 
-Português: Canal disparado a cada ciclo do ticker definido em SetInspectInterval\(\)
+Channel triggered at each ticker cycle defined in SetInspectInterval\(\)
+
+Português:
+
+Canal disparado a cada ciclo do ticker definido em SetInspectInterval\(\)
 
 ### func \(\*ContainerBuilder\) [GetChannelOnContainerReady](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcGetChannelOnContainerReady.go#L14>)
 
