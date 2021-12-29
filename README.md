@@ -419,13 +419,12 @@ Para quem não tem prática em processo de build em duas etapas\, na primeira et
   - [func (e *ContainerBuilder) GetFailFlag() (fail bool)](<#func-containerbuilder-getfailflag>)
   - [func (e *ContainerBuilder) GetGitCloneToBuild() (url string)](<#func-containerbuilder-getgitclonetobuild>)
   - [func (e *ContainerBuilder) GetIPV4Address() (IP string)](<#func-containerbuilder-getipv4address>)
-  - [func (e *ContainerBuilder) GetIdByContainerName() (err error)](<#func-containerbuilder-getidbycontainername>)
   - [func (e *ContainerBuilder) GetImageArchitecture() (architecture string)](<#func-containerbuilder-getimagearchitecture>)
   - [func (e *ContainerBuilder) GetImageAuthor() (author string)](<#func-containerbuilder-getimageauthor>)
   - [func (e *ContainerBuilder) GetImageCacheName() (name string)](<#func-containerbuilder-getimagecachename>)
   - [func (e *ContainerBuilder) GetImageComment() (comment string)](<#func-containerbuilder-getimagecomment>)
-  - [func (e *ContainerBuilder) GetImageContainer() (container string)](<#func-containerbuilder-getimagecontainer>)
-  - [func (e *ContainerBuilder) GetImageCreated() (created time.Time)](<#func-containerbuilder-getimagecreated>)
+  - [func (e *ContainerBuilder) GetImageContainer() (imageName string)](<#func-containerbuilder-getimagecontainer>)
+  - [func (e *ContainerBuilder) GetImageCreatedTime() (created time.Time)](<#func-containerbuilder-getimagecreatedtime>)
   - [func (e *ContainerBuilder) GetImageExpirationTime() (expiration time.Duration)](<#func-containerbuilder-getimageexpirationtime>)
   - [func (e *ContainerBuilder) GetImageID() (ID string)](<#func-containerbuilder-getimageid>)
   - [func (e *ContainerBuilder) GetImageName() (name string)](<#func-containerbuilder-getimagename>)
@@ -537,6 +536,7 @@ Para quem não tem prática em processo de build em duas etapas\, na primeira et
   - [func (e *ContainerBuilder) addImageBuildOptionsGitCredentials() (buildOptions types.ImageBuildOptions)](<#func-containerbuilder-addimagebuildoptionsgitcredentials>)
   - [func (e *ContainerBuilder) addProblem(problem string)](<#func-containerbuilder-addproblem>)
   - [func (e *ContainerBuilder) findCurrentIPV4AddressSupport(networkID string) (IP string, err error)](<#func-containerbuilder-findcurrentipv4addresssupport>)
+  - [func (e *ContainerBuilder) getIdByContainerName() (err error)](<#func-containerbuilder-getidbycontainername>)
   - [func (e *ContainerBuilder) getProbalityNumber() (probality float64)](<#func-containerbuilder-getprobalitynumber>)
   - [func (e *ContainerBuilder) getRandSeed() (seed *rand.Rand)](<#func-containerbuilder-getrandseed>)
   - [func (e *ContainerBuilder) gitMakePublicSshKey() (publicKeys *ssh.PublicKeys, err error)](<#func-containerbuilder-gitmakepublicsshkey>)
@@ -6012,16 +6012,58 @@ Saída:
   containerName: Nome do container
 ```
 
-### func \(\*ContainerBuilder\) [GetFailFlag](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcGetFailFlag.go#L3>)
+### func \(\*ContainerBuilder\) [GetFailFlag](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcGetFailFlag.go#L21>)
 
 ```go
 func (e *ContainerBuilder) GetFailFlag() (fail bool)
 ```
 
-### func \(\*ContainerBuilder\) [GetGitCloneToBuild](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcGetGitCloneToBuild.go#L3>)
+#### GetFailFlag
+
+English:
+
+Returns the fail indicator flag set by the AddFailMatchFlag\(\)\, AddFailMatchFlagToFileLog\(\)\, AddFilterToFail\(\) functions\,
+
+```
+Output:
+  fail: true if test failed
+```
+
+Português:
+
+Retorna o flag indicador de falha definido pelas funções AddFailMatchFlag\(\)\, AddFailMatchFlagToFileLog\(\)\, AddFilterToFail\(\)
+
+```
+Saída:
+  fail: true se o teste tiver falhado
+```
+
+### func \(\*ContainerBuilder\) [GetGitCloneToBuild](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcGetGitCloneToBuild.go#L20>)
 
 ```go
 func (e *ContainerBuilder) GetGitCloneToBuild() (url string)
+```
+
+#### GetGitCloneToBuild
+
+English:
+
+Returns the URL of the repository to clone for image transformation
+
+Note:
+
+```
+* See the SetGitCloneToBuild() function for more details.
+```
+
+Português:
+
+Retorna a URL do repositório a ser clonado para a transformação em imagem
+
+Nota:
+
+```
+* Veja a função SetGitCloneToBuild() para mais detalhes.
 ```
 
 ### func \(\*ContainerBuilder\) [GetIPV4Address](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcGetIpAddress.go#L22>)
@@ -6039,8 +6081,8 @@ Returns the last IP read from the container
 Note:
 
 ```
-* If the container is disconnected or connected to another network after creation, this information
-  may change
+* If the container is disconnected or connected to another network after creation, this
+  information may change
 ```
 
 Português:
@@ -6054,61 +6096,189 @@ Nota:
   pode mudar
 ```
 
-### func \(\*ContainerBuilder\) [GetIdByContainerName](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcGetIdByContainerName.go#L12>)
-
-```go
-func (e *ContainerBuilder) GetIdByContainerName() (err error)
-```
-
-#### GetIdByContainerName
-
-English: Returns the container ID defined in SetContainerName\(\)
-
-Português: Retorna o ID do container definido em SetContainerName\(\)
-
-### func \(\*ContainerBuilder\) [GetImageArchitecture](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcGetImageArchitecture.go#L3>)
+### func \(\*ContainerBuilder\) [GetImageArchitecture](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcGetImageArchitecture.go#L18>)
 
 ```go
 func (e *ContainerBuilder) GetImageArchitecture() (architecture string)
 ```
 
-### func \(\*ContainerBuilder\) [GetImageAuthor](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcGetImageAuthor.go#L3>)
+#### GetImageArchitecture
+
+English:
+
+Returns the architecture of the image\.
+
+```
+Output:
+  architecture: image architecture
+```
+
+Português:
+
+Retorna a arquitetura da imagem\.
+
+```
+Saída:
+  architecture: arquitetura da imagem
+```
+
+### func \(\*ContainerBuilder\) [GetImageAuthor](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcGetImageAuthor.go#L18>)
 
 ```go
 func (e *ContainerBuilder) GetImageAuthor() (author string)
 ```
 
-### func \(\*ContainerBuilder\) [GetImageCacheName](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcGetImageCacheName.go#L3>)
+#### GetImageAuthor
+
+English:
+
+Returns the author of the image\.
+
+```
+Output:
+  author: image author
+```
+
+Português:
+
+Retorna o autor da imagem\.
+
+```
+Saída:
+  author: autor da imagem
+```
+
+### func \(\*ContainerBuilder\) [GetImageCacheName](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcGetImageCacheName.go#L18>)
 
 ```go
 func (e *ContainerBuilder) GetImageCacheName() (name string)
 ```
 
-### func \(\*ContainerBuilder\) [GetImageComment](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcGetImageComment.go#L3>)
+#### GetImageCacheName
+
+English:
+
+Returns the name of the image cache used to create the image
+
+```
+Output:
+  name: name of the image cache
+```
+
+Português:
+
+Devolve o nome da imagem cache usada para criar a imagem
+
+```
+Saída:
+  name: nome da imagem cache
+```
+
+### func \(\*ContainerBuilder\) [GetImageComment](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcGetImageComment.go#L18>)
 
 ```go
 func (e *ContainerBuilder) GetImageComment() (comment string)
 ```
 
-### func \(\*ContainerBuilder\) [GetImageContainer](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcGetImageContainer.go#L3>)
+#### GetImageComment
 
-```go
-func (e *ContainerBuilder) GetImageContainer() (container string)
+English:
+
+Returns the archived comment of the image
+
+```
+Output:
+  comment: image comment
 ```
 
-### func \(\*ContainerBuilder\) [GetImageCreated](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcGetImageCreated.go#L5>)
+Português:
 
-```go
-func (e *ContainerBuilder) GetImageCreated() (created time.Time)
+Retorna o comentário arquivado na imagem
+
+```
+Saída:
+  comment: comentário da imagem
 ```
 
-### func \(\*ContainerBuilder\) [GetImageExpirationTime](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcGetImageExpirationTime.go#L5>)
+### func \(\*ContainerBuilder\) [GetImageContainer](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcGetImageContainer.go#L18>)
+
+```go
+func (e *ContainerBuilder) GetImageContainer() (imageName string)
+```
+
+#### GetImageContainer
+
+English:
+
+Returns the name of the image used to create the container
+
+```
+Output:
+  imageName: Name of the image used to create the container
+```
+
+Português:
+
+Retorna o nome da imagem usada para criar o container
+
+```
+Saída:
+  imageName: Nome da imagem usada para criar o container
+```
+
+### func \(\*ContainerBuilder\) [GetImageCreatedTime](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcGetImageCreatedTime.go#L20>)
+
+```go
+func (e *ContainerBuilder) GetImageCreatedTime() (created time.Time)
+```
+
+#### GetImageCreatedTime
+
+English:
+
+```
+Returns the date of creation of the image.
+
+Output:
+  created: Time.Time object with the date of creation of the image.
+```
+
+Português:
+
+Retorna a data de criação da imagem\.
+
+```
+Saída:
+  created: Objeto time.Time com a data de criação da imagem.
+```
+
+### func \(\*ContainerBuilder\) [GetImageExpirationTime](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcGetImageExpirationTime.go#L22>)
 
 ```go
 func (e *ContainerBuilder) GetImageExpirationTime() (expiration time.Duration)
 ```
 
-### func \(\*ContainerBuilder\) [GetImageID](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcGetImageID.go#L8>)
+#### GetImageExpirationTime
+
+Português:
+
+Retorna a data de expiração da imagem\, ou seja\, a data usada como base para impedir que a mesma imagem seja gerada várias vezes em um único teste\.
+
+```
+Saída:
+  expiration: Objeto time.Duration com a data de validade da imagem
+```
+
+English:
+
+Returns the image's expiration date\, that is\, the date used as a basis to prevent the same image from being generated multiple times in a single test\.
+
+```
+Output:
+  expiration: time.Duration object with the image's expiration date
+```
+
+### func \(\*ContainerBuilder\) [GetImageID](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcGetImageID.go#L18>)
 
 ```go
 func (e *ContainerBuilder) GetImageID() (ID string)
@@ -6116,11 +6286,25 @@ func (e *ContainerBuilder) GetImageID() (ID string)
 
 #### GetImageID
 
-English: Returns the image ID\.
+English:
 
-Português: Retorna o ID da imagem\.
+Returns the image ID\.
 
-### func \(\*ContainerBuilder\) [GetImageName](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcGetImageName.go#L8>)
+```
+Output:
+  ID: image ID
+```
+
+Português:
+
+Retorna o ID da imagem\.
+
+```
+Saída:
+  ID: ID da imagem
+```
+
+### func \(\*ContainerBuilder\) [GetImageName](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcGetImageName.go#L18>)
 
 ```go
 func (e *ContainerBuilder) GetImageName() (name string)
@@ -6128,9 +6312,23 @@ func (e *ContainerBuilder) GetImageName() (name string)
 
 #### GetImageName
 
-English: Returns the name of the image\.
+English:
 
-Português: Retorna o nome da imagem\.
+Returns the name of the image\.
+
+```
+Output:
+  name: Name of the image
+```
+
+Português:
+
+Retorna o nome da imagem\.
+
+```
+Saída:
+  name: Nome da imagem
+```
 
 ### func \(\*ContainerBuilder\) [GetImageOs](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcGetImageOs.go#L3>)
 
@@ -9727,6 +9925,32 @@ Português: função de apoio a FindCurrentIpAddress\(\)
 
 ```
 networkID: ID da rede docker
+```
+
+### func \(\*ContainerBuilder\) [getIdByContainerName](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcGetIdByContainerName.go#L23>)
+
+```go
+func (e *ContainerBuilder) getIdByContainerName() (err error)
+```
+
+getIdByContainerName
+
+English:
+
+Fills the container ID in the control object from the container name defined in SetContainerName\(\)
+
+```
+Output:
+  err: Standard error object
+```
+
+Português:
+
+Preenche o ID do container no objeto de controle a partir do nome do container definido em SetContainerName\(\)
+
+```
+Saída:
+  err: Objeto de erro padrão
 ```
 
 ### func \(\*ContainerBuilder\) [getProbalityNumber](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcGetProbalityNumber.go#L12>)
