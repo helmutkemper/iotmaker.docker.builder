@@ -37,7 +37,7 @@ func (e *ContainerBuilder) ContainerCopyTo(
 	err error,
 ) {
 	if e.containerID == "" {
-		err = e.GetIdByContainerName()
+		err = e.getIdByContainerName()
 		if err != nil {
 			util.TraceToLog()
 			return

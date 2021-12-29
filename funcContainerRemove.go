@@ -27,7 +27,7 @@ import (
 //     err: Objeto de erro padrão
 func (e *ContainerBuilder) ContainerRemove(removeVolumes bool) (err error) {
 	if e.containerID == "" {
-		err = e.GetIdByContainerName()
+		err = e.getIdByContainerName()
 		if err != nil {
 			util.TraceToLog()
 			return

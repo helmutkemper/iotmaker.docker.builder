@@ -551,7 +551,7 @@ func (e *Theater) GetImageExpirationTime() (expiration time.Duration) {
 
 func (e *Theater) imageExpirationTimeIsValid(docker *dockerBuild.ContainerBuilder) (valid bool) {
 	_, _ = docker.ImageInspect()
-	return docker.GetImageCreated().Add(e.GetImageExpirationTime()).After(time.Now())
+	return docker.GetImageCreatedTime().Add(e.GetImageExpirationTime()).After(time.Now())
 }
 
 func (e *Theater) GetChannels() (eventChannel *chan Event) {

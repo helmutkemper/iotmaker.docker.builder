@@ -23,7 +23,7 @@ import (
 //     err: Objeto de erro padrão
 func (e *ContainerBuilder) GetContainerLog() (log []byte, err error) {
 	if e.containerID == "" {
-		err = e.GetIdByContainerName()
+		err = e.getIdByContainerName()
 		if err != nil {
 			util.TraceToLog()
 			return

@@ -21,7 +21,7 @@ import (
 //     err: objeto de erro padrão
 func (e *ContainerBuilder) ContainerRestart() (err error) {
 	if e.containerID == "" {
-		err = e.GetIdByContainerName()
+		err = e.getIdByContainerName()
 		if err != nil {
 			util.TraceToLog()
 			return

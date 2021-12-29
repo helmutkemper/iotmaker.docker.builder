@@ -28,7 +28,7 @@ import (
 //     err: objeto de erro padrão
 func (e *ContainerBuilder) ContainerRestartWithTimeout(timeout time.Duration) (err error) {
 	if e.containerID == "" {
-		err = e.GetIdByContainerName()
+		err = e.getIdByContainerName()
 		if err != nil {
 			util.TraceToLog()
 			return

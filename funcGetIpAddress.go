@@ -8,8 +8,8 @@ package iotmakerdockerbuilder
 //
 // Note:
 //
-//   * If the container is disconnected or connected to another network after creation, this information
-//     may change
+//   * If the container is disconnected or connected to another network after creation, this
+//     information may change
 //
 // Português:
 //

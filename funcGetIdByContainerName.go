@@ -4,12 +4,23 @@ import (
 	"github.com/helmutkemper/util"
 )
 
-// GetIdByContainerName
+// getIdByContainerName
 //
-// English: Returns the container ID defined in SetContainerName()
+// English:
 //
-// Português: Retorna o ID do container definido em SetContainerName()
-func (e *ContainerBuilder) GetIdByContainerName() (err error) {
+//  Fills the container ID in the control object from the container name defined in SetContainerName()
+//
+//   Output:
+//     err: Standard error object
+//
+// Português:
+//
+//  Preenche o ID do container no objeto de controle a partir do nome do container definido em
+//  SetContainerName()
+//
+//   Saída:
+//     err: Objeto de erro padrão
+func (e *ContainerBuilder) getIdByContainerName() (err error) {
 	e.containerID, err = e.dockerSys.ContainerFindIdByName(e.containerName)
 	if err != nil {
 		util.TraceToLog()
