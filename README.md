@@ -6236,9 +6236,9 @@ func (e *ContainerBuilder) GetImageCreatedTime() (created time.Time)
 
 English:
 
-```
-Returns the date of creation of the image.
+Returns the date of creation of the image\.
 
+```
 Output:
   created: Time.Time object with the date of creation of the image.
 ```
@@ -6330,10 +6330,30 @@ Saída:
   name: Nome da imagem
 ```
 
-### func \(\*ContainerBuilder\) [GetImageOs](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcGetImageOs.go#L3>)
+### func \(\*ContainerBuilder\) [GetImageOs](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcGetImageOs.go#L18>)
 
 ```go
 func (e *ContainerBuilder) GetImageOs() (os string)
+```
+
+#### GetImageOs
+
+English:
+
+Returns the operating system used to create the image\.
+
+```
+Output:
+  os: name of the operating system used to create the image
+```
+
+Português:
+
+Retorna o sistema operacional usado para criar a imagem\.
+
+```
+Saída:
+  os: nome do sistema operacional usado para criar a imagem
 ```
 
 ### func \(\*ContainerBuilder\) [GetImageOsVersion](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcGetImageOsVersion.go#L3>)

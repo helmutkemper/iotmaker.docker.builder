@@ -6,7 +6,7 @@ import "time"
 //
 // English:
 //
-//   Returns the date of creation of the image.
+//  Returns the date of creation of the image.
 //
 //   Output:
 //     created: Time.Time object with the date of creation of the image.
