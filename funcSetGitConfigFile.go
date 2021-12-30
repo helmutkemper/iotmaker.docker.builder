@@ -2,7 +2,14 @@ package iotmakerdockerbuilder
 
 // SetGitConfigFile
 //
-// English: Defines the contents of the .gitconfig file
+// English:
+//
+//  Defines the contents of the .gitconfig file
+//
+//   Input:
+//     value: .gitconfig file contents
+//
+// Example:
 //
 //     var err error
 //     var usr *user.User
@@ -22,7 +29,14 @@ package iotmakerdockerbuilder
 //     var container = ContainerBuilder{}
 //     container.SetGitConfigFile(string(file))
 //
-// Português: Define o conteúdo do arquivo .gitconfig
+// Português:
+//
+//  Define o conteúdo do arquivo .gitconfig
+//
+// 	 Entrada:
+//     value: conteúdo do arquivo .gitconfig
+//
+// Exemplo:
 //
 //     var err error
 //     var usr *user.User

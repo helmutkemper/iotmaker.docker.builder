@@ -9497,7 +9497,7 @@ container.SetGitCloneToBuildWithPrivateToken(url, privateToken)
 container.SetGitConfigFile(string(file))
 ```
 
-### func \(\*ContainerBuilder\) [SetGitConfigFile](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetGitConfigFile.go#L44>)
+### func \(\*ContainerBuilder\) [SetGitConfigFile](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetGitConfigFile.go#L58>)
 
 ```go
 func (e *ContainerBuilder) SetGitConfigFile(value string)
@@ -9505,7 +9505,16 @@ func (e *ContainerBuilder) SetGitConfigFile(value string)
 
 #### SetGitConfigFile
 
-English: Defines the contents of the \.gitconfig file
+English:
+
+Defines the contents of the \.gitconfig file
+
+```
+Input:
+  value: .gitconfig file contents
+```
+
+Example:
 
 ```
 var err error
@@ -9527,7 +9536,19 @@ var container = ContainerBuilder{}
 container.SetGitConfigFile(string(file))
 ```
 
-Português: Define o conteúdo do arquivo \.gitconfig
+Português:
+
+Define o conteúdo do arquivo \.gitconfig
+
+```
+Entrada:
+```
+
+```
+value: conteúdo do arquivo .gitconfig
+```
+
+Exemplo:
 
 ```
 var err error
@@ -9549,7 +9570,7 @@ var container = ContainerBuilder{}
 container.SetGitConfigFile(string(file))
 ```
 
-### func \(\*ContainerBuilder\) [SetGitPathPrivateRepository](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetGitPathPrivateRepository.go#L13>)
+### func \(\*ContainerBuilder\) [SetGitPathPrivateRepository](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetGitPathPrivateRepository.go#L18>)
 
 ```go
 func (e *ContainerBuilder) SetGitPathPrivateRepository(value string)
@@ -9557,16 +9578,22 @@ func (e *ContainerBuilder) SetGitPathPrivateRepository(value string)
 
 #### SetGitPathPrivateRepository
 
-English: path do private repository defined in "go env \-w GOPRIVATE=$GIT\_PRIVATE\_REPO"
+English:
+
+Path do private repository defined in "go env \-w GOPRIVATE=$GIT\_PRIVATE\_REPO"
 
 ```
-Example: github.com/helmutkemper
+Input:
+  value: Caminho do repositório privado. Eg.: github.com/helmutkemper
 ```
 
-Português: caminho do repositório privado definido em "go env \-w GOPRIVATE=$GIT\_PRIVATE\_REPO"
+Português:
+
+Caminho do repositório privado definido em "go env \-w GOPRIVATE=$GIT\_PRIVATE\_REPO"
 
 ```
-Exemplo: github.com/helmutkemper
+Entrada:
+  value: Caminho do repositório privado. Ex.: github.com/helmutkemper
 ```
 
 <details><summary>Example</summary>
@@ -9660,70 +9687,74 @@ func (e *ContainerBuilder) SetGitSshPassword(password string)
 
 #### SetGitSshPassword
 
-English: Sets the password for the ssh key for private git repositories\.
+English:
+
+Sets the password for the ssh key for private git repositories\.
 
 ```
+Input:
+  password: git ssh certificate password
+```
+
 Note:
 
-If the repository is private and the host computer has access to the git server, use
-SetPrivateRepositoryAutoConfig() to copy the git credentials contained in ~/.ssh and the settings of
-~/.gitconfig automatically;
-
-To be able to access private repositories from inside the container, build the image in two or more steps
-and in the first step, copy the id_rsa and known_hosts files to the /root/.ssh folder, and the ~/.gitconfig
-file to the /root folder;
-
-The MakeDefaultDockerfileForMe() function make a standard dockerfile with the procedures above;
-
-If the ~/.ssh/id_rsa key is password protected, use the SetGitSshPassword() function to set the password;
-
-If you want to define the files manually, use SetGitConfigFile(), SetSshKnownHostsFile() and
-SetSshIdRsaFile() to define the files manually;
-
-This function must be used with the ImageBuildFromServer() and SetImageName() function to download and
-generate an image from the contents of a git repository;
-
-The repository must contain a Dockerfile file and it will be searched for in the following order:
-'./Dockerfile-iotmaker', './Dockerfile', './dockerfile', 'Dockerfile.*', 'dockerfile.*', '.*Dockerfile.*'
-and '.*dockerfile.*';
-
-The repository can be defined by the methods SetGitCloneToBuild(), SetGitCloneToBuildWithPrivateSshKey(),
-SetGitCloneToBuildWithPrivateToken() and SetGitCloneToBuildWithUserPassworh().
+```
+* If the repository is private and the host computer has access to the git server, use
+  SetPrivateRepositoryAutoConfig() to copy the git credentials contained in ~/.ssh and the
+  settings of ~/.gitconfig automatically;
+* To be able to access private repositories from inside the container, build the image in two or
+  more steps and in the first step, copy the id_rsa and known_hosts files to the /root/.ssh
+  folder, and the ~/.gitconfig file to the /root folder;
+* The MakeDefaultDockerfileForMe() function make a standard dockerfile with the procedures above;
+* If the ~/.ssh/id_rsa key is password protected, use the SetGitSshPassword() function to set the
+  password;
+* If you want to define the files manually, use SetGitConfigFile(), SetSshKnownHostsFile() and
+  SetSshIdRsaFile() to define the files manually;
+* This function must be used with the ImageBuildFromServer() and SetImageName() function to
+  download and generate an image from the contents of a git repository;
+* The repository must contain a Dockerfile file and it will be searched for in the following
+  order:
+  './Dockerfile-iotmaker', './Dockerfile', './dockerfile', 'Dockerfile.*', 'dockerfile.*',
+  '.*Dockerfile.*' and '.*dockerfile.*';
+* The repository can be defined by the methods SetGitCloneToBuild(),
+  SetGitCloneToBuildWithPrivateSshKey(), SetGitCloneToBuildWithPrivateToken() and
+  SetGitCloneToBuildWithUserPassworh().
 ```
 
-Português: Define a senha da chave ssh para repositórios git privados\.
+Português:
+
+Define a senha da chave ssh para repositórios git privados\.
 
 ```
+Entrada:
+  password: senha da chave ssh
+```
+
 Nota:
 
-Caso o repositório seja privado e o computador hospedeiro tenha acesso ao servidor git, use
-SetPrivateRepositoryAutoConfig() para copiar as credências do git contidas em ~/.ssh e as configurações de
-~/.gitconfig de forma automática;
-
-Para conseguir acessar repositórios privados de dentro do container, construa a imagem em duas ou mais etapas
-e na primeira etapa, copie os arquivos id_rsa e known_hosts para a pasta /root/.ssh e o arquivo .gitconfig
-para a pasta /root/;
-
-A função MakeDefaultDockerfileForMe() monta um dockerfile padrão com os procedimentos acima;
-
-Caso a chave ~/.ssh/id_rsa seja protegida com senha, use a função SetGitSshPassword() para definir a senha
-da mesma;
-
-Caso queira definir os arquivos de forma manual, use SetGitConfigFile(), SetSshKnownHostsFile() e
-SetSshIdRsaFile() para definir os arquivos de forma manual;
-
-Esta função deve ser usada com a função ImageBuildFromServer() e SetImageName() para baixar e gerar uma
-imagem a partir do conteúdo de um repositório git;
-
-O repositório deve contar um arquivo Dockerfile e ele será procurado na seguinte ordem:
-'./Dockerfile-iotmaker', './Dockerfile', './dockerfile', 'Dockerfile.*', 'dockerfile.*', '.*Dockerfile.*'
-e '.*dockerfile.*';
-
-O repositório pode ser definido pelos métodos SetGitCloneToBuild(), SetGitCloneToBuildWithPrivateSshKey(),
-SetGitCloneToBuildWithPrivateToken() e SetGitCloneToBuildWithUserPassworh().
+```
+* Caso o repositório seja privado e o computador hospedeiro tenha acesso ao servidor git, use
+  SetPrivateRepositoryAutoConfig() para copiar as credências do git contidas em ~/.ssh e as
+  configurações de ~/.gitconfig de forma automática;
+* Para conseguir acessar repositórios privados de dentro do container, construa a imagem em duas
+  ou mais etapas e na primeira etapa, copie os arquivos id_rsa e known_hosts para a pasta
+  /root/.ssh e o arquivo .gitconfig para a pasta /root/;
+* A função MakeDefaultDockerfileForMe() monta um dockerfile padrão com os procedimentos acima;
+* Caso a chave ~/.ssh/id_rsa seja protegida com senha, use a função SetGitSshPassword() para
+  definir a senha da mesma;
+* Caso queira definir os arquivos de forma manual, use SetGitConfigFile(), SetSshKnownHostsFile()
+  e SetSshIdRsaFile() para definir os arquivos de forma manual;
+* Esta função deve ser usada com a função ImageBuildFromServer() e SetImageName() para baixar e
+  gerar uma imagem a partir do conteúdo de um repositório git;
+* O repositório deve contar um arquivo Dockerfile e ele será procurado na seguinte ordem:
+  './Dockerfile-iotmaker', './Dockerfile', './dockerfile', 'Dockerfile.*', 'dockerfile.*',
+  '.*Dockerfile.*' e '.*dockerfile.*';
+* O repositório pode ser definido pelos métodos SetGitCloneToBuild(),
+  SetGitCloneToBuildWithPrivateSshKey(), SetGitCloneToBuildWithPrivateToken() e
+  SetGitCloneToBuildWithUserPassworh().
 ```
 
-### func \(\*ContainerBuilder\) [SetImageBuildOptionsCPUPeriod](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetImageBuildOptionsCPUPeriod.go#L12>)
+### func \(\*ContainerBuilder\) [SetImageBuildOptionsCPUPeriod](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetImageBuildOptionsCPUPeriod.go#L27>)
 
 ```go
 func (e *ContainerBuilder) SetImageBuildOptionsCPUPeriod(value int64)
@@ -9731,11 +9762,33 @@ func (e *ContainerBuilder) SetImageBuildOptionsCPUPeriod(value int64)
 
 #### SetImageBuildOptionsCPUPeriod
 
-English: Specify the CPU CFS scheduler period\, which is used alongside \-\-cpu\-quota\. Defaults to 100000 microseconds \(100 milliseconds\)\. Most users do not change this from the default\. For most use\-cases\, \-\-cpus is a more convenient alternative\.
+English:
 
-Português: Especifique o período do agendador CFS da CPU\, que é usado junto com \-\-cpu\-quota\. O padrão é 100\.000 microssegundos \(100 milissegundos\)\. A maioria dos usuários não altera o padrão\. Para a maioria dos casos de uso\, \-\-cpus é uma alternativa mais conveniente\.
+Specify the CPU CFS scheduler period\, which is used alongside \-\-cpu\-quota\.
 
-### func \(\*ContainerBuilder\) [SetImageBuildOptionsCPUQuota](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetImageBuildOptionsCPUQuota.go#L21>)
+```
+Input:
+  value: CPU CFS scheduler period
+```
+
+Defaults to 100000 microseconds \(100 milliseconds\)\. Most users do not change this from the default\.
+
+For most use\-cases\, \-\-cpus is a more convenient alternative\.
+
+Português:
+
+Especifique o período do agendador CFS da CPU\, que é usado junto com \-\-cpu\-quota\.
+
+```
+Entrada:
+  value: período do agendador CFS da CPU
+```
+
+O padrão é 100\.000 microssegundos \(100 milissegundos\)\. A maioria dos usuários não altera o padrão\.
+
+Para a maioria dos casos de uso\, \-\-cpus é uma alternativa mais conveniente\.
+
+### func \(\*ContainerBuilder\) [SetImageBuildOptionsCPUQuota](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetImageBuildOptionsCPUQuota.go#L40>)
 
 ```go
 func (e *ContainerBuilder) SetImageBuildOptionsCPUQuota(value int64)
@@ -9743,13 +9796,35 @@ func (e *ContainerBuilder) SetImageBuildOptionsCPUQuota(value int64)
 
 #### SetImageBuildOptionsCPUQuota
 
-English: Set this flag to a value greater or less than the default of 1024 to increase or reduce the container’s weight\, and give it access to a greater or lesser proportion of the host machine’s CPU cycles\.
+English:
 
-This is only enforced when CPU cycles are constrained\. When plenty of CPU cycles are available\, all containers use as much CPU as they need\. In that way\, this is a soft limit\. \-\-cpu\-shares does not prevent containers from being scheduled in swarm mode\. It prioritizes container CPU resources for the available CPU cycles\. It does not guarantee or reserve any specific CPU access\.
+Defines the host machine’s CPU cycles\.
 
-Português: Defina este flag para um valor maior ou menor que o padrão de 1024 para aumentar ou reduzir o peso do container e dar a ele acesso a uma proporção maior ou menor dos ciclos de CPU da máquina hospedeira\.
+```
+Input:
+  value: machine’s CPU cycles. (Default: 1024)
+```
 
-Isso só é aplicado quando os ciclos da CPU são restritos\. Quando muitos ciclos de CPU estão disponíveis\, todos os containeres usam a quantidade de CPU de que precisam\. Dessa forma\, é um limite flexível\. \-\-cpu\-shares não impede que os containers sejam agendados no modo swarm\. Ele prioriza os recursos da CPU do container para os ciclos de CPU disponíveis\. Não garante ou reserva nenhum acesso específico à CPU\.
+Set this flag to a value greater or less than the default of 1024 to increase or reduce the container’s weight\, and give it access to a greater or lesser proportion of the host machine’s CPU cycles\.
+
+This is only enforced when CPU cycles are constrained\. When plenty of CPU cycles are available\, all containers use as much CPU as they need\. In that way\, this is a soft limit\. \-\-cpu\-shares does not prevent containers from being scheduled in swarm mode\. It prioritizes container CPU resources for the available CPU cycles\.
+
+It does not guarantee or reserve any specific CPU access\.
+
+Português:
+
+Define os ciclos de CPU da máquina hospedeira\.
+
+```
+Entrada:
+  value: ciclos de CPU da máquina hospedeira. (Default: 1024)
+```
+
+Defina este flag para um valor maior ou menor que o padrão de 1024 para aumentar ou reduzir o peso do container e dar a ele acesso a uma proporção maior ou menor dos ciclos de CPU da máquina hospedeira\.
+
+Isso só é aplicado quando os ciclos da CPU são restritos\. Quando muitos ciclos de CPU estão disponíveis\, todos os containeres usam a quantidade de CPU de que precisam\. Dessa forma\, é um limite flexível\. \-\-cpu\-shares não impede que os containers sejam agendados no modo swarm\. Ele prioriza os recursos da CPU do container para os ciclos de CPU disponíveis\.
+
+Não garante ou reserva nenhum acesso específico à CPU\.
 
 ### func \(\*ContainerBuilder\) [SetImageBuildOptionsCPUSetCPUs](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetImageBuildOptionsCPUSetCPUs.go#L23>)
 
