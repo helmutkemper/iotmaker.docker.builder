@@ -9826,7 +9826,7 @@ Isso só é aplicado quando os ciclos da CPU são restritos\. Quando muitos cicl
 
 Não garante ou reserva nenhum acesso específico à CPU\.
 
-### func \(\*ContainerBuilder\) [SetImageBuildOptionsCPUSetCPUs](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetImageBuildOptionsCPUSetCPUs.go#L23>)
+### func \(\*ContainerBuilder\) [SetImageBuildOptionsCPUSetCPUs](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetImageBuildOptionsCPUSetCPUs.go#L34>)
 
 ```go
 func (e *ContainerBuilder) SetImageBuildOptionsCPUSetCPUs(value string)
@@ -9834,7 +9834,14 @@ func (e *ContainerBuilder) SetImageBuildOptionsCPUSetCPUs(value string)
 
 #### SetImageBuildOptionsCPUSetCPUs
 
-English: Limit the specific CPUs or cores a container can use\.
+English:
+
+Limit the specific CPUs or cores a container can use\.
+
+```
+Input:
+  value: string with the format "1,2,3"
+```
 
 A comma\-separated list or hyphen\-separated range of CPUs a container can use\, if you have more than one CPU\.
 
@@ -9842,7 +9849,14 @@ The first CPU is numbered 0\.
 
 A valid value might be 0\-3 \(to use the first\, second\, third\, and fourth CPU\) or 1\,3 \(to use the second and fourth CPU\)\.
 
-Português: Limite a quantidade de CPUs ou núcleos específicos que um container pode usar\.
+Português:
+
+Limite a quantidade de CPUs ou núcleos específicos que um container pode usar\.
+
+```
+Entrada:
+  value: string com o formato "1,2,3"
+```
 
 Uma lista separada por vírgulas ou intervalo separado por hífen de CPUs que um container pode usar\, se você tiver mais de uma CPU\.
 
@@ -9850,7 +9864,7 @@ A primeira CPU é numerada como 0\.
 
 Um valor válido pode ser 0\-3 \(para usar a primeira\, segunda\, terceira e quarta CPU\) ou 1\,3 \(para usar a segunda e a quarta CPU\)\.
 
-### func \(\*ContainerBuilder\) [SetImageBuildOptionsCPUSetMems](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetImageBuildOptionsCPUSetMems.go#L18>)
+### func \(\*ContainerBuilder\) [SetImageBuildOptionsCPUSetMems](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetImageBuildOptionsCPUSetMems.go#L30>)
 
 ```go
 func (e *ContainerBuilder) SetImageBuildOptionsCPUSetMems(value string)
@@ -9858,19 +9872,33 @@ func (e *ContainerBuilder) SetImageBuildOptionsCPUSetMems(value string)
 
 #### SetImageBuildOptionsCPUSetMems
 
-English: Define a memory nodes \(MEMs\) \(\-\-cpuset\-mems\)
+English:
+
+Define a memory nodes \(MEMs\) \(\-\-cpuset\-mems\)
+
+```
+Input:
+  value: string with the format "0-3,5-7"
+```
 
 \-\-cpuset\-mems="" Memory nodes \(MEMs\) in which to allow execution \(0\-3\, 0\,1\)\. Only effective on NUMA systems\.
 
 If you have four memory nodes on your system \(0\-3\)\, use \-\-cpuset\-mems=0\,1 then processes in your Docker container will only use memory from the first two memory nodes\.
 
-Português: Define memory node \(MEMs\) \(\-\-cpuset\-mems\)
+Português:
+
+Define memory node \(MEMs\) \(\-\-cpuset\-mems\)
+
+```
+Entrada:
+  value: string com o formato "0-3,5-7"
+```
 
 \-\-cpuset\-mems="" Memory nodes \(MEMs\) no qual permitir a execução \(0\-3\, 0\,1\)\. Só funciona em sistemas NUMA\.
 
 Se você tiver quatro nodes de memória em seu sistema \(0\-3\)\, use \-\-cpuset\-mems=0\,1 então\, os processos em seu container do Docker usarão apenas a memória dos dois primeiros nodes\.
 
-### func \(\*ContainerBuilder\) [SetImageBuildOptionsCPUShares](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetImageBuildOptionsCPUShares.go#L20>)
+### func \(\*ContainerBuilder\) [SetImageBuildOptionsCPUShares](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetImageBuildOptionsCPUShares.go#L35>)
 
 ```go
 func (e *ContainerBuilder) SetImageBuildOptionsCPUShares(value int64)
@@ -9878,9 +9906,29 @@ func (e *ContainerBuilder) SetImageBuildOptionsCPUShares(value int64)
 
 #### SetImageBuildOptionsCPUShares
 
-English: Set this flag to a value greater or less than the default of 1024 to increase or reduce the container’s weight\, and give it access to a greater or lesser proportion of the host machine’s CPU cycles\. This is only enforced when CPU cycles are constrained\. When plenty of CPU cycles are available\, all containers use as much CPU as they need\. In that way\, this is a soft limit\. \-\-cpu\-shares does not prevent containers from being scheduled in swarm mode\. It prioritizes container CPU resources for the available CPU cycles\. It does not guarantee or reserve any specific CPU access\.
+English:
 
-Português: Defina este sinalizador para um valor maior ou menor que o padrão de 1024 para aumentar ou reduzir o peso do container e dar a ele acesso a uma proporção maior ou menor dos ciclos de CPU da máquina host\. Isso só é aplicado quando os ciclos da CPU são restritos\. Quando muitos ciclos de CPU estão disponíveis\, todos os container usam a quantidade de CPU de que precisam\. Dessa forma\, este é um limite flexível\. \-\-cpu\-shares não impede que os containers sejam agendados no modo swarm\. Ele prioriza os recursos da CPU do container para os ciclos de CPU disponíveis\. Não garante ou reserva nenhum acesso específico à CPU\.
+Set this flag to a value greater or less than the default of 1024 to increase or reduce the container’s weight\, and give it access to a greater or lesser proportion of the host machine’s CPU cycles\.
+
+This is only enforced when CPU cycles are constrained\.
+
+When plenty of CPU cycles are available\, all containers use as much CPU as they need\.
+
+In that way\, this is a soft limit\. \-\-cpu\-shares does not prevent containers from being scheduled in swarm mode\.
+
+It prioritizes container CPU resources for the available CPU cycles\.
+
+It does not guarantee or reserve any specific CPU access\.
+
+Português:
+
+Defina este sinalizador para um valor maior ou menor que o padrão de 1024 para aumentar ou reduzir o peso do container e dar a ele acesso a uma proporção maior ou menor dos ciclos de CPU da máquina host\.
+
+Isso só é aplicado quando os ciclos da CPU são restritos\. Quando muitos ciclos de CPU estão disponíveis\, todos os container usam a quantidade de CPU de que precisam\. Dessa forma\, este é um limite flexível\. \-\-cpu\-shares não impede que os containers sejam agendados no modo swarm\.
+
+Ele prioriza os recursos da CPU do container para os ciclos de CPU disponíveis\.
+
+Não garante ou reserva nenhum acesso específico à CPU\.
 
 ### func \(\*ContainerBuilder\) [SetImageBuildOptionsCacheFrom](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetImageBuildOptionsCacheFrom.go#L10>)
 
