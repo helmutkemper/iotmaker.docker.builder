@@ -6629,13 +6629,43 @@ Nota:
   informações estão prontas para uso
 ```
 
-### func \(\*ContainerBuilder\) [GetLastLineOfOccurrenceBySearchTextInsideContainerLog](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcGetLastLineOfOccurrenceBySearchTextInsideContainerLog.go#L8>)
+### func \(\*ContainerBuilder\) [GetLastLineOfOccurrenceBySearchTextInsideContainerLog](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcGetLastLineOfOccurrenceBySearchTextInsideContainerLog.go#L33>)
 
 ```go
 func (e *ContainerBuilder) GetLastLineOfOccurrenceBySearchTextInsideContainerLog(value string) (text string, contains bool, err error)
 ```
 
-### func \(\*ContainerBuilder\) [GetLastLogs](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcGetLastLogs.go#L15>)
+#### GetLastLineOfOccurrenceBySearchTextInsideContainerLog
+
+English:
+
+```
+Returns the last line of output standard output container that contains the text searched
+
+Input:
+  value: text to be searched in the standard output of the container
+
+Output:
+  text: string with the last line that contains the text searched
+  contains: true if the text was found
+  err: default error object
+```
+
+Português:
+
+Retorna a ultima linha sa saída padrão do container que contém o texto procurado
+
+```
+Input:
+  value: texto procurado na saída padrão do container
+
+Saída:
+  text: string com a última linha que contém o texto procurado
+  contains: true se o texto foi encontrado
+  err: objeto de erro padrão
+```
+
+### func \(\*ContainerBuilder\) [GetLastLogs](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcGetLastLogs.go#L30>)
 
 ```go
 func (e *ContainerBuilder) GetLastLogs() (logs string)
@@ -6643,21 +6673,39 @@ func (e *ContainerBuilder) GetLastLogs() (logs string)
 
 #### GetLastLogs
 
-English: Returns the standard container output based on the last ticker cycle defined in SetInspectInterval\(\)
+English:
+
+Returns the standard container output based on the last ticker cycle defined in SetInspectInterval\(\)
 
 ```
-Note: the GetChannelOnContainerInspect() function returns the channel triggered by the ticker when the
-information is ready for use
+Output:
+  logs: container standard output text
 ```
 
-Português: Retorna a saída padrão do container baseado no último ciclo do ticker definido em SetInspectInterval\(\)
+Note:
 
 ```
-Nota: a função GetChannelOnContainerInspect() retorna o canal disparado pelo ticker quando as informações estão
-prontas para uso
+* The GetChannelOnContainerInspect() function returns the channel triggered by the ticker when
+  the information is ready for use
 ```
 
-### func \(\*ContainerBuilder\) [GetMetadata](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcGetMetadata.go#L12>)
+Português:
+
+Retorna a saída padrão do container baseado no último ciclo do ticker definido em SetInspectInterval\(\)
+
+```
+Saída:
+  logs: saída padrão do container
+```
+
+Nota:
+
+```
+* A função GetChannelOnContainerInspect() retorna o canal disparado pelo ticker quando as
+  informações estão prontas para uso
+```
+
+### func \(\*ContainerBuilder\) [GetMetadata](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcGetMetadata.go#L18>)
 
 ```go
 func (e *ContainerBuilder) GetMetadata() (metadata map[string]interface{})
@@ -6665,11 +6713,25 @@ func (e *ContainerBuilder) GetMetadata() (metadata map[string]interface{})
 
 #### GetMetadata
 
-English: Returns a list of user\-defined data Output: metadata: map\[string\]interface\{\} with user defined data
+English:
 
-Português: Retorna uma lista de dados definida oelo usuário Saída: metadata: map\[string\]interface\{\} com dados definidos oelo usuário
+Returns a list of user\-defined data
 
-### func \(\*ContainerBuilder\) [GetNetworkGatewayIPV4](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcGetNetworkGatewayIPV4.go#L13>)
+```
+Output:
+  metadata: map[string]interface{} with user defined data
+```
+
+Português:
+
+Retorna uma lista de dados definida oelo usuário
+
+```
+Saída:
+  metadata: map[string]interface{} com dados definidos oelo usuário
+```
+
+### func \(\*ContainerBuilder\) [GetNetworkGatewayIPV4](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcGetNetworkGatewayIPV4.go#L23>)
 
 ```go
 func (e *ContainerBuilder) GetNetworkGatewayIPV4() (IPV4 string)
@@ -6677,11 +6739,25 @@ func (e *ContainerBuilder) GetNetworkGatewayIPV4() (IPV4 string)
 
 #### GetNetworkGatewayIPV4
 
-English: Returns the gateway from the network to the IPV4 network
+English:
 
-Português: Retorna o gateway da rede para rede IPV4
+Returns the gateway from the network to the IPV4 network
 
-### func \(\*ContainerBuilder\) [GetNetworkGatewayIPV4ByNetworkName](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcGetNetworkGatewayIPV4ByNetworkName.go#L19>)
+```
+Output:
+  IPV4: IPV4 address of the gateway
+```
+
+Português:
+
+Retorna o gateway da rede para rede IPV4
+
+```
+Saída:
+  IPV4: endereço IPV4 do gateway
+```
+
+### func \(\*ContainerBuilder\) [GetNetworkGatewayIPV4ByNetworkName](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcGetNetworkGatewayIPV4ByNetworkName.go#L42>)
 
 ```go
 func (e *ContainerBuilder) GetNetworkGatewayIPV4ByNetworkName(networkName string) (IPV4 string, err error)
@@ -6689,19 +6765,45 @@ func (e *ContainerBuilder) GetNetworkGatewayIPV4ByNetworkName(networkName string
 
 #### GetNetworkGatewayIPV4ByNetworkName
 
-English: If the container is connected to more than one network\, this function returns the gateway of the chosen network\.
+English:
+
+If the container is connected to more than one network\, this function returns the gateway of the chosen network\.
 
 ```
-Note: the default docker network is named "bridge"
+Input:
+  networkName: name of the network
+
+Output:
+  IPV4: address of the gateway of the network
+  err: standard object error
 ```
 
-Português: Caso o container esteja ligado em mais de uma rede\, esta função devolve o gateway da rede escolhida\.
+Note:
 
 ```
-Nota: a rede padrão do docker tem o nome "bridge"
+* The default docker network is named "bridge"
 ```
 
-### func \(\*ContainerBuilder\) [GetNetworkIPV4](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcGetNetworkIPV4.go#L13>)
+Português:
+
+Caso o container esteja ligado em mais de uma rede\, esta função devolve o gateway da rede escolhida\.
+
+```
+Entrada:
+  networkName: nome da rede
+
+Saída:
+  IPV4: endereço do gateway da rede
+  err: objeto de erro padrão
+```
+
+Nota:
+
+```
+* A rede padrão do docker tem o nome "bridge"
+```
+
+### func \(\*ContainerBuilder\) [GetNetworkIPV4](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcGetNetworkIPV4.go#L23>)
 
 ```go
 func (e *ContainerBuilder) GetNetworkIPV4() (IPV4 string)
@@ -6709,11 +6811,25 @@ func (e *ContainerBuilder) GetNetworkIPV4() (IPV4 string)
 
 #### GetNetworkIPV4
 
-English: Return the IPV4 from the docker network
+English:
 
-Português: Retorno o IPV4 da rede do docker
+Return the IPV4 from the docker network
 
-### func \(\*ContainerBuilder\) [GetNetworkIPV4ByNetworkName](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcGetNetworkIPV4ByNetworkName.go#L19>)
+```
+Output:
+  IPV4: network address IPV4
+```
+
+Português:
+
+Retorno o IPV4 da rede do docker
+
+```
+Saída:
+  IPV4: endereço IPV4 da rede
+```
+
+### func \(\*ContainerBuilder\) [GetNetworkIPV4ByNetworkName](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcGetNetworkIPV4ByNetworkName.go#L41>)
 
 ```go
 func (e *ContainerBuilder) GetNetworkIPV4ByNetworkName(networkName string) (IPV4 string, err error)
@@ -6721,19 +6837,45 @@ func (e *ContainerBuilder) GetNetworkIPV4ByNetworkName(networkName string) (IPV4
 
 #### GetNetworkIPV4ByNetworkName
 
-English: If the container is connected to more than one network\, this function returns the IPV4 of the chosen network\.
+English:
+
+If the container is connected to more than one network\, this function returns the IPV4 of the chosen network\.
 
 ```
-Note: the default docker network is named "bridge"
+Input:
+  networkName: string with the name of the network
+
+Output:
+  IPV4 IPV4 address of the network
+  err: standard object error
 ```
 
-Português: Caso o container esteja ligado em mais de uma rede\, esta função devolve o IPV4 da rede escolhida\.
+Note:
 
 ```
-Nota: a rede padrão do docker tem o nome "bridge"
+* The default docker network is named "bridge"
 ```
 
-### func \(\*ContainerBuilder\) [GetNetworkInterface](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcGetNetworkInterface.go#L12>)
+Português:
+
+Caso o container esteja ligado em mais de uma rede\, esta função devolve o IPV4 da rede escolhida\.
+
+```
+Entrada:
+  networkName: string com o nome da rede
+
+Saída:
+  IPV4: endereço IPV4 da rede
+  err: objeto de erro padrão
+```
+
+Nota:
+
+```
+* A rede padrão do docker tem o nome "bridge"
+```
+
+### func \(\*ContainerBuilder\) [GetNetworkInterface](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcGetNetworkInterface.go#L22>)
 
 ```go
 func (e *ContainerBuilder) GetNetworkInterface() (network isolatedNetwork.ContainerBuilderNetworkInterface)
@@ -6741,14 +6883,48 @@ func (e *ContainerBuilder) GetNetworkInterface() (network isolatedNetwork.Contai
 
 #### GetNetworkInterface
 
-English: Returns the object defined for the network control
+English:
 
-Português: Retorna o objeto definido para o controle da rede
+Returns the object defined for the network control
 
-### func \(\*ContainerBuilder\) [GetProblem](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcGetProblem.go#L3>)
+```
+Output:
+  network: Object pointer used to configure the network
+```
+
+Português:
+
+Retorna o objeto definido para o controle da rede
+
+```
+Saída:
+  network: Ponteiro do objeto usado para configurar a rede
+```
+
+### func \(\*ContainerBuilder\) [GetProblem](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcGetProblem.go#L18>)
 
 ```go
 func (e *ContainerBuilder) GetProblem() (problem string)
+```
+
+#### GetProblem
+
+English:
+
+Return problem description when possible\.
+
+```
+Output:
+  problem: descrição do problema
+```
+
+Português:
+
+Retorna a descrição do problema\, quando possível
+
+```
+Saída:
+  problem: descrição do problema
 ```
 
 ### func \(\*ContainerBuilder\) [GetSuccessFlag](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcGetSuccessFlag.go#L3>)

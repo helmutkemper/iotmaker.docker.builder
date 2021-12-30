@@ -5,6 +5,31 @@ import (
 	"github.com/helmutkemper/util"
 )
 
+// GetLastLineOfOccurrenceBySearchTextInsideContainerLog
+//
+// English:
+//
+//   Returns the last line of output standard output container that contains the text searched
+//
+//   Input:
+//     value: text to be searched in the standard output of the container
+//
+//   Output:
+//     text: string with the last line that contains the text searched
+//     contains: true if the text was found
+//     err: default error object
+//
+// Português:
+//
+//  Retorna a ultima linha sa saída padrão do container que contém o texto procurado
+//
+//   Input:
+//     value: texto procurado na saída padrão do container
+//
+//   Saída:
+//     text: string com a última linha que contém o texto procurado
+//     contains: true se o texto foi encontrado
+//     err: objeto de erro padrão
 func (e *ContainerBuilder) GetLastLineOfOccurrenceBySearchTextInsideContainerLog(value string) (text string, contains bool, err error) {
 	var logs []byte
 	var lineList [][]byte
