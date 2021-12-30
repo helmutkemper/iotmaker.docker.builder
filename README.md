@@ -8354,7 +8354,7 @@ Entrada:
     herda o valor padrão).
 ```
 
-### func \(\*ContainerBuilder\) [SetContainerName](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetContainerName.go#L12>)
+### func \(\*ContainerBuilder\) [SetContainerName](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetContainerName.go#L18>)
 
 ```go
 func (e *ContainerBuilder) SetContainerName(value string)
@@ -8362,11 +8362,25 @@ func (e *ContainerBuilder) SetContainerName(value string)
 
 #### SetContainerName
 
-English: Defines the name of the container Input: value: container name
+English:
 
-Português: Define o nome do container Entrada: value: nome do container
+Defines the name of the container
 
-### func \(\*ContainerBuilder\) [SetContainerRestartPolicyAlways](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetContainerRestartPolicyAlways.go#L15>)
+```
+Input:
+  value: container name
+```
+
+Português:
+
+Define o nome do container
+
+```
+Entrada:
+  value: nome do container
+```
+
+### func \(\*ContainerBuilder\) [SetContainerRestartPolicyAlways](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetContainerRestartPolicyAlways.go#L18>)
 
 ```go
 func (e *ContainerBuilder) SetContainerRestartPolicyAlways()
@@ -8374,11 +8388,15 @@ func (e *ContainerBuilder) SetContainerRestartPolicyAlways()
 
 #### SetContainerRestartPolicyAlways
 
-English: Always restart the container if it stops\. If it is manually stopped\, it is restarted only when Docker daemon restarts or the container itself is manually restarted\.
+English:
 
-Português: Define a política de reinício do container como sempre reinicia o container quando ele para\, mesmo quando ele é parado manualmente\.
+Always restart the container if it stops\. If it is manually stopped\, it is restarted only when Docker daemon restarts or the container itself is manually restarted\.
 
-### func \(\*ContainerBuilder\) [SetContainerRestartPolicyNo](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetContainerRestartPolicyNo.go#L12>)
+Português:
+
+Define a política de reinício do container como sempre reinicia o container quando ele para\, mesmo quando ele é parado manualmente\.
+
+### func \(\*ContainerBuilder\) [SetContainerRestartPolicyNo](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetContainerRestartPolicyNo.go#L16>)
 
 ```go
 func (e *ContainerBuilder) SetContainerRestartPolicyNo()
@@ -8386,11 +8404,15 @@ func (e *ContainerBuilder) SetContainerRestartPolicyNo()
 
 #### SetContainerRestartPolicyNo
 
-English: Do not automatically restart the container\. \(the default\)
+English:
 
-Português: Define a política de reinício do container como não reiniciar o container \(padrão\)\.
+Do not automatically restart the container\. \(the default\)
 
-### func \(\*ContainerBuilder\) [SetContainerRestartPolicyOnFailure](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetContainerRestartPolicyOnFailure.go#L13>)
+Português:
+
+Define a política de reinício do container como não reiniciar o container \(padrão\)\.
+
+### func \(\*ContainerBuilder\) [SetContainerRestartPolicyOnFailure](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetContainerRestartPolicyOnFailure.go#L17>)
 
 ```go
 func (e *ContainerBuilder) SetContainerRestartPolicyOnFailure()
@@ -8398,11 +8420,15 @@ func (e *ContainerBuilder) SetContainerRestartPolicyOnFailure()
 
 #### SetContainerRestartPolicyOnFailure
 
-English: Restart the container if it exits due to an error\, which manifests as a non\-zero exit code
+English:
 
-Português: Define a política de reinício do container como reinicia o container se houver um erro \(com o manifesto informando um código de erro diferente de zero\)\.
+Restart the container if it exits due to an error\, which manifests as a non\-zero exit code
 
-### func \(\*ContainerBuilder\) [SetContainerRestartPolicyUnlessStopped](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetContainerRestartPolicyUnlessStopped.go#L15>)
+Português:
+
+Define a política de reinício do container como reinicia o container se houver um erro \(com o manifesto informando um código de erro diferente de zero\)\.
+
+### func \(\*ContainerBuilder\) [SetContainerRestartPolicyUnlessStopped](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetContainerRestartPolicyUnlessStopped.go#L18>)
 
 ```go
 func (e *ContainerBuilder) SetContainerRestartPolicyUnlessStopped()
@@ -8410,9 +8436,13 @@ func (e *ContainerBuilder) SetContainerRestartPolicyUnlessStopped()
 
 #### SetContainerRestartPolicyUnlessStopped
 
-English: Similar to always\, except that when the container is stopped \(manually or otherwise\)\, it is not restarted even after Docker daemon restarts\.
+English:
 
-Português: Define a política de reinício do container como sempre reinicia o container\, caso ele não tenha sido parado manualmente\.
+Similar to always\, except that when the container is stopped \(manually or otherwise\)\, it is not restarted even after Docker daemon restarts\.
+
+Português:
+
+Define a política de reinício do container como sempre reinicia o container\, caso ele não tenha sido parado manualmente\.
 
 ### func \(\*ContainerBuilder\) [SetContainerShellForShellFormOfRunCmdEntrypoint](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetContainerShellForShellFormOfRunCmdEntrypoint.go#L8>)
 

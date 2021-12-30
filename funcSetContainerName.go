@@ -2,11 +2,17 @@ package iotmakerdockerbuilder
 
 // SetContainerName
 //
-// English: Defines the name of the container
+// English:
+//
+//  Defines the name of the container
+//
 //   Input:
 //     value: container name
 //
-// Português: Define o nome do container
+// Português:
+//
+//  Define o nome do container
+//
 //   Entrada:
 //     value: nome do container
 func (e *ContainerBuilder) SetContainerName(value string) {
