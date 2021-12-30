@@ -18,24 +18,39 @@ import (
 
 // ImageBuildFromServer
 //
-// English: Build a docker image from a project contained in a git repository.
+// English:
 //
-//   Note: The repository can be defined by the methods SetGitCloneToBuild(), SetGitCloneToBuildWithPrivateSshKey(),
-//   SetGitCloneToBuildWithPrivateToken() and SetGitCloneToBuildWithUserPassworh();
-//   SetPrivateRepositoryAutoConfig() copies the git credentials contained in ~/.ssh and the settings of
-//   ~/.gitconfig;
-//   The SetGitConfigFile(), SetSshIdRsaFile() and SetSshKnownHostsFile() functions can be used to set git security
-//   and configuration files manually.
+//  Build a docker image from a project contained in a git repository.
+//
+//   Output:
+//     inspect: Contém informações sobre a imagem criada
+//     err: standard object error
+//
+// Note:
+//
+//   * The repository must be defined by the methods SetGitCloneToBuild(),
+//     SetGitCloneToBuildWithPrivateSshKey(), SetGitCloneToBuildWithPrivateToken() and
+//     SetGitCloneToBuildWithUserPassworh();
+//   * SetPrivateRepositoryAutoConfig() copies the git credentials contained in ~/.ssh and the
+//     settings of ~/.gitconfig;
+//   * The SetGitConfigFile(), SetSshIdRsaFile() and SetSshKnownHostsFile() functions can be used to
+//     set git security and configuration files manually.
 //
 // Português: Monta uma imagem docker a partir de um projeto contido em um repositório git.
 //
-//   Nota: O repositório pode ser definido pelos métodos SetGitCloneToBuild(),
-//   SetGitCloneToBuildWithPrivateSshKey(), SetGitCloneToBuildWithPrivateToken() e
-//   SetGitCloneToBuildWithUserPassworh();
-//   SetPrivateRepositoryAutoConfig() copia as credências do git contidas em ~/.ssh e as configurações de
-//   ~/.gitconfig;
-//   As funções SetGitConfigFile(), SetSshIdRsaFile() e SetSshKnownHostsFile() podem ser usadas para definir os
-//   arquivos de configurações se segurança do git manualmente.
+//   Saída:
+//     inspect: contém informações sobre a imagem criada
+//     err: objeto de erro padrão
+//
+// Nota:
+//
+//   * O repositório pode ser definido pelos métodos SetGitCloneToBuild(),
+//     SetGitCloneToBuildWithPrivateSshKey(), SetGitCloneToBuildWithPrivateToken() e
+//     SetGitCloneToBuildWithUserPassworh();
+//   * SetPrivateRepositoryAutoConfig() copia as credências do git contidas em ~/.ssh e as
+//     configurações de ~/.gitconfig;
+//   * As funções SetGitConfigFile(), SetSshIdRsaFile() e SetSshKnownHostsFile() podem ser usadas para
+//     definir os arquivos de configurações se segurança do git manualmente.
 func (e *ContainerBuilder) ImageBuildFromServer() (inspect types.ImageInspect, err error) {
 	err = e.verifyImageName()
 	if err != nil {

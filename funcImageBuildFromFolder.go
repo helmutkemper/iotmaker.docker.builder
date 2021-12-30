@@ -15,25 +15,43 @@ import (
 
 // ImageBuildFromFolder
 //
-// English: transforms the contents of the folder defined in SetBuildFolderPath() into a docker image
+// English:
 //
-//     The folder must contain a dockerfile file, but since different uses can have different dockerfiles, the
-//     following order will be given when searching for the file: "Dockerfile-iotmaker", "Dockerfile", "dockerfile"
-//     in the root folder;
-//     If not found, a recursive search will be done for "Dockerfile" and "dockerfile";
-//     If the project is in golang and the main.go file, containing the package main, is contained in the root
-//     folder, with the go.mod file, the MakeDefaultDockerfileForMe() function can be used to use a standard
-//     Dockerfile file
+//  Transforms the contents of the folder defined in SetBuildFolderPath() into a docker image
 //
-// Português: transforma o conteúdo da pasta definida em SetBuildFolderPath() em uma imagem docker
+//   Output:
+//     inspect: Contém informações sobre a imagem criada
+//     err: standard object error
 //
-//     Nota: A pasta deve conter um arquivo dockerfile, mas, como diferentes usos podem ter diferentes dockerfiles,
-//     será dada a seguinte ordem na busca pelo arquivo: "Dockerfile-iotmaker", "Dockerfile", "dockerfile" na pasta
-//     raiz.
-//     Se não houver encontrado, será feita uma busca recursiva por "Dockerfile" e "dockerfile"
-//     Caso o projeto seja em golang e o arquivo main.go, contendo o pacote main, esteja contido na pasta raiz,
-//     com o arquivo go.mod, pode ser usada a função MakeDefaultDockerfileForMe() para ser usado um arquivo
-//     Dockerfile padrão
+// Note:
+//
+//   * The folder must contain a dockerfile file, but since different uses can have different
+//     dockerfiles, the following order will be given when searching for the file:
+//     "Dockerfile-iotmaker", "Dockerfile", "dockerfile" in the root folder;
+//   * If not found, a recursive search will be done for "Dockerfile" and "dockerfile";
+//   * If the project is in golang and the main.go file, containing the package main, is contained in
+//     the root folder, with the go.mod file, the MakeDefaultDockerfileForMe() and
+//     MakeDefaultDockerfileForMeWithInstallExtras() functions can be used to make a standard
+//     Dockerfile file automatically.
+//
+// Português:
+//
+//  Transforma o conteúdo da pasta definida em SetBuildFolderPath() em uma imagem docker
+//
+//   Saída:
+//     inspect: contém informações sobre a imagem criada
+//     err: objeto de erro padrão
+//
+// Nota:
+//
+//   * A pasta deve conter um arquivo dockerfile, mas, como diferentes usos podem ter diferentes
+//     dockerfiles, será dada a seguinte ordem na busca pelo arquivo: "Dockerfile-iotmaker",
+//     "Dockerfile", "dockerfile" na pasta raiz;
+//   * Se não houver encontrado, será feita uma busca recursiva por "Dockerfile" e "dockerfile";
+//   * Caso o projeto seja em golang e o arquivo main.go, contendo o pacote main, esteja contido na
+//     pasta raiz, com o arquivo go.mod, podem ser usadas as funções MakeDefaultDockerfileForMe() e
+//     MakeDefaultDockerfileForMeWithInstallExtras() para ser gerar um arquivo Dockerfile padrão de
+//     forma automática.
 func (e *ContainerBuilder) ImageBuildFromFolder() (inspect types.ImageInspect, err error) {
 	err = e.verifyImageName()
 	if err != nil {

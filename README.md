@@ -6927,13 +6927,33 @@ Saída:
   problem: descrição do problema
 ```
 
-### func \(\*ContainerBuilder\) [GetSuccessFlag](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcGetSuccessFlag.go#L3>)
+### func \(\*ContainerBuilder\) [GetSuccessFlag](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcGetSuccessFlag.go#L18>)
 
 ```go
 func (e *ContainerBuilder) GetSuccessFlag() (success bool)
 ```
 
-### func \(\*ContainerBuilder\) [ImageBuildFromFolder](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcImageBuildFromFolder.go#L37>)
+#### GetSuccessFlag
+
+English:
+
+Get success flag
+
+```
+Output:
+  success: success flag
+```
+
+Português:
+
+Retorna a bandeira indicadora de sucesso no teste
+
+```
+Saída:
+  success: bandeira indicadora de sucesso no teste
+```
+
+### func \(\*ContainerBuilder\) [ImageBuildFromFolder](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcImageBuildFromFolder.go#L55>)
 
 ```go
 func (e *ContainerBuilder) ImageBuildFromFolder() (inspect types.ImageInspect, err error)
@@ -6941,28 +6961,50 @@ func (e *ContainerBuilder) ImageBuildFromFolder() (inspect types.ImageInspect, e
 
 #### ImageBuildFromFolder
 
-English: transforms the contents of the folder defined in SetBuildFolderPath\(\) into a docker image
+English:
+
+Transforms the contents of the folder defined in SetBuildFolderPath\(\) into a docker image
 
 ```
-The folder must contain a dockerfile file, but since different uses can have different dockerfiles, the
-following order will be given when searching for the file: "Dockerfile-iotmaker", "Dockerfile", "dockerfile"
-in the root folder;
-If not found, a recursive search will be done for "Dockerfile" and "dockerfile";
-If the project is in golang and the main.go file, containing the package main, is contained in the root
-folder, with the go.mod file, the MakeDefaultDockerfileForMe() function can be used to use a standard
-Dockerfile file
+Output:
+  inspect: Contém informações sobre a imagem criada
+  err: standard object error
 ```
 
-Português: transforma o conteúdo da pasta definida em SetBuildFolderPath\(\) em uma imagem docker
+Note:
 
 ```
-Nota: A pasta deve conter um arquivo dockerfile, mas, como diferentes usos podem ter diferentes dockerfiles,
-será dada a seguinte ordem na busca pelo arquivo: "Dockerfile-iotmaker", "Dockerfile", "dockerfile" na pasta
-raiz.
-Se não houver encontrado, será feita uma busca recursiva por "Dockerfile" e "dockerfile"
-Caso o projeto seja em golang e o arquivo main.go, contendo o pacote main, esteja contido na pasta raiz,
-com o arquivo go.mod, pode ser usada a função MakeDefaultDockerfileForMe() para ser usado um arquivo
-Dockerfile padrão
+* The folder must contain a dockerfile file, but since different uses can have different
+  dockerfiles, the following order will be given when searching for the file:
+  "Dockerfile-iotmaker", "Dockerfile", "dockerfile" in the root folder;
+* If not found, a recursive search will be done for "Dockerfile" and "dockerfile";
+* If the project is in golang and the main.go file, containing the package main, is contained in
+  the root folder, with the go.mod file, the MakeDefaultDockerfileForMe() and
+  MakeDefaultDockerfileForMeWithInstallExtras() functions can be used to make a standard
+  Dockerfile file automatically.
+```
+
+Português:
+
+Transforma o conteúdo da pasta definida em SetBuildFolderPath\(\) em uma imagem docker
+
+```
+Saída:
+  inspect: contém informações sobre a imagem criada
+  err: objeto de erro padrão
+```
+
+Nota:
+
+```
+* A pasta deve conter um arquivo dockerfile, mas, como diferentes usos podem ter diferentes
+  dockerfiles, será dada a seguinte ordem na busca pelo arquivo: "Dockerfile-iotmaker",
+  "Dockerfile", "dockerfile" na pasta raiz;
+* Se não houver encontrado, será feita uma busca recursiva por "Dockerfile" e "dockerfile";
+* Caso o projeto seja em golang e o arquivo main.go, contendo o pacote main, esteja contido na
+  pasta raiz, com o arquivo go.mod, podem ser usadas as funções MakeDefaultDockerfileForMe() e
+  MakeDefaultDockerfileForMeWithInstallExtras() para ser gerar um arquivo Dockerfile padrão de
+  forma automática.
 ```
 
 <details><summary>Example</summary>
@@ -7089,7 +7131,7 @@ func main() {
 </p>
 </details>
 
-### func \(\*ContainerBuilder\) [ImageBuildFromServer](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcImageBuildFromServer.go#L39>)
+### func \(\*ContainerBuilder\) [ImageBuildFromServer](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcImageBuildFromServer.go#L54>)
 
 ```go
 func (e *ContainerBuilder) ImageBuildFromServer() (inspect types.ImageInspect, err error)
@@ -7097,27 +7139,46 @@ func (e *ContainerBuilder) ImageBuildFromServer() (inspect types.ImageInspect, e
 
 #### ImageBuildFromServer
 
-English: Build a docker image from a project contained in a git repository\.
+English:
+
+Build a docker image from a project contained in a git repository\.
 
 ```
-Note: The repository can be defined by the methods SetGitCloneToBuild(), SetGitCloneToBuildWithPrivateSshKey(),
-SetGitCloneToBuildWithPrivateToken() and SetGitCloneToBuildWithUserPassworh();
-SetPrivateRepositoryAutoConfig() copies the git credentials contained in ~/.ssh and the settings of
-~/.gitconfig;
-The SetGitConfigFile(), SetSshIdRsaFile() and SetSshKnownHostsFile() functions can be used to set git security
-and configuration files manually.
+Output:
+  inspect: Contém informações sobre a imagem criada
+  err: standard object error
+```
+
+Note:
+
+```
+* The repository must be defined by the methods SetGitCloneToBuild(),
+  SetGitCloneToBuildWithPrivateSshKey(), SetGitCloneToBuildWithPrivateToken() and
+  SetGitCloneToBuildWithUserPassworh();
+* SetPrivateRepositoryAutoConfig() copies the git credentials contained in ~/.ssh and the
+  settings of ~/.gitconfig;
+* The SetGitConfigFile(), SetSshIdRsaFile() and SetSshKnownHostsFile() functions can be used to
+  set git security and configuration files manually.
 ```
 
 Português: Monta uma imagem docker a partir de um projeto contido em um repositório git\.
 
 ```
-Nota: O repositório pode ser definido pelos métodos SetGitCloneToBuild(),
-SetGitCloneToBuildWithPrivateSshKey(), SetGitCloneToBuildWithPrivateToken() e
-SetGitCloneToBuildWithUserPassworh();
-SetPrivateRepositoryAutoConfig() copia as credências do git contidas em ~/.ssh e as configurações de
-~/.gitconfig;
-As funções SetGitConfigFile(), SetSshIdRsaFile() e SetSshKnownHostsFile() podem ser usadas para definir os
-arquivos de configurações se segurança do git manualmente.
+Saída:
+  inspect: contém informações sobre a imagem criada
+  err: objeto de erro padrão
+```
+
+Nota:
+
+```
+* O repositório pode ser definido pelos métodos SetGitCloneToBuild(),
+  SetGitCloneToBuildWithPrivateSshKey(), SetGitCloneToBuildWithPrivateToken() e
+  SetGitCloneToBuildWithUserPassworh();
+* SetPrivateRepositoryAutoConfig() copia as credências do git contidas em ~/.ssh e as
+  configurações de ~/.gitconfig;
+* As funções SetGitConfigFile(), SetSshIdRsaFile() e SetSshKnownHostsFile() podem ser usadas para
+  definir os arquivos de configurações se segurança do git manualmente.
 ```
 
 ### func \(\*ContainerBuilder\) [ImageFindIdByName](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcImageFindIdByName.go#L8>)
