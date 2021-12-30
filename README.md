@@ -8532,7 +8532,7 @@ Nota:
 * As colunas de dados preenchidos varia de acordo com o sistema operacional.
 ```
 
-### func \(\*ContainerBuilder\) [SetCsvFileRowsToPrint](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetCsvFileRowsToPrint.go#L13>)
+### func \(\*ContainerBuilder\) [SetCsvFileRowsToPrint](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetCsvFileRowsToPrint.go#L37>)
 
 ```go
 func (e *ContainerBuilder) SetCsvFileRowsToPrint(value int64)
@@ -8540,11 +8540,43 @@ func (e *ContainerBuilder) SetCsvFileRowsToPrint(value int64)
 
 #### SetCsvFileRowsToPrint
 
-Português: Define quais colunas vão ser impressas no log\, na forma de arquivo CSV\, com informações de desempenho do container\, com indicadores de consumo de memória e tempos de acesso\. Entrada: value: Lista das colunas impressas no arquivo CSV\. Ex\.: KLogColumnMacOs\, KLogColumnWindows\, KLogColumnAll ou qualquer combinação de KLogColumn\.\.\. concatenado com pipe\, KLogColumnReadingTime | KLogColumnCurrentNumberOfOidsInTheCGroup | KLogColumnTotalCPUTimeConsumed
+English:
+
+Defines which columns will be printed in the log\, in the form of a CSV file\, with container performance information\, memory consumption indicators and access times\.
 
 ```
-Nota: - Para vê a lista completa de colunas, use SetCsvFileRowsToPrint(KLogColumnAll) e SetCsvFileReader(true).
-        Isto irá imprimir os nomes das constantes em cima de cada coluna do log.
+Input:
+  value: List of columns printed in CSV file. Eg.: KLogColumnMacOs, KLogColumnWindows,
+    KLogColumnAll or any combination of KLogColumn... concatenated with pipe.
+    Eg.: KLogColumnReadingTime | KLogColumnCurrentNumberOfOidsInTheCGroup | ...
+```
+
+Nota:
+
+```
+* To see the complete list of columns, use SetCsvFileRowsToPrint(KLogColumnAll) and
+  SetCsvFileReader(true).
+  This will print the constant names on top of each column in the log.
+```
+
+Português:
+
+Define quais colunas vão ser impressas no log\, na forma de arquivo CSV\, com informações de desempenho do container\, indicadores de consumo de memória e tempos de acesso\.
+
+```
+Entrada:
+
+  value: Lista das colunas impressas no arquivo CSV. Ex.: KLogColumnMacOs, KLogColumnWindows,
+    KLogColumnAll ou qualquer combinação de KLogColumn... concatenado com pipe.
+    Ex.: KLogColumnReadingTime | KLogColumnCurrentNumberOfOidsInTheCGroup | ...
+```
+
+Nota:
+
+```
+* Para vê a lista completa de colunas, use SetCsvFileRowsToPrint(KLogColumnAll) e
+  SetCsvFileReader(true).
+  Isto irá imprimir os nomes das constantes em cima de cada coluna do log.
 ```
 
 <details><summary>Example</summary>
@@ -8664,7 +8696,7 @@ error: false
 </p>
 </details>
 
-### func \(\*ContainerBuilder\) [SetCsvFileValueSeparator](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetCsvFileValueSeparator.go#L22>)
+### func \(\*ContainerBuilder\) [SetCsvFileValueSeparator](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetCsvFileValueSeparator.go#L34>)
 
 ```go
 func (e *ContainerBuilder) SetCsvFileValueSeparator(value string)
@@ -8672,25 +8704,43 @@ func (e *ContainerBuilder) SetCsvFileValueSeparator(value string)
 
 #### SetCsvFileValueSeparator
 
-English: Defines the column separator of the log file\, in CSV format\, containing container usage statistics\. Input: value: CSV file column separator \(default value: "\,"\)
+English:
+
+Defines the column separator of the log file\, in CSV format\, containing container usage statistics\.
 
 ```
-Note: - This function is used in conjunction with the SetCsvLogPath(), StartMonitor(), StopMonitor(),
-        SetCsvFileRowSeparator(), SetCsvFileReader(), SetCsvFileRowsToPrint(), AddFilterToLog() and
-        AddFilterToLogWithReplace() functions;
-      - The data columns populated varies by operating system.
+Input:
+  value: CSV file column separator (default value: ",")
 ```
 
-Português: Define o separador de coluna do arquivo de log\, em formato CSV\, contendo estatísticas de uso do container\. Entrada: value: separador de coluna do arquivo CSV \(valor padrão: "\,"\)
+Note:
 
 ```
-Nota: - Esta função é usada em conjunto com as funções SetCsvLogPath(), StartMonitor(), StopMonitor(),
-        SetCsvFileRowSeparator(), SetCsvFileReader(), SetCsvFileRowsToPrint(), AddFilterToLog() e
-        AddFilterToLogWithReplace();
-      - As colunas de dados preenchidos varia de acordo com o sistema operacional.
+* This function is used in conjunction with the SetCsvLogPath(), StartMonitor(), StopMonitor(),
+  SetCsvFileRowSeparator(), SetCsvFileReader(), SetCsvFileRowsToPrint(), AddFilterToLog() and
+  AddFilterToLogWithReplace() functions;
+* The data columns populated varies by operating system.
 ```
 
-### func \(\*ContainerBuilder\) [SetCsvLogPath](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetCsvLogPath.go#L26>)
+Português:
+
+Define o separador de coluna do arquivo de log\, em formato CSV\, contendo estatísticas de uso do container\.
+
+```
+Entrada:
+  value: separador de coluna do arquivo CSV (valor padrão: ",")
+```
+
+Nota:
+
+```
+* Esta função é usada em conjunto com as funções SetCsvLogPath(), StartMonitor(), StopMonitor(),
+  SetCsvFileRowSeparator(), SetCsvFileReader(), SetCsvFileRowsToPrint(), AddFilterToLog() e
+  AddFilterToLogWithReplace();
+* As colunas de dados preenchidos varia de acordo com o sistema operacional.
+```
+
+### func \(\*ContainerBuilder\) [SetCsvLogPath](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetCsvLogPath.go#L39>)
 
 ```go
 func (e *ContainerBuilder) SetCsvLogPath(path string, removeOldFile bool)
@@ -8698,22 +8748,45 @@ func (e *ContainerBuilder) SetCsvLogPath(path string, removeOldFile bool)
 
 #### SetCsvLogPath
 
-English: Defines the log file path\, in CSV format\, containing container usage statistics\. Input: path: Log file path\. removeOldFile: true deletes the file if it exists; false adds more records to the existing file\.
+English:
+
+Defines the log file path\, in CSV format\, containing container usage statistics\.
 
 ```
-Note: - This function must be used in conjunction with the StartMonitor() and StopMonitor() functions;
-      - The data columns populated varies by operating system;
-      - See the SetCsvFileReader(), SetCsvFileRowsToPrint(), AddFilterToLog(), AddFilterToLogWithReplace(),
-        SetCsvFileValueSeparator() and SetCsvFileRowSeparator() functions to change some log settings.
+Input:
+  path: Log file path.
+  removeOldFile: true deletes the file if it exists; false adds more records to the existing
+    file.
 ```
 
-Português: Define o caminho do arquivo de log\, em formato CSV\, contendo estatísticas de uso do container\. Entrada: path: Caminho do arquivo de log\. removeOldFile: true apaga o arquivo caso o mesmo exista; false adiciona mais registros ao arquivo existente\.
+Note:
 
 ```
-Nota: - Esta função deve ser usada em conjunto com as funções StartMonitor() e StopMonitor();
-      - As colunas de dados preenchidos varia de acordo com o sistema operacional;
-      - Veja as funções SetCsvFileReader(), SetCsvFileRowsToPrint(), AddFilterToLog(), AddFilterToLogWithReplace(),
-        SetCsvFileValueSeparator() e SetCsvFileRowSeparator() para alterar algumas configurações do log.
+* This function must be used in conjunction with the StartMonitor() and StopMonitor() functions;
+* The data columns populated varies by operating system;
+* See the SetCsvFileReader(), SetCsvFileRowsToPrint(), AddFilterToLog(),
+  AddFilterToLogWithReplace(), SetCsvFileValueSeparator() and SetCsvFileRowSeparator() functions
+  to change some log settings.
+```
+
+Português:
+
+Define o caminho do arquivo de log\, em formato CSV\, contendo estatísticas de uso do container\.
+
+```
+Entrada:
+  path: Caminho do arquivo de log.
+  removeOldFile: true apaga o arquivo caso o mesmo exista; false adiciona mais registros ao arquivo existente.
+```
+
+Nota:
+
+```
+* Esta função deve ser usada em conjunto com as funções StartMonitor() e StopMonitor();
+* As colunas de dados preenchidos varia de acordo com o sistema operacional;
+* Veja as funções SetCsvFileReader(), SetCsvFileRowsToPrint(), AddFilterToLog(),
+  AddFilterToLogWithReplace(), SetCsvFileValueSeparator() e SetCsvFileRowSeparator() para alterar
+  algumas configurações do log.
 ```
 
 <details><summary>Example</summary>
@@ -8823,7 +8896,7 @@ message: done!
 </p>
 </details>
 
-### func \(\*ContainerBuilder\) [SetDockerfileBuilder](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetDockerfileBuilder.go#L12>)
+### func \(\*ContainerBuilder\) [SetDockerfileBuilder](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetDockerfileBuilder.go#L26>)
 
 ```go
 func (e *ContainerBuilder) SetDockerfileBuilder(value DockerfileAuto)
@@ -8831,16 +8904,34 @@ func (e *ContainerBuilder) SetDockerfileBuilder(value DockerfileAuto)
 
 #### SetDockerfileBuilder
 
-English: Defines a new object containing the builder of the dockerfile\.
+English:
+
+Defines a new object containing the builder of the dockerfile\.
 
 ```
-Note: see the DockerfileAuto interface for further instructions.
+Input:
+  value: Object compatible with DockerfileAuto interface
 ```
 
-Português: Define um novo objeto contendo o construtor do arquivo dockerfile\.
+Note:
 
 ```
-Nota: veja a interface DockerfileAuto para mais instruções.
+* Eee the DockerfileAuto interface for further instructions.
+```
+
+Português:
+
+Define um novo objeto contendo o construtor do arquivo dockerfile\.
+
+```
+Entrada:
+  value: Objeto compatível com a interface DockerfileAuto
+```
+
+Nota:
+
+```
+* Veja a interface DockerfileAuto para mais instruções.
 ```
 
 ### func \(\*ContainerBuilder\) [SetEnvironmentVar](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetEnvironmentVar.go#L12>)
@@ -8925,7 +9016,7 @@ value: slice de string contendo um variável de ambiente por chave
 </p>
 </details>
 
-### func \(\*ContainerBuilder\) [SetGitCloneToBuild](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetGitCloneToBuild.go#L67>)
+### func \(\*ContainerBuilder\) [SetGitCloneToBuild](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetGitCloneToBuild.go#L62>)
 
 ```go
 func (e *ContainerBuilder) SetGitCloneToBuild(url string)
@@ -8933,71 +9024,70 @@ func (e *ContainerBuilder) SetGitCloneToBuild(url string)
 
 #### SetGitCloneToBuild
 
-English: Defines the path of a repository to be used as the base of the image to be mounted\.
+English:
+
+Defines the path of a repository to be used as the base of the image to be mounted\.
 
 ```
-url: Address of the repository containing the project
+Input:
+  url: Address of the repository containing the project
+```
 
-  Note:
+Note:
 
-  If the repository is private and the host computer has access to the git server, use
-  SetPrivateRepositoryAutoConfig() to copy the git credentials contained in ~/.ssh and the settings of
-  ~/.gitconfig automatically;
-
-  To be able to access private repositories from inside the container, build the image in two or more steps
-  and in the first step, copy the id_rsa and known_hosts files to the /root/.ssh folder, and the ~/.gitconfig
-  file to the /root folder;
-
-  The MakeDefaultDockerfileForMe() function make a standard dockerfile with the procedures above;
-
-  If the ~/.ssh/id_rsa key is password protected, use the SetGitSshPassword() function to set the password;
-
-  If you want to define the files manually, use SetGitConfigFile(), SetSshKnownHostsFile() and
+```
+* If the repository is private and the host computer has access to the git server, use
+  SetPrivateRepositoryAutoConfig() to copy the git credentials contained in ~/.ssh and the
+  settings of ~/.gitconfig automatically;
+* To be able to access private repositories from inside the container, build the image in two or
+  more steps and in the first step, copy the id_rsa and known_hosts files to the /root/.ssh
+  folder, and the ~/.gitconfig file to the /root folder;
+* The MakeDefaultDockerfileForMe() function make a standard dockerfile with the procedures above;
+* If the ~/.ssh/id_rsa key is password protected, use the SetGitSshPassword() function to set the
+  password;
+* If you want to define the files manually, use SetGitConfigFile(), SetSshKnownHostsFile() and
   SetSshIdRsaFile() to define the files manually;
-
-  This function must be used with the ImageBuildFromServer() and SetImageName() function to download and
-  generate an image from the contents of a git repository;
-
-  The repository must contain a Dockerfile file and it will be searched for in the following order:
-  './Dockerfile-iotmaker', './Dockerfile', './dockerfile', 'Dockerfile.*', 'dockerfile.*', '.*Dockerfile.*'
-  and '.*dockerfile.*';
-
-  The repository can be defined by the methods SetGitCloneToBuild(), SetGitCloneToBuildWithPrivateSshKey(),
-  SetGitCloneToBuildWithPrivateToken() and SetGitCloneToBuildWithUserPassworh().
+* This function must be used with the ImageBuildFromServer() and SetImageName() function to
+  download and generate an image from the contents of a git repository;
+* The repository must contain a Dockerfile file and it will be searched for in the following
+  order:
+  './Dockerfile-iotmaker', './Dockerfile', './dockerfile', 'Dockerfile.*', 'dockerfile.*',
+  '.*Dockerfile.*' and '.*dockerfile.*';
+* The repository can be defined by the methods SetGitCloneToBuild(),
+  SetGitCloneToBuildWithPrivateSshKey(), SetGitCloneToBuildWithPrivateToken() and
+  SetGitCloneToBuildWithUserPassworh().
 ```
 
-Português: Define o caminho de um repositório para ser usado como base da imagem a ser montada\.
+Português:
+
+Define o caminho de um repositório para ser usado como base da imagem a ser montada\.
 
 ```
-url: Endereço do repositório contendo o projeto
+Entrada:
+  url: Endereço do repositório contendo o projeto
+```
 
-  Nota:
+Nota:
 
-  Caso o repositório seja privado e o computador hospedeiro tenha acesso ao servidor git, use
-  SetPrivateRepositoryAutoConfig() para copiar as credências do git contidas em ~/.ssh e as configurações de
-  ~/.gitconfig de forma automática;
-
-  Para conseguir acessar repositórios privados de dentro do container, construa a imagem em duas ou mais etapas
-  e na primeira etapa, copie os arquivos id_rsa e known_hosts para a pasta /root/.ssh e o arquivo .gitconfig
-  para a pasta /root/;
-
-  A função MakeDefaultDockerfileForMe() monta um dockerfile padrão com os procedimentos acima;
-
-  Caso a chave ~/.ssh/id_rsa seja protegida com senha, use a função SetGitSshPassword() para definir a senha
-  da mesma;
-
-  Caso queira definir os arquivos de forma manual, use SetGitConfigFile(), SetSshKnownHostsFile() e
-  SetSshIdRsaFile() para definir os arquivos de forma manual;
-
-  Esta função deve ser usada com a função ImageBuildFromServer() e SetImageName() para baixar e gerar uma
-  imagem a partir do conteúdo de um repositório git;
-
-  O repositório deve contar um arquivo Dockerfile e ele será procurado na seguinte ordem:
-  './Dockerfile-iotmaker', './Dockerfile', './dockerfile', 'Dockerfile.*', 'dockerfile.*', '.*Dockerfile.*'
-  e '.*dockerfile.*';
-
-  O repositório pode ser definido pelos métodos SetGitCloneToBuild(), SetGitCloneToBuildWithPrivateSshKey(),
-  SetGitCloneToBuildWithPrivateToken() e SetGitCloneToBuildWithUserPassworh().
+```
+* Caso o repositório seja privado e o computador hospedeiro tenha acesso ao servidor git, use
+  SetPrivateRepositoryAutoConfig() para copiar as credências do git contidas em ~/.ssh e as
+  configurações de ~/.gitconfig de forma automática;
+* Para conseguir acessar repositórios privados de dentro do container, construa a imagem em duas
+  ou mais etapas e na primeira etapa, copie os arquivos id_rsa e known_hosts para a pasta
+  /root/.ssh e o arquivo .gitconfig para a pasta /root/;
+* A função MakeDefaultDockerfileForMe() monta um dockerfile padrão com os procedimentos acima;
+* Caso a chave ~/.ssh/id_rsa seja protegida com senha, use a função SetGitSshPassword() para
+  definir a senha da mesma;
+* Caso queira definir os arquivos de forma manual, use SetGitConfigFile(), SetSshKnownHostsFile()
+  e SetSshIdRsaFile() para definir os arquivos de forma manual;
+* Esta função deve ser usada com a função ImageBuildFromServer() e SetImageName() para baixar e
+  gerar uma imagem a partir do conteúdo de um repositório git;
+* O repositório deve contar um arquivo Dockerfile e ele será procurado na seguinte ordem:
+  './Dockerfile-iotmaker', './Dockerfile', './dockerfile', 'Dockerfile.*', 'dockerfile.*',
+  '.*Dockerfile.*' e '.*dockerfile.*';
+* O repositório pode ser definido pelos métodos SetGitCloneToBuild(),
+  SetGitCloneToBuildWithPrivateSshKey(), SetGitCloneToBuildWithPrivateToken() e SetGitCloneToBuildWithUserPassworh().
 ```
 
 <details><summary>Example</summary>
@@ -9063,113 +9153,121 @@ func (e *ContainerBuilder) SetGitCloneToBuildWithPrivateSSHKey(url, privateSSHKe
 
 #### SetGitCloneToBuildWithPrivateSSHKey
 
-English: Defines the path of a repository to be used as the base of the image to be mounted\.
+English:
+
+Defines the path of a repository to be used as the base of the image to be mounted\.
 
 ```
-url: Address of the repository containing the project
-privateSSHKeyPath: this is the path of the private ssh key compatible with the public key registered in git
-password: password used when the ssh key was generated or empty string
+Input:
+  url: Address of the repository containing the project
+  privateSSHKeyPath: this is the path of the private ssh key compatible with the public key
+    registered in git
+  password: password used when the ssh key was generated or empty string
+```
 
-  Note:
+Note:
 
-  If the repository is private and the host computer has access to the git server, use
-  SetPrivateRepositoryAutoConfig() to copy the git credentials contained in ~/.ssh and the settings of
-  ~/.gitconfig automatically;
-
-  To be able to access private repositories from inside the container, build the image in two or more steps
-  and in the first step, copy the id_rsa and known_hosts files to the /root/.ssh folder, and the ~/.gitconfig
-  file to the /root folder;
-
-  The MakeDefaultDockerfileForMe() function make a standard dockerfile with the procedures above;
-
-  If the ~/.ssh/id_rsa key is password protected, use the SetGitSshPassword() function to set the password;
-
-  If you want to define the files manually, use SetGitConfigFile(), SetSshKnownHostsFile() and
+```
+* If the repository is private and the host computer has access to the git server, use
+  SetPrivateRepositoryAutoConfig() to copy the git credentials contained in ~/.ssh and the
+  settings of ~/.gitconfig automatically;
+* To be able to access private repositories from inside the container, build the image in two or
+  more steps and in the first step, copy the id_rsa and known_hosts files to the /root/.ssh
+  folder, and the ~/.gitconfig file to the /root folder;
+* The MakeDefaultDockerfileForMe() function make a standard dockerfile with the procedures above;
+* If the ~/.ssh/id_rsa key is password protected, use the SetGitSshPassword() function to set the
+  password;
+* If you want to define the files manually, use SetGitConfigFile(), SetSshKnownHostsFile() and
   SetSshIdRsaFile() to define the files manually;
-
-  This function must be used with the ImageBuildFromServer() and SetImageName() function to download and
-  generate an image from the contents of a git repository;
-
-  The repository must contain a Dockerfile file and it will be searched for in the following order:
-  './Dockerfile-iotmaker', './Dockerfile', './dockerfile', 'Dockerfile.*', 'dockerfile.*', '.*Dockerfile.*'
-  and '.*dockerfile.*';
-
-  The repository can be defined by the methods SetGitCloneToBuild(), SetGitCloneToBuildWithPrivateSshKey(),
-  SetGitCloneToBuildWithPrivateToken() and SetGitCloneToBuildWithUserPassworh().
-
-  code:
-    var err error
-    var usr *user.User
-    var privateSSHKeyPath string
-    var userGitConfigPath string
-    var file []byte
-    usr, err = user.Current()
-    if err != nil {
-      panic(err)
-    }
-
-    privateSSHKeyPath = filepath.Join(usr.HomeDir, ".shh", "id_rsa")
-    userGitConfigPath = filepath.Join(usr.HomeDir, ".gitconfig")
-    file, err = ioutil.ReadFile(userGitConfigPath)
-
-    var container = ContainerBuilder{}
-    container.SetGitCloneToBuildWithPrivateSSHKey(url, privateSSHKeyPath, password)
-    container.SetGitConfigFile(string(file))
+* This function must be used with the ImageBuildFromServer() and SetImageName() function to
+  download and generate an image from the contents of a git repository;
+* The repository must contain a Dockerfile file and it will be searched for in the following
+  order:
+  './Dockerfile-iotmaker', './Dockerfile', './dockerfile', 'Dockerfile.*', 'dockerfile.*',
+  '.*Dockerfile.*' and '.*dockerfile.*';
+* The repository can be defined by the methods SetGitCloneToBuild(),
+  SetGitCloneToBuildWithPrivateSshKey(), SetGitCloneToBuildWithPrivateToken() and
+  SetGitCloneToBuildWithUserPassworh().
 ```
 
-Português: Define o caminho de um repositório para ser usado como base da imagem a ser montada\.
+code:
 
 ```
-url: Endereço do repositório contendo o projeto
-privateSSHKeyPath: este é o caminho da chave ssh privada compatível com a chave pública cadastrada no git
-password: senha usada no momento que a chave ssh foi gerada ou string em branco
+var err error
+var usr *user.User
+var privateSSHKeyPath string
+var userGitConfigPath string
+var file []byte
+usr, err = user.Current()
+if err != nil {
+  panic(err)
+}
 
-  Nota:
+privateSSHKeyPath = filepath.Join(usr.HomeDir, ".shh", "id_rsa")
+userGitConfigPath = filepath.Join(usr.HomeDir, ".gitconfig")
+file, err = ioutil.ReadFile(userGitConfigPath)
 
-  Caso o repositório seja privado e o computador hospedeiro tenha acesso ao servidor git, use
-  SetPrivateRepositoryAutoConfig() para copiar as credências do git contidas em ~/.ssh e as configurações de
-  ~/.gitconfig de forma automática;
+var container = ContainerBuilder{}
+container.SetGitCloneToBuildWithPrivateSSHKey(url, privateSSHKeyPath, password)
+container.SetGitConfigFile(string(file))
+```
 
-  Para conseguir acessar repositórios privados de dentro do container, construa a imagem em duas ou mais etapas
-  e na primeira etapa, copie os arquivos id_rsa e known_hosts para a pasta /root/.ssh e o arquivo .gitconfig
-  para a pasta /root/;
+Português:
 
-  A função MakeDefaultDockerfileForMe() monta um dockerfile padrão com os procedimentos acima;
+Define o caminho de um repositório para ser usado como base da imagem a ser montada\.
 
-  Caso a chave ~/.ssh/id_rsa seja protegida com senha, use a função SetGitSshPassword() para definir a senha
-  da mesma;
+```
+Entrada:
+  url: Endereço do repositório contendo o projeto
+  privateSSHKeyPath: este é o caminho da chave ssh privada compatível com a chave pública
+    cadastrada no git
+  password: senha usada no momento que a chave ssh foi gerada ou string em branco
+```
 
-  Caso queira definir os arquivos de forma manual, use SetGitConfigFile(), SetSshKnownHostsFile() e
-  SetSshIdRsaFile() para definir os arquivos de forma manual;
+Nota:
 
-  Esta função deve ser usada com a função ImageBuildFromServer() e SetImageName() para baixar e gerar uma
-  imagem a partir do conteúdo de um repositório git;
+```
+* Caso o repositório seja privado e o computador hospedeiro tenha acesso ao servidor git, use
+  SetPrivateRepositoryAutoConfig() para copiar as credências do git contidas em ~/.ssh e as
+  configurações de ~/.gitconfig de forma automática;
+* Para conseguir acessar repositórios privados de dentro do container, construa a imagem em duas
+  ou mais etapas e na primeira etapa, copie os arquivos id_rsa e known_hosts para a pasta
+  /root/.ssh e o arquivo .gitconfig para a pasta /root/;
+* A função MakeDefaultDockerfileForMe() monta um dockerfile padrão com os procedimentos acima;
+* Caso a chave ~/.ssh/id_rsa seja protegida com senha, use a função SetGitSshPassword() para
+  definir a senha da mesma;
+* Caso queira definir os arquivos de forma manual, use SetGitConfigFile(), SetSshKnownHostsFile()
+  e SetSshIdRsaFile() para definir os arquivos de forma manual;
+* Esta função deve ser usada com a função ImageBuildFromServer() e SetImageName() para baixar e
+  gerar uma imagem a partir do conteúdo de um repositório git;
+* O repositório deve contar um arquivo Dockerfile e ele será procurado na seguinte ordem:
+  './Dockerfile-iotmaker', './Dockerfile', './dockerfile', 'Dockerfile.*', 'dockerfile.*',
+  '.*Dockerfile.*' e '.*dockerfile.*';
+* O repositório pode ser definido pelos métodos SetGitCloneToBuild(),
+  SetGitCloneToBuildWithPrivateSshKey(), SetGitCloneToBuildWithPrivateToken() e
+  SetGitCloneToBuildWithUserPassworh().
+```
 
-  O repositório deve contar um arquivo Dockerfile e ele será procurado na seguinte ordem:
-  './Dockerfile-iotmaker', './Dockerfile', './dockerfile', 'Dockerfile.*', 'dockerfile.*', '.*Dockerfile.*'
-  e '.*dockerfile.*';
+code:
 
-  O repositório pode ser definido pelos métodos SetGitCloneToBuild(), SetGitCloneToBuildWithPrivateSshKey(),
-  SetGitCloneToBuildWithPrivateToken() e SetGitCloneToBuildWithUserPassworh().
+```
+var err error
+var usr *user.User
+var privateSSHKeyPath string
+var userGitConfigPath string
+var file []byte
+usr, err = user.Current()
+if err != nil {
+  panic(err)
+}
 
-  code:
-    var err error
-    var usr *user.User
-    var privateSSHKeyPath string
-    var userGitConfigPath string
-    var file []byte
-    usr, err = user.Current()
-    if err != nil {
-      panic(err)
-    }
+privateSSHKeyPath = filepath.Join(usr.HomeDir, ".shh", "id_rsa")
+userGitConfigPath = filepath.Join(usr.HomeDir, ".gitconfig")
+file, err = ioutil.ReadFile(userGitConfigPath)
 
-    privateSSHKeyPath = filepath.Join(usr.HomeDir, ".shh", "id_rsa")
-    userGitConfigPath = filepath.Join(usr.HomeDir, ".gitconfig")
-    file, err = ioutil.ReadFile(userGitConfigPath)
-
-    var container = ContainerBuilder{}
-    container.SetGitCloneToBuildWithPrivateSSHKey(url, privateSSHKeyPath, password)
-    container.SetGitConfigFile(string(file))
+var container = ContainerBuilder{}
+container.SetGitCloneToBuildWithPrivateSSHKey(url, privateSSHKeyPath, password)
+container.SetGitConfigFile(string(file))
 ```
 
 ### func \(\*ContainerBuilder\) [SetGitCloneToBuildWithPrivateToken](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetGitCloneToBuildWithPrivateToken.go#L103>)

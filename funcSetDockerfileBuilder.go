@@ -2,13 +2,27 @@ package iotmakerdockerbuilder
 
 // SetDockerfileBuilder
 //
-// English: Defines a new object containing the builder of the dockerfile.
+// English:
 //
-//   Note: see the DockerfileAuto interface for further instructions.
+//  Defines a new object containing the builder of the dockerfile.
 //
-// Português: Define um novo objeto contendo o construtor do arquivo dockerfile.
+//   Input:
+//     value: Object compatible with DockerfileAuto interface
 //
-//   Nota: veja a interface DockerfileAuto para mais instruções.
+// Note:
+//
+//   * Eee the DockerfileAuto interface for further instructions.
+//
+// Português:
+//
+//  Define um novo objeto contendo o construtor do arquivo dockerfile.
+//
+//   Entrada:
+//     value: Objeto compatível com a interface DockerfileAuto
+//
+// Nota:
+//
+//   * Veja a interface DockerfileAuto para mais instruções.
 func (e *ContainerBuilder) SetDockerfileBuilder(value DockerfileAuto) {
 	e.autoDockerfile = value
 }
