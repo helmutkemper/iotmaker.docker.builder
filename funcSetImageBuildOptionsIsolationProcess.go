@@ -6,9 +6,13 @@ import (
 
 // SetImageBuildOptionsIsolationProcess
 //
-// English: Set process isolation mode
+// English:
 //
-// Português: Determina o método de isolamento do processo
+//  Set process isolation mode
+//
+// Português:
+//
+//  Determina o método de isolamento do processo
 func (e *ContainerBuilder) SetImageBuildOptionsIsolationProcess() {
 	e.buildOptions.Isolation = container.IsolationProcess
 }

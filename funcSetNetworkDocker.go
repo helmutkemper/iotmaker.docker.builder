@@ -6,17 +6,27 @@ import (
 
 // SetNetworkDocker
 //
-// English: Sets the docker network manager pointer
+// English:
 //
-//   network: pointer to the network manager object.
+//  Sets the docker network manager pointer
 //
-//     Note: compatible with dockerBuilderNetwork.ContainerBuilderNetwork{} object
+//   Input:
+//     network: pointer to the network manager object.
 //
-// Português: Define o ponteiro do gerenciador de rede docker
+// Note:
 //
-//   network: ponteiro para o objeto gerenciador de rede.
+//   * Compatible with dockerBuilderNetwork.ContainerBuilderNetwork{} object
 //
-//     Nota: compatível com o objeto dockerBuilderNetwork.ContainerBuilderNetwork{}
+// Português:
+//
+//  Define o ponteiro do gerenciador de rede docker
+//
+//   Entrada:
+//     network: ponteiro para o objeto gerenciador de rede.
+//
+// Nota:
+//
+//   * Compatível com o objeto dockerBuilderNetwork.ContainerBuilderNetwork{}
 func (e *ContainerBuilder) SetNetworkDocker(network isolatedNetwork.ContainerBuilderNetworkInterface) {
 	e.network = network
 }

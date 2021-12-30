@@ -6,9 +6,13 @@ import (
 
 // SetImageBuildOptionsIsolationHyperV
 //
-// English: Set HyperV isolation mode
+// English:
 //
-// Português: Define o método de isolamento como sendo HyperV
+//  Set HyperV isolation mode
+//
+// Português:
+//
+//  Define o método de isolamento como sendo HyperV
 func (e *ContainerBuilder) SetImageBuildOptionsIsolationHyperV() {
 	e.buildOptions.Isolation = container.IsolationHyperV
 }

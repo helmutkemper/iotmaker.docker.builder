@@ -9898,7 +9898,7 @@ Entrada:
 
 Se você tiver quatro nodes de memória em seu sistema \(0\-3\)\, use \-\-cpuset\-mems=0\,1 então\, os processos em seu container do Docker usarão apenas a memória dos dois primeiros nodes\.
 
-### func \(\*ContainerBuilder\) [SetImageBuildOptionsCPUShares](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetImageBuildOptionsCPUShares.go#L35>)
+### func \(\*ContainerBuilder\) [SetImageBuildOptionsCPUShares](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetImageBuildOptionsCPUShares.go#L45>)
 
 ```go
 func (e *ContainerBuilder) SetImageBuildOptionsCPUShares(value int64)
@@ -9907,6 +9907,13 @@ func (e *ContainerBuilder) SetImageBuildOptionsCPUShares(value int64)
 #### SetImageBuildOptionsCPUShares
 
 English:
+
+Set the CPU shares of the image build options\.
+
+```
+Input:
+  value: CPU shares (Default: 1024)
+```
 
 Set this flag to a value greater or less than the default of 1024 to increase or reduce the container’s weight\, and give it access to a greater or lesser proportion of the host machine’s CPU cycles\.
 
@@ -9922,6 +9929,13 @@ It does not guarantee or reserve any specific CPU access\.
 
 Português:
 
+Define o compartilhamento de CPU na construção da imagem\.
+
+```
+Entrada:
+  value: Compartilhamento de CPU (Default: 1024)
+```
+
 Defina este sinalizador para um valor maior ou menor que o padrão de 1024 para aumentar ou reduzir o peso do container e dar a ele acesso a uma proporção maior ou menor dos ciclos de CPU da máquina host\.
 
 Isso só é aplicado quando os ciclos da CPU são restritos\. Quando muitos ciclos de CPU estão disponíveis\, todos os container usam a quantidade de CPU de que precisam\. Dessa forma\, este é um limite flexível\. \-\-cpu\-shares não impede que os containers sejam agendados no modo swarm\.
@@ -9930,7 +9944,7 @@ Ele prioriza os recursos da CPU do container para os ciclos de CPU disponíveis\
 
 Não garante ou reserva nenhum acesso específico à CPU\.
 
-### func \(\*ContainerBuilder\) [SetImageBuildOptionsCacheFrom](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetImageBuildOptionsCacheFrom.go#L10>)
+### func \(\*ContainerBuilder\) [SetImageBuildOptionsCacheFrom](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetImageBuildOptionsCacheFrom.go#L26>)
 
 ```go
 func (e *ContainerBuilder) SetImageBuildOptionsCacheFrom(values []string)
@@ -9938,11 +9952,37 @@ func (e *ContainerBuilder) SetImageBuildOptionsCacheFrom(values []string)
 
 #### SetImageBuildOptionsCacheFrom
 
-English: specifies images that are used for matching cache\. Images specified here do not need to have a valid parent chain to match cache\.
+English:
 
-Português: especifica imagens que são usadas para correspondência de cache\. As imagens especificadas aqui não precisam ter uma cadeia pai válida para corresponder a cache\.
+Specifies images that are used for matching cache\.
 
-### func \(\*ContainerBuilder\) [SetImageBuildOptionsExtraHosts](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetImageBuildOptionsExtraHosts.go#L27>)
+```
+Entrada:
+  values: images that are used for matching cache.
+```
+
+Note:
+
+```
+Images specified here do not need to have a valid parent chain to match cache.
+```
+
+Português:
+
+Especifica imagens que são usadas para correspondência de cache\.
+
+```
+Entrada:
+  values: imagens que são usadas para correspondência de cache.
+```
+
+Note:
+
+```
+As imagens especificadas aqui não precisam ter uma cadeia pai válida para corresponder a cache.
+```
+
+### func \(\*ContainerBuilder\) [SetImageBuildOptionsExtraHosts](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetImageBuildOptionsExtraHosts.go#L46>)
 
 ```go
 func (e *ContainerBuilder) SetImageBuildOptionsExtraHosts(values []string)
@@ -9950,33 +9990,55 @@ func (e *ContainerBuilder) SetImageBuildOptionsExtraHosts(values []string)
 
 #### SetImageBuildOptionsExtraHosts
 
-English: Add hostname mappings at build\-time\. Use the same values as the docker client \-\-add\-host parameter\.
+English:
+
+Add hostname mappings at build\-time\. Use the same values as the docker client \-\-add\-host parameter\.
 
 ```
-values:
-  somehost:162.242.195.82
-  otherhost:50.31.209.229
+Input:
+  values: hosts to mapping
+```
 
-An entry with the ip address and hostname is created in /etc/hosts inside containers for this build, e.g:
+Example:
+
+```
+values = []string{
+  "somehost:162.242.195.82",
+  "otherhost:50.31.209.229",
+}
+
+An entry with the ip address and hostname is created in /etc/hosts inside containers for this
+build, e.g:
 
   162.242.195.82 somehost
   50.31.209.229 otherhost
 ```
 
-Português\): Adiciona itens ao mapa de hostname durante o processo de construção da imagem\. Use os mesmos valores que em docker client \-\-add\-host parameter\.
+Português:
+
+Adiciona itens ao mapa de hostname durante o processo de construção da imagem\. Use os mesmos valores que em docker client \-\-add\-host parameter\.
 
 ```
-values:
-  somehost:162.242.195.82
-  otherhost:50.31.209.229
+Entrada:
+  values: hosts para mapeamento
+```
 
-Uma nova entrada com o endereço ip e hostname será criada dentro de /etc/hosts do container. Exemplo:
+Exemplo:
+
+```
+values = []string{
+  "somehost:162.242.195.82",
+  "otherhost:50.31.209.229",
+}
+
+Uma nova entrada com o endereço ip e hostname será criada dentro de /etc/hosts do container.
+Exemplo:
 
   162.242.195.82 somehost
   50.31.209.229 otherhost
 ```
 
-### func \(\*ContainerBuilder\) [SetImageBuildOptionsIsolationDefault](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetImageBuildOptionsIsolationDefault.go#L12>)
+### func \(\*ContainerBuilder\) [SetImageBuildOptionsIsolationDefault](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetImageBuildOptionsIsolationDefault.go#L16>)
 
 ```go
 func (e *ContainerBuilder) SetImageBuildOptionsIsolationDefault()
@@ -9984,11 +10046,15 @@ func (e *ContainerBuilder) SetImageBuildOptionsIsolationDefault()
 
 #### SetImageBuildOptionsIsolationDefault
 
-English: Set default isolation mode on current daemon
+English:
 
-Português: Define o método de isolamento do processo como sendo o mesmo do deamon
+Set default isolation mode on current daemon
 
-### func \(\*ContainerBuilder\) [SetImageBuildOptionsIsolationHyperV](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetImageBuildOptionsIsolationHyperV.go#L12>)
+Português:
+
+Define o método de isolamento do processo como sendo o mesmo do deamon
+
+### func \(\*ContainerBuilder\) [SetImageBuildOptionsIsolationHyperV](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetImageBuildOptionsIsolationHyperV.go#L16>)
 
 ```go
 func (e *ContainerBuilder) SetImageBuildOptionsIsolationHyperV()
@@ -9996,11 +10062,15 @@ func (e *ContainerBuilder) SetImageBuildOptionsIsolationHyperV()
 
 #### SetImageBuildOptionsIsolationHyperV
 
-English: Set HyperV isolation mode
+English:
 
-Português: Define o método de isolamento como sendo HyperV
+Set HyperV isolation mode
 
-### func \(\*ContainerBuilder\) [SetImageBuildOptionsIsolationProcess](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetImageBuildOptionsIsolationProcess.go#L12>)
+Português:
+
+Define o método de isolamento como sendo HyperV
+
+### func \(\*ContainerBuilder\) [SetImageBuildOptionsIsolationProcess](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetImageBuildOptionsIsolationProcess.go#L16>)
 
 ```go
 func (e *ContainerBuilder) SetImageBuildOptionsIsolationProcess()
@@ -10008,11 +10078,15 @@ func (e *ContainerBuilder) SetImageBuildOptionsIsolationProcess()
 
 #### SetImageBuildOptionsIsolationProcess
 
-English: Set process isolation mode
+English:
 
-Português: Determina o método de isolamento do processo
+Set process isolation mode
 
-### func \(\*ContainerBuilder\) [SetImageBuildOptionsMemory](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetImageBuildOptionsMemory.go#L68>)
+Português:
+
+Determina o método de isolamento do processo
+
+### func \(\*ContainerBuilder\) [SetImageBuildOptionsMemory](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetImageBuildOptionsMemory.go#L78>)
 
 ```go
 func (e *ContainerBuilder) SetImageBuildOptionsMemory(value int64)
@@ -10020,21 +10094,41 @@ func (e *ContainerBuilder) SetImageBuildOptionsMemory(value int64)
 
 #### SetImageBuildOptionsMemory
 
-English: The maximum amount of memory the container can use\. If you set this option\, the minimum allowed value is 4 \* 1024 \* 1024 \(4 megabyte\)\. Input: value: amount of memory in bytes
+English:
+
+The maximum amount of memory the container can use\.
 
 ```
-Use value * KKiloByte, value * KMegaByte and value * KGigaByte
-See https://docs.docker.com/engine/reference/run/#user-memory-constraints
+Input:
+  value: amount of memory in bytes
 ```
 
-Português: Memória máxima total que o container pode usar\. Se você vai usar esta opção\, o máximo permitido é 4 \* 1024 \* 1024 \(4 megabyte\) Entrada: value: Quantidade de memória em bytes
+Note:
 
 ```
-Use value * KKiloByte, value * KMegaByte e value * KGigaByte
-See https://docs.docker.com/engine/reference/run/#user-memory-constraints
+* If you set this option, the minimum allowed value is 4 * 1024 * 1024 (4 megabyte);
+* Use value * KKiloByte, value * KMegaByte and value * KGigaByte
+  See https://docs.docker.com/engine/reference/run/#user-memory-constraints
 ```
 
-### func \(\*ContainerBuilder\) [SetImageBuildOptionsMemorySwap](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetImageBuildOptionsMemorySwap.go#L63>)
+Português:
+
+Memória máxima total que o container pode usar\.
+
+```
+Entrada:
+  value: Quantidade de memória em bytes
+```
+
+Nota:
+
+```
+* Se você vai usar esta opção, o máximo permitido é 4 * 1024 * 1024 (4 megabyte)
+* Use value * KKiloByte, value * KMegaByte e value * KGigaByte
+  See https://docs.docker.com/engine/reference/run/#user-memory-constraints
+```
+
+### func \(\*ContainerBuilder\) [SetImageBuildOptionsMemorySwap](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetImageBuildOptionsMemorySwap.go#L70>)
 
 ```go
 func (e *ContainerBuilder) SetImageBuildOptionsMemorySwap(value int64)
@@ -10042,21 +10136,29 @@ func (e *ContainerBuilder) SetImageBuildOptionsMemorySwap(value int64)
 
 #### SetImageBuildOptionsMemorySwap
 
-English: Set memory swap \(\-\-memory\-swap\)
+English:
+
+Set memory swap \(\-\-memory\-swap\)
+
+Note:
 
 ```
-Use value * KKiloByte, value * KMegaByte and value * KGigaByte
-See https://docs.docker.com/engine/reference/run/#user-memory-constraints
+* Use value * KKiloByte, value * KMegaByte and value * KGigaByte
+  See https://docs.docker.com/engine/reference/run/#user-memory-constraints
 ```
 
-Português: habilita a opção memory swp
+Português:
+
+habilita a opção memory swp
+
+Note:
 
 ```
-Use value * KKiloByte, value * KMegaByte e value * KGigaByte
-See https://docs.docker.com/engine/reference/run/#user-memory-constraints
+* Use value * KKiloByte, value * KMegaByte e value * KGigaByte
+  See https://docs.docker.com/engine/reference/run/#user-memory-constraints
 ```
 
-### func \(\*ContainerBuilder\) [SetImageBuildOptionsNoCache](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetImageBuildOptionsNoCache.go#L8>)
+### func \(\*ContainerBuilder\) [SetImageBuildOptionsNoCache](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetImageBuildOptionsNoCache.go#L12>)
 
 ```go
 func (e *ContainerBuilder) SetImageBuildOptionsNoCache()
@@ -10064,11 +10166,19 @@ func (e *ContainerBuilder) SetImageBuildOptionsNoCache()
 
 #### SetImageBuildOptionsNoCache
 
-English: Set image build no cache
+English:
 
-Português: Define a opção \`sem cache\` para a construção da imagem
+```
+Set image build no cache
+```
 
-### func \(\*ContainerBuilder\) [SetImageBuildOptionsPlatform](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetImageBuildOptionsPlatform.go#L16>)
+Português:
+
+```
+Define a opção `sem cache` para a construção da imagem
+```
+
+### func \(\*ContainerBuilder\) [SetImageBuildOptionsPlatform](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetImageBuildOptionsPlatform.go#L31>)
 
 ```go
 func (e *ContainerBuilder) SetImageBuildOptionsPlatform(value string)
@@ -10076,7 +10186,16 @@ func (e *ContainerBuilder) SetImageBuildOptionsPlatform(value string)
 
 #### SetImageBuildOptionsPlatform
 
-English: Target platform containers for this service will run on\, using the os\[/arch\[/variant\]\] syntax\, e\.g\.
+English:
+
+Target platform containers for this service will run on\, using the os\[/arch\[/variant\]\] syntax\.
+
+```
+Input:
+  value: target platform
+```
+
+Examples:
 
 ```
 osx
@@ -10084,7 +10203,16 @@ windows/amd64
 linux/arm64/v8
 ```
 
-Português: Especifica a plataforma de container onde o serviço vai rodar\, usando a sintaxe os\[/arch\[/variant\]\]
+Português:
+
+Especifica a plataforma de container onde o serviço vai rodar\, usando a sintaxe os\[/arch\[/variant\]\]
+
+```
+Entrada:
+  value: plataforma de destino
+```
+
+Exemplos:
 
 ```
 osx
@@ -10092,7 +10220,7 @@ windows/amd64
 linux/arm64/v8
 ```
 
-### func \(\*ContainerBuilder\) [SetImageBuildOptionsSecurityOpt](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetImageBuildOptionsSecurityOpt.go#L29>)
+### func \(\*ContainerBuilder\) [SetImageBuildOptionsSecurityOpt](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetImageBuildOptionsSecurityOpt.go#L43>)
 
 ```go
 func (e *ContainerBuilder) SetImageBuildOptionsSecurityOpt(value []string)
@@ -10100,7 +10228,16 @@ func (e *ContainerBuilder) SetImageBuildOptionsSecurityOpt(value []string)
 
 #### SetImageBuildOptionsSecurityOpt
 
-English: Set the container security options
+English:
+
+Set the container security options
+
+```
+Input:
+  values: container security options
+```
+
+Examples:
 
 ```
 label=user:USER        — Set the label user for the container
@@ -10114,7 +10251,16 @@ seccomp=unconfined     — Turn off seccomp confinement for the container
 seccomp=profile.json   — White-listed syscalls seccomp Json file to be used as a seccomp filter
 ```
 
-Português: Modifica as opções de segurança do container
+Português:
+
+Modifica as opções de segurança do container
+
+```
+Entrada:
+  values: opções de segurança do container
+```
+
+Exemplos:
 
 ```
 label=user:USER        — Determina o rótulo user para o container
@@ -10128,7 +10274,7 @@ seccomp=unconfined     — Desliga o confinamento causado pelo seccomp do linux 
 seccomp=profile.json   — White-listed syscalls seccomp Json file to be used as a seccomp filter
 ```
 
-### func \(\*ContainerBuilder\) [SetImageBuildOptionsSquash](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetImageBuildOptionsSquash.go#L10>)
+### func \(\*ContainerBuilder\) [SetImageBuildOptionsSquash](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetImageBuildOptionsSquash.go#L20>)
 
 ```go
 func (e *ContainerBuilder) SetImageBuildOptionsSquash(value bool)
@@ -10136,11 +10282,25 @@ func (e *ContainerBuilder) SetImageBuildOptionsSquash(value bool)
 
 #### SetImageBuildOptionsSquash
 
-English: squash the resulting image's layers to the parent preserves the original image and creates a new one from the parent with all the changes applied to a single layer
+English:
 
-Português: Usa o conteúdo dos layers da imagem pai para criar uma imagem nova\, preservando a imagem pai\, e aplica todas as mudanças a um novo layer
+Squash the resulting image's layers to the parent preserves the original image and creates a new one from the parent with all the changes applied to a single layer
 
-### func \(\*ContainerBuilder\) [SetImageBuildOptionsTarget](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetImageBuildOptionsTarget.go#L14>)
+```
+Input:
+  value: true preserve the original image and creates a new one from the parent
+```
+
+Português:
+
+Usa o conteúdo dos layers da imagem pai para criar uma imagem nova\, preservando a imagem pai\, e aplica todas as mudanças a um novo layer
+
+```
+Entrada:
+  value: true preserva a imagem original e cria uma nova imagem a partir da imagem pai
+```
+
+### func \(\*ContainerBuilder\) [SetImageBuildOptionsTarget](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetImageBuildOptionsTarget.go#L28>)
 
 ```go
 func (e *ContainerBuilder) SetImageBuildOptionsTarget(value string)
@@ -10148,25 +10308,79 @@ func (e *ContainerBuilder) SetImageBuildOptionsTarget(value string)
 
 #### SetImageBuildOptionsTarget
 
-English: Build the specified stage as defined inside the Dockerfile\. See the multi\-stage build docs for details\.
+English:
+
+Build the specified stage as defined inside the Dockerfile\.
 
 ```
-See https://docs.docker.com/develop/develop-images/multistage-build/
+Input:
+  value: stage name
 ```
 
-Português: Monta o container a partir do estágio definido no arquivo Dockerfile\. Veja a documentação de múltiplos estágios para mais detalhes\.
+Note:
 
 ```
-See https://docs.docker.com/develop/develop-images/multistage-build/
+* See the multi-stage build docs for details.
+  See https://docs.docker.com/develop/develop-images/multistage-build/
 ```
 
-### func \(\*ContainerBuilder\) [SetImageCacheName](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetImageCacheName.go#L3>)
+Português:
+
+Monta o container a partir do estágio definido no arquivo Dockerfile\.
+
+```
+Entrada:
+  value: nome do estágio
+```
+
+Nota:
+
+```
+* Veja a documentação de múltiplos estágios para mais detalhes.
+  See https://docs.docker.com/develop/develop-images/multistage-build/
+```
+
+### func \(\*ContainerBuilder\) [SetImageCacheName](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetImageCacheName.go#L28>)
 
 ```go
 func (e *ContainerBuilder) SetImageCacheName(name string)
 ```
 
-### func \(\*ContainerBuilder\) [SetImageExpirationTime](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetImageExpirationTime.go#L21>)
+#### SetImageCacheName
+
+English::
+
+Defines the name of the cache image
+
+```
+Input:
+  name: Name of the cached image. (Default: "cache:lastest")
+```
+
+Note:
+
+```
+* See ImageMakeCache(), SetCacheEnable(), MakeDefaultDockerfileForMe() and
+  MakeDefaultDockerfileForMeWithInstallExtras() functions
+```
+
+Português:
+
+Define o nome da imagem cache
+
+```
+Entrada:
+  name: Nome da imagem cacge. (Default: "cache:lastest")
+```
+
+Nota:
+
+```
+* Veja as funções ImageMakeCache(), SetCacheEnable(), MakeDefaultDockerfileForMe() e
+  MakeDefaultDockerfileForMeWithInstallExtras()
+```
+
+### func \(\*ContainerBuilder\) [SetImageExpirationTime](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetImageExpirationTime.go#L31>)
 
 ```go
 func (e *ContainerBuilder) SetImageExpirationTime(expiration time.Duration)
@@ -10174,21 +10388,39 @@ func (e *ContainerBuilder) SetImageExpirationTime(expiration time.Duration)
 
 #### SetImageExpirationTime
 
-English: Sets image validity time\, preventing image build more than once within a certain period of time\. Input: expiration: Image expiration time
+English:
+
+Sets image validity time\, preventing image build more than once within a certain period of time\.
 
 ```
-Note: - This feature prevents creation of the same image when the test uses loops to generate multiple containers
-        from the same image.
+Input:
+  expiration: Image expiration time
 ```
 
-Português: Define o tempo de validade da imagem\, evitando o build da imagem mais de uma vez dentro de um certo período de tempo\. Entrada: expiration: Tempo de validade da imagem
+Note:
 
 ```
-Nota: - Esta funcionalidade impede a criação da mesma imagem quando o teste usa laços para gerar vários containers
-        da mesma imagem.
+* This feature prevents creation of the same image when the test uses loops to generate multiple
+  containers from the same image.
 ```
 
-### func \(\*ContainerBuilder\) [SetImageName](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetImageName.go#L16>)
+Português:
+
+Define o tempo de validade da imagem\, evitando o build da imagem mais de uma vez dentro de um certo período de tempo\.
+
+```
+Entrada:
+  expiration: Tempo de validade da imagem
+```
+
+Nota:
+
+```
+* Esta funcionalidade impede a criação da mesma imagem quando o teste usa laços para gerar vários
+  containers da mesma imagem.
+```
+
+### func \(\*ContainerBuilder\) [SetImageName](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetImageName.go#L26>)
 
 ```go
 func (e *ContainerBuilder) SetImageName(value string)
@@ -10196,19 +10428,35 @@ func (e *ContainerBuilder) SetImageName(value string)
 
 #### SetImageName
 
-English: Defines the name of the image to be used or created Input: value: name of the image to be downloaded or created
+English:
+
+Defines the name of the image to be used or created
 
 ```
-Note: - the image name must have the version tag. E.g.: name:latest
+Input:
+  value: name of the image to be downloaded or created
 ```
 
-Português: Define o nome da imagem a ser usada ou criada Entrada: value: noma da imagem a ser baixada ou criada
+Note:
 
 ```
-Nota: - o nome da imagem deve ter a tag de versão. Ex.: nome:latest
+* the image name must have the version tag. E.g.: name:latest
 ```
 
-### func \(\*ContainerBuilder\) [SetInspectInterval](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetInspectInterval.go#L22>)
+Português:
+
+Define o nome da imagem a ser usada ou criada
+
+```
+Entrada:
+  value: noma da imagem a ser baixada ou criada
+```
+
+Nota:
+
+\* o nome da imagem deve ter a tag de versão\. Ex\.: nome:latest
+
+### func \(\*ContainerBuilder\) [SetInspectInterval](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetInspectInterval.go#L32>)
 
 ```go
 func (e *ContainerBuilder) SetInspectInterval(value time.Duration)
@@ -10216,25 +10464,39 @@ func (e *ContainerBuilder) SetInspectInterval(value time.Duration)
 
 #### SetInspectInterval
 
-English: Defines the container's monitoring interval \[optional\]
+English:
+
+Defines the container's monitoring interval \[optional\]
 
 ```
-value: time interval between container inspection events
-
-  Note: This function has a high computational cost and should be used sparingly.
-  The captured values are presented by GetLastInspect() and GetChannelOnContainerInspect()
+Input:
+  value: time interval between container inspection events
 ```
 
-Português: Define o intervalo de monitoramento do container \[opcional\]
+Note:
 
 ```
-value: intervalo de tempo entre os eventos de inspeção do container
-
-  Nota: Esta função tem um custo computacional elevado e deve ser usada com moderação.
-  Os valores capturados são apresentados por GetLastInspect() e GetChannelOnContainerInspect()
+* This function has a high computational cost and should be used sparingly.
+* The captured values are presented by GetLastInspect() and GetChannelOnContainerInspect()
 ```
 
-### func \(\*ContainerBuilder\) [SetMetadata](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetMetadata.go#L12>)
+Português:
+
+Define o intervalo de monitoramento do container \[opcional\]
+
+```
+Entrada:
+  value: intervalo de tempo entre os eventos de inspeção do container
+```
+
+Nota:
+
+```
+* Esta função tem um custo computacional elevado e deve ser usada com moderação.
+* Os valores capturados são apresentados por GetLastInspect() e GetChannelOnContainerInspect()
+```
+
+### func \(\*ContainerBuilder\) [SetMetadata](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetMetadata.go#L18>)
 
 ```go
 func (e *ContainerBuilder) SetMetadata(metadata map[string]interface{})
@@ -10242,11 +10504,25 @@ func (e *ContainerBuilder) SetMetadata(metadata map[string]interface{})
 
 #### SetMetadata
 
-English: Sets a list of user\-defined data Input: metadata: map\[string\]interface\{\} with user defined data
+English:
 
-Português: Define uma lista de dados definidos pelo usuário Entrada: metadata: map\[string\]interface\{\} com dados definidos oelo usuário
+Sets a list of user\-defined data
 
-### func \(\*ContainerBuilder\) [SetNetworkDocker](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetNetworkDocker.go#L20>)
+```
+Input:
+  metadata: map[string]interface{} with user defined data
+```
+
+Português:
+
+Define uma lista de dados definidos pelo usuário
+
+```
+Entrada:
+  metadata: map[string]interface{} com dados definidos oelo usuário
+```
+
+### func \(\*ContainerBuilder\) [SetNetworkDocker](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetNetworkDocker.go#L30>)
 
 ```go
 func (e *ContainerBuilder) SetNetworkDocker(network isolatedNetwork.ContainerBuilderNetworkInterface)
@@ -10254,20 +10530,34 @@ func (e *ContainerBuilder) SetNetworkDocker(network isolatedNetwork.ContainerBui
 
 #### SetNetworkDocker
 
-English: Sets the docker network manager pointer
+English:
+
+Sets the docker network manager pointer
 
 ```
-network: pointer to the network manager object.
-
-  Note: compatible with dockerBuilderNetwork.ContainerBuilderNetwork{} object
+Input:
+  network: pointer to the network manager object.
 ```
 
-Português: Define o ponteiro do gerenciador de rede docker
+Note:
 
 ```
-network: ponteiro para o objeto gerenciador de rede.
+* Compatible with dockerBuilderNetwork.ContainerBuilderNetwork{} object
+```
 
-  Nota: compatível com o objeto dockerBuilderNetwork.ContainerBuilderNetwork{}
+Português:
+
+Define o ponteiro do gerenciador de rede docker
+
+```
+Entrada:
+  network: ponteiro para o objeto gerenciador de rede.
+```
+
+Nota:
+
+```
+* Compatível com o objeto dockerBuilderNetwork.ContainerBuilderNetwork{}
 ```
 
 <details><summary>Example</summary>
@@ -10335,13 +10625,23 @@ network: ponteiro para o objeto gerenciador de rede.
 </p>
 </details>
 
-### func \(\*ContainerBuilder\) [SetOnBuild](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetOnBuild.go#L104>)
+### func \(\*ContainerBuilder\) [SetOnBuild](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetOnBuild.go#L120>)
 
 ```go
 func (e *ContainerBuilder) SetOnBuild(onBuild []string)
 ```
 
-SetOnBuild \(english\): Adds to the image a trigger instruction to be executed at a later time\, when the image is used as the base for another build\.
+#### SetOnBuild
+
+English:
+
+Adds to the image a trigger instruction to be executed at a later time\, when the image is used as the base for another build\.
+
+```
+Input:
+  onBuild: List of trigger instruction to be executed at a later time, when the image is used as
+   the base for another build
+```
 
 The trigger will be executed in the context of the downstream build\, as if it had been inserted immediately after the FROM instruction in the downstream Dockerfile\.
 
@@ -10366,11 +10666,21 @@ For example you might add something like this:
 }
 ```
 
-Warning: The ONBUILD instruction may not trigger FROM or MAINTAINER instructions\.
+Warning:
 
-https://docs.docker.com/engine/reference/builder/#onbuild
+```
+The ONBUILD instruction may not trigger FROM or MAINTAINER instructions.
+```
 
-SetOnBuild \(português\): Adiciona à imagem uma instrução de gatilho a ser executada posteriormente\, quando a imagem for usada como base para outra construção\.
+Note:
+
+```
+See https://docs.docker.com/engine/reference/builder/#onbuild
+```
+
+Português:
+
+Adiciona à imagem uma instrução de gatilho a ser executada posteriormente\, quando a imagem for usada como base para outra construção\.
 
 O gatilho será executado no contexto do downstream build \, como se tivesse sido inserido imediatamente após a instrução FROM no downstream Dockerfile\.
 
@@ -10395,9 +10705,17 @@ Por exemplo\, você pode adicionar algo assim:
 }
 ```
 
-Atenção: A instrução ONBUILD não pode disparar as instruções FROM ou MAINTAINER\.
+Atenção:
 
+```
+A instrução ONBUILD não pode disparar as instruções FROM ou MAINTAINER.
+```
+
+Nota:
+
+```
 https://docs.docker.com/engine/reference/builder/#onbuild
+```
 
 ### func \(\*ContainerBuilder\) [SetOpenAllContainersPorts](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetDoNotOpenContainersPorts.go#L18>)
 

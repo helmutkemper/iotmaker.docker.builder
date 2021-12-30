@@ -4,6 +4,11 @@ package iotmakerdockerbuilder
 //
 // English:
 //
+//  Set the CPU shares of the image build options.
+//
+//   Input:
+//     value: CPU shares (Default: 1024)
+//
 //  Set this flag to a value greater or less than the default of 1024 to increase or reduce the
 //  container’s weight, and give it access to a greater or lesser proportion of the host machine’s
 //  CPU cycles.
@@ -20,6 +25,11 @@ package iotmakerdockerbuilder
 //  It does not guarantee or reserve any specific CPU access.
 //
 // Português:
+//
+//  Define o compartilhamento de CPU na construção da imagem.
+//
+//   Entrada:
+//     value: Compartilhamento de CPU (Default: 1024)
 //
 //  Defina este sinalizador para um valor maior ou menor que o padrão de 1024 para aumentar ou reduzir
 //  o peso do container e dar a ele acesso a uma proporção maior ou menor dos ciclos de CPU da máquina

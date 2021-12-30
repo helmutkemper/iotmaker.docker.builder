@@ -2,7 +2,14 @@ package iotmakerdockerbuilder
 
 // SetImageBuildOptionsSecurityOpt
 //
-// English: Set the container security options
+// English:
+//
+//  Set the container security options
+//
+//   Input:
+//     values: container security options
+//
+// Examples:
 //
 //   label=user:USER        — Set the label user for the container
 //   label=role:ROLE        — Set the label role for the container
@@ -14,7 +21,14 @@ package iotmakerdockerbuilder
 //   seccomp=unconfined     — Turn off seccomp confinement for the container
 //   seccomp=profile.json   — White-listed syscalls seccomp Json file to be used as a seccomp filter
 //
-// Português: Modifica as opções de segurança do container
+// Português:
+//
+//  Modifica as opções de segurança do container
+//
+//   Entrada:
+//     values: opções de segurança do container
+//
+// Exemplos:
 //
 //   label=user:USER        — Determina o rótulo user para o container
 //   label=role:ROLE        — Determina o rótulo role para o container

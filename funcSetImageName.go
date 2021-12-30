@@ -2,17 +2,27 @@ package iotmakerdockerbuilder
 
 // SetImageName
 //
-// English: Defines the name of the image to be used or created
+// English:
+//
+//  Defines the name of the image to be used or created
+//
 //   Input:
 //     value: name of the image to be downloaded or created
 //
-//   Note: - the image name must have the version tag. E.g.: name:latest
+// Note:
 //
-// Português: Define o nome da imagem a ser usada ou criada
+//   * the image name must have the version tag. E.g.: name:latest
+//
+// Português:
+//
+//  Define o nome da imagem a ser usada ou criada
+//
 //   Entrada:
 //     value: noma da imagem a ser baixada ou criada
 //
-//   Nota: - o nome da imagem deve ter a tag de versão. Ex.: nome:latest
+// Nota:
+//
+//  * o nome da imagem deve ter a tag de versão. Ex.: nome:latest
 func (e *ContainerBuilder) SetImageName(value string) {
 	e.imageName = value
 }
