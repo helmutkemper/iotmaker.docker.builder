@@ -2,15 +2,19 @@ package iotmakerdockerbuilder
 
 // SetCacheEnable
 //
-// English: When true, looks for an image named `chache:latest` as a basis for creating new images when the
-// MakeDefaultDockerfileForMe() function is used.
+// English:
 //
-// This function is extremely useful when developing new applications, reducing the time
-// to create images with each new test.
+//  When true, looks for an image named `chache:latest` as a basis for creating new images when the
+//  MakeDefaultDockerfileForMe() function is used.
 //
 //   Input:
-//     value: true to enable the use of image named cache:latest as the basis for new
-//       images if it exists
+//     value: true to enable the use of image named cache:latest as the basis for new images if it
+//       exists
+//
+// Note:
+//
+//   * This function is extremely useful when developing new applications, reducing the time to create
+//     images with each new test.
 //
 // Example:
 //
@@ -29,7 +33,7 @@ package iotmakerdockerbuilder
 //
 //    RUN go get -u github.com/nats-io/nats.go
 //
-// Code Golang:
+//    Code Golang:
 //
 //    var imageCacheName = "cache:latest"
 //    var imageId string
@@ -58,15 +62,19 @@ package iotmakerdockerbuilder
 //      return
 //    }
 //
-// Português: Quando true, procura por uma imagem de nome `chache:latest` como base para a criação de novas imagens
-// quando a função MakeDefaultDockerfileForMe() é usada.
+// Português:
 //
-// Esta função é extremamente útil no desenvolvimento de novas aplicações,
-// reduzindo o tempo de criação de imagens a cada novo teste.
+//  Quando true, procura por uma imagem de nome `chache:latest` como base para a criação de novas
+//  imagens quando a função MakeDefaultDockerfileForMe() é usada.
 //
 //   Entrada:
-//     value: true para habilitar o uso da imagem de nome cache:latest como base para
-//       novas imagens, caso a mesma exista
+//     value: true para habilitar o uso da imagem de nome cache:latest como base para novas imagens,
+//       caso a mesma exista
+//
+// Nota:
+//
+//   * Esta função é extremamente útil no desenvolvimento de novas aplicações, reduzindo o tempo de
+//     criação de imagens a cada novo teste.
 //
 // Exemplo:
 //
@@ -85,7 +93,7 @@ package iotmakerdockerbuilder
 //
 //    RUN go get -u github.com/nats-io/nats.go
 //
-// Código Golang:
+//    Código Golang:
 //
 //    var imageCacheName = "cache:latest"
 //    var imageId string

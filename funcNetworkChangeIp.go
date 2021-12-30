@@ -7,11 +7,17 @@ import (
 
 // NetworkChangeIp
 //
-// English: Change the IP address of the container, to the next IP in the docker network manager list
+// English:
+//
+//  Change the IP address of the container, to the next IP in the docker network manager list
+//
 //   Output:
 //     err: Default object error from golang
 //
-// Português: Troca o endereço IP do container, para o próximo IP da lista do gerenciador de rede docker
+// Português:
+//
+//  Troca o endereço IP do container, para o próximo IP da lista do gerenciador de rede docker
+//
 //   Saída:
 //     err: Objeto padrão de erro golang
 func (e *ContainerBuilder) NetworkChangeIp() (err error) {
