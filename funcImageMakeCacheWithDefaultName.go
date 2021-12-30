@@ -8,6 +8,13 @@ import "time"
 //
 //  Creates a cached image used as a basis for creating new images.
 //
+//   Input:
+//     projectPath: path of the project folder
+//     expirationDate: expiration date of the image
+//
+//   Output:
+//     err: standard object error
+//
 // The way to use this function is:
 //
 //  First option:
@@ -27,6 +34,13 @@ import "time"
 // Português:
 //
 //  Cria uma imagem cache usada como base para a criação de novas imagens.
+//
+//   Input:
+//     projectPath: caminha da pasta do projeto
+//     expirationDate: data de expiração da imagem.
+//
+//   Output:
+//     err: standard object error
 //
 // A forma de usar esta função é:
 //

@@ -1479,7 +1479,7 @@ Entrada:
     "nats" no nome. [opcional]
 ```
 
-## func [ImageMakeCache](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcImageMakeCache.go#L54>)
+## func [ImageMakeCache](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcImageMakeCache.go#L70>)
 
 ```go
 func ImageMakeCache(projectPath, cacheName string, expirationDate time.Duration) (err error)
@@ -1490,6 +1490,16 @@ func ImageMakeCache(projectPath, cacheName string, expirationDate time.Duration)
 English:
 
 Creates a cached image used as a basis for creating new images\.
+
+```
+Input:
+  projectPath: path of the project folder
+  cacheName: name of the cache image
+  expirationDate: expiration date of the image
+
+Output:
+  err: standard object error
+```
 
 The way to use this function is:
 
@@ -1517,6 +1527,16 @@ Português:
 
 Cria uma imagem cache usada como base para a criação de novas imagens\.
 
+```
+Input:
+  projectPath: caminha da pasta do projeto
+  cacheName: nome da imagem cache
+  expirationDate: data de expiração da imagem.
+
+Output:
+  err: standard object error
+```
+
 A forma de usar esta função é:
 
 Primeira opção:
@@ -1540,7 +1560,7 @@ Segunda opção:
   por exemplo, `FROM cache:latest`;
 ```
 
-## func [ImageMakeCacheWithDefaultName](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcImageMakeCacheWithDefaultName.go#L48>)
+## func [ImageMakeCacheWithDefaultName](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcImageMakeCacheWithDefaultName.go#L62>)
 
 ```go
 func ImageMakeCacheWithDefaultName(projectPath string, expirationDate time.Duration) (err error)
@@ -1551,6 +1571,15 @@ func ImageMakeCacheWithDefaultName(projectPath string, expirationDate time.Durat
 English:
 
 Creates a cached image used as a basis for creating new images\.
+
+```
+Input:
+  projectPath: path of the project folder
+  expirationDate: expiration date of the image
+
+Output:
+  err: standard object error
+```
 
 The way to use this function is:
 
@@ -1575,6 +1604,15 @@ Second option:
 Português:
 
 Cria uma imagem cache usada como base para a criação de novas imagens\.
+
+```
+Input:
+  projectPath: caminha da pasta do projeto
+  expirationDate: data de expiração da imagem.
+
+Output:
+  err: standard object error
+```
 
 A forma de usar esta função é:
 
