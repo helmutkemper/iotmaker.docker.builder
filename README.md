@@ -7181,25 +7181,103 @@ Nota:
   definir os arquivos de configurações se segurança do git manualmente.
 ```
 
-### func \(\*ContainerBuilder\) [ImageFindIdByName](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcImageFindIdByName.go#L8>)
+### func \(\*ContainerBuilder\) [ImageFindIdByName](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcImageFindIdByName.go#L31>)
 
 ```go
 func (e *ContainerBuilder) ImageFindIdByName(name string) (id string, err error)
 ```
 
-### func \(\*ContainerBuilder\) [ImageFindIdByNameContains](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcImageFindIdByNameContains.go#L8>)
+#### ImageFindIdByName
+
+English:
+
+Find an image by name
+
+```
+Input:
+  name: image name
+
+Output:
+  id: image ID
+  err: default error object
+```
+
+Português:
+
+Encontra uma imagem pelo nome
+
+```
+Input:
+  name: nome da imagem
+
+Output:
+  id: ID da imagem
+  err: Objeto padrão de erro
+```
+
+### func \(\*ContainerBuilder\) [ImageFindIdByNameContains](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcImageFindIdByNameContains.go#L31>)
 
 ```go
 func (e *ContainerBuilder) ImageFindIdByNameContains(containsName string) (list []NameAndId, err error)
 ```
 
-### func \(\*ContainerBuilder\) [ImageInspect](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcImageInspect.go#L10>)
+#### ImageFindIdByNameContains
+
+English:
+
+Find an image by part of the name
+
+```
+Input:
+  containerName: Part of the name of the image
+
+Output:
+  list: List of images found
+  err: Default error object
+```
+
+Português:
+
+Encontra uma imagem por parte do nome
+
+```
+Entrada:
+  containerName: Parte do nome da imagem
+
+Saída:
+  list: Lista de imagens encontradas
+  err: Objeto de erro padrão
+```
+
+### func \(\*ContainerBuilder\) [ImageInspect](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcImageInspect.go#L29>)
 
 ```go
 func (e *ContainerBuilder) ImageInspect() (inspect types.ImageInspect, err error)
 ```
 
-### func \(\*ContainerBuilder\) [ImageListExposedPorts](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcImageListExposedPorts.go#L21>)
+#### ImageInspect
+
+English:
+
+Inspects the image and returns information type\, ID\, name\, size\, creation date\, update date\, author\, tags\, etc
+
+```
+Output:
+  inspect: Image information
+  err: Default error object
+```
+
+Português:
+
+Inspeciona a imagem e retorna informações tipo\, ID\, nome\, tamanho\, data de criação\, data de atualização\, autor\, tags\, etc
+
+```
+Saída:
+ inspect: Informações da imagem
+ err: Objeto de erro padrão
+```
+
+### func \(\*ContainerBuilder\) [ImageListExposedPorts](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcImageListExposedPorts.go#L37>)
 
 ```go
 func (e *ContainerBuilder) ImageListExposedPorts() (portList []nat.Port, err error)
@@ -7207,20 +7285,40 @@ func (e *ContainerBuilder) ImageListExposedPorts() (portList []nat.Port, err err
 
 #### ImageListExposedPorts
 
-English: Lists all the ports defined in the image to be exposed\.
+English:
+
+Lists all the ports defined in the image to be exposed\.
 
 ```
-Note: The ports exposed in the creation of the container can be defined by SetOpenAllContainersPorts(),
-AddPortToChange() and AddPortToExpose();
-By default, all doors are closed.
+Output:
+  portList: List of ports exposed on image creation. (Dockerfile expose port)
+  err: standard error object
 ```
 
-Português: Lista todas as portas definidas na imagem para serem expostas\.
+Note:
 
 ```
-Nota: As portas expostas na criação do container podem ser definidas por SetOpenAllContainersPorts(),
-AddPortToChange() e AddPortToExpose();
-Por padrão, todas as portas ficam fechadas.
+* The ports exposed in the creation of the container can be defined by
+  SetOpenAllContainersPorts(), AddPortToChange() and AddPortToExpose();
+* By default, all doors are closed.
+```
+
+Português:
+
+Lista todas as portas definidas na imagem para serem expostas\.
+
+```
+Saída:
+  portList: Lista de portas expostas na criação da imagem. (Dockerfile expose port)
+  err: Objeto de erro padrão
+```
+
+Nota:
+
+```
+* As portas expostas na criação do container podem ser definidas por SetOpenAllContainersPorts(),
+  AddPortToChange() e AddPortToExpose();
+* Por padrão, todas as portas ficam fechadas.
 ```
 
 <details><summary>Example</summary>
@@ -7285,7 +7383,7 @@ port: 8222/tcp
 </p>
 </details>
 
-### func \(\*ContainerBuilder\) [ImageListExposedVolumes](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcImageListExposedVolumes.go#L18>)
+### func \(\*ContainerBuilder\) [ImageListExposedVolumes](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcImageListExposedVolumes.go#L34>)
 
 ```go
 func (e *ContainerBuilder) ImageListExposedVolumes() (list []string, err error)
@@ -7293,18 +7391,38 @@ func (e *ContainerBuilder) ImageListExposedVolumes() (list []string, err error)
 
 #### ImageListExposedVolumes
 
-English: Lists all volumes defined in the image\.
+English:
+
+Lists all volumes defined in the image\.
 
 ```
-Note: Use the AddFileOrFolderToLinkBetweenConputerHostAndContainer() function to link folders and files
-between the host computer and the container
+Output:
+  list: List of exposed volumes
+  err: Standard error object
 ```
 
-Português: Lista todos os volumes definidos na imagem\.
+Note:
 
 ```
-Nota: Use a função AddFileOrFolderToLinkBetweenConputerHostAndContainer() para vincular pastas e arquivos
-entre o computador hospedeiro e o container
+* Use the AddFileOrFolderToLinkBetweenConputerHostAndContainer() function to link folders and
+  files between the host computer and the container
+```
+
+Português:
+
+Lista todos os volumes definidos na imagem\.
+
+```
+Saída:
+```
+
+list: Lista de volumes expostos err: Objeto de erro padrão
+
+Nota:
+
+```
+* Use a função AddFileOrFolderToLinkBetweenConputerHostAndContainer() para vincular pastas e
+  arquivos entre o computador hospedeiro e o container
 ```
 
 <details><summary>Example</summary>
@@ -7356,7 +7474,7 @@ entre o computador hospedeiro e o container
 </p>
 </details>
 
-### func \(\*ContainerBuilder\) [ImagePull](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcImagePull.go#L15>)
+### func \(\*ContainerBuilder\) [ImagePull](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcImagePull.go#L25>)
 
 ```go
 func (e *ContainerBuilder) ImagePull() (err error)
@@ -7364,9 +7482,23 @@ func (e *ContainerBuilder) ImagePull() (err error)
 
 #### ImagePull
 
-English: downloads the image to be mounted\. \(equivalent to the docker pull image command\)
+English:
 
-Português: baixa a imagem a ser montada\. \(equivale ao comando docker pull image\)
+Downloads the image to be mounted\. \(equivalent to the docker pull image command\)
+
+```
+Output:
+  err: standart error object
+```
+
+Português:
+
+Baixa a imagem a ser montada\. \(equivale ao comando docker pull image\)
+
+```
+Saída:
+  err: objeto de erro padrão
+```
 
 <details><summary>Example</summary>
 <p>
@@ -7440,7 +7572,7 @@ Português: baixa a imagem a ser montada\. \(equivale ao comando docker pull ima
 </p>
 </details>
 
-### func \(\*ContainerBuilder\) [ImageRemove](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcImageRemove.go#L14>)
+### func \(\*ContainerBuilder\) [ImageRemove](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcImageRemove.go#L30>)
 
 ```go
 func (e *ContainerBuilder) ImageRemove() (err error)
@@ -7448,11 +7580,37 @@ func (e *ContainerBuilder) ImageRemove() (err error)
 
 #### ImageRemove
 
-English: remove the image if there are no containers using the image \(remove all containers before use\, including stopped containers\)
+English:
 
-Português: remove a imagem se não houver containers usando a imagem \(remova todos os containers antes do uso\, inclusive os containers parados\)
+Remove the image if there are no containers using the image
 
-### func \(\*ContainerBuilder\) [ImageRemoveByName](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcImageRemoveByName.go#L18>)
+```
+Output:
+  err: Standard error object
+```
+
+Note:
+
+```
+* Remove all containers before use, including stopped containers
+```
+
+Português:
+
+Remove a imagem se não houver containers usando a imagem
+
+```
+Saída:
+  err: Objeto de erro padrão
+```
+
+Nota:
+
+```
+* Remova todos os containers antes do uso, inclusive os containers parados
+```
+
+### func \(\*ContainerBuilder\) [ImageRemoveByName](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcImageRemoveByName.go#L36>)
 
 ```go
 func (e *ContainerBuilder) ImageRemoveByName(name string) (err error)
@@ -7460,19 +7618,43 @@ func (e *ContainerBuilder) ImageRemoveByName(name string) (err error)
 
 #### ImageRemoveByName
 
-English: remove the image if there are no containers using the image \(remove all containers before use\, including stopped containers\)
+English:
+
+Remove the image if there are no containers using the image
 
 ```
-name: full image name
+Input:
+  name: full image name
+
+Output:
+  err: standard error object
 ```
 
-Português: remove a imagem se não houver containers usando a imagem \(remova todos os containers antes do uso\, inclusive os containers parados\)
+Note:
 
 ```
-name: nome completo da imagem
+* Remove all containers before use, including stopped containers
 ```
 
-### func \(\*ContainerBuilder\) [Init](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcInit.go#L16>)
+Português:
+
+Remove a imagem se não houver containers usando a imagem
+
+```
+Entrada:
+  name: nome completo da imagem
+
+Saída:
+  err: objeto de erro padrão
+```
+
+Nota:
+
+```
+* Remova todos os containers antes do uso, inclusive os containers parados
+```
+
+### func \(\*ContainerBuilder\) [Init](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcInit.go#L34>)
 
 ```go
 func (e *ContainerBuilder) Init() (err error)
@@ -7480,11 +7662,37 @@ func (e *ContainerBuilder) Init() (err error)
 
 #### Init
 
-English: Initializes the object and should be called only after all settings have been configured
+English:
 
-Português: Inicializa o objeto e deve ser chamado apenas depois de toas as configurações serem definidas
+Initializes the object\.
 
-### func \(\*ContainerBuilder\) [MakeDefaultDockerfileForMe](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcMakeDefaultGolangDockerfileForMe.go#L45>)
+```
+Output:
+  err: Standard error object
+```
+
+Note:
+
+```
+* Should be called only after all settings have been configured
+```
+
+Português:
+
+Inicializa o objeto\.
+
+```
+Saída:
+  err: Objeto de erro padrão
+```
+
+Nota:
+
+```
+* Deve ser chamado apenas depois de toas as configurações serem definidas
+```
+
+### func \(\*ContainerBuilder\) [MakeDefaultDockerfileForMe](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcMakeDefaultDockerfileForMe.go#L61>)
 
 ```go
 func (e *ContainerBuilder) MakeDefaultDockerfileForMe()
@@ -7492,44 +7700,73 @@ func (e *ContainerBuilder) MakeDefaultDockerfileForMe()
 
 #### MakeDefaultDockerfileForMe
 
-Similar: MakeDefaultDockerfileForMe\(\)\, MakeDefaultDockerfileForMeWithInstallExtras\(\)
-
-English: Automatically mount the Dockerfile\-iotmaker inside the target folder\.
-
-If there are ports exposed in the configurations\, they will be defined automatically and the same goes for volumes\, where files shared between the host and the container will expose the folder containing the file inside the container as volume\.
+Similar:
 
 ```
-Caution: the Dockerfile-iotmaker may be overwritten.
-
-Rules: - For Golang projects, the go.mod file is mandatory;
-       - The main.go file containing the main package must be at the root folder.
-
-Note: - If you need a dockerfile made for another programming language, see the DockerfileAuto interface and the
-        SetDockerfileBuilder() function;
-      - If the image cache is enabled and image cahe is not found, the
-        MakeDefaultDockerfileForMeWithInstallExtras() function will be used. It will download git, open-ssh and
-        other tools necessary for the first part of the build in two steps;
-      - The tools downloaded in the first step of the build and the ssh and git credentials will be discarded,
-        only the binary generated by Golang will be transferred to the second image.
+MakeDefaultDockerfileForMe(), MakeDefaultDockerfileForMeWithInstallExtras()
 ```
 
-Português: Monta o arquivo Dockerfile\-iotmaker dentro da pasta alvo de forma automática\.
+English:
 
-Caso haja portas expostas ou volumes nas configurações\, as mesmas serão definidas automaticamente\, onde arquivos compartilhados entre o host e o container exporá a pasta contendo o arquivo dentro do container como um volume\.
+Automatically mount the Dockerfile\-iotmaker inside the target folder\.
+
+Caution:
 
 ```
-Cuidado: o arquivo Dockerfile-iotmaker pode ser sobrescrito.
+* The Dockerfile-iotmaker may be overwritten
+```
 
-Regras: - Para projetos Golang, o arquivo go.mod é obrigatório;
-        - O arquivo main.go contendo o package main deve está na raiz do diretório.
+Rules:
 
-Nota: - Caso necessite de um dockerfile feito para outra linguagem de programação, veja a interface
-        DockerfileAuto e a função SetDockerfileBuilder();
-      - Caso a imagem cache esteja habilitada e não seja encontrada, será usada a função
-        MakeDefaultDockerfileForMeWithInstallExtras(), que baixará git, open-ssh e outras ferramentas necessárias
-        para a primeira parte do build em duas etapas;
-      - As ferramentas baixadas na primeira etapa do build e as credenciais ssh e git serão descartadas e apenas o
-        binário gerado pelo Golang será transferido para a segunda imagem.
+```
+* For Golang projects, the go.mod file is mandatory;
+* The main.go file containing the main package must be at the root folder.
+```
+
+Note:
+
+```
+* If there are ports exposed in the configurations, they will be defined automatically and the
+  same goes for volumes, where files shared between the host and the container will expose the
+  folder containing the file inside the container as volume;
+* If you need a dockerfile made for another programming language, see the DockerfileAuto
+  interface and the SetDockerfileBuilder() function;
+* If the image cache is enabled and image cahe is not found, the
+  MakeDefaultDockerfileForMeWithInstallExtras() function will be used. It will download git,
+  open-ssh and other tools necessary for the first part of the build in two steps;
+* The tools downloaded in the first step of the build and the ssh and git credentials will be
+  discarded, only the binary generated by Golang will be transferred to the second image.
+```
+
+Português:
+
+Monta o arquivo Dockerfile\-iotmaker dentro da pasta alvo de forma automática\.
+
+Cuidado:
+
+```
+* O arquivo Dockerfile-iotmaker pode ser sobrescrito.
+```
+
+Regras:
+
+```
+* Para projetos Golang, o arquivo go.mod é obrigatório;
+* O arquivo main.go contendo o package main deve está na raiz do diretório.
+```
+
+Nota:
+
+```
+* Caso haja portas expostas ou volumes nas configurações, as mesmas serão definidas
+  automaticamente, o mesmo serve para arquivos compartilhados entre o host e o container;
+* Caso necessite de um dockerfile feito para outra linguagem de programação, veja a interface
+  DockerfileAuto e a função SetDockerfileBuilder();
+* Caso a imagem cache esteja habilitada e não seja encontrada, será usada a função
+  MakeDefaultDockerfileForMeWithInstallExtras(), que baixará git, open-ssh e outras ferramentas
+  necessárias para a primeira parte do build em duas etapas;
+* As ferramentas baixadas na primeira etapa do build e as credenciais ssh e git serão descartadas
+  e apenas o binário gerado pelo Golang será transferido para a segunda imagem.
 ```
 
 ### func \(\*ContainerBuilder\) [MakeDefaultDockerfileForMeWithInstallExtras](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcMakeDefaultDockerfileForMeWithInstallExtras.go#L37>)

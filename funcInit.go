@@ -10,9 +10,27 @@ import (
 
 // Init
 //
-// English: Initializes the object and should be called only after all settings have been configured
+// English:
 //
-// Português: Inicializa o objeto e deve ser chamado apenas depois de toas as configurações serem definidas
+//  Initializes the object.
+//
+//   Output:
+//     err: Standard error object
+//
+// Note:
+//
+//   * Should be called only after all settings have been configured
+//
+// Português:
+//
+//  Inicializa o objeto.
+//
+//   Saída:
+//     err: Objeto de erro padrão
+//
+// Nota:
+//
+//   * Deve ser chamado apenas depois de toas as configurações serem definidas
 func (e *ContainerBuilder) Init() (err error) {
 	e.init = true
 

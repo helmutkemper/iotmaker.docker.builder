@@ -9,9 +9,19 @@ import (
 
 // ImagePull
 //
-// English: downloads the image to be mounted. (equivalent to the docker pull image command)
+// English:
 //
-// Português: baixa a imagem a ser montada. (equivale ao comando docker pull image)
+//  Downloads the image to be mounted. (equivalent to the docker pull image command)
+//
+//   Output:
+//     err: standart error object
+//
+// Português:
+//
+//  Baixa a imagem a ser montada. (equivale ao comando docker pull image)
+//
+//   Saída:
+//     err: objeto de erro padrão
 func (e *ContainerBuilder) ImagePull() (err error) {
 	if e.printBuildOutput == true {
 		go func(ch *chan iotmakerdocker.ContainerPullStatusSendToChannel) {

@@ -7,6 +7,25 @@ import (
 	"time"
 )
 
+// ImageInspect
+//
+// English:
+//
+//  Inspects the image and returns information type, ID, name, size, creation date, update date,
+//  author, tags, etc
+//
+//   Output:
+//     inspect: Image information
+//     err: Default error object
+//
+// Português:
+//
+//  Inspeciona a imagem e retorna informações tipo, ID, nome, tamanho, data de criação, data de
+//  atualização, autor, tags, etc
+//
+//   Saída:
+//    inspect: Informações da imagem
+//    err: Objeto de erro padrão
 func (e *ContainerBuilder) ImageInspect() (inspect types.ImageInspect, err error) {
 	if e.imageID == "" {
 		e.imageID, err = e.ImageFindIdByName(e.GetImageName())

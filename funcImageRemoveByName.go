@@ -6,15 +6,33 @@ import (
 
 // ImageRemoveByName
 //
-// English: remove the image if there are no containers using the image (remove all containers before use, including
-// stopped containers)
+// English:
 //
-//   name: full image name
+//  Remove the image if there are no containers using the image
 //
-// Português: remove a imagem se não houver containers usando a imagem (remova todos os containers antes
-// do uso, inclusive os containers parados)
+//   Input:
+//     name: full image name
 //
-//   name: nome completo da imagem
+//   Output:
+//     err: standard error object
+//
+// Note:
+//
+//   * Remove all containers before use, including stopped containers
+//
+// Português:
+//
+//  Remove a imagem se não houver containers usando a imagem
+//
+//   Entrada:
+//     name: nome completo da imagem
+//
+//   Saída:
+//     err: objeto de erro padrão
+//
+// Nota:
+//
+//   * Remova todos os containers antes do uso, inclusive os containers parados
 func (e *ContainerBuilder) ImageRemoveByName(name string) (err error) {
 	err = e.dockerSys.ImageRemoveByName(name, false, false)
 	if err != nil {
