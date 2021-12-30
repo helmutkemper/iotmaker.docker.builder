@@ -6394,34 +6394,141 @@ Saída:
   os: nome do sistema operacional usado para criar a imagem
 ```
 
-### func \(\*ContainerBuilder\) [GetImageOsVersion](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcGetImageOsVersion.go#L3>)
+### func \(\*ContainerBuilder\) [GetImageOsVersion](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcGetImageOsVersion.go#L18>)
 
 ```go
 func (e *ContainerBuilder) GetImageOsVersion() (osVersion string)
 ```
 
-### func \(\*ContainerBuilder\) [GetImageParent](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcGetImageParent.go#L3>)
+#### GetImageOsVersion
+
+English:
+
+Returns the operating system version of the image
+
+```
+Output:
+  osVersion: operating system version of the image
+```
+
+Português:
+
+Retorna a versão do sistema operacional da imagem
+
+```
+Saída:
+  osVersion: versão do sistema operacional da imagem
+```
+
+### func \(\*ContainerBuilder\) [GetImageParent](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcGetImageParent.go#L16>)
 
 ```go
 func (e *ContainerBuilder) GetImageParent() (parent string)
 ```
 
-### func \(\*ContainerBuilder\) [GetImageRepoDigests](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcGetImageRepoDigests.go#L3>)
+#### GetImageParent
+
+ Retorna o nome da imagem base
+
+```
+Saída:
+  parent: nome da imagem base
+```
+
+English:
+
+Returns the name of the base image
+
+```
+Output:
+  parent: name of the base image
+```
+
+### func \(\*ContainerBuilder\) [GetImageRepoDigests](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcGetImageRepoDigests.go#L25>)
 
 ```go
 func (e *ContainerBuilder) GetImageRepoDigests() (repoDigests []string)
 ```
 
-### func \(\*ContainerBuilder\) [GetImageRepoTags](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcGetImageRepoTags.go#L3>)
+#### GetImageRepoDigests
+
+English:
+
+Get image reports
+
+```
+Output:
+  repoDigests: image reports
+```
+
+Português:
+
+Obtém relatórios simplificados da imagem
+
+```
+Saída:
+  repoDigests: relatórios da imagem
+```
+
+English:
+
+Get image reports
+
+```
+Output:
+  repoDigests: image reports
+```
+
+### func \(\*ContainerBuilder\) [GetImageRepoTags](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcGetImageRepoTags.go#L18>)
 
 ```go
 func (e *ContainerBuilder) GetImageRepoTags() (repoTags []string)
 ```
 
-### func \(\*ContainerBuilder\) [GetImageSize](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcGetImageSize.go#L3>)
+#### GetImageRepoTags
+
+English:
+
+Get the list of tags of an image repository\.
+
+```
+Output:
+  repoTags: list of image repository tags.
+```
+
+Português:
+
+Obtém a lista de tags de um repositório de imagens\.
+
+```
+Saída:
+  repoTags: lista de tags do repositório de imagens.
+```
+
+### func \(\*ContainerBuilder\) [GetImageSize](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcGetImageSize.go#L18>)
 
 ```go
 func (e *ContainerBuilder) GetImageSize() (size int64)
+```
+
+#### GetImageSize
+
+English:
+
+Returns the image size
+
+```
+Output:
+  size: image size
+```
+
+Português:
+
+Retorna o tamanho da imagem
+
+```
+Saída:
+  size: tamanho da imagem
 ```
 
 ### func \(\*ContainerBuilder\) [GetImageVariant](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcGetImageVariant.go#L3>)
@@ -6430,19 +6537,59 @@ func (e *ContainerBuilder) GetImageSize() (size int64)
 func (e *ContainerBuilder) GetImageVariant() (variant string)
 ```
 
-### func \(\*ContainerBuilder\) [GetImageVirtualSize](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcGetImageVirtualSize.go#L3>)
+### func \(\*ContainerBuilder\) [GetImageVirtualSize](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcGetImageVirtualSize.go#L18>)
 
 ```go
 func (e *ContainerBuilder) GetImageVirtualSize() (virtualSize int64)
 ```
 
-### func \(\*ContainerBuilder\) [GetInitialized](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcGetInitialized.go#L3>)
+#### GetImageVirtualSize
+
+English:
+
+Returns the virtual size of the image
+
+```
+Output:
+  virtualSize: virtual size of the image
+```
+
+Português:
+
+Retorna o tamanho virtual da imagem
+
+```
+Saída:
+  virtualSize: tamanho virtual da imagem
+```
+
+### func \(\*ContainerBuilder\) [GetInitialized](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcGetInitialized.go#L18>)
 
 ```go
 func (e *ContainerBuilder) GetInitialized() (initialized bool)
 ```
 
-### func \(\*ContainerBuilder\) [GetLastInspect](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcGetLastInspect.go#L19>)
+#### GetInitialized
+
+English:
+
+Returns if the container control object was initialized
+
+```
+Output:
+  initialized: true if the container control object was initialized
+```
+
+Português:
+
+Retorna se o objeto de controle do container foi inicializado
+
+```
+Saída:
+  inicializado: true caso o objeto de controle do container foi inicializado
+```
+
+### func \(\*ContainerBuilder\) [GetLastInspect](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcGetLastInspect.go#L32>)
 
 ```go
 func (e *ContainerBuilder) GetLastInspect() (inspect iotmakerdocker.ContainerInspect)
@@ -6450,18 +6597,36 @@ func (e *ContainerBuilder) GetLastInspect() (inspect iotmakerdocker.ContainerIns
 
 #### GetLastInspect
 
-English: Returns the container data based on the last ticker cycle defined in SetInspectInterval\(\)
+English:
+
+Returns the container data based on the last ticker cycle defined in SetInspectInterval\(\)
 
 ```
-Note: the GetChannelOnContainerInspect() function returns the channel triggered by the ticker when the
-information is ready for use
+Output:
+  inspect: Container information such as name, ID, volumes, network, etc.
 ```
 
-Português: Retorna os dados do container baseado no último ciclo do ticker definido em SetInspectInterval\(\)
+Note:
 
 ```
-Nota: a função GetChannelOnContainerInspect() retorna o canal disparado pelo ticker quando as informações estão
-prontas para uso
+* The GetChannelOnContainerInspect() function returns the channel triggered by the ticker when
+  the information is ready for use
+```
+
+Português:
+
+Retorna os dados do container baseado no último ciclo do ticker definido em SetInspectInterval\(\)
+
+```
+Output:
+  inspect: Informações sobre o container, como nome, ID, volumes, rede, etc.
+```
+
+Nota:
+
+```
+* A função GetChannelOnContainerInspect() retorna o canal disparado pelo ticker quando as
+  informações estão prontas para uso
 ```
 
 ### func \(\*ContainerBuilder\) [GetLastLineOfOccurrenceBySearchTextInsideContainerLog](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcGetLastLineOfOccurrenceBySearchTextInsideContainerLog.go#L8>)
