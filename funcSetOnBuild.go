@@ -37,12 +37,15 @@ package iotmakerdockerbuilder
 //  of the image being built. The instruction does not otherwise affect the current build.
 //  At the end of the build, a list of all triggers is stored in the image manifest, under
 //  the key OnBuild. They can be inspected with the docker inspect command.
+//
 //  Later the image may be used as a base for a new build, using the FROM instruction.
 //  As part of processing the FROM instruction, the downstream builder looks for OnBuild
 //  triggers, and executes them in the same order they were registered. If any of the
 //  triggers fail, the FROM instruction is aborted which in turn causes the build to fail.
+//
 //  If all triggers succeed, the FROM instruction completes and the build continues as
 //  usual.
+//
 //  Triggers are cleared from the final image after being executed. In other words they are
 //  not inherited by “grand-children” builds.
 //
@@ -65,6 +68,10 @@ package iotmakerdockerbuilder
 //
 //  Adiciona à imagem uma instrução de gatilho a ser executada posteriormente, quando a imagem for
 //  usada como base para outra construção.
+//
+//   Entrada:
+//     onBuild: Lista de instruções de gatilho a serem executadas posteriormente, quando a imagem for
+//       usada como base para outra construção
 //
 //  O gatilho será executado no contexto do downstream build , como se tivesse sido
 //  inserido imediatamente após a instrução FROM no downstream Dockerfile.
@@ -92,6 +99,7 @@ package iotmakerdockerbuilder
 //  Ao encontrar uma instrução OnBuild, o construtor adiciona um gatilho aos metadados da
 //  imagem que está sendo construída. A instrução não afeta de outra forma a construção
 //  atual.
+//
 //  No final da construção, uma lista de todos os gatilhos é armazenada no manifesto da
 //  imagem, sob a chave OnBuild. Eles podem ser inspecionados com o comando docker inspect.
 //  Posteriormente, a imagem pode ser usada como base para uma nova construção, usando a
@@ -100,6 +108,7 @@ package iotmakerdockerbuilder
 //  Se qualquer um dos gatilhos falhar, a instrução FROM é abortada, o que, por sua vez,
 //  faz com que o build falhe. Se todos os gatilhos forem bem-sucedidos, a instrução FROM
 //  será concluída e a construção continuará normalmente.
+//
 //  Os gatilhos são apagados da imagem final após serem executados. Em outras palavras,
 //  eles não são herdados por construções de "netos".
 //
