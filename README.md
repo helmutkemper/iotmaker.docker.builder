@@ -8444,7 +8444,7 @@ Português:
 
 Define a política de reinício do container como sempre reinicia o container\, caso ele não tenha sido parado manualmente\.
 
-### func \(\*ContainerBuilder\) [SetContainerShellForShellFormOfRunCmdEntrypoint](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetContainerShellForShellFormOfRunCmdEntrypoint.go#L8>)
+### func \(\*ContainerBuilder\) [SetContainerShellForShellFormOfRunCmdEntrypoint](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetContainerShellForShellFormOfRunCmdEntrypoint.go#L12>)
 
 ```go
 func (e *ContainerBuilder) SetContainerShellForShellFormOfRunCmdEntrypoint(values []string)
@@ -8452,19 +8452,43 @@ func (e *ContainerBuilder) SetContainerShellForShellFormOfRunCmdEntrypoint(value
 
 #### SetContainerShellForShellFormOfRunCmdEntrypoint
 
-English: shell for shell\-form of run cmd entrypoint
+English:
 
-Português: define o terminal \(shell\) para executar o entrypoint
+shell for shell\-form of run cmd entrypoint
 
-### func \(\*ContainerBuilder\) [SetCsvFileReader](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetCsvFileReader.go#L12>)
+Português:
+
+define o terminal \(shell\) para executar o entrypoint
+
+### func \(\*ContainerBuilder\) [SetCsvFileReader](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetCsvFileReader.go#L21>)
 
 ```go
 func (e *ContainerBuilder) SetCsvFileReader(value bool)
 ```
 
-SetCsvFileReader
+#### SetCsvFileReader
 
-### func \(\*ContainerBuilder\) [SetCsvFileRowSeparator](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetCsvFileRowSeparator.go#L22>)
+English:
+
+Prints in the header of the file the name of the constant responsible for printing the column in the log\.
+
+```
+Input:
+  value: true to print the name of the constant responsible for printing the column in the log
+    in the header of the file.
+```
+
+Português:
+
+Imprime no cabeçalho do arquivo o nome da constante responsável por imprimir a coluna no log\.
+
+```
+Entrada:
+  value: true para imprimir no cabeçalho do arquivo o nome da constante responsável por imprimir
+    a coluna no log.
+```
+
+### func \(\*ContainerBuilder\) [SetCsvFileRowSeparator](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetCsvFileRowSeparator.go#L32>)
 
 ```go
 func (e *ContainerBuilder) SetCsvFileRowSeparator(value string)
@@ -8472,22 +8496,40 @@ func (e *ContainerBuilder) SetCsvFileRowSeparator(value string)
 
 #### SetCsvFileRowSeparator
 
-English: Defines the log file line separator\, in CSV format\, containing container usage statistics\. Input: value: separador de linha do arquivo CSV \(valor padrão: "\\n"\)
+English:
+
+Defines the log file line separator\, in CSV format\, containing container usage statistics\.
 
 ```
-Nota: - Esta função é usada em conjunto com as funções SetCsvLogPath(), StartMonitor(), StopMonitor(),
-        SetCsvFileRowSeparator(), SetCsvFileReader(), SetCsvFileRowsToPrint(), AddFilterToLog() e
-        AddFilterToLogWithReplace();
-      - As colunas de dados preenchidos varia de acordo com o sistema operacional.
+Input:
+  value: separador de linha do arquivo CSV (valor padrão: "\n")
 ```
 
-Português: Define o separador de linha do arquivo de log\, em formato CSV\, contendo estatísticas de uso do container\. Entrada: value: separador de linha do arquivo CSV \(valor padrão: "\\n"\)
+Nota:
 
 ```
-Nota: - Esta função é usada em conjunto com as funções SetCsvLogPath(), StartMonitor(), StopMonitor(),
-        SetCsvFileRowSeparator(), SetCsvFileReader(), SetCsvFileRowsToPrint(), AddFilterToLog() e
-        AddFilterToLogWithReplace();
-      - As colunas de dados preenchidos varia de acordo com o sistema operacional.
+* Esta função é usada em conjunto com as funções SetCsvLogPath(), StartMonitor(), StopMonitor(),
+  SetCsvFileRowSeparator(), SetCsvFileReader(), SetCsvFileRowsToPrint(), AddFilterToLog() e
+  AddFilterToLogWithReplace();
+* As colunas de dados preenchidos varia de acordo com o sistema operacional.
+```
+
+Português:
+
+Define o separador de linha do arquivo de log\, em formato CSV\, contendo estatísticas de uso do container\.
+
+```
+Entrada:
+  value: separador de linha do arquivo CSV (valor padrão: "\n")
+```
+
+Nota:
+
+```
+* Esta função é usada em conjunto com as funções SetCsvLogPath(), StartMonitor(), StopMonitor(),
+  SetCsvFileRowSeparator(), SetCsvFileReader(), SetCsvFileRowsToPrint(), AddFilterToLog() e
+  AddFilterToLogWithReplace();
+* As colunas de dados preenchidos varia de acordo com o sistema operacional.
 ```
 
 ### func \(\*ContainerBuilder\) [SetCsvFileRowsToPrint](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetCsvFileRowsToPrint.go#L13>)
