@@ -8214,7 +8214,7 @@ if err != nil {
 }
 ```
 
-### func \(\*ContainerBuilder\) [SetContainerAttachStandardStreamsToTty](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetContainerAttachStandardStreamsToTty.go#L8>)
+### func \(\*ContainerBuilder\) [SetContainerAttachStandardStreamsToTty](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetContainerAttachStandardStreamsToTty.go#L18>)
 
 ```go
 func (e *ContainerBuilder) SetContainerAttachStandardStreamsToTty(value bool)
@@ -8222,11 +8222,25 @@ func (e *ContainerBuilder) SetContainerAttachStandardStreamsToTty(value bool)
 
 #### SetContainerAttachStandardStreamsToTty
 
-English: attach standard streams to tty
+English:
 
-Português: anexa a saída padrão do tty
+Attach standard streams to tty
 
-### func \(\*ContainerBuilder\) [SetContainerCommandToRunWhenStartingTheContainer](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetContainerCommandToRunWhenStartingTheContainer.go#L8>)
+```
+Entrada:
+  value: true to attach standard streams to tty
+```
+
+Português:
+
+Anexa a saída padrão do tty
+
+```
+Entrada:
+  value: true para anexar a saída padrão do tty
+```
+
+### func \(\*ContainerBuilder\) [SetContainerCommandToRunWhenStartingTheContainer](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetContainerCommandToRunWhenStartingTheContainer.go#L18>)
 
 ```go
 func (e *ContainerBuilder) SetContainerCommandToRunWhenStartingTheContainer(values []string)
@@ -8234,11 +8248,25 @@ func (e *ContainerBuilder) SetContainerCommandToRunWhenStartingTheContainer(valu
 
 #### SetContainerCommandToRunWhenStartingTheContainer
 
-English: command to run when stating the container \(style Dockerfile CMD\)
+English:
 
-Português: comando a ser executado quando o container inicia \(estilo Dockerfile CMD\)
+Command to run when stating the container \(style Dockerfile CMD\)
 
-### func \(\*ContainerBuilder\) [SetContainerEntrypointToRunWhenStartingTheContainer](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetContainerEntrypointToRunWhenStartingTheContainer.go#L8>)
+```
+Input:
+  values: List of commands. Eg.: []string{"ls", "-l"}
+```
+
+Português:
+
+Comando a ser executado quando o container inicia \(estilo Dockerfile CMD\)
+
+```
+Entrada:
+  values: Lista de comandos. Ex.: []string{"ls", "-l"}
+```
+
+### func \(\*ContainerBuilder\) [SetContainerEntrypointToRunWhenStartingTheContainer](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetContainerEntrypointToRunWhenStartingTheContainer.go#L18>)
 
 ```go
 func (e *ContainerBuilder) SetContainerEntrypointToRunWhenStartingTheContainer(values []string)
@@ -8246,11 +8274,25 @@ func (e *ContainerBuilder) SetContainerEntrypointToRunWhenStartingTheContainer(v
 
 #### SetContainerEntrypointToRunWhenStartingTheContainer
 
-English: entrypoint to run when stating the container
+English:
 
-Português: entrypoint a ser executado quando o container inicia
+Entrypoint to run when stating the container
 
-### func \(\*ContainerBuilder\) [SetContainerHealthcheck](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetContainerHealthcheck.go#L34>)
+```
+Input:
+  values: entrypoint. Eg.: docker run --entrypoint [new_command] [docker_image] [optional:value]
+```
+
+Português:
+
+Entrypoint a ser executado quando o container iniciar
+
+```
+Entrada:
+  values: entrypoint. Ex.: docker run --entrypoint [new_command] [docker_image] [optional:value]
+```
+
+### func \(\*ContainerBuilder\) [SetContainerHealthcheck](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetContainerHealthcheck.go#L54>)
 
 ```go
 func (e *ContainerBuilder) SetContainerHealthcheck(value *HealthConfig)
@@ -8258,9 +8300,59 @@ func (e *ContainerBuilder) SetContainerHealthcheck(value *HealthConfig)
 
 #### SetContainerHealthcheck
 
-English: holds configuration settings for the HEALTHCHECK feature\. Test:       Test is the test to perform to check that the container is healthy\. An empty slice means to inherit the default\. The options are: \{\}: inherit healthcheck \{"NONE"\}: disable healthcheck \{"CMD"\, args\.\.\.\}: exec arguments directly \{"CMD\-SHELL"\, command\}: run command with system's default shell Interval:    Interval is the time to wait between checks \(Zero means inherit\)\. Timeout:     Timeout is the time to wait before considering the check to have hung \(Zero means inherit\)\. StartPeriod: The start period for the container to initialize before the retries starts to count down \(Zero means inherit\)\. Retries:     Retries is the number of consecutive failures needed to consider a container as unhealthy \(Zero means inherit\)\.
+English:
 
-Português: define definições de configuração para o recurso HEALTHCHECK\. Test:       Test é o teste a ser executado para testar a saúde do container se não for definido\, herda o teste padrão As opções são: \{\}: herda o teste padrão \{"NONE"\}: desabilita o healthcheck \{"CMD"\, args\.\.\.\}: executa os argumentos diretamente \{"CMD\-SHELL"\, command\} : executa o comando com shell padrão do sistema Interval:    intervalo entre testes \(zero herda o valor padrão\)\. Timeout:     intervalo de espera antes de considerar o teste com problemas \(zero herda o valor padrão\)\. StartPeriod: tempo de espera pela incialização do container antes dos testes começarem \(zero herda o valor padrão\)\. Retries:     número de testes consecutivos antes de considerar o teste com problemas \(zero herda o valor padrão\)\.
+Holds configuration settings for the HEALTHCHECK feature\.
+
+```
+Input:
+  value: Ponteiro para HealthConfig
+    Test: Test is the test to perform to check that the container is healthy.
+          An empty slice means to inherit the default.
+          The options are:
+            {}: inherit healthcheck
+            {"NONE"}: disable healthcheck
+            {"CMD", args...}: exec arguments directly
+            {"CMD-SHELL", command}: run command with system's default shell
+
+    Interval: Interval is the time to wait between checks (Zero means inherit).
+
+    Timeout: Timeout is the time to wait before considering the check to have hung (Zero means
+             inherit).
+
+    StartPeriod: The start period for the container to initialize before the retries starts to
+                 count down (Zero means inherit).
+
+    Retries: Retries is the number of consecutive failures needed to consider a container as
+             unhealthy (Zero means inherit).
+```
+
+Português:
+
+Adiciona definições de configuração para o recurso HEALTHCHECK\.
+
+```
+Entrada:
+  value: Ponteiro para HealthConfig
+    Test: Test é o teste a ser executado para testar a saúde do container se não for definido,
+          herda o teste padrão
+          As opções são:
+            {}: herda o teste padrão
+            {"NONE"}: desabilita o healthcheck
+            {"CMD", args...}: executa os argumentos diretamente
+            {"CMD-SHELL", command} : executa o comando com shell padrão do sistema
+
+    Interval: intervalo entre testes (zero herda o valor padrão).
+
+    Timeout: intervalo de espera antes de considerar o teste com problemas (zero herda o valor
+             padrão).
+
+    StartPeriod: tempo de espera pela incialização do container antes dos testes começarem
+                 (zero herda o valor padrão).
+
+    Retries: número de testes consecutivos antes de considerar o teste com problemas (zero
+    herda o valor padrão).
+```
 
 ### func \(\*ContainerBuilder\) [SetContainerName](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetContainerName.go#L12>)
 
