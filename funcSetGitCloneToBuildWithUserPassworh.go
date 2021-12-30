@@ -2,40 +2,43 @@ package iotmakerdockerbuilder
 
 // SetGitCloneToBuildWithUserPassworh
 //
-// English: Defines the path of a repository to be used as the base of the image to be mounted.
+// English:
 //
-//   url: Address of the repository containing the project
-//   user: git user
-//   password: git password
+//  Defines the path of a repository to be used as the base of the image to be mounted.
 //
-//     Note:
+//   Input:
+//     url: Address of the repository containing the project
+//     user: git user
+//     password: git password
 //
-//     If the repository is private and the host computer has access to the git server, use
+// Note:
+//
+//   * If the repository is private and the host computer has access to the git server, use
 //     SetPrivateRepositoryAutoConfig() to copy the git credentials contained in ~/.ssh and the settings of
 //     ~/.gitconfig automatically;
 //
-//     To be able to access private repositories from inside the container, build the image in two or more steps
+//   * To be able to access private repositories from inside the container, build the image in two or more steps
 //     and in the first step, copy the id_rsa and known_hosts files to the /root/.ssh folder, and the ~/.gitconfig
 //     file to the /root folder;
 //
-//     The MakeDefaultDockerfileForMe() function make a standard dockerfile with the procedures above;
+//   * The MakeDefaultDockerfileForMe() function make a standard dockerfile with the procedures above;
 //
-//     If the ~/.ssh/id_rsa key is password protected, use the SetGitSshPassword() function to set the password;
+//   * If the ~/.ssh/id_rsa key is password protected, use the SetGitSshPassword() function to set the password;
 //
-//     If you want to define the files manually, use SetGitConfigFile(), SetSshKnownHostsFile() and
+//   * If you want to define the files manually, use SetGitConfigFile(), SetSshKnownHostsFile() and
 //     SetSshIdRsaFile() to define the files manually;
 //
-//     This function must be used with the ImageBuildFromServer() and SetImageName() function to download and
+//   * This function must be used with the ImageBuildFromServer() and SetImageName() function to download and
 //     generate an image from the contents of a git repository;
 //
-//     The repository must contain a Dockerfile file and it will be searched for in the following order:
+//   * The repository must contain a Dockerfile file and it will be searched for in the following order:
 //     './Dockerfile-iotmaker', './Dockerfile', './dockerfile', 'Dockerfile.*', 'dockerfile.*', '.*Dockerfile.*'
 //     and '.*dockerfile.*';
 //
-//     The repository can be defined by the methods SetGitCloneToBuild(), SetGitCloneToBuildWithPrivateSshKey(),
+//   * The repository can be defined by the methods SetGitCloneToBuild(), SetGitCloneToBuildWithPrivateSshKey(),
 //     SetGitCloneToBuildWithPrivateToken() and SetGitCloneToBuildWithUserPassworh().
 //
-//     code:
+// code:
 //       var err error
 //       var usr *user.User
 //       var userGitConfigPath string
