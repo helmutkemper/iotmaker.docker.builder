@@ -6,7 +6,7 @@ import (
 	"log"
 )
 
-func ExampleContainerBuilder_ContainerCopyTo() {
+func ExampleContainerBuilder_ContainerCopyFrom() {
 	var err error
 
 	// English: Deletes all docker elements with the term `delete` in the name.
@@ -15,14 +15,14 @@ func ExampleContainerBuilder_ContainerCopyTo() {
 	// [optional/opcional]
 	SaGarbageCollector()
 
-	err = buildGoLintImageCopyToExample()
+	err = buildGoLintImageCopyFromExample()
 	if err != nil {
 		fmt.Printf("error: %v", err.Error())
 		SaGarbageCollector()
 		return
 	}
 
-	err = builAlpineImageCopyToExample()
+	err = builAlpineImageCopyFromExample()
 	if err != nil {
 		fmt.Printf("error: %v", err.Error())
 		SaGarbageCollector()
@@ -37,7 +37,7 @@ func ExampleContainerBuilder_ContainerCopyTo() {
 	// image os: linux
 }
 
-func buildGoLintImageCopyToExample() (err error) {
+func buildGoLintImageCopyFromExample() (err error) {
 	var imageInspect types.ImageInspect
 	var container = ContainerBuilder{}
 
@@ -117,7 +117,7 @@ func buildGoLintImageCopyToExample() (err error) {
 	return
 }
 
-func builAlpineImageCopyToExample() (err error) {
+func builAlpineImageCopyFromExample() (err error) {
 	var imageInspect types.ImageInspect
 	var container = ContainerBuilder{}
 

@@ -3505,6 +3505,184 @@ Entrada:
   replace: Elemento da troca da expressão regular [opcional].
 ```
 
+<details><summary>Example</summary>
+<p>
+
+```go
+{
+
+	var err error
+	var imageInspect types.ImageInspect
+
+	err = SaImageMakeCacheWithDefaultName("./example/cache/", 365*24*60*60*time.Second)
+	if err != nil {
+		fmt.Printf("error: %v", err.Error())
+		SaGarbageCollector()
+		return
+	}
+
+	SaGarbageCollector()
+
+	var container = ContainerBuilder{}
+
+	container.SetPrintBuildOnStrOut()
+
+	container.SetCacheEnable(true)
+
+	container.MakeDefaultDockerfileForMe()
+
+	container.SetImageName("delete:latest")
+
+	container.SetBuildFolderPath("./test/chaos")
+
+	container.SetContainerName("container_counter_delete_after_test")
+
+	container.SetImageBuildOptionsMemory(100 * KMegaByte)
+
+	container.SetCsvLogPath("./test.counter.log.csv", true)
+
+	container.SetCsvFileValueSeparator("\t")
+
+	container.AddFilterToCvsLogWithReplace(
+
+		"contador",
+
+		"counter",
+
+		"^.*?counter: (?P<valueToGet>[\\d\\.]+)",
+
+		"\\.",
+		",",
+	)
+
+	container.AddFilterToRestartContainer(
+
+		"restart-me!",
+
+		"^.*?(?P<valueToGet>restart-me!)",
+
+		"",
+		"",
+	)
+
+	container.AddFilterToSuccess(
+
+		"done!",
+
+		"^.*?(?P<valueToGet>\\d+/\\d+/\\d+ \\d+:\\d+:\\d+ done!).*",
+
+		"(?P<date>\\d+/\\d+/\\d+)\\s+(?P<hour>\\d+:\\d+:\\d+)\\s+(?P<value>done!).*",
+		"${value}",
+	)
+
+	container.AddFilterToFail(
+
+		"counter: 340",
+
+		"^.*?(?P<valueToGet>\\d+/\\d+/\\d+ \\d+:\\d+:\\d+ counter: [\\d\\.]+).*",
+
+		"(?P<date>\\d+/\\d+/\\d+)\\s+(?P<hour>\\d+:\\d+:\\d+)\\s+counter:\\s+(?P<value>[\\d\\.]+).*",
+		"Test Fail! Counter Value: ${value} - Hour: ${hour} - Date: ${date}",
+	)
+
+	container.AddFilterToStartChaos(
+		"chaos enable",
+		"chaos enable",
+		"",
+		"",
+	)
+
+	container.SetRestartProbability(0.9, 1.0, 1)
+
+	container.SetTimeToStartChaosOnChaosScene(2*time.Second, 5*time.Second)
+
+	container.SetTimeBeforeStartChaosInThisContainerOnChaosScene(2*time.Second, 5*time.Second)
+
+	container.SetTimeOnContainerPausedStateOnChaosScene(2*time.Second, 5*time.Second)
+
+	container.SetTimeOnContainerUnpausedStateOnChaosScene(2*time.Second, 5*time.Second)
+
+	container.SetTimeToRestartThisContainerAfterStopEventOnChaosScene(2*time.Second, 5*time.Second)
+
+	container.EnableChaosScene(true)
+
+	err = container.Init()
+	if err != nil {
+		fmt.Printf("error: %v", err.Error())
+		SaGarbageCollector()
+		return
+	}
+
+	imageInspect, err = container.ImageBuildFromFolder()
+	if err != nil {
+		fmt.Printf("error: %v", err.Error())
+		SaGarbageCollector()
+		return
+	}
+
+	fmt.Printf("image size: %v\n", container.SizeToString(imageInspect.Size))
+	fmt.Printf("image os: %v\n", imageInspect.Os)
+
+	err = container.ContainerBuildAndStartFromImage()
+	if err != nil {
+		log.Printf("error: %v", err.Error())
+		SaGarbageCollector()
+		return
+	}
+
+	container.StartMonitor()
+
+	event := container.GetChaosEvent()
+
+	for {
+		var pass = false
+		select {
+		case e := <-event:
+			if e.Done == true || e.Error == true || e.Fail == true {
+				pass = true
+
+				fmt.Printf("container name: %v\n", e.ContainerName)
+				fmt.Printf("done: %v\n", e.Done)
+				fmt.Printf("fail: %v\n", e.Fail)
+				fmt.Printf("error: %v\n", e.Error)
+				fmt.Printf("message: %v\n", e.Message)
+
+				break
+			}
+		}
+
+		if pass == true {
+			break
+		}
+	}
+
+	err = container.StopMonitor()
+	if err != nil {
+		log.Printf("error: %v", err.Error())
+		SaGarbageCollector()
+		return
+	}
+
+	SaGarbageCollector()
+
+}
+```
+
+#### Output
+
+```
+image size: 1.4 MB
+image os: linux
+container name: container_counter_delete_after_test
+done: true
+fail: false
+error: false
+message: done!
+```
+
+</p>
+</details>
+
 ### func \(\*ContainerBuilder\) [AddImageBuildOptionsBuildArgs](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcAddImageBuildOptionsBuildArgs.go#L60>)
 
 ```go
@@ -4293,41 +4471,6 @@ Output:
   err:       Default error object
 ```
 
-### func \(\*ContainerBuilder\) [ContainerCopyTo](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcContainerCopyTo.go#L33-L38>)
-
-```go
-func (e *ContainerBuilder) ContainerCopyTo(hostPathList []string, containerPathList []string) (err error)
-```
-
-#### ContainerCopyTo
-
-Português:
-
-Copia um arquivo contido no computador local para dentro do container
-
-```
-Entrada:
-  hostPathList: lista de arquivos a serem salvos no computador hospedeiro (caminho + nome do
-    arquivo)
-  containerPathList: lista de arquivos contidos no container (apenas o caminho)
-
-Saída:
-  err: Objeto de erro padrão
-```
-
-English:
-
-Copy a file contained on the local computer into the container
-
-```
-Input:
-  hostPathList: list of files to be saved on the host computer (path + filename)
-  containerPathList: list of files contained in the container (path only)
-
-Output:
-  err: standard error object
-```
-
 <details><summary>Example</summary>
 <p>
 
@@ -4349,14 +4492,14 @@ func main() {
 	// [optional/opcional]
 	SaGarbageCollector()
 
-	//err = buildGoLintImage()
+	err = buildGoLintImageCopyFromExample()
 	if err != nil {
 		fmt.Printf("error: %v", err.Error())
 		SaGarbageCollector()
 		return
 	}
 
-	err = builAlpineImage()
+	err = builAlpineImageCopyFromExample()
 	if err != nil {
 		fmt.Printf("error: %v", err.Error())
 		SaGarbageCollector()
@@ -4365,7 +4508,7 @@ func main() {
 
 }
 
-func buildGoLintImage() (err error) {
+func buildGoLintImageCopyFromExample() (err error) {
 	var imageInspect types.ImageInspect
 	var container = ContainerBuilder{}
 
@@ -4445,7 +4588,7 @@ func buildGoLintImage() (err error) {
 	return
 }
 
-func builAlpineImage() (err error) {
+func builAlpineImageCopyFromExample() (err error) {
 	var imageInspect types.ImageInspect
 	var container = ContainerBuilder{}
 
@@ -4545,12 +4688,273 @@ func builAlpineImage() (err error) {
 #### Output
 
 ```
-image size: 1.4 MB
+image size: 510.9 MB
 image os: linux
-container name: container_counter_delete_after_test
-done: false
-fail: true
-error: false
+file name: golangci-lint
+image size: 281.8 MB
+image os: linux
+```
+
+</p>
+</details>
+
+### func \(\*ContainerBuilder\) [ContainerCopyTo](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcContainerCopyTo.go#L33-L38>)
+
+```go
+func (e *ContainerBuilder) ContainerCopyTo(hostPathList []string, containerPathList []string) (err error)
+```
+
+#### ContainerCopyTo
+
+Português:
+
+Copia um arquivo contido no computador local para dentro do container
+
+```
+Entrada:
+  hostPathList: lista de arquivos a serem salvos no computador hospedeiro (caminho + nome do
+    arquivo)
+  containerPathList: lista de arquivos contidos no container (apenas o caminho)
+
+Saída:
+  err: Objeto de erro padrão
+```
+
+English:
+
+Copy a file contained on the local computer into the container
+
+```
+Input:
+  hostPathList: list of files to be saved on the host computer (path + filename)
+  containerPathList: list of files contained in the container (path only)
+
+Output:
+  err: standard error object
+```
+
+<details><summary>Example</summary>
+<p>
+
+```go
+package main
+
+import (
+	"fmt"
+	"github.com/docker/docker/api/types"
+	"log"
+)
+
+func main() {
+	var err error
+
+	// English: Deletes all docker elements with the term `delete` in the name.
+	//
+	// Português: Apaga todos os elementos docker com o termo `delete` no nome.
+	// [optional/opcional]
+	SaGarbageCollector()
+
+	err = buildGoLintImageCopyToExample()
+	if err != nil {
+		fmt.Printf("error: %v", err.Error())
+		SaGarbageCollector()
+		return
+	}
+
+	err = builAlpineImageCopyToExample()
+	if err != nil {
+		fmt.Printf("error: %v", err.Error())
+		SaGarbageCollector()
+		return
+	}
+
+}
+
+func buildGoLintImageCopyToExample() (err error) {
+	var imageInspect types.ImageInspect
+	var container = ContainerBuilder{}
+
+	// English: print the standard output of the container
+	//
+	// Português: imprime a saída padrão do container
+	// [optional/opcional]
+	container.SetPrintBuildOnStrOut()
+
+	// English: Name of the new image to be created.
+	//
+	// Português: Nome da nova imagem a ser criada.
+	container.SetImageName("golint_delete:latest")
+
+	// English: Golang project path to be turned into docker image
+	//
+	// Português: Caminho do projeto em Golang a ser transformado em imagem docker
+	container.SetBuildFolderPath("./example/golint/imageGolintBuild")
+
+	// English: Defines the name of the docker container to be created.
+	//
+	// Português: Define o nome do container docker a ser criado.
+	container.SetContainerName("container_golint_delete_after_test")
+
+	// English: Initializes the container manager object.
+	//
+	// Português: Inicializa o objeto gerenciador de container.
+	err = container.Init()
+	if err != nil {
+		fmt.Printf("error: %v", err.Error())
+		SaGarbageCollector()
+		return
+	}
+
+	// English: Creates an image from a project folder.
+	//
+	// Português: Cria uma imagem a partir de uma pasta de projeto.
+	imageInspect, err = container.ImageBuildFromFolder()
+	if err != nil {
+		fmt.Printf("error: %v", err.Error())
+		SaGarbageCollector()
+		return
+	}
+
+	fmt.Printf("image size: %v\n", container.SizeToString(imageInspect.Size))
+	fmt.Printf("image os: %v\n", imageInspect.Os)
+
+	// English: Creates and initializes the container based on the created image.
+	//
+	// Português: Cria e inicializa o container baseado na imagem criada.
+	err = container.ContainerBuildAndStartFromImage()
+	if err != nil {
+		log.Printf("error: %v", err.Error())
+		SaGarbageCollector()
+		return
+	}
+
+	var copyResponse []types.ContainerPathStat
+	copyResponse, err = container.ContainerCopyFrom(
+		[]string{"/go/pkg/mod/github.com/golangci/golangci-lint@v1.23.6/bin/golangci-lint"},
+		[]string{"./example/golint/golangci-lint"},
+	)
+	if err != nil {
+		log.Printf("error: %v", err.Error())
+		SaGarbageCollector()
+		return
+	}
+
+	// English: Deletes all docker elements with the term `delete` in the name.
+	//
+	// Português: Apaga todos os elementos docker com o termo `delete` no nome.
+	// [optional/opcional]
+	SaGarbageCollector()
+
+	fmt.Printf("file name: %v\n", copyResponse[0].Name)
+
+	return
+}
+
+func builAlpineImageCopyToExample() (err error) {
+	var imageInspect types.ImageInspect
+	var container = ContainerBuilder{}
+
+	// English: print the standard output of the container
+	//
+	// Português: imprime a saída padrão do container
+	// [optional/opcional]
+	container.SetPrintBuildOnStrOut()
+
+	// English: Name of the new image to be created.
+	//
+	// Português: Nome da nova imagem a ser criada.
+	container.SetImageName("alpine_delete:latest")
+
+	// English: Golang project path to be turned into docker image
+	//
+	// Português: Caminho do projeto em Golang a ser transformado em imagem docker
+	container.SetBuildFolderPath("./example/golint/imageAlpineBuild")
+
+	// English: Defines the name of the docker container to be created.
+	//
+	// Português: Define o nome do container docker a ser criado.
+	container.SetContainerName("container_alpine_delete_after_test")
+
+	// English: Initializes the container manager object.
+	//
+	// Português: Inicializa o objeto gerenciador de container.
+	err = container.Init()
+	if err != nil {
+		fmt.Printf("error: %v", err.Error())
+		SaGarbageCollector()
+		return
+	}
+
+	// English: Creates an image from a project folder.
+	//
+	// Português: Cria uma imagem a partir de uma pasta de projeto.
+	imageInspect, err = container.ImageBuildFromFolder()
+	if err != nil {
+		fmt.Printf("error: %v", err.Error())
+		SaGarbageCollector()
+		return
+	}
+
+	fmt.Printf("image size: %v\n", container.SizeToString(imageInspect.Size))
+	fmt.Printf("image os: %v\n", imageInspect.Os)
+
+	// English: Creates and initializes the container based on the created image.
+	//
+	// Português: Cria e inicializa o container baseado na imagem criada.
+	err = container.ContainerBuildAndStartFromImage()
+	if err != nil {
+		log.Printf("error: %v", err.Error())
+		SaGarbageCollector()
+		return
+	}
+
+	err = container.ContainerCopyTo(
+		[]string{"./example/golint/golangci-lint"},
+		[]string{"/go"},
+	)
+
+	if err != nil {
+		log.Printf("error: %v", err.Error())
+		SaGarbageCollector()
+		return
+	}
+
+	var exitCode int
+	var runing bool
+	var stdOutput []byte
+	var stdError []byte
+	exitCode, runing, stdOutput, stdError, err = container.ContainerExecCommand([]string{"ls", "-l"})
+
+	log.Printf("exitCode: %v", exitCode)
+	log.Printf("runing: %v", runing)
+	log.Printf("stdOutput: %v", string(stdOutput))
+	log.Printf("stdError: %v", string(stdError))
+
+	exitCode, runing, stdOutput, stdError, err = container.ContainerExecCommand([]string{"./golangci-lint"})
+
+	log.Printf("exitCode: %v", exitCode)
+	log.Printf("runing: %v", runing)
+	log.Printf("stdOutput: %v", string(stdOutput))
+	log.Printf("stdError: %v", string(stdError))
+
+	// English: Deletes all docker elements with the term `delete` in the name.
+	//
+	// Português: Apaga todos os elementos docker com o termo `delete` no nome.
+	// [optional/opcional]
+	SaGarbageCollector()
+
+	return
+}
+```
+
+#### Output
+
+```
+image size: 510.9 MB
+image os: linux
+file name: golangci-lint
+image size: 281.8 MB
+image os: linux
 ```
 
 </p>
