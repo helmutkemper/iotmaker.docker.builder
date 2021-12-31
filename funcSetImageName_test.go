@@ -9,7 +9,7 @@ import (
 	"time"
 )
 
-func ExampleContainerBuilder_AddPortToChange() {
+func ExampleContainerBuilder_SetImageName() {
 
 	var err error
 

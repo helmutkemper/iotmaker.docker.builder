@@ -1,10 +1,10 @@
 package iotmakerdockerbuilder
 
-// AddFilterToLogWithReplace
+// AddFilterToCvsLogWithReplace
 //
 // Similar:
 //
-//   AddFilterToLogWithReplace(), AddFilterToLog()
+//   AddFilterToCvsLogWithReplace(), AddFilterToCvsLog()
 //
 // English:
 //
@@ -39,7 +39,7 @@ package iotmakerdockerbuilder
 // Nota:
 //
 //   * Esta função é usada em conjunto com SetCsvLogPath(), StartMonitor(), StopMonitor()
-func (e *ContainerBuilder) AddFilterToLogWithReplace(label, match, filter, search, replace string) {
+func (e *ContainerBuilder) AddFilterToCvsLogWithReplace(label, match, filter, search, replace string) {
 	if e.chaos.filterLog == nil {
 		e.chaos.filterLog = make([]LogFilter, 0)
 	}

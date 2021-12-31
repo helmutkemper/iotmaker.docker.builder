@@ -9,7 +9,7 @@ import (
 func ExampleContainerBuilder_ImagePull() {
 	var err error
 
-	GarbageCollector()
+	SaGarbageCollector()
 
 	// create a network [optional]
 	var netDocker = dockerNetwork.ContainerBuilderNetwork{}
@@ -67,7 +67,7 @@ func ExampleContainerBuilder_ImagePull() {
 	// 1111;
 	// you can use SetDoNotOpenContainersPorts() to not open containers ports
 
-	GarbageCollector()
+	SaGarbageCollector()
 
 	// use this function to remove image, ONLY before container stoped and deleted
 	err = container.ImageRemoveByName("nats:latest")

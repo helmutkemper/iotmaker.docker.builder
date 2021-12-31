@@ -9,19 +9,28 @@ import (
 	"time"
 )
 
-func ExampleContainerBuilder_AddFailMatchFlagToFileLog() {
-	ContainerBuilderAddFailMatchFlagToFileLog()
-}
+// example:padrão
 
-func ContainerBuilderAddFailMatchFlagToFileLog() {
+func ExampleContainerBuilder_AddFailMatchFlagToFileLog() {
 	var err error
 	var imageInspect types.ImageInspect
+
+	// English: Mounts an image cache and makes imaging up to 5x faster
+	//
+	// Português: Monta uma imagem cache e deixa a criação de imagens até 5x mais rápida
+	// [optional/opcional]
+	err = SaImageMakeCacheWithDefaultName("./example/cache/", 365*24*60*60*time.Second)
+	if err != nil {
+		fmt.Printf("error: %v", err.Error())
+		SaGarbageCollector()
+		return
+	}
 
 	// English: Deletes all docker elements with the term `delete` in the name.
 	//
 	// Português: Apaga todos os elementos docker com o termo `delete` no nome.
 	// [optional/opcional]
-	GarbageCollector()
+	SaGarbageCollector()
 
 	var container = ContainerBuilder{}
 
@@ -103,7 +112,7 @@ func ContainerBuilderAddFailMatchFlagToFileLog() {
 	// Português: Define um filtro de busca por texto na saída padrão do container e escreve o texto no log definido por SetCsvLogPath()
 	// O container de exemplo imprime um contador na saída padrão `log.Printf("counter: %.2f", counter)`. `label` adiciona o nome da coluna; `match` procura pelo texto; `filter` aplica uma expressão regular; `search` e `replace` fazem uma substuição em cima do valor encontrado antes de escrever no log.
 	// [optional/opcional]
-	container.AddFilterToLogWithReplace(
+	container.AddFilterToCvsLogWithReplace(
 		"contador",
 		"counter",
 		"^.*?counter: (?P<valueToGet>[\\d\\.]+)",
@@ -131,7 +140,7 @@ func ContainerBuilderAddFailMatchFlagToFileLog() {
 	)
 	if err != nil {
 		fmt.Printf("error: %v", err.Error())
-		GarbageCollector()
+		SaGarbageCollector()
 		return
 	}
 
@@ -141,7 +150,7 @@ func ContainerBuilderAddFailMatchFlagToFileLog() {
 	err = container.Init()
 	if err != nil {
 		fmt.Printf("error: %v", err.Error())
-		GarbageCollector()
+		SaGarbageCollector()
 		return
 	}
 
@@ -151,7 +160,7 @@ func ContainerBuilderAddFailMatchFlagToFileLog() {
 	imageInspect, err = container.ImageBuildFromFolder()
 	if err != nil {
 		fmt.Printf("error: %v", err.Error())
-		GarbageCollector()
+		SaGarbageCollector()
 		return
 	}
 
@@ -164,7 +173,7 @@ func ContainerBuilderAddFailMatchFlagToFileLog() {
 	err = container.ContainerBuildAndStartFromImage()
 	if err != nil {
 		log.Printf("error: %v", err.Error())
-		GarbageCollector()
+		SaGarbageCollector()
 		return
 	}
 
@@ -183,28 +192,30 @@ func ContainerBuilderAddFailMatchFlagToFileLog() {
 	// English: Let the example run until a failure happens to terminate the test
 	//
 	// Português: Deixa o exemplo rodar até que uma falha aconteça para terminar o teste
-	var fail bool
 	for {
+		var pass = false
 		select {
 		case e := <-event:
-			if e.Fail == true {
+			if e.Done == true || e.Error == true || e.Fail == true {
+				pass = true
+
 				fmt.Printf("container name: %v\n", e.ContainerName)
 				fmt.Printf("done: %v\n", e.Done)
 				fmt.Printf("fail: %v\n", e.Fail)
 				fmt.Printf("error: %v\n", e.Error)
 
-				fail = e.Fail
+				break
 			}
 		}
 
-		if fail == true {
+		if pass == true {
 			break
 		}
 	}
 
-	// English: For container monitoring. Note: This function should be used to avoid trying to read a container that no longer exists, erased by the GarbageCollector() function.
+	// English: For container monitoring. Note: This function should be used to avoid trying to read a container that no longer exists, erased by the SaGarbageCollector() function.
 	//
-	// Português: Para o monitoramento do container. Nota: Esta função deve ser usada para evitar tentativa de leitura em um container que não existe mais, apagado pela função GarbageCollector().
+	// Português: Para o monitoramento do container. Nota: Esta função deve ser usada para evitar tentativa de leitura em um container que não existe mais, apagado pela função SaGarbageCollector().
 	// [optional/opcional]
 	_ = container.StopMonitor()
 
@@ -212,13 +223,13 @@ func ContainerBuilderAddFailMatchFlagToFileLog() {
 	//
 	// Português: Apaga todos os elementos docker com o termo `delete` no nome.
 	// [optional/opcional]
-	GarbageCollector()
+	SaGarbageCollector()
 
 	var data []byte
 	data, err = ioutil.ReadFile("./log1/log2/log3/log.0.log")
 	if err != nil {
 		log.Printf("error: %v", err.Error())
-		GarbageCollector()
+		SaGarbageCollector()
 		return
 	}
 

@@ -13,8 +13,8 @@ package iotmakerdockerbuilder
 // Note:
 //
 //   * This function is used in conjunction with the SetCsvLogPath(), StartMonitor(), StopMonitor(),
-//     SetCsvFileRowSeparator(), SetCsvFileReader(), SetCsvFileRowsToPrint(), AddFilterToLog() and
-//     AddFilterToLogWithReplace() functions;
+//     SetCsvFileRowSeparator(), SetCsvFileReader(), SetCsvFileRowsToPrint(), AddFilterToCvsLog() and
+//     AddFilterToCvsLogWithReplace() functions;
 //   * The data columns populated varies by operating system.
 //
 // Português:
@@ -28,8 +28,8 @@ package iotmakerdockerbuilder
 // Nota:
 //
 //   * Esta função é usada em conjunto com as funções SetCsvLogPath(), StartMonitor(), StopMonitor(),
-//     SetCsvFileRowSeparator(), SetCsvFileReader(), SetCsvFileRowsToPrint(), AddFilterToLog() e
-//     AddFilterToLogWithReplace();
+//     SetCsvFileRowSeparator(), SetCsvFileReader(), SetCsvFileRowsToPrint(), AddFilterToCvsLog() e
+//     AddFilterToCvsLogWithReplace();
 //   * As colunas de dados preenchidos varia de acordo com o sistema operacional.
 func (e *ContainerBuilder) SetCsvFileValueSeparator(value string) {
 	e.csvValueSeparator = value

@@ -4,7 +4,7 @@ import (
 	"github.com/helmutkemper/util"
 )
 
-// GarbageCollector
+// SaGarbageCollector
 //
 // English:
 //
@@ -29,7 +29,7 @@ import (
 //     names: Termos contidos no nome dos elementos docker indicados para remoção.
 //       Ex.: nats, remove os elementos de rede, imagem container e volumes que contenham o termo
 //       "nats" no nome. [opcional]
-func GarbageCollector(names ...string) {
+func SaGarbageCollector(names ...string) {
 	var err error
 
 	// garbage collector delete all containers, images, volumes and networks whose name contains the term

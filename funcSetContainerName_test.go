@@ -9,8 +9,7 @@ import (
 	"time"
 )
 
-func ExampleContainerBuilder_AddPortToChange() {
-
+func ExampleContainerBuilder_SetContainerName() {
 	var err error
 
 	// English: Deletes all docker elements with the term `delete` in the name.

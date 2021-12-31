@@ -39,7 +39,7 @@ func ImageBuildViewer(ch *chan iotmakerdocker.ContainerPullStatusSendToChannel) 
 func ExampleContainerBuilder_ImageBuildFromFolder() {
 	var err error
 
-	GarbageCollector()
+	SaGarbageCollector()
 
 	var container = ContainerBuilder{}
 	// new image name delete:latest
@@ -104,7 +104,7 @@ func ExampleContainerBuilder_ImageBuildFromFolder() {
 	// print output
 	fmt.Printf("%s", body)
 
-	GarbageCollector()
+	SaGarbageCollector()
 
 	// Output:
 	// <html><body><p>C is life! Golang is a evolution of C</p></body></html>

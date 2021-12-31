@@ -2,7 +2,7 @@ package iotmakerdockerbuilder
 
 import "time"
 
-// ImageMakeCache
+// SaImageMakeCache
 //
 // English:
 //
@@ -59,6 +59,6 @@ import "time"
 //   * Criar seu próprio Dockerfile e em vez de usar `FROM golang:1.16-alpine`, usar o nome da cacge,
 //     por exemplo, `FROM cache:latest`;
 //
-func ImageMakeCacheWithDefaultName(projectPath string, expirationDate time.Duration) (err error) {
-	return ImageMakeCache(projectPath, "cache:latest", expirationDate)
+func SaImageMakeCacheWithDefaultName(projectPath string, expirationDate time.Duration) (err error) {
+	return SaImageMakeCache(projectPath, "cache:latest", expirationDate)
 }

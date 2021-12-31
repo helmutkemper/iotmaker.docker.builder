@@ -60,7 +60,7 @@ func ExampleContainerBuilder_SetNetworkDocker() {
 	// At this point, the MongoDB is ready for use on port 27017
 
 	// Stop and delete the container
-	GarbageCollector()
+	SaGarbageCollector()
 
 	// Output:
 	//

@@ -12,7 +12,7 @@ import (
 func TestContainerBuilder_writeTimeSpentByTasksOfTheCGroupInKernelMode(t *testing.T) {
 	var err error
 
-	GarbageCollector()
+	SaGarbageCollector()
 
 	var logFile = "./test.counter.log.6.csv"
 
@@ -33,7 +33,7 @@ func TestContainerBuilder_writeTimeSpentByTasksOfTheCGroupInKernelMode(t *testin
 	container.SetImageBuildOptionsMemory(100 * KMegaByte)
 
 	container.SetCsvLogPath(logFile, true)
-	container.AddFilterToLog(
+	container.AddFilterToCvsLog(
 		"contador",
 		"counter",
 		"^.*?counter: (?P<valueToGet>[\\d\\.]+)",
@@ -62,7 +62,7 @@ func TestContainerBuilder_writeTimeSpentByTasksOfTheCGroupInKernelMode(t *testin
 	err = container.Init()
 	if err != nil {
 		fmt.Printf("error: %v", err.Error())
-		GarbageCollector()
+		SaGarbageCollector()
 		t.Fail()
 		return
 	}
@@ -70,7 +70,7 @@ func TestContainerBuilder_writeTimeSpentByTasksOfTheCGroupInKernelMode(t *testin
 	_, err = container.ImageBuildFromFolder()
 	if err != nil {
 		fmt.Printf("error: %v", err.Error())
-		GarbageCollector()
+		SaGarbageCollector()
 		t.Fail()
 		return
 	}
@@ -78,7 +78,7 @@ func TestContainerBuilder_writeTimeSpentByTasksOfTheCGroupInKernelMode(t *testin
 	err = container.ContainerBuildAndStartFromImage()
 	if err != nil {
 		log.Printf("error: %v", err.Error())
-		GarbageCollector()
+		SaGarbageCollector()
 		t.Fail()
 		return
 	}
@@ -99,7 +99,7 @@ func TestContainerBuilder_writeTimeSpentByTasksOfTheCGroupInKernelMode(t *testin
 	err = container.StopMonitor()
 	if err != nil {
 		log.Printf("error: %v", err.Error())
-		GarbageCollector()
+		SaGarbageCollector()
 		t.Fail()
 		return
 	}
@@ -158,5 +158,5 @@ func TestContainerBuilder_writeTimeSpentByTasksOfTheCGroupInKernelMode(t *testin
 
 	_ = os.Remove(logFile)
 
-	GarbageCollector()
+	SaGarbageCollector()
 }

@@ -9,19 +9,28 @@ import (
 	"time"
 )
 
-func ExampleContainerBuilder_AddFileOrFolderToLinkBetweenConputerHostAndContainer() {
-	AddFileOrFolderToLinkBetweenConputerHostAndContainer()
-}
+// example:padrão
 
-func AddFileOrFolderToLinkBetweenConputerHostAndContainer() {
+func ExampleContainerBuilder_AddFileOrFolderToLinkBetweenConputerHostAndContainer() {
 
 	var err error
+
+	// English: Mounts an image cache and makes imaging up to 5x faster
+	//
+	// Português: Monta uma imagem cache e deixa a criação de imagens até 5x mais rápida
+	// [optional/opcional]
+	err = SaImageMakeCacheWithDefaultName("./example/cache/", 365*24*60*60*time.Second)
+	if err != nil {
+		fmt.Printf("error: %v", err.Error())
+		SaGarbageCollector()
+		return
+	}
 
 	// English: Deletes all docker elements with the term `delete` in the name.
 	//
 	// Português: Apaga todos os elementos docker com o termo `delete` no nome.
 	// [optional/opcional]
-	GarbageCollector()
+	SaGarbageCollector()
 
 	var container = ContainerBuilder{}
 
@@ -96,8 +105,6 @@ func AddFileOrFolderToLinkBetweenConputerHostAndContainer() {
 		panic(err)
 	}
 
-	//todo: fazer o inspect
-
 	// English: Creates an image from a project server.
 	//
 	// Português: Cria uma imagem a partir do servidor com o projeto.
@@ -150,7 +157,7 @@ func AddFileOrFolderToLinkBetweenConputerHostAndContainer() {
 	//
 	// Português: Apaga todos os elementos docker com o termo `delete` no nome.
 	// [optional/opcional]
-	GarbageCollector()
+	SaGarbageCollector()
 
 	//Output:
 	//<html><body><p>C is life! Golang is a evolution of C</p></body></html>

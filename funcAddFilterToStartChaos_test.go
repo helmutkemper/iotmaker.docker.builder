@@ -15,10 +15,21 @@ func AddFilterToStartChaos() {
 	var err error
 	var imageInspect types.ImageInspect
 
+	// English: Mounts an image cache and makes imaging up to 5x faster
+	//
+	// Português: Monta uma imagem cache e deixa a criação de imagens até 5x mais rápida
+	// [optional/opcional]
+	err = SaImageMakeCacheWithDefaultName("./example/cache/", 365*24*60*60*time.Second)
+	if err != nil {
+		fmt.Printf("error: %v", err.Error())
+		SaGarbageCollector()
+		return
+	}
+
 	// English: Deletes all docker elements with the term `delete` in the name.
 	//
 	// Português: Apaga todos os elementos docker com o termo `delete` no nome.
-	GarbageCollector()
+	SaGarbageCollector()
 
 	var container = ContainerBuilder{}
 
@@ -70,7 +81,7 @@ func AddFilterToStartChaos() {
 	// English: Adds a search filter to the standard output of the container, to save the information in the log file
 	//
 	// Português: Adiciona um filtro de busca na saída padrão do container, para salvar a informação no arquivo de log
-	container.AddFilterToLogWithReplace(
+	container.AddFilterToCvsLogWithReplace(
 		// English: Label to be written to log file
 		//
 		// Português: Rótulo a ser escrito no arquivo de log
@@ -207,7 +218,7 @@ func AddFilterToStartChaos() {
 	err = container.Init()
 	if err != nil {
 		fmt.Printf("error: %v", err.Error())
-		GarbageCollector()
+		SaGarbageCollector()
 		return
 	}
 
@@ -217,7 +228,7 @@ func AddFilterToStartChaos() {
 	imageInspect, err = container.ImageBuildFromFolder()
 	if err != nil {
 		fmt.Printf("error: %v", err.Error())
-		GarbageCollector()
+		SaGarbageCollector()
 		return
 	}
 
@@ -230,7 +241,7 @@ func AddFilterToStartChaos() {
 	err = container.ContainerBuildAndStartFromImage()
 	if err != nil {
 		log.Printf("error: %v", err.Error())
-		GarbageCollector()
+		SaGarbageCollector()
 		return
 	}
 
@@ -256,12 +267,17 @@ func AddFilterToStartChaos() {
 	// English: Stop container monitoring.
 	//
 	// Português: Para o monitoramento do container.
-	container.StopMonitor()
+	err = container.StopMonitor()
+	if err != nil {
+		log.Printf("error: %v", err.Error())
+		SaGarbageCollector()
+		return
+	}
 
 	// English: Deletes all docker elements with the term `delete` in the name.
 	//
 	// Português: Apaga todos os elementos docker com o termo `delete` no nome.
-	GarbageCollector()
+	SaGarbageCollector()
 
 	// Output:
 	// image size: 1.38 MB

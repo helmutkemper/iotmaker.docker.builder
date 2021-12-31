@@ -17,7 +17,7 @@ func ExampleContainerBuilder_SetCsvLogPath() {
 	var err error
 	var imageInspect types.ImageInspect
 
-	GarbageCollector()
+	SaGarbageCollector()
 
 	var container = ContainerBuilder{}
 	// imprime a saída padrão do container
@@ -37,7 +37,7 @@ func ExampleContainerBuilder_SetCsvLogPath() {
 
 	container.SetCsvLogPath("./test.counter.log.csv", true)
 	container.SetCsvFileValueSeparator("\t")
-	container.AddFilterToLogWithReplace(
+	container.AddFilterToCvsLogWithReplace(
 		"contador",
 		"counter",
 		"^.*?counter: (?P<valueToGet>[\\d\\.]+)",
@@ -60,14 +60,14 @@ func ExampleContainerBuilder_SetCsvLogPath() {
 	err = container.Init()
 	if err != nil {
 		fmt.Printf("error: %v", err.Error())
-		GarbageCollector()
+		SaGarbageCollector()
 		return
 	}
 
 	imageInspect, err = container.ImageBuildFromFolder()
 	if err != nil {
 		fmt.Printf("error: %v", err.Error())
-		GarbageCollector()
+		SaGarbageCollector()
 		return
 	}
 
@@ -77,7 +77,7 @@ func ExampleContainerBuilder_SetCsvLogPath() {
 	err = container.ContainerBuildAndStartFromImage()
 	if err != nil {
 		log.Printf("error: %v", err.Error())
-		GarbageCollector()
+		SaGarbageCollector()
 		return
 	}
 
@@ -96,7 +96,7 @@ func ExampleContainerBuilder_SetCsvLogPath() {
 
 	container.StopMonitor()
 
-	GarbageCollector()
+	SaGarbageCollector()
 
 	// Output:
 	// image size: 1.38 MB

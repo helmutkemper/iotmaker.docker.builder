@@ -77,13 +77,18 @@ func (e *ContainerBuilder) managerChaos() {
 		return
 	}
 
-	line, e.chaos.foundSuccess = e.logsSearchAndReplaceIntoText(&logs, lineList, e.chaos.filterSuccess)
-	line, e.chaos.foundFail = e.logsSearchAndReplaceIntoText(&logs, lineList, e.chaos.filterFail)
-	_, lineNumber = e.traceCodeLine()
 	event.clear()
-	if e.chaos.foundFail == true || e.chaos.foundSuccess == true {
+	line, e.chaos.foundSuccess = e.logsSearchAndReplaceIntoText(&logs, lineList, e.chaos.filterSuccess)
+	if e.chaos.foundSuccess == true {
 		event.Message = string(line)
+	} else {
+		line, e.chaos.foundFail = e.logsSearchAndReplaceIntoText(&logs, lineList, e.chaos.filterFail)
+		if e.chaos.foundFail == true {
+			event.Message = string(line)
+		}
 	}
+	_, lineNumber = e.traceCodeLine()
+
 	event.Metadata = e.metadata
 	event.ContainerName = e.GetContainerName()
 	event.Fail = e.chaos.foundFail

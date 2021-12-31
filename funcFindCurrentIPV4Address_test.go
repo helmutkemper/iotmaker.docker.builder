@@ -9,7 +9,7 @@ import (
 func ExampleContainerBuilder_FindCurrentIPV4Address() {
 	var err error
 
-	GarbageCollector()
+	SaGarbageCollector()
 
 	var container = ContainerBuilder{}
 
@@ -65,7 +65,7 @@ func ExampleContainerBuilder_FindCurrentIPV4Address() {
 	// 1111;
 	// you can use SetDoNotOpenContainersPorts() to not open containers ports
 
-	GarbageCollector()
+	SaGarbageCollector()
 
 	// use this function to remove image, ONLY before container stoped and deleted
 	err = container.ImageRemoveByName("nats:latest")

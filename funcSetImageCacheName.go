@@ -11,7 +11,7 @@ package iotmakerdockerbuilder
 //
 // Note:
 //
-//   * See ImageMakeCache(), SetCacheEnable(), MakeDefaultDockerfileForMe() and
+//   * See SaImageMakeCache(), SetCacheEnable(), MakeDefaultDockerfileForMe() and
 //     MakeDefaultDockerfileForMeWithInstallExtras() functions
 //
 // Português:
@@ -23,7 +23,7 @@ package iotmakerdockerbuilder
 //
 // Nota:
 //
-//   * Veja as funções ImageMakeCache(), SetCacheEnable(), MakeDefaultDockerfileForMe() e
+//   * Veja as funções SaImageMakeCache(), SetCacheEnable(), MakeDefaultDockerfileForMe() e
 //     MakeDefaultDockerfileForMeWithInstallExtras()
 func (e *ContainerBuilder) SetImageCacheName(name string) {
 	e.imageCacheName = name

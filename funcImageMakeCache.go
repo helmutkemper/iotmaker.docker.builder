@@ -4,7 +4,7 @@ import (
 	"time"
 )
 
-// ImageMakeCache
+// SaImageMakeCache
 //
 // English:
 //
@@ -67,7 +67,7 @@ import (
 //   * Criar seu próprio Dockerfile e em vez de usar `FROM golang:1.16-alpine`, usar o nome da cacge,
 //     por exemplo, `FROM cache:latest`;
 //
-func ImageMakeCache(projectPath, cacheName string, expirationDate time.Duration) (err error) {
+func SaImageMakeCache(projectPath, cacheName string, expirationDate time.Duration) (err error) {
 
 	var container = ContainerBuilder{}
 

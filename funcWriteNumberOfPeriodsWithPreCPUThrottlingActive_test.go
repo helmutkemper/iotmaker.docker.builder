@@ -12,7 +12,7 @@ import (
 func TestContainerBuilder_writeNumberOfPeriodsWithPreCPUThrottlingActive(t *testing.T) {
 	var err error
 
-	GarbageCollector()
+	SaGarbageCollector()
 
 	var logFile = "./test.counter.log.20.csv"
 
@@ -33,7 +33,7 @@ func TestContainerBuilder_writeNumberOfPeriodsWithPreCPUThrottlingActive(t *test
 	container.SetImageBuildOptionsMemory(100 * KMegaByte)
 
 	container.SetCsvLogPath(logFile, true)
-	container.AddFilterToLog(
+	container.AddFilterToCvsLog(
 		"contador",
 		"counter",
 		"^.*?counter: (?P<valueToGet>[\\d\\.]+)",
@@ -76,7 +76,7 @@ func TestContainerBuilder_writeNumberOfPeriodsWithPreCPUThrottlingActive(t *test
 	err = container.Init()
 	if err != nil {
 		fmt.Printf("error: %v", err.Error())
-		GarbageCollector()
+		SaGarbageCollector()
 		t.Fail()
 		return
 	}
@@ -84,7 +84,7 @@ func TestContainerBuilder_writeNumberOfPeriodsWithPreCPUThrottlingActive(t *test
 	_, err = container.ImageBuildFromFolder()
 	if err != nil {
 		fmt.Printf("error: %v", err.Error())
-		GarbageCollector()
+		SaGarbageCollector()
 		t.Fail()
 		return
 	}
@@ -92,7 +92,7 @@ func TestContainerBuilder_writeNumberOfPeriodsWithPreCPUThrottlingActive(t *test
 	err = container.ContainerBuildAndStartFromImage()
 	if err != nil {
 		log.Printf("error: %v", err.Error())
-		GarbageCollector()
+		SaGarbageCollector()
 		t.Fail()
 		return
 	}
@@ -113,7 +113,7 @@ func TestContainerBuilder_writeNumberOfPeriodsWithPreCPUThrottlingActive(t *test
 	err = container.StopMonitor()
 	if err != nil {
 		log.Printf("error: %v", err.Error())
-		GarbageCollector()
+		SaGarbageCollector()
 		t.Fail()
 		return
 	}
@@ -242,5 +242,5 @@ func TestContainerBuilder_writeNumberOfPeriodsWithPreCPUThrottlingActive(t *test
 
 	_ = os.Remove(logFile)
 
-	GarbageCollector()
+	SaGarbageCollector()
 }

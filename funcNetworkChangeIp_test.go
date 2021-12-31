@@ -15,7 +15,7 @@ func ExampleContainerBuilder_NetworkChangeIp() {
 
 	// English: Deletes all docker elements with the term `delete` in the name.
 	// Português: Apaga todos os elementos docker com o termo `delete` no nome.
-	GarbageCollector()
+	SaGarbageCollector()
 
 	var netDocker = &dockerNetwork.ContainerBuilderNetwork{}
 	err = netDocker.Init()
@@ -70,7 +70,7 @@ func ExampleContainerBuilder_NetworkChangeIp() {
 	err = container.Init()
 	if err != nil {
 		fmt.Printf("error: %v", err.Error())
-		GarbageCollector()
+		SaGarbageCollector()
 		return
 	}
 
@@ -79,7 +79,7 @@ func ExampleContainerBuilder_NetworkChangeIp() {
 	imageInspect, err = container.ImageBuildFromFolder()
 	if err != nil {
 		fmt.Printf("error: %v", err.Error())
-		GarbageCollector()
+		SaGarbageCollector()
 		return
 	}
 
@@ -91,7 +91,7 @@ func ExampleContainerBuilder_NetworkChangeIp() {
 	err = container.ContainerBuildAndStartFromImage()
 	if err != nil {
 		log.Printf("error: %v", err.Error())
-		GarbageCollector()
+		SaGarbageCollector()
 		return
 	}
 
@@ -99,7 +99,7 @@ func ExampleContainerBuilder_NetworkChangeIp() {
 	containerInspect, err = container.ContainerInspect()
 	if err != nil {
 		log.Printf("error: %v", err.Error())
-		GarbageCollector()
+		SaGarbageCollector()
 		return
 	}
 
@@ -108,28 +108,28 @@ func ExampleContainerBuilder_NetworkChangeIp() {
 	err = container.ContainerStop()
 	if err != nil {
 		log.Printf("error: %v", err.Error())
-		GarbageCollector()
+		SaGarbageCollector()
 		return
 	}
 
 	err = container.NetworkChangeIp()
 	if err != nil {
 		log.Printf("error: %v", err.Error())
-		GarbageCollector()
+		SaGarbageCollector()
 		return
 	}
 
 	err = container.ContainerStart()
 	if err != nil {
 		log.Printf("error: %v", err.Error())
-		GarbageCollector()
+		SaGarbageCollector()
 		return
 	}
 
 	containerInspect, err = container.ContainerInspect()
 	if err != nil {
 		log.Printf("error: %v", err.Error())
-		GarbageCollector()
+		SaGarbageCollector()
 		return
 	}
 
@@ -137,7 +137,7 @@ func ExampleContainerBuilder_NetworkChangeIp() {
 
 	// English: Deletes all docker elements with the term `delete` in the name.
 	// Português: Apaga todos os elementos docker com o termo `delete` no nome.
-	GarbageCollector()
+	SaGarbageCollector()
 
 	// Output:
 	// image size: 1.31 MB

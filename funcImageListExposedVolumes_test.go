@@ -9,7 +9,7 @@ func ExampleContainerBuilder_ImageListExposedVolumes() {
 	var err error
 	var volumes []string
 
-	GarbageCollector()
+	SaGarbageCollector()
 
 	var container = ContainerBuilder{}
 	// new image name delete:latest
@@ -37,7 +37,7 @@ func ExampleContainerBuilder_ImageListExposedVolumes() {
 
 	fmt.Printf("%v", volumes[0])
 
-	GarbageCollector()
+	SaGarbageCollector()
 
 	// Output:
 	// /static

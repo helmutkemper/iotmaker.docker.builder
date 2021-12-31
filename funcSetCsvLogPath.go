@@ -17,8 +17,8 @@ import "os"
 //
 //   * This function must be used in conjunction with the StartMonitor() and StopMonitor() functions;
 //   * The data columns populated varies by operating system;
-//   * See the SetCsvFileReader(), SetCsvFileRowsToPrint(), AddFilterToLog(),
-//     AddFilterToLogWithReplace(), SetCsvFileValueSeparator() and SetCsvFileRowSeparator() functions
+//   * See the SetCsvFileReader(), SetCsvFileRowsToPrint(), AddFilterToCvsLog(),
+//     AddFilterToCvsLogWithReplace(), SetCsvFileValueSeparator() and SetCsvFileRowSeparator() functions
 //     to change some log settings.
 //
 // Português:
@@ -33,8 +33,8 @@ import "os"
 //
 //   * Esta função deve ser usada em conjunto com as funções StartMonitor() e StopMonitor();
 //   * As colunas de dados preenchidos varia de acordo com o sistema operacional;
-//   * Veja as funções SetCsvFileReader(), SetCsvFileRowsToPrint(), AddFilterToLog(),
-//     AddFilterToLogWithReplace(), SetCsvFileValueSeparator() e SetCsvFileRowSeparator() para alterar
+//   * Veja as funções SetCsvFileReader(), SetCsvFileRowsToPrint(), AddFilterToCvsLog(),
+//     AddFilterToCvsLogWithReplace(), SetCsvFileValueSeparator() e SetCsvFileRowSeparator() para alterar
 //     algumas configurações do log.
 func (e *ContainerBuilder) SetCsvLogPath(path string, removeOldFile bool) {
 

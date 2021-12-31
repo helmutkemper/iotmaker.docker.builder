@@ -15,7 +15,7 @@ func ExampleConfigChaosScene() {
 	// English: Deletes all docker elements with the term `delete` in the name.
 	//
 	// Português: Apaga todos os elementos docker com o termo `delete` no nome.
-	GarbageCollector()
+	SaGarbageCollector()
 
 	// English: Create a chaos scene named nats_chaos and control the number of containers stopped at the same time
 	//
@@ -65,7 +65,7 @@ func ExampleConfigChaosScene() {
 	// English: Deletes all docker elements with the term `delete` in the name.
 	//
 	// Português: Apaga todos os elementos docker com o termo `delete` no nome.
-	GarbageCollector()
+	SaGarbageCollector()
 
 	// Output:
 	//

@@ -19,7 +19,7 @@ func AddPortToExpose() {
 	// English: Deletes all docker elements with the term `delete` in the name.
 	//
 	// Português: Apaga todos os elementos docker com o termo `delete` no nome.
-	GarbageCollector()
+	SaGarbageCollector()
 
 	var container = ContainerBuilder{}
 
@@ -115,7 +115,7 @@ func AddPortToExpose() {
 	// print output
 	fmt.Printf("%s", body)
 
-	GarbageCollector()
+	SaGarbageCollector()
 
 	// Output:
 	// <html><body><p>C is life! Golang is a evolution of C</p></body></html>

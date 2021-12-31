@@ -14,7 +14,8 @@ import (
 //
 // English:
 //
-//  Error text searched for in the container's standard output.
+//  Looks for error text in the container's standard output and saves it to a log file on the host
+//  computer
 //
 //   Input:
 //     value: Error text
@@ -26,7 +27,8 @@ import (
 //
 // Português:
 //
-//  Texto indicativo de erro procurado na saída padrão do container.
+//  Procura por um texto indicativo de erro na saída padrão do container e o salva em um arquivo de
+//  log no computador hospedeiro
 //
 //   Entrada:
 //     value: Texto indicativo de erro

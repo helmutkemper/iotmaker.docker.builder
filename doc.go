@@ -96,7 +96,7 @@
 //		}
 //
 //		// Create a network named cache_delete_after_test, subnet 10.0.0.0/16 e gatway 10.0.0.1
-//		// Use the term "delete" to enable the function "dockerBuilder.GarbageCollector()", which will search for and remove
+//		// Use the term "delete" to enable the function "dockerBuilder.SaGarbageCollector()", which will search for and remove
 //		// all docker elements with the term "delete" contained in the name. For example, network, image, container and
 //		// volumes.
 //		err = netDocker.NetworkCreate("cache_delete_after_test", "10.0.0.0/16", "10.0.0.1")
@@ -114,7 +114,7 @@
 //		// Link container and network [optional] (next ip address is 10.0.0.2)
 //		container.SetNetworkDocker(&netDocker)
 //		// Set a container name.
-//		// Use the term "delete" to enable the function "dockerBuilder.GarbageCollector()", which will search for and remove
+//		// Use the term "delete" to enable the function "dockerBuilder.SaGarbageCollector()", which will search for and remove
 //		// all docker elements with the term "delete" contained in the name. For example, network, image, container and
 //		// volumes.
 //		container.SetContainerName("container_delete_nats_after_test")
@@ -176,7 +176,7 @@
 //		}
 //
 //		// Create a network named cache_delete_after_test, subnet 10.0.0.0/16 e gatway 10.0.0.1
-//		// Use the term "delete" to enable the function "dockerBuilder.GarbageCollector()", which will search for and remove
+//		// Use the term "delete" to enable the function "dockerBuilder.SaGarbageCollector()", which will search for and remove
 //		// all docker elements with the term "delete" contained in the name. For example, network, image, container and
 //		// volumes.
 //		err = netDocker.NetworkCreate("cache_delete_after_test", "10.0.0.0/16", "10.0.0.1")
@@ -199,12 +199,12 @@
 //		// named "cache:latest" and use this image as the basis for the test images.
 //		container.SetCacheEnable(true)
 //		// Determines the name of the image to be created during the test.
-//		// Use the term "delete" to enable the function "dockerBuilder.GarbageCollector()", which will search for and remove
+//		// Use the term "delete" to enable the function "dockerBuilder.SaGarbageCollector()", which will search for and remove
 //		// all docker elements with the term "delete" contained in the name. For example, network, image, container and
 //		// volumes.
 //		container.SetImageName("data_rand_pod_image:latest")
 //		// Determina o nome do container. Lembre-se que ele deve ser único.
-//		// Use the term "delete" to enable the function "dockerBuilder.GarbageCollector()", which will search for and remove
+//		// Use the term "delete" to enable the function "dockerBuilder.SaGarbageCollector()", which will search for and remove
 //		// all docker elements with the term "delete" contained in the name. For example, network, image, container and
 //		// volumes.
 //		container.SetContainerName("delete_data_rand_pod_container")
@@ -295,7 +295,7 @@
 //		// Print the container's standard output to golang's standard output
 //		container.SetPrintBuildOnStrOut()
 //		// Determines the name of the image to be created during the test.
-//		// Use the term "delete" to enable the function "dockerBuilder.GarbageCollector()", which will search for and remove
+//		// Use the term "delete" to enable the function "dockerBuilder.SaGarbageCollector()", which will search for and remove
 //		// all docker elements with the term "delete" contained in the name. For example, network, image, container and
 //		// volumes.
 //		container.SetImageName("cache:latest")

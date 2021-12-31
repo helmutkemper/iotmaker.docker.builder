@@ -15,7 +15,7 @@ import (
 func ExampleNetworkChaos_Init() {
 	var err error
 
-	GarbageCollector()
+	SaGarbageCollector()
 
 	var netDocker = &dockerNetwork.ContainerBuilderNetwork{}
 	err = netDocker.Init()

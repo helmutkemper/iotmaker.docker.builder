@@ -13,7 +13,7 @@ import (
 func ExampleContainerBuilder_SetGitPathPrivateRepository() {
 	var err error
 
-	GarbageCollector()
+	SaGarbageCollector()
 
 	var container = ContainerBuilder{}
 	container.SetPrintBuildOnStrOut()
@@ -79,7 +79,7 @@ func ExampleContainerBuilder_SetGitPathPrivateRepository() {
 	// print output
 	fmt.Printf("%s", body)
 
-	GarbageCollector()
+	SaGarbageCollector()
 
 	// Output:
 	// <html><body><p>C is life! Golang is a evolution of C</p></body></html>

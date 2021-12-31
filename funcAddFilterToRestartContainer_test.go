@@ -7,18 +7,28 @@ import (
 	"time"
 )
 
-func ExampleContainerBuilder_AddFilterToRestartContainer() {
-	AddFilterToRestartContainer()
-}
+// example:padrão
 
-func AddFilterToRestartContainer() {
+func ExampleContainerBuilder_AddFilterToRestartContainer() {
+
 	var err error
 	var imageInspect types.ImageInspect
+
+	// English: Mounts an image cache and makes imaging up to 5x faster
+	//
+	// Português: Monta uma imagem cache e deixa a criação de imagens até 5x mais rápida
+	// [optional/opcional]
+	err = SaImageMakeCacheWithDefaultName("./example/cache/", 365*24*60*60*time.Second)
+	if err != nil {
+		fmt.Printf("error: %v", err.Error())
+		SaGarbageCollector()
+		return
+	}
 
 	// English: Deletes all docker elements with the term `delete` in the name.
 	//
 	// Português: Apaga todos os elementos docker com o termo `delete` no nome.
-	GarbageCollector()
+	SaGarbageCollector()
 
 	var container = ContainerBuilder{}
 
@@ -67,7 +77,7 @@ func AddFilterToRestartContainer() {
 	// English: Adds a search filter to the standard output of the container, to save the information in the log file
 	//
 	// Português: Adiciona um filtro de busca na saída padrão do container, para salvar a informação no arquivo de log
-	container.AddFilterToLogWithReplace(
+	container.AddFilterToCvsLogWithReplace(
 		// English: Label to be written to log file
 		//
 		// Português: Rótulo a ser escrito no arquivo de log
@@ -204,7 +214,7 @@ func AddFilterToRestartContainer() {
 	err = container.Init()
 	if err != nil {
 		fmt.Printf("error: %v", err.Error())
-		GarbageCollector()
+		SaGarbageCollector()
 		return
 	}
 
@@ -214,7 +224,7 @@ func AddFilterToRestartContainer() {
 	imageInspect, err = container.ImageBuildFromFolder()
 	if err != nil {
 		fmt.Printf("error: %v", err.Error())
-		GarbageCollector()
+		SaGarbageCollector()
 		return
 	}
 
@@ -227,7 +237,7 @@ func AddFilterToRestartContainer() {
 	err = container.ContainerBuildAndStartFromImage()
 	if err != nil {
 		log.Printf("error: %v", err.Error())
-		GarbageCollector()
+		SaGarbageCollector()
 		return
 	}
 
@@ -241,27 +251,48 @@ func AddFilterToRestartContainer() {
 	// Português: Pega o ponteiro do canal de eventos dentro do container.
 	event := container.GetChaosEvent()
 
-	select {
-	case e := <-event:
-		fmt.Printf("container name: %v\n", e.ContainerName)
-		fmt.Printf("done: %v\n", e.Done)
-		fmt.Printf("fail: %v\n", e.Fail)
-		fmt.Printf("error: %v\n", e.Error)
-		fmt.Printf("message: %v\n", e.Message)
+	// English: Let the example run until a failure happens to terminate the test
+	//
+	// Português: Deixa o exemplo rodar até que uma falha aconteça para terminar o teste
+	for {
+		var pass = false
+		select {
+		case e := <-event:
+			if e.Done == true || e.Error == true || e.Fail == true {
+				pass = true
+
+				fmt.Printf("container name: %v\n", e.ContainerName)
+				fmt.Printf("done: %v\n", e.Done)
+				fmt.Printf("fail: %v\n", e.Fail)
+				fmt.Printf("error: %v\n", e.Error)
+				fmt.Printf("message: %v\n", e.Message)
+
+				break
+			}
+		}
+
+		if pass == true {
+			break
+		}
 	}
 
 	// English: Stop container monitoring.
 	//
 	// Português: Para o monitoramento do container.
-	container.StopMonitor()
+	err = container.StopMonitor()
+	if err != nil {
+		log.Printf("error: %v", err.Error())
+		SaGarbageCollector()
+		return
+	}
 
 	// English: Deletes all docker elements with the term `delete` in the name.
 	//
 	// Português: Apaga todos os elementos docker com o termo `delete` no nome.
-	GarbageCollector()
+	SaGarbageCollector()
 
 	// Output:
-	// image size: 1.38 MB
+	// image size: 1.4 MB
 	// image os: linux
 	// container name: container_counter_delete_after_test
 	// done: true

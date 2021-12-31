@@ -13,19 +13,19 @@ func ExampleContainerBuilder_ContainerCopyTo() {
 	//
 	// Português: Apaga todos os elementos docker com o termo `delete` no nome.
 	// [optional/opcional]
-	GarbageCollector()
+	SaGarbageCollector()
 
 	//err = buildGoLintImage()
 	if err != nil {
 		fmt.Printf("error: %v", err.Error())
-		GarbageCollector()
+		SaGarbageCollector()
 		return
 	}
 
 	err = builAlpineImage()
 	if err != nil {
 		fmt.Printf("error: %v", err.Error())
-		GarbageCollector()
+		SaGarbageCollector()
 		return
 	}
 
@@ -69,7 +69,7 @@ func buildGoLintImage() (err error) {
 	err = container.Init()
 	if err != nil {
 		fmt.Printf("error: %v", err.Error())
-		GarbageCollector()
+		SaGarbageCollector()
 		return
 	}
 
@@ -79,7 +79,7 @@ func buildGoLintImage() (err error) {
 	imageInspect, err = container.ImageBuildFromFolder()
 	if err != nil {
 		fmt.Printf("error: %v", err.Error())
-		GarbageCollector()
+		SaGarbageCollector()
 		return
 	}
 
@@ -92,7 +92,7 @@ func buildGoLintImage() (err error) {
 	err = container.ContainerBuildAndStartFromImage()
 	if err != nil {
 		log.Printf("error: %v", err.Error())
-		GarbageCollector()
+		SaGarbageCollector()
 		return
 	}
 
@@ -103,7 +103,7 @@ func buildGoLintImage() (err error) {
 	)
 	if err != nil {
 		log.Printf("error: %v", err.Error())
-		GarbageCollector()
+		SaGarbageCollector()
 		return
 	}
 
@@ -111,7 +111,7 @@ func buildGoLintImage() (err error) {
 	//
 	// Português: Apaga todos os elementos docker com o termo `delete` no nome.
 	// [optional/opcional]
-	GarbageCollector()
+	SaGarbageCollector()
 
 	fmt.Printf("file name: %v\n", copyResponse[0].Name)
 
@@ -149,7 +149,7 @@ func builAlpineImage() (err error) {
 	err = container.Init()
 	if err != nil {
 		fmt.Printf("error: %v", err.Error())
-		GarbageCollector()
+		SaGarbageCollector()
 		return
 	}
 
@@ -159,7 +159,7 @@ func builAlpineImage() (err error) {
 	imageInspect, err = container.ImageBuildFromFolder()
 	if err != nil {
 		fmt.Printf("error: %v", err.Error())
-		GarbageCollector()
+		SaGarbageCollector()
 		return
 	}
 
@@ -172,7 +172,7 @@ func builAlpineImage() (err error) {
 	err = container.ContainerBuildAndStartFromImage()
 	if err != nil {
 		log.Printf("error: %v", err.Error())
-		GarbageCollector()
+		SaGarbageCollector()
 		return
 	}
 
@@ -183,7 +183,7 @@ func builAlpineImage() (err error) {
 
 	if err != nil {
 		log.Printf("error: %v", err.Error())
-		GarbageCollector()
+		SaGarbageCollector()
 		return
 	}
 
@@ -209,7 +209,7 @@ func builAlpineImage() (err error) {
 	//
 	// Português: Apaga todos os elementos docker com o termo `delete` no nome.
 	// [optional/opcional]
-	GarbageCollector()
+	SaGarbageCollector()
 
 	return
 }

@@ -13,7 +13,7 @@ import (
 func TestTheater_BuildFromImage(t *testing.T) {
 	var err error
 
-	builder.GarbageCollector()
+	builder.SaGarbageCollector()
 
 	// create a container
 	var containerNats = builder.ContainerBuilder{}
@@ -48,13 +48,13 @@ func TestTheater_BuildFromImage(t *testing.T) {
 		t.Fail()
 	}
 
-	builder.GarbageCollector()
+	builder.SaGarbageCollector()
 }
 
 func TestTheater_WriteStatsCSV(t *testing.T) {
 	var err error
 
-	builder.GarbageCollector()
+	builder.SaGarbageCollector()
 
 	var container = builder.ContainerBuilder{}
 	// imprime a saída padrão do container
@@ -129,7 +129,7 @@ func TestTheater_WriteStatsCSV(t *testing.T) {
 		}
 	}
 
-	builder.GarbageCollector()
+	builder.SaGarbageCollector()
 
 	var file []byte
 	file, err = ioutil.ReadFile("./counter.log.csv")
@@ -176,7 +176,7 @@ func TestTheater_WriteStatsCSV(t *testing.T) {
 func TestTheater_AddContainers(t *testing.T) {
 	var err error
 
-	builder.GarbageCollector()
+	builder.SaGarbageCollector()
 
 	// *******************************************************************************************************************
 	// Nats - container

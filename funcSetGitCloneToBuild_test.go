@@ -7,7 +7,7 @@ import (
 func ExampleContainerBuilder_SetGitCloneToBuild() {
 	var err error
 
-	GarbageCollector()
+	SaGarbageCollector()
 
 	var container = ContainerBuilder{}
 	// new image name delete:latest
@@ -47,7 +47,7 @@ func ExampleContainerBuilder_SetGitCloneToBuild() {
 	// At this point, the container is ready for use on port 3030
 
 	// Stop and delete the container
-	GarbageCollector()
+	SaGarbageCollector()
 
 	// Output:
 	//

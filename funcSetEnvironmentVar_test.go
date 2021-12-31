@@ -8,7 +8,7 @@ import (
 func ExampleContainerBuilder_SetEnvironmentVar() {
 	var err error
 
-	GarbageCollector()
+	SaGarbageCollector()
 
 	var netDocker = dockerNetwork.ContainerBuilderNetwork{}
 	err = netDocker.Init()
@@ -65,7 +65,7 @@ func ExampleContainerBuilder_SetEnvironmentVar() {
 	// At this point, the MongoDB is ready for use on port 27017
 
 	// Stop and delete the container
-	// GarbageCollector()
+	// SaGarbageCollector()
 
 	// Output:
 	//

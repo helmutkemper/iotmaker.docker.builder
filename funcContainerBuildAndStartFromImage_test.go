@@ -12,7 +12,7 @@ import (
 func ExampleContainerBuilder_ContainerBuildAndStartFromImage() {
 	var err error
 
-	GarbageCollector()
+	SaGarbageCollector()
 
 	var container = ContainerBuilder{}
 
@@ -89,7 +89,7 @@ func ExampleContainerBuilder_ContainerBuildAndStartFromImage() {
 	// print output
 	fmt.Printf("%s", body)
 
-	GarbageCollector()
+	SaGarbageCollector()
 
 	// Output:
 	// <html><body><p>C is life! Golang is a evolution of C</p></body></html>

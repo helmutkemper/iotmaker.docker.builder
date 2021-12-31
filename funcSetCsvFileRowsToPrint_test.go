@@ -8,7 +8,7 @@ import (
 func ExampleContainerBuilder_SetCsvFileRowsToPrint() {
 	var err error
 
-	GarbageCollector()
+	SaGarbageCollector()
 
 	var container = ContainerBuilder{}
 	// imprime a saída padrão do container
@@ -27,7 +27,7 @@ func ExampleContainerBuilder_SetCsvFileRowsToPrint() {
 	container.SetImageBuildOptionsMemory(100 * KMegaByte)
 
 	container.SetCsvLogPath("./test.counter.log.36.csv", true)
-	container.AddFilterToLog(
+	container.AddFilterToCvsLog(
 		"contador",
 		"counter",
 		"^.*?counter: (?P<valueToGet>[\\d\\.]+)",
@@ -50,21 +50,21 @@ func ExampleContainerBuilder_SetCsvFileRowsToPrint() {
 	err = container.Init()
 	if err != nil {
 		fmt.Printf("error: %v", err.Error())
-		GarbageCollector()
+		SaGarbageCollector()
 		return
 	}
 
 	_, err = container.ImageBuildFromFolder()
 	if err != nil {
 		fmt.Printf("error: %v", err.Error())
-		GarbageCollector()
+		SaGarbageCollector()
 		return
 	}
 
 	err = container.ContainerBuildAndStartFromImage()
 	if err != nil {
 		log.Printf("error: %v", err.Error())
-		GarbageCollector()
+		SaGarbageCollector()
 		return
 	}
 
@@ -97,11 +97,11 @@ func ExampleContainerBuilder_SetCsvFileRowsToPrint() {
 	err = container.StopMonitor()
 	if err != nil {
 		log.Printf("error: %v", err.Error())
-		GarbageCollector()
+		SaGarbageCollector()
 		return
 	}
 
-	GarbageCollector()
+	SaGarbageCollector()
 
 	//Output:
 	//container name: container_counter_delete_after_test
