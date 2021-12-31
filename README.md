@@ -542,7 +542,7 @@ Para quem não tem prática em processo de build em duas etapas\, na primeira et
   - [func (e *ContainerBuilder) gitMakePublicSshKey() (publicKeys *ssh.PublicKeys, err error)](<#func-containerbuilder-gitmakepublicsshkey>)
   - [func (e *ContainerBuilder) imageExpirationTimeIsValid() (valid bool)](<#func-containerbuilder-imageexpirationtimeisvalid>)
   - [func (e *ContainerBuilder) incIpV4Address(ip string, inc int64) (next string, err error)](<#func-containerbuilder-incipv4address>)
-  - [func (e *ContainerBuilder) logsCleaner(logs []byte) [][]byte](<#func-containerbuilder-logscleaner>)
+  - [func (e *ContainerBuilder) logsCleaner(logs []byte) (logsLine [][]byte)](<#func-containerbuilder-logscleaner>)
   - [func (e *ContainerBuilder) logsSearchAndReplaceIntoText(logs *[]byte, lineList [][]byte, configuration []LogFilter) (line []byte, found bool)](<#func-containerbuilder-logssearchandreplaceintotext>)
   - [func (e *ContainerBuilder) managerChaos()](<#func-containerbuilder-managerchaos>)
   - [func (e *ContainerBuilder) selectBetweenMaxAndMin(max, min time.Duration) (selected time.Duration)](<#func-containerbuilder-selectbetweenmaxandmin>)
@@ -11610,7 +11610,7 @@ Prepara as credenciais do git\.
 
 Chamada por SetPrivateRepositoryAutoConfig\(\)
 
-### func \(\*ContainerBuilder\) [addProblem](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcAddProblem.go#L12>)
+### func \(\*ContainerBuilder\) [addProblem](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcAddProblem.go#L14>)
 
 ```go
 func (e *ContainerBuilder) addProblem(problem string)
@@ -11618,11 +11618,21 @@ func (e *ContainerBuilder) addProblem(problem string)
 
 addProblem
 
-English: Adds a description of a problem to explain the error to the user\. Input: problem: problem explanation
+English: Adds a description of a problem to explain the error to the user\.
 
-Português: Adiciona a descrição de um problema para explica o erro ao usuário\. Entrada: problem: descrição do problema
+```
+Input:
+  problem: problem explanation
+```
 
-### func \(\*ContainerBuilder\) [findCurrentIPV4AddressSupport](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcFindCurrentIPV4AddressSupport.go#L19>)
+Português: Adiciona a descrição de um problema para explica o erro ao usuário\.
+
+```
+Entrada:
+  problem: descrição do problema
+```
+
+### func \(\*ContainerBuilder\) [findCurrentIPV4AddressSupport](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcFindCurrentIPV4AddressSupport.go#L31>)
 
 ```go
 func (e *ContainerBuilder) findCurrentIPV4AddressSupport(networkID string) (IP string, err error)
@@ -11630,16 +11640,28 @@ func (e *ContainerBuilder) findCurrentIPV4AddressSupport(networkID string) (IP s
 
 findCurrentIPV4AddressSupport
 
-English: support function for FindCurrentIpAddress\(\)
+English:
+
+Support function for FindCurrentIpAddress\(\)
 
 ```
-networkID: Docker's network ID
+Input:
+  networkID: Docker's network ID
+
+Output:
+  IP: network IPV4 address
+  err: standard error object
 ```
 
 Português: função de apoio a FindCurrentIpAddress\(\)
 
 ```
-networkID: ID da rede docker
+Entrada:
+  networkID: ID da rede docker
+
+Saída:
+  IP: endereço IPV4 da rede
+  err: objeto de erro padrão
 ```
 
 ### func \(\*ContainerBuilder\) [getIdByContainerName](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcGetIdByContainerName.go#L23>)
@@ -11668,7 +11690,7 @@ Saída:
   err: Objeto de erro padrão
 ```
 
-### func \(\*ContainerBuilder\) [getProbalityNumber](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcGetProbalityNumber.go#L12>)
+### func \(\*ContainerBuilder\) [getProbalityNumber](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcGetProbalityNumber.go#L18>)
 
 ```go
 func (e *ContainerBuilder) getProbalityNumber() (probality float64)
@@ -11676,17 +11698,51 @@ func (e *ContainerBuilder) getProbalityNumber() (probality float64)
 
 getProbalityNumber
 
-English: Returns a random number greater than zero and less than one Output: probality: Open point floating point number between 0\.0 and 1\.0
+English:
 
-Português: Retorna um número aleatório maior do que zero e menor do que um Saída: probality: Número de ponto flutuante de ponto aberto entre 0\.0 e 1\.0
+Returns a random number greater than zero and less than one
 
-### func \(\*ContainerBuilder\) [getRandSeed](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcGetRandSeed.go#L8>)
+```
+Output:
+  probality: Open point floating point number between 0.0 and 1.0
+```
+
+Português:
+
+Retorna um número aleatório maior do que zero e menor do que um
+
+```
+Saída:
+  probality: Número de ponto flutuante de ponto aberto entre 0.0 e 1.0
+```
+
+### func \(\*ContainerBuilder\) [getRandSeed](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcGetRandSeed.go#L23>)
 
 ```go
 func (e *ContainerBuilder) getRandSeed() (seed *rand.Rand)
 ```
 
-### func \(\*ContainerBuilder\) [gitMakePublicSshKey](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcGitMakePublicSshKey.go#L14>)
+getRandSeed
+
+English:
+
+```
+Generate random number seed
+
+ Output:
+   seed: random number seed
+```
+
+Português:
+
+```
+Gera a semente do número aleatório
+
+ Saída:
+   seed: semente do número aleatório
+```
+
+### func \(\*ContainerBuilder\) [gitMakePublicSshKey](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcGitMakePublicSshKey.go#L26>)
 
 ```go
 func (e *ContainerBuilder) gitMakePublicSshKey() (publicKeys *ssh.PublicKeys, err error)
@@ -11694,46 +11750,133 @@ func (e *ContainerBuilder) gitMakePublicSshKey() (publicKeys *ssh.PublicKeys, er
 
 gitMakePublicSshKey
 
-English: Mount the ssl certificate for the git clone function
+English:
 
-Português: Monta o certificado ssl para a função de git clone
+Mount the ssl certificate for the git clone function
 
-### func \(\*ContainerBuilder\) [imageExpirationTimeIsValid](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcImageExpirationTimeIsValid.go#L5>)
+```
+Output:
+  publicKeys: Ponteiro de objeto compatível com o objeto ssh.PublicKeys
+  err: standard error object
+```
+
+Português:
+
+Monta o certificado ssl para a função de git clone
+
+```
+Saída:
+```
+
+```
+publicKeys: Ponteiro de objeto compatível com o objeto ssh.PublicKeys
+err: objeto de erro padrão
+```
+
+### func \(\*ContainerBuilder\) [imageExpirationTimeIsValid](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcImageExpirationTimeIsValid.go#L20>)
 
 ```go
 func (e *ContainerBuilder) imageExpirationTimeIsValid() (valid bool)
 ```
 
-### func \(\*ContainerBuilder\) [incIpV4Address](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcIncIpV4Address.go#L26>)
+imageExpirationTimeIsValid
+
+English:
+
+Detects if the image is within the expiration date\.
+
+```
+Output:
+  valid: true, if the image is within the expiry date.
+```
+
+Português:
+
+Detecta se a imagem está dentro do prazo de validade\.
+
+```
+Saída:
+  valid: true, se a imagem está dentro do prazo de validade.
+```
+
+### func \(\*ContainerBuilder\) [incIpV4Address](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcIncIpV4Address.go#L44>)
 
 ```go
 func (e *ContainerBuilder) incIpV4Address(ip string, inc int64) (next string, err error)
 ```
 
-nextIpV4Address
+incIpV4Address
 
-English: receives an IP address in the form of a string and increments it\.
+English:
 
-```
-ip:  only the ip address. e.g.: 10.0.0.1
-inc: number of increments
-
-  Note: this function does not take into account the network configuration, use it with care!
-```
-
-Português: recebe um endereço IP na forma de string e incrementa o mesmo\.
+Receives an IP address in the form of a string and increments it\.
 
 ```
-ip:  apenas o endereço ip. ex.: 10.0.0.1
-inc: quantidade de incrementos
+Input:
+  ip:  only the ip address. e.g.: 10.0.0.1
+  inc: number of increments
 
-  Nota: esta função não considera a configuração da rede, use com cuidado!
+Output:
+  next: the next ip address. e.g.: 10.0.0.2
+  err: standard error object
 ```
 
-### func \(\*ContainerBuilder\) [logsCleaner](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcLogsCleaner.go#L7>)
+Note:
+
+```
+* This function does not take into account the network configuration, use it with care!
+```
+
+Português:
+
+Recebe um endereço IP na forma de string e incrementa o mesmo\.
+
+```
+Entrada:
+  ip:  apenas o endereço ip. ex.: 10.0.0.1
+  inc: quantidade de incrementos
+
+Saída:
+  next: o próximo endereço ip. ex.: 10.0.0.2
+  err: objeto de erro padrão
+```
+
+Nota:
+
+```
+Esta função não considera a configuração da rede, use com cuidado!
+```
+
+### func \(\*ContainerBuilder\) [logsCleaner](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcLogsCleaner.go#L28>)
 
 ```go
-func (e *ContainerBuilder) logsCleaner(logs []byte) [][]byte
+func (e *ContainerBuilder) logsCleaner(logs []byte) (logsLine [][]byte)
+```
+
+logsCleaner
+
+Português:
+
+```
+Limpa as linhas em branco da saída padrão do container
+
+ Entrada:
+   logs: saída padrão do container
+
+ Saída:
+   logsLine: Lista de linhas da saída padrão do container
+```
+
+English:
+
+```
+Clear blank lines of the container's standard output
+
+Input:
+  logs: container's standard output
+
+Output:
+  logsLine: List of lines of the container's standard output
 ```
 
 ### func \(\*ContainerBuilder\) [logsSearchAndReplaceIntoText](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcLogsSearchAndReplaceIntoText.go#L13>)

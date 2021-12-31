@@ -8,21 +8,39 @@ import (
 	"strings"
 )
 
-// nextIpV4Address
+// incIpV4Address
 //
-// English: receives an IP address in the form of a string and increments it.
+// English:
 //
-//   ip:  only the ip address. e.g.: 10.0.0.1
-//   inc: number of increments
+//  Receives an IP address in the form of a string and increments it.
 //
-//     Note: this function does not take into account the network configuration, use it with care!
+//   Input:
+//     ip:  only the ip address. e.g.: 10.0.0.1
+//     inc: number of increments
 //
-// Português: recebe um endereço IP na forma de string e incrementa o mesmo.
+//   Output:
+//     next: the next ip address. e.g.: 10.0.0.2
+//     err: standard error object
 //
-//   ip:  apenas o endereço ip. ex.: 10.0.0.1
-//   inc: quantidade de incrementos
+// Note:
 //
-//     Nota: esta função não considera a configuração da rede, use com cuidado!
+//   * This function does not take into account the network configuration, use it with care!
+//
+// Português:
+//
+//  Recebe um endereço IP na forma de string e incrementa o mesmo.
+//
+//   Entrada:
+//     ip:  apenas o endereço ip. ex.: 10.0.0.1
+//     inc: quantidade de incrementos
+//
+//   Saída:
+//     next: o próximo endereço ip. ex.: 10.0.0.2
+//     err: objeto de erro padrão
+//
+// Nota:
+//
+//   Esta função não considera a configuração da rede, use com cuidado!
 func (e *ContainerBuilder) incIpV4Address(ip string, inc int64) (next string, err error) {
 
 	// está na rede padrão do docker

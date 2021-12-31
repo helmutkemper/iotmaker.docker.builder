@@ -8,9 +8,21 @@ import (
 
 // gitMakePublicSshKey
 //
-// English: Mount the ssl certificate for the git clone function
+// English:
 //
-// Português: Monta o certificado ssl para a função de git clone
+//  Mount the ssl certificate for the git clone function
+//
+//   Output:
+//     publicKeys: Ponteiro de objeto compatível com o objeto ssh.PublicKeys
+//     err: standard error object
+//
+// Português:
+//
+//  Monta o certificado ssl para a função de git clone
+//
+// 	 Saída:
+//     publicKeys: Ponteiro de objeto compatível com o objeto ssh.PublicKeys
+//     err: objeto de erro padrão
 func (e *ContainerBuilder) gitMakePublicSshKey() (publicKeys *ssh.PublicKeys, err error) {
 	if e.gitData.sshPrivateKeyPath != "" {
 		_, err = os.Stat(e.gitData.sshPrivateKeyPath)
