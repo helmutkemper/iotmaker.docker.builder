@@ -355,12 +355,10 @@ Para quem não tem prática em processo de build em duas etapas\, na primeira et
 ## Index
 
 - [Constants](<#constants>)
-- [Variables](<#variables>)
 - [func ConfigChaosScene(sceneName string, maxStopedContainers, maxPausedContainers, maxTotalPausedAndStoppedContainers int)](<#func-configchaosscene>)
 - [func GarbageCollector(names ...string)](<#func-garbagecollector>)
 - [func ImageMakeCache(projectPath, cacheName string, expirationDate time.Duration) (err error)](<#func-imagemakecache>)
 - [func ImageMakeCacheWithDefaultName(projectPath string, expirationDate time.Duration) (err error)](<#func-imagemakecachewithdefaultname>)
-- [func init()](<#func-init>)
 - [type BlkioStatEntry](<#type-blkiostatentry>)
 - [type BlkioStats](<#type-blkiostats>)
 - [type CPUStats](<#type-cpustats>)
@@ -533,141 +531,8 @@ Para quem não tem prática em processo de build em duas etapas\, na primeira et
   - [func (e ContainerBuilder) TestDockerInstall() (err error)](<#func-containerbuilder-testdockerinstall>)
   - [func (e *ContainerBuilder) WaitForTextInContainerLog(value string) (dockerLogs string, err error)](<#func-containerbuilder-waitfortextincontainerlog>)
   - [func (e *ContainerBuilder) WaitForTextInContainerLogWithTimeout(value string, timeout time.Duration) (dockerLogs string, err error)](<#func-containerbuilder-waitfortextincontainerlogwithtimeout>)
-  - [func (e *ContainerBuilder) addImageBuildOptionsGitCredentials() (buildOptions types.ImageBuildOptions)](<#func-containerbuilder-addimagebuildoptionsgitcredentials>)
-  - [func (e *ContainerBuilder) addProblem(problem string)](<#func-containerbuilder-addproblem>)
-  - [func (e *ContainerBuilder) findCurrentIPV4AddressSupport(networkID string) (IP string, err error)](<#func-containerbuilder-findcurrentipv4addresssupport>)
-  - [func (e *ContainerBuilder) getIdByContainerName() (err error)](<#func-containerbuilder-getidbycontainername>)
-  - [func (e *ContainerBuilder) getProbalityNumber() (probality float64)](<#func-containerbuilder-getprobalitynumber>)
-  - [func (e *ContainerBuilder) getRandSeed() (seed *rand.Rand)](<#func-containerbuilder-getrandseed>)
-  - [func (e *ContainerBuilder) gitMakePublicSshKey() (publicKeys *ssh.PublicKeys, err error)](<#func-containerbuilder-gitmakepublicsshkey>)
-  - [func (e *ContainerBuilder) imageExpirationTimeIsValid() (valid bool)](<#func-containerbuilder-imageexpirationtimeisvalid>)
-  - [func (e *ContainerBuilder) incIpV4Address(ip string, inc int64) (next string, err error)](<#func-containerbuilder-incipv4address>)
-  - [func (e *ContainerBuilder) logsCleaner(logs []byte) [][]byte](<#func-containerbuilder-logscleaner>)
-  - [func (e *ContainerBuilder) logsSearchAndReplaceIntoText(logs *[]byte, lineList [][]byte, configuration []LogFilter) (line []byte, found bool)](<#func-containerbuilder-logssearchandreplaceintotext>)
-  - [func (e *ContainerBuilder) managerChaos()](<#func-containerbuilder-managerchaos>)
-  - [func (e *ContainerBuilder) selectBetweenMaxAndMin(max, min time.Duration) (selected time.Duration)](<#func-containerbuilder-selectbetweenmaxandmin>)
-  - [func (e *ContainerBuilder) stopMonitorAfterStopped() (err error)](<#func-containerbuilder-stopmonitorafterstopped>)
-  - [func (e ContainerBuilder) traceCodeLine() (file string, line int)](<#func-containerbuilder-tracecodeline>)
-  - [func (e *ContainerBuilder) verifyImageName() (err error)](<#func-containerbuilder-verifyimagename>)
-  - [func (e *ContainerBuilder) verifyStatusError(inspect iotmakerdocker.ContainerInspect) (hasError bool)](<#func-containerbuilder-verifystatuserror>)
-  - [func (e *ContainerBuilder) writeAggregatePreCPUTimeTheContainerWasThrottled(file *os.File, stats *types.Stats) (tab bool, err error)](<#func-containerbuilder-writeaggregateprecputimethecontainerwasthrottled>)
-  - [func (e *ContainerBuilder) writeAggregateTimeTheContainerWasThrottledForInNanoseconds(file *os.File, stats *types.Stats) (tab bool, err error)](<#func-containerbuilder-writeaggregatetimethecontainerwasthrottledforinnanoseconds>)
-  - [func (e *ContainerBuilder) writeBlkioIoMergedRecursive(file *os.File, stats *types.Stats) (tab bool, err error)](<#func-containerbuilder-writeblkioiomergedrecursive>)
-  - [func (e *ContainerBuilder) writeBlkioIoQueuedRecursive(file *os.File, stats *types.Stats) (tab bool, err error)](<#func-containerbuilder-writeblkioioqueuedrecursive>)
-  - [func (e *ContainerBuilder) writeBlkioIoServiceBytesRecursive(file *os.File, stats *types.Stats) (tab bool, err error)](<#func-containerbuilder-writeblkioioservicebytesrecursive>)
-  - [func (e *ContainerBuilder) writeBlkioIoServiceTimeRecursive(file *os.File, stats *types.Stats) (tab bool, err error)](<#func-containerbuilder-writeblkioioservicetimerecursive>)
-  - [func (e *ContainerBuilder) writeBlkioIoServicedRecursive(file *os.File, stats *types.Stats) (tab bool, err error)](<#func-containerbuilder-writeblkioioservicedrecursive>)
-  - [func (e *ContainerBuilder) writeBlkioIoTimeRecursive(file *os.File, stats *types.Stats) (tab bool, err error)](<#func-containerbuilder-writeblkioiotimerecursive>)
-  - [func (e *ContainerBuilder) writeBlkioIoWaitTimeRecursive(file *os.File, stats *types.Stats) (tab bool, err error)](<#func-containerbuilder-writeblkioiowaittimerecursive>)
-  - [func (e *ContainerBuilder) writeBlkioSectorsRecursive(file *os.File, stats *types.Stats) (tab bool, err error)](<#func-containerbuilder-writeblkiosectorsrecursive>)
-  - [func (e *ContainerBuilder) writeCommittedBytes(file *os.File, stats *types.Stats) (tab bool, err error)](<#func-containerbuilder-writecommittedbytes>)
-  - [func (e *ContainerBuilder) writeConstAggregatePreCPUTimeTheContainerWasThrottled(file *os.File) (tab bool, err error)](<#func-containerbuilder-writeconstaggregateprecputimethecontainerwasthrottled>)
-  - [func (e *ContainerBuilder) writeConstAggregateTimeTheContainerWasThrottledForInNanoseconds(file *os.File) (tab bool, err error)](<#func-containerbuilder-writeconstaggregatetimethecontainerwasthrottledforinnanoseconds>)
-  - [func (e *ContainerBuilder) writeConstBlkioIoMergedRecursive(file *os.File, stats *types.Stats) (tab bool, err error)](<#func-containerbuilder-writeconstblkioiomergedrecursive>)
-  - [func (e *ContainerBuilder) writeConstBlkioIoQueuedRecursive(file *os.File, stats *types.Stats) (tab bool, err error)](<#func-containerbuilder-writeconstblkioioqueuedrecursive>)
-  - [func (e *ContainerBuilder) writeConstBlkioIoServiceBytesRecursive(file *os.File, stats *types.Stats) (tab bool, err error)](<#func-containerbuilder-writeconstblkioioservicebytesrecursive>)
-  - [func (e *ContainerBuilder) writeConstBlkioIoServiceTimeRecursive(file *os.File, stats *types.Stats) (tab bool, err error)](<#func-containerbuilder-writeconstblkioioservicetimerecursive>)
-  - [func (e *ContainerBuilder) writeConstBlkioIoServicedRecursive(file *os.File, stats *types.Stats) (tab bool, err error)](<#func-containerbuilder-writeconstblkioioservicedrecursive>)
-  - [func (e *ContainerBuilder) writeConstBlkioIoTimeRecursive(file *os.File, stats *types.Stats) (tab bool, err error)](<#func-containerbuilder-writeconstblkioiotimerecursive>)
-  - [func (e *ContainerBuilder) writeConstBlkioIoWaitTimeRecursive(file *os.File, stats *types.Stats) (tab bool, err error)](<#func-containerbuilder-writeconstblkioiowaittimerecursive>)
-  - [func (e *ContainerBuilder) writeConstBlkioSectorsRecursive(file *os.File, stats *types.Stats) (tab bool, err error)](<#func-containerbuilder-writeconstblkiosectorsrecursive>)
-  - [func (e *ContainerBuilder) writeConstCommittedBytes(file *os.File) (tab bool, err error)](<#func-containerbuilder-writeconstcommittedbytes>)
-  - [func (e *ContainerBuilder) writeConstCurrentNumberOfOidsInTheCGroup(file *os.File) (tab bool, err error)](<#func-containerbuilder-writeconstcurrentnumberofoidsinthecgroup>)
-  - [func (e *ContainerBuilder) writeConstCurrentResCounterUsageForMemory(file *os.File) (tab bool, err error)](<#func-containerbuilder-writeconstcurrentrescounterusageformemory>)
-  - [func (e *ContainerBuilder) writeConstFilterIntoLog(file *os.File, filter []LogFilter) (tab bool, err error)](<#func-containerbuilder-writeconstfilterintolog>)
-  - [func (e *ContainerBuilder) writeConstLimitOnTheNumberOfPidsInTheCGroup(file *os.File) (tab bool, err error)](<#func-containerbuilder-writeconstlimitonthenumberofpidsinthecgroup>)
-  - [func (e *ContainerBuilder) writeConstMaximumUsageEverRecorded(file *os.File) (tab bool, err error)](<#func-containerbuilder-writeconstmaximumusageeverrecorded>)
-  - [func (e *ContainerBuilder) writeConstMemoryLimit(file *os.File) (tab bool, err error)](<#func-containerbuilder-writeconstmemorylimit>)
-  - [func (e *ContainerBuilder) writeConstNumberOfPeriodsWhenTheContainerHitsItsThrottlingLimit(file *os.File) (tab bool, err error)](<#func-containerbuilder-writeconstnumberofperiodswhenthecontainerhitsitsthrottlinglimit>)
-  - [func (e *ContainerBuilder) writeConstNumberOfPeriodsWhenTheContainerPreCPUHitsItsThrottlingLimit(file *os.File) (tab bool, err error)](<#func-containerbuilder-writeconstnumberofperiodswhenthecontainerprecpuhitsitsthrottlinglimit>)
-  - [func (e *ContainerBuilder) writeConstNumberOfPeriodsWithPreCPUThrottlingActive(file *os.File) (tab bool, err error)](<#func-containerbuilder-writeconstnumberofperiodswithprecputhrottlingactive>)
-  - [func (e *ContainerBuilder) writeConstNumberOfPeriodsWithThrottlingActive(file *os.File) (tab bool, err error)](<#func-containerbuilder-writeconstnumberofperiodswiththrottlingactive>)
-  - [func (e *ContainerBuilder) writeConstNumberOfTimesMemoryUsageHitsLimits(file *os.File) (tab bool, err error)](<#func-containerbuilder-writeconstnumberoftimesmemoryusagehitslimits>)
-  - [func (e *ContainerBuilder) writeConstOnlineCPUs(file *os.File) (tab bool, err error)](<#func-containerbuilder-writeconstonlinecpus>)
-  - [func (e *ContainerBuilder) writeConstOnlinePreCPUs(file *os.File) (tab bool, err error)](<#func-containerbuilder-writeconstonlineprecpus>)
-  - [func (e *ContainerBuilder) writeConstPeakCommittedBytes(file *os.File) (tab bool, err error)](<#func-containerbuilder-writeconstpeakcommittedbytes>)
-  - [func (e *ContainerBuilder) writeConstPreCPUSystemUsage(file *os.File) (tab bool, err error)](<#func-containerbuilder-writeconstprecpusystemusage>)
-  - [func (e *ContainerBuilder) writeConstPrivateWorkingSet(file *os.File) (tab bool, err error)](<#func-containerbuilder-writeconstprivateworkingset>)
-  - [func (e *ContainerBuilder) writeConstReadingTime(file *os.File) (tab bool, err error)](<#func-containerbuilder-writeconstreadingtime>)
-  - [func (e *ContainerBuilder) writeConstSystemUsage(file *os.File) (tab bool, err error)](<#func-containerbuilder-writeconstsystemusage>)
-  - [func (e *ContainerBuilder) writeConstTimeSpentByPreCPUTasksOfTheCGroupInKernelMode(file *os.File) (tab bool, err error)](<#func-containerbuilder-writeconsttimespentbyprecputasksofthecgroupinkernelmode>)
-  - [func (e *ContainerBuilder) writeConstTimeSpentByPreCPUTasksOfTheCGroupInUserMode(file *os.File) (tab bool, err error)](<#func-containerbuilder-writeconsttimespentbyprecputasksofthecgroupinusermode>)
-  - [func (e *ContainerBuilder) writeConstTimeSpentByTasksOfTheCGroupInKernelMode(file *os.File) (tab bool, err error)](<#func-containerbuilder-writeconsttimespentbytasksofthecgroupinkernelmode>)
-  - [func (e *ContainerBuilder) writeConstTimeSpentByTasksOfTheCGroupInUserMode(file *os.File) (tab bool, err error)](<#func-containerbuilder-writeconsttimespentbytasksofthecgroupinusermode>)
-  - [func (e *ContainerBuilder) writeConstTotalCPUTimeConsumed(file *os.File) (tab bool, err error)](<#func-containerbuilder-writeconsttotalcputimeconsumed>)
-  - [func (e *ContainerBuilder) writeConstTotalCPUTimeConsumedPerCore(file *os.File) (tab bool, err error)](<#func-containerbuilder-writeconsttotalcputimeconsumedpercore>)
-  - [func (e *ContainerBuilder) writeConstTotalPreCPUTimeConsumed(file *os.File) (tab bool, err error)](<#func-containerbuilder-writeconsttotalprecputimeconsumed>)
-  - [func (e *ContainerBuilder) writeConstTotalPreCPUTimeConsumedPerCore(file *os.File) (tab bool, err error)](<#func-containerbuilder-writeconsttotalprecputimeconsumedpercore>)
-  - [func (e *ContainerBuilder) writeContainerConstToFile(file *os.File, stats *types.Stats) (err error)](<#func-containerbuilder-writecontainerconsttofile>)
-  - [func (e *ContainerBuilder) writeContainerLabelToFile(file *os.File, stats *types.Stats) (err error)](<#func-containerbuilder-writecontainerlabeltofile>)
-  - [func (e *ContainerBuilder) writeContainerLogToFile(path string, lineList [][]byte) (err error)](<#func-containerbuilder-writecontainerlogtofile>)
-  - [func (e *ContainerBuilder) writeContainerStatsToFile(file *os.File, stats *types.Stats, lineList *[][]byte) (err error)](<#func-containerbuilder-writecontainerstatstofile>)
-  - [func (e *ContainerBuilder) writeCurrentNumberOfOidsInTheCGroup(file *os.File, stats *types.Stats) (tab bool, err error)](<#func-containerbuilder-writecurrentnumberofoidsinthecgroup>)
-  - [func (e *ContainerBuilder) writeCurrentResCounterUsageForMemory(file *os.File, stats *types.Stats) (tab bool, err error)](<#func-containerbuilder-writecurrentrescounterusageformemory>)
-  - [func (e *ContainerBuilder) writeFilterIntoLog(file *os.File, filter []LogFilter, lineList *[][]byte) (tab bool, err error)](<#func-containerbuilder-writefilterintolog>)
-  - [func (e *ContainerBuilder) writeLabelAggregatePreCPUTimeTheContainerWasThrottled(file *os.File) (tab bool, err error)](<#func-containerbuilder-writelabelaggregateprecputimethecontainerwasthrottled>)
-  - [func (e *ContainerBuilder) writeLabelAggregateTimeTheContainerWasThrottledForInNanoseconds(file *os.File) (tab bool, err error)](<#func-containerbuilder-writelabelaggregatetimethecontainerwasthrottledforinnanoseconds>)
-  - [func (e *ContainerBuilder) writeLabelBlkioIoMergedRecursive(file *os.File, stats *types.Stats) (tab bool, err error)](<#func-containerbuilder-writelabelblkioiomergedrecursive>)
-  - [func (e *ContainerBuilder) writeLabelBlkioIoQueuedRecursive(file *os.File, stats *types.Stats) (tab bool, err error)](<#func-containerbuilder-writelabelblkioioqueuedrecursive>)
-  - [func (e *ContainerBuilder) writeLabelBlkioIoServiceBytesRecursive(file *os.File, stats *types.Stats) (tab bool, err error)](<#func-containerbuilder-writelabelblkioioservicebytesrecursive>)
-  - [func (e *ContainerBuilder) writeLabelBlkioIoServiceTimeRecursive(file *os.File, stats *types.Stats) (tab bool, err error)](<#func-containerbuilder-writelabelblkioioservicetimerecursive>)
-  - [func (e *ContainerBuilder) writeLabelBlkioIoServicedRecursive(file *os.File, stats *types.Stats) (tab bool, err error)](<#func-containerbuilder-writelabelblkioioservicedrecursive>)
-  - [func (e *ContainerBuilder) writeLabelBlkioIoTimeRecursive(file *os.File, stats *types.Stats) (tab bool, err error)](<#func-containerbuilder-writelabelblkioiotimerecursive>)
-  - [func (e *ContainerBuilder) writeLabelBlkioIoWaitTimeRecursive(file *os.File, stats *types.Stats) (tab bool, err error)](<#func-containerbuilder-writelabelblkioiowaittimerecursive>)
-  - [func (e *ContainerBuilder) writeLabelBlkioSectorsRecursive(file *os.File, stats *types.Stats) (tab bool, err error)](<#func-containerbuilder-writelabelblkiosectorsrecursive>)
-  - [func (e *ContainerBuilder) writeLabelCommittedBytes(file *os.File) (tab bool, err error)](<#func-containerbuilder-writelabelcommittedbytes>)
-  - [func (e *ContainerBuilder) writeLabelCurrentNumberOfOidsInTheCGroup(file *os.File) (tab bool, err error)](<#func-containerbuilder-writelabelcurrentnumberofoidsinthecgroup>)
-  - [func (e *ContainerBuilder) writeLabelCurrentResCounterUsageForMemory(file *os.File) (tab bool, err error)](<#func-containerbuilder-writelabelcurrentrescounterusageformemory>)
-  - [func (e *ContainerBuilder) writeLabelFilterIntoLog(file *os.File, filter []LogFilter) (tab bool, err error)](<#func-containerbuilder-writelabelfilterintolog>)
-  - [func (e *ContainerBuilder) writeLabelLimitOnTheNumberOfPidsInTheCGroup(file *os.File) (tab bool, err error)](<#func-containerbuilder-writelabellimitonthenumberofpidsinthecgroup>)
-  - [func (e *ContainerBuilder) writeLabelMaximumUsageEverRecorded(file *os.File) (tab bool, err error)](<#func-containerbuilder-writelabelmaximumusageeverrecorded>)
-  - [func (e *ContainerBuilder) writeLabelMemoryLimit(file *os.File) (tab bool, err error)](<#func-containerbuilder-writelabelmemorylimit>)
-  - [func (e *ContainerBuilder) writeLabelNumberOfPeriodsWhenTheContainerHitsItsThrottlingLimit(file *os.File) (tab bool, err error)](<#func-containerbuilder-writelabelnumberofperiodswhenthecontainerhitsitsthrottlinglimit>)
-  - [func (e *ContainerBuilder) writeLabelNumberOfPeriodsWhenTheContainerPreCPUHitsItsThrottlingLimit(file *os.File) (tab bool, err error)](<#func-containerbuilder-writelabelnumberofperiodswhenthecontainerprecpuhitsitsthrottlinglimit>)
-  - [func (e *ContainerBuilder) writeLabelNumberOfPeriodsWithPreCPUThrottlingActive(file *os.File) (tab bool, err error)](<#func-containerbuilder-writelabelnumberofperiodswithprecputhrottlingactive>)
-  - [func (e *ContainerBuilder) writeLabelNumberOfPeriodsWithThrottlingActive(file *os.File) (tab bool, err error)](<#func-containerbuilder-writelabelnumberofperiodswiththrottlingactive>)
-  - [func (e *ContainerBuilder) writeLabelNumberOfTimesMemoryUsageHitsLimits(file *os.File) (tab bool, err error)](<#func-containerbuilder-writelabelnumberoftimesmemoryusagehitslimits>)
-  - [func (e *ContainerBuilder) writeLabelOnlineCPUs(file *os.File) (tab bool, err error)](<#func-containerbuilder-writelabelonlinecpus>)
-  - [func (e *ContainerBuilder) writeLabelOnlinePreCPUs(file *os.File) (tab bool, err error)](<#func-containerbuilder-writelabelonlineprecpus>)
-  - [func (e *ContainerBuilder) writeLabelPeakCommittedBytes(file *os.File) (tab bool, err error)](<#func-containerbuilder-writelabelpeakcommittedbytes>)
-  - [func (e *ContainerBuilder) writeLabelPreCPUSystemUsage(file *os.File) (tab bool, err error)](<#func-containerbuilder-writelabelprecpusystemusage>)
-  - [func (e *ContainerBuilder) writeLabelPrivateWorkingSet(file *os.File) (tab bool, err error)](<#func-containerbuilder-writelabelprivateworkingset>)
-  - [func (e *ContainerBuilder) writeLabelReadingTime(file *os.File) (tab bool, err error)](<#func-containerbuilder-writelabelreadingtime>)
-  - [func (e *ContainerBuilder) writeLabelSystemUsage(file *os.File) (tab bool, err error)](<#func-containerbuilder-writelabelsystemusage>)
-  - [func (e *ContainerBuilder) writeLabelTimeSpentByPreCPUTasksOfTheCGroupInKernelMode(file *os.File) (tab bool, err error)](<#func-containerbuilder-writelabeltimespentbyprecputasksofthecgroupinkernelmode>)
-  - [func (e *ContainerBuilder) writeLabelTimeSpentByPreCPUTasksOfTheCGroupInUserMode(file *os.File) (tab bool, err error)](<#func-containerbuilder-writelabeltimespentbyprecputasksofthecgroupinusermode>)
-  - [func (e *ContainerBuilder) writeLabelTimeSpentByTasksOfTheCGroupInKernelMode(file *os.File) (tab bool, err error)](<#func-containerbuilder-writelabeltimespentbytasksofthecgroupinkernelmode>)
-  - [func (e *ContainerBuilder) writeLabelTimeSpentByTasksOfTheCGroupInUserMode(file *os.File) (tab bool, err error)](<#func-containerbuilder-writelabeltimespentbytasksofthecgroupinusermode>)
-  - [func (e *ContainerBuilder) writeLabelTotalCPUTimeConsumed(file *os.File) (tab bool, err error)](<#func-containerbuilder-writelabeltotalcputimeconsumed>)
-  - [func (e *ContainerBuilder) writeLabelTotalCPUTimeConsumedPerCore(file *os.File) (tab bool, err error)](<#func-containerbuilder-writelabeltotalcputimeconsumedpercore>)
-  - [func (e *ContainerBuilder) writeLabelTotalPreCPUTimeConsumed(file *os.File) (tab bool, err error)](<#func-containerbuilder-writelabeltotalprecputimeconsumed>)
-  - [func (e *ContainerBuilder) writeLabelTotalPreCPUTimeConsumedPerCore(file *os.File) (tab bool, err error)](<#func-containerbuilder-writelabeltotalprecputimeconsumedpercore>)
-  - [func (e *ContainerBuilder) writeLimitOnTheNumberOfPidsInTheCGroup(file *os.File, stats *types.Stats) (tab bool, err error)](<#func-containerbuilder-writelimitonthenumberofpidsinthecgroup>)
-  - [func (e *ContainerBuilder) writeMaximumUsageEverRecorded(file *os.File, stats *types.Stats) (tab bool, err error)](<#func-containerbuilder-writemaximumusageeverrecorded>)
-  - [func (e *ContainerBuilder) writeMemoryLimit(file *os.File, stats *types.Stats) (tab bool, err error)](<#func-containerbuilder-writememorylimit>)
-  - [func (e *ContainerBuilder) writeNumberOfPeriodsWhenTheContainerHitsItsThrottlingLimit(file *os.File, stats *types.Stats) (tab bool, err error)](<#func-containerbuilder-writenumberofperiodswhenthecontainerhitsitsthrottlinglimit>)
-  - [func (e *ContainerBuilder) writeNumberOfPeriodsWhenTheContainerPreCPUHitsItsThrottlingLimit(file *os.File, stats *types.Stats) (tab bool, err error)](<#func-containerbuilder-writenumberofperiodswhenthecontainerprecpuhitsitsthrottlinglimit>)
-  - [func (e *ContainerBuilder) writeNumberOfPeriodsWithPreCPUThrottlingActive(file *os.File, stats *types.Stats) (tab bool, err error)](<#func-containerbuilder-writenumberofperiodswithprecputhrottlingactive>)
-  - [func (e *ContainerBuilder) writeNumberOfPeriodsWithThrottlingActive(file *os.File, stats *types.Stats) (tab bool, err error)](<#func-containerbuilder-writenumberofperiodswiththrottlingactive>)
-  - [func (e *ContainerBuilder) writeNumberOfTimesMemoryUsageHitsLimits(file *os.File, stats *types.Stats) (tab bool, err error)](<#func-containerbuilder-writenumberoftimesmemoryusagehitslimits>)
-  - [func (e *ContainerBuilder) writeOnlineCPUs(file *os.File, stats *types.Stats) (tab bool, err error)](<#func-containerbuilder-writeonlinecpus>)
-  - [func (e *ContainerBuilder) writeOnlinePreCPUs(file *os.File, stats *types.Stats) (tab bool, err error)](<#func-containerbuilder-writeonlineprecpus>)
-  - [func (e *ContainerBuilder) writePeakCommittedBytes(file *os.File, stats *types.Stats) (tab bool, err error)](<#func-containerbuilder-writepeakcommittedbytes>)
-  - [func (e *ContainerBuilder) writePreCPUSystemUsage(file *os.File, stats *types.Stats) (tab bool, err error)](<#func-containerbuilder-writeprecpusystemusage>)
-  - [func (e *ContainerBuilder) writePrivateWorkingSet(file *os.File, stats *types.Stats) (tab bool, err error)](<#func-containerbuilder-writeprivateworkingset>)
-  - [func (e *ContainerBuilder) writeReadingTime(file *os.File, stats *types.Stats) (tab bool, err error)](<#func-containerbuilder-writereadingtime>)
-  - [func (e *ContainerBuilder) writeSystemUsage(file *os.File, stats *types.Stats) (tab bool, err error)](<#func-containerbuilder-writesystemusage>)
-  - [func (e *ContainerBuilder) writeTimeSpentByPreCPUTasksOfTheCGroupInKernelMode(file *os.File, stats *types.Stats) (tab bool, err error)](<#func-containerbuilder-writetimespentbyprecputasksofthecgroupinkernelmode>)
-  - [func (e *ContainerBuilder) writeTimeSpentByPreCPUTasksOfTheCGroupInUserMode(file *os.File, stats *types.Stats) (tab bool, err error)](<#func-containerbuilder-writetimespentbyprecputasksofthecgroupinusermode>)
-  - [func (e *ContainerBuilder) writeTimeSpentByTasksOfTheCGroupInKernelMode(file *os.File, stats *types.Stats) (tab bool, err error)](<#func-containerbuilder-writetimespentbytasksofthecgroupinkernelmode>)
-  - [func (e *ContainerBuilder) writeTimeSpentByTasksOfTheCGroupInUserMode(file *os.File, stats *types.Stats) (tab bool, err error)](<#func-containerbuilder-writetimespentbytasksofthecgroupinusermode>)
-  - [func (e *ContainerBuilder) writeTotalCPUTimeConsumed(file *os.File, stats *types.Stats) (tab bool, err error)](<#func-containerbuilder-writetotalcputimeconsumed>)
-  - [func (e *ContainerBuilder) writeTotalCPUTimeConsumedPerCore(file *os.File, stats *types.Stats) (tab bool, err error)](<#func-containerbuilder-writetotalcputimeconsumedpercore>)
-  - [func (e *ContainerBuilder) writeTotalPreCPUTimeConsumed(file *os.File, stats *types.Stats) (tab bool, err error)](<#func-containerbuilder-writetotalprecputimeconsumed>)
-  - [func (e *ContainerBuilder) writeTotalPreCPUTimeConsumedPerCore(file *os.File, stats *types.Stats) (tab bool, err error)](<#func-containerbuilder-writetotalprecputimeconsumedpercore>)
 - [type DockerfileAuto](<#type-dockerfileauto>)
 - [type Event](<#type-event>)
-  - [func (e *Event) clear()](<#func-event-clear>)
 - [type HealthConfig](<#type-healthconfig>)
 - [type LogFilter](<#type-logfilter>)
 - [type MemoryStats](<#type-memorystats>)
@@ -678,16 +543,11 @@ Para quem não tem prática em processo de build em duas etapas\, na primeira et
   - [func (e *NetworkChaos) SetFatherContainer(fatherContainer *ContainerBuilder)](<#func-networkchaos-setfathercontainer>)
   - [func (e *NetworkChaos) SetNetworkDocker(network isolatedNetwork.ContainerBuilderNetworkInterface)](<#func-networkchaos-setnetworkdocker>)
   - [func (e *NetworkChaos) SetPorts(listenPort, outputPort int, invert bool)](<#func-networkchaos-setports>)
-  - [func (e *NetworkChaos) imageExists() (exists bool)](<#func-networkchaos-imageexists>)
 - [type PidsStats](<#type-pidsstats>)
 - [type Restart](<#type-restart>)
 - [type Stats](<#type-stats>)
 - [type StorageStats](<#type-storagestats>)
 - [type TestContainerLog](<#type-testcontainerlog>)
-  - [func (e *TestContainerLog) fileToDataFormat(path string, t *testing.T) (problem pb.Problem)](<#func-testcontainerlog-filetodataformat>)
-  - [func (e TestContainerLog) findKeyIndex(key string, t *testing.T) (index int, problem pb.Problem)](<#func-testcontainerlog-findkeyindex>)
-  - [func (e *TestContainerLog) makeTest(path string, listUnderTest *[]parserLog, t *testing.T) (problem pb.Problem)](<#func-testcontainerlog-maketest>)
-  - [func (e TestContainerLog) proccessKeyList(listUnderTest *[]parserLog, t *testing.T) (problem pb.Problem)](<#func-testcontainerlog-proccesskeylist>)
 - [type Theater](<#type-theater>)
   - [func (e *Theater) ConfigScene(sceneName string, maxStopedContainers, maxPausedContainers, maxTotalPausedAndStoppedContainers int)](<#func-theater-configscene>)
   - [func (e *Theater) Init()](<#func-theater-init>)
@@ -697,10 +557,6 @@ Para quem não tem prática em processo de build em duas etapas\, na primeira et
   - [func (e *Theater) SetContainerUnStopped(sceneName string)](<#func-theater-setcontainerunstopped>)
 - [type ThrottlingData](<#type-throttlingdata>)
 - [type Timers](<#type-timers>)
-- [type chaos](<#type-chaos>)
-- [type gitData](<#type-gitdata>)
-- [type parserLog](<#type-parserlog>)
-- [type scene](<#type-scene>)
 
 
 ## Constants
@@ -1144,16 +1000,7 @@ const (
     KLogPrivateWorkingSetLabel  = "Private working set"
     KLogPrivateWorkingSetValue  = "KPrivateWorkingSet"
     KLogPrivateWorkingSetRegexp = "\\d+"
-
-    kLogHeaderLine = 0
-    kLogLabelLine  = 1
 )
-```
-
-## Variables
-
-```go
-var theater = Theater{}
 ```
 
 ## func [ConfigChaosScene](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcConfigChaosScene.go#L59-L64>)
@@ -1635,18 +1482,6 @@ Segunda opção:
   por exemplo, `FROM cache:latest`;
 ```
 
-## func [init](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/typeScene.go#L193>)
-
-```go
-func init()
-```
-
-init
-
-English: Launch the test theater
-
-Português: Inicializa o teatro de teste
-
 ## type [BlkioStatEntry](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/typeBlkioStatEntry.go#L16-L21>)
 
 ### BlkioStatEntry
@@ -1781,76 +1616,8 @@ Gerenciador de containers e imagens docker
 
 ```go
 type ContainerBuilder struct {
-    metadata                map[string]interface{}
-    problem                 string
-    csvValueSeparator       string
-    csvRowSeparator         string
-    csvConstHeader          bool
-    logCpus                 int
-    rowsToPrint             int64
-    chaos                   chaos
-    enableCache             bool
-    network                 isolatedNetwork.ContainerBuilderNetworkInterface
-    dockerSys               iotmakerdocker.DockerSystem
-    changePointer           chan iotmakerdocker.ContainerPullStatusSendToChannel
-    onContainerReady        *chan bool
-    onContainerInspect      *chan bool
-    imageInspected          bool
-    imageInstallExtras      bool
-    imageCacheName          string
-    imageName               string
-    imageID                 string
-    imageRepoTags           []string
-    imageRepoDigests        []string
-    imageParent             string
-    imageComment            string
-    imageCreated            time.Time
-    imageContainer          string
-    imageAuthor             string
-    imageArchitecture       string
-    imageVariant            string
-    imageOs                 string
-    imageOsVersion          string
-    imageSize               int64
-    imageVirtualSize        int64
-    containerName           string
-    buildPath               string
-    environmentVar          []string
-    changePorts             []dockerfileGolang.ChangePort
-    openPorts               []string
-    exposePortsOnDockerfile []string
-    openAllPorts            bool
-    waitString              string
-    waitStringTimeout       time.Duration
-    containerID             string
-    ticker                  *time.Ticker
-    inspect                 iotmakerdocker.ContainerInspect
-    logs                    string
-    logsLastSize            int
-    inspectInterval         time.Duration
-    gitData                 gitData
-    volumes                 []mount.Mount
-    IPV4Address             string
-    autoDockerfile          DockerfileAuto
-    containerConfig         container.Config
-    restartPolicy           iotmakerdocker.RestartPolicy
-
-    makeDefaultDockerfile bool
-    printBuildOutput      bool
-    init                  bool
-    startedAfterBuild     bool
-
-    contentIdRsaFile               string
-    contentIdRsaFileWithScape      string
-    contentKnownHostsFile          string
-    contentKnownHostsFileWithScape string
-    contentGitConfigFile           string
-    contentGitConfigFileWithScape  string
-
-    gitPathPrivateRepository string
-
-    buildOptions        types.ImageBuildOptions
-    imageExpirationTime time.Duration
+    IPV4Address string
+    // contains filtered or unexported fields
 }
 ```
 
@@ -11429,23 +11196,13 @@ Output:
   size: string containing the value in Bytes, KBytes, MBytes and GBytes
 ```
 
-### func \(\*ContainerBuilder\) [StartMonitor](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcStartMonitor.go#L26>)
+### func \(\*ContainerBuilder\) [StartMonitor](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcStartMonitor.go#L30>)
 
 ```go
 func (e *ContainerBuilder) StartMonitor()
 ```
 
 #### StartMonitor
-
-Português:
-
-Habilitar um time\.Ticker com a finalidade de colher informações de desempenho do container na forma de um log CSV e gerencia o controle de caos\, caso o mesmo tenha sido habilitado\.
-
-Nota:
-
-```
-* Esta função é usada em conjunto com as funções EnableChaosScene() e SetCsvLogPath()
-```
 
 English:
 
@@ -11454,121 +11211,69 @@ Enable a time.Ticker in order to gather performance information from the contain
 a CSV log and manage chaos control, if it has been enabled.
 ```
 
+Note:
+
+```
+* This function is used in conjunction with the EnableChaosScene(), SetCsvLogPath() and
+  StopMonitor() functions;
+* StopMonitor() Must be called at the end of the chaos test.
+```
+
+Português:
+
+Habilitar um time\.Ticker com a finalidade de colher informações de desempenho do container na forma de um log CSV e gerencia o controle de caos\, caso o mesmo tenha sido habilitado\.
+
 Nota:
 
 ```
-* Esta função é usada em conjunto com as funções EnableChaosScene() e SetCsvLogPath()
+* Esta função é usada em conjunto com as funções EnableChaosScene(), SetCsvLogPath() e
+  StopMonitor();
+* StopMonitor() Must be called at the end of the chaos test.
 ```
 
-### func \(\*ContainerBuilder\) [StopMonitor](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcStopMonitor.go#L3>)
+### func \(\*ContainerBuilder\) [StopMonitor](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcStopMonitor.go#L26>)
 
 ```go
 func (e *ContainerBuilder) StopMonitor() (err error)
 ```
 
-### func \(ContainerBuilder\) [TestDockerInstall](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcTestDockerInstall.go#L8>)
+#### StopMonitor
+
+English:
+
+Disable time\.Ticker in order to gather performance information from the container in the form of a CSV log and manage chaos control\, if it has been enabled\.
+
+Note:
+
+```
+* This function is used in conjunction with the EnableChaosScene(), SetCsvLogPath() and
+  StopMonitor() functions;
+* StopMonitor() Must be called at the end of the chaos test.
+```
+
+Português:
+
+Desabilita o time\.Ticker com a finalidade de colher informações de desempenho do container na forma de um log CSV e gerencia o controle de caos\, caso o mesmo tenha sido habilitado\.
+
+Nota:
+
+```
+* Esta função é usada em conjunto com as funções EnableChaosScene(), SetCsvLogPath() e
+  StopMonitor();
+* StopMonitor() Deve ser chamado ao final do teste de caos.
+```
+
+### func \(ContainerBuilder\) [TestDockerInstall](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcTestDockerInstall.go#L23>)
 
 ```go
 func (e ContainerBuilder) TestDockerInstall() (err error)
 ```
 
-### func \(\*ContainerBuilder\) [WaitForTextInContainerLog](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcWaitForTextInContainerLog.go#L17>)
-
-```go
-func (e *ContainerBuilder) WaitForTextInContainerLog(value string) (dockerLogs string, err error)
-```
-
-#### WaitForTextInContainerLog
-
-English: Wait for the text to appear in the container's default output
-
-```
-value: searched text
-```
-
-Português: Espera pelo texto aparecer na saída padrão do container
-
-```
-value: texto procurado
-```
-
-### func \(\*ContainerBuilder\) [WaitForTextInContainerLogWithTimeout](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcWaitForTextInContainerLogWithTimeout.go#L20>)
-
-```go
-func (e *ContainerBuilder) WaitForTextInContainerLogWithTimeout(value string, timeout time.Duration) (dockerLogs string, err error)
-```
-
-#### WaitForTextInContainerLogWithTimeout
-
-English: Wait for the text to appear in the container's default output
-
-```
-value: searched text
-timeout: wait timeout
-```
-
-Português: Espera pelo texto aparecer na saída padrão do container
-
-```
-value: texto procurado
-timeout: tempo limite de espera
-```
-
-### func \(\*ContainerBuilder\) [addImageBuildOptionsGitCredentials](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcAddImageBuildOptionsGitCredentials.go#L14>)
-
-```go
-func (e *ContainerBuilder) addImageBuildOptionsGitCredentials() (buildOptions types.ImageBuildOptions)
-```
-
-addImageBuildOptionsGitCredentials
-
-English: Prepare the git credentials\. Called from SetPrivateRepositoryAutoConfig\(\)
-
-Português: Prepara as credenciais do git\. Chamada por SetPrivateRepositoryAutoConfig\(\)
-
-### func \(\*ContainerBuilder\) [addProblem](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcAddProblem.go#L12>)
-
-```go
-func (e *ContainerBuilder) addProblem(problem string)
-```
-
-addProblem
-
-English: Adds a description of a problem to explain the error to the user\. Input: problem: problem explanation
-
-Português: Adiciona a descrição de um problema para explica o erro ao usuário\. Entrada: problem: descrição do problema
-
-### func \(\*ContainerBuilder\) [findCurrentIPV4AddressSupport](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcFindCurrentIPV4AddressSupport.go#L19>)
-
-```go
-func (e *ContainerBuilder) findCurrentIPV4AddressSupport(networkID string) (IP string, err error)
-```
-
-findCurrentIPV4AddressSupport
-
-English: support function for FindCurrentIpAddress\(\)
-
-```
-networkID: Docker's network ID
-```
-
-Português: função de apoio a FindCurrentIpAddress\(\)
-
-```
-networkID: ID da rede docker
-```
-
-### func \(\*ContainerBuilder\) [getIdByContainerName](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcGetIdByContainerName.go#L23>)
-
-```go
-func (e *ContainerBuilder) getIdByContainerName() (err error)
-```
-
-getIdByContainerName
+#### TestDockerInstall
 
 English:
 
-Fills the container ID in the control object from the container name defined in SetContainerName\(\)
+Test if docker is responding correctly
 
 ```
 Output:
@@ -11577,827 +11282,79 @@ Output:
 
 Português:
 
-Preenche o ID do container no objeto de controle a partir do nome do container definido em SetContainerName\(\)
+Testa se o docker está respondendo de forma correta
 
 ```
 Saída:
-  err: Objeto de erro padrão
+  err: Standard error object
 ```
 
-### func \(\*ContainerBuilder\) [getProbalityNumber](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcGetProbalityNumber.go#L12>)
+### func \(\*ContainerBuilder\) [WaitForTextInContainerLog](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcWaitForTextInContainerLog.go#L29>)
 
 ```go
-func (e *ContainerBuilder) getProbalityNumber() (probality float64)
+func (e *ContainerBuilder) WaitForTextInContainerLog(value string) (dockerLogs string, err error)
 ```
 
-getProbalityNumber
+#### WaitForTextInContainerLog
 
-English: Returns a random number greater than zero and less than one Output: probality: Open point floating point number between 0\.0 and 1\.0
+English:
 
-Português: Retorna um número aleatório maior do que zero e menor do que um Saída: probality: Número de ponto flutuante de ponto aberto entre 0\.0 e 1\.0
+Wait for the text to appear in the container's default output
 
-### func \(\*ContainerBuilder\) [getRandSeed](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcGetRandSeed.go#L8>)
-
-```go
-func (e *ContainerBuilder) getRandSeed() (seed *rand.Rand)
-```
-
-### func \(\*ContainerBuilder\) [gitMakePublicSshKey](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcGitMakePublicSshKey.go#L14>)
-
-```go
-func (e *ContainerBuilder) gitMakePublicSshKey() (publicKeys *ssh.PublicKeys, err error)
-```
-
-gitMakePublicSshKey
-
-English: Mount the ssl certificate for the git clone function
-
-Português: Monta o certificado ssl para a função de git clone
-
-### func \(\*ContainerBuilder\) [imageExpirationTimeIsValid](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcImageExpirationTimeIsValid.go#L5>)
-
-```go
-func (e *ContainerBuilder) imageExpirationTimeIsValid() (valid bool)
-```
-
-### func \(\*ContainerBuilder\) [incIpV4Address](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcIncIpV4Address.go#L26>)
-
-```go
-func (e *ContainerBuilder) incIpV4Address(ip string, inc int64) (next string, err error)
-```
-
-nextIpV4Address
-
-English: receives an IP address in the form of a string and increments it\.
-
-```
-ip:  only the ip address. e.g.: 10.0.0.1
-inc: number of increments
-
-  Note: this function does not take into account the network configuration, use it with care!
-```
-
-Português: recebe um endereço IP na forma de string e incrementa o mesmo\.
-
-```
-ip:  apenas o endereço ip. ex.: 10.0.0.1
-inc: quantidade de incrementos
-
-  Nota: esta função não considera a configuração da rede, use com cuidado!
-```
-
-### func \(\*ContainerBuilder\) [logsCleaner](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcLogsCleaner.go#L7>)
-
-```go
-func (e *ContainerBuilder) logsCleaner(logs []byte) [][]byte
-```
-
-### func \(\*ContainerBuilder\) [logsSearchAndReplaceIntoText](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcLogsSearchAndReplaceIntoText.go#L13>)
-
-```go
-func (e *ContainerBuilder) logsSearchAndReplaceIntoText(logs *[]byte, lineList [][]byte, configuration []LogFilter) (line []byte, found bool)
-```
-
-### func \(\*ContainerBuilder\) [managerChaos](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcManagerChaos.go#L15>)
-
-```go
-func (e *ContainerBuilder) managerChaos()
-```
-
-managerChaos
-
-English: manages the log and state of the container
-
-Português: gerencia o log e o estado do container
-
-### func \(\*ContainerBuilder\) [selectBetweenMaxAndMin](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSelectBetweenMaxAndMin.go#L5>)
-
-```go
-func (e *ContainerBuilder) selectBetweenMaxAndMin(max, min time.Duration) (selected time.Duration)
-```
-
-### func \(\*ContainerBuilder\) [stopMonitorAfterStopped](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcStopMonitorAfterStopped.go#L8>)
-
-```go
-func (e *ContainerBuilder) stopMonitorAfterStopped() (err error)
-```
-
-### func \(ContainerBuilder\) [traceCodeLine](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcTraceCodeLine.go#L5>)
-
-```go
-func (e ContainerBuilder) traceCodeLine() (file string, line int)
-```
-
-### func \(\*ContainerBuilder\) [verifyImageName](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcVerifyImageName.go#L14>)
-
-```go
-func (e *ContainerBuilder) verifyImageName() (err error)
-```
-
-verifyImageName
-
-English: check if the image name has the version tag
-
-Português: verifica se o nome da imagem tem a tag de versão
-
-### func \(\*ContainerBuilder\) [verifyStatusError](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcVerifyStatusError.go#L8>)
-
-```go
-func (e *ContainerBuilder) verifyStatusError(inspect iotmakerdocker.ContainerInspect) (hasError bool)
-```
-
-### func \(\*ContainerBuilder\) [writeAggregatePreCPUTimeTheContainerWasThrottled](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcWriteAggregatePreCPUTimeTheContainerWasThrottled.go#L11>)
-
-```go
-func (e *ContainerBuilder) writeAggregatePreCPUTimeTheContainerWasThrottled(file *os.File, stats *types.Stats) (tab bool, err error)
-```
-
-### func \(\*ContainerBuilder\) [writeAggregateTimeTheContainerWasThrottledForInNanoseconds](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcWriteAggregateTimeTheContainerWasThrottledForInNanoseconds.go#L11>)
-
-```go
-func (e *ContainerBuilder) writeAggregateTimeTheContainerWasThrottledForInNanoseconds(file *os.File, stats *types.Stats) (tab bool, err error)
-```
-
-### func \(\*ContainerBuilder\) [writeBlkioIoMergedRecursive](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcWriteBlkioIoMergedRecursive.go#L11>)
-
-```go
-func (e *ContainerBuilder) writeBlkioIoMergedRecursive(file *os.File, stats *types.Stats) (tab bool, err error)
-```
-
-### func \(\*ContainerBuilder\) [writeBlkioIoQueuedRecursive](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcWriteBlkioIoQueuedRecursive.go#L11>)
-
-```go
-func (e *ContainerBuilder) writeBlkioIoQueuedRecursive(file *os.File, stats *types.Stats) (tab bool, err error)
-```
-
-### func \(\*ContainerBuilder\) [writeBlkioIoServiceBytesRecursive](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcWriteBlkioIoServiceBytesRecursive.go#L11>)
-
-```go
-func (e *ContainerBuilder) writeBlkioIoServiceBytesRecursive(file *os.File, stats *types.Stats) (tab bool, err error)
-```
-
-### func \(\*ContainerBuilder\) [writeBlkioIoServiceTimeRecursive](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcWriteBlkioIoServiceTimeRecursive.go#L11>)
-
-```go
-func (e *ContainerBuilder) writeBlkioIoServiceTimeRecursive(file *os.File, stats *types.Stats) (tab bool, err error)
-```
-
-### func \(\*ContainerBuilder\) [writeBlkioIoServicedRecursive](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcWriteBlkioIoServicedRecursive.go#L11>)
-
-```go
-func (e *ContainerBuilder) writeBlkioIoServicedRecursive(file *os.File, stats *types.Stats) (tab bool, err error)
-```
-
-### func \(\*ContainerBuilder\) [writeBlkioIoTimeRecursive](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcWriteBlkioIoTimeRecursive.go#L11>)
-
-```go
-func (e *ContainerBuilder) writeBlkioIoTimeRecursive(file *os.File, stats *types.Stats) (tab bool, err error)
-```
-
-### func \(\*ContainerBuilder\) [writeBlkioIoWaitTimeRecursive](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcWriteBlkioIoWaitTimeRecursive.go#L11>)
-
-```go
-func (e *ContainerBuilder) writeBlkioIoWaitTimeRecursive(file *os.File, stats *types.Stats) (tab bool, err error)
-```
-
-### func \(\*ContainerBuilder\) [writeBlkioSectorsRecursive](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcWriteBlkioSectorsRecursive.go#L11>)
-
-```go
-func (e *ContainerBuilder) writeBlkioSectorsRecursive(file *os.File, stats *types.Stats) (tab bool, err error)
-```
-
-### func \(\*ContainerBuilder\) [writeCommittedBytes](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcWriteCommittedBytes.go#L11>)
-
-```go
-func (e *ContainerBuilder) writeCommittedBytes(file *os.File, stats *types.Stats) (tab bool, err error)
-```
-
-### func \(\*ContainerBuilder\) [writeConstAggregatePreCPUTimeTheContainerWasThrottled](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcWriteConstAggregatePreCPUTimeTheContainerWasThrottled.go#L9>)
-
-```go
-func (e *ContainerBuilder) writeConstAggregatePreCPUTimeTheContainerWasThrottled(file *os.File) (tab bool, err error)
-```
-
-### func \(\*ContainerBuilder\) [writeConstAggregateTimeTheContainerWasThrottledForInNanoseconds](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcWriteConstAggregateTimeTheContainerWasThrottledForInNanoseconds.go#L9>)
-
-```go
-func (e *ContainerBuilder) writeConstAggregateTimeTheContainerWasThrottledForInNanoseconds(file *os.File) (tab bool, err error)
-```
-
-### func \(\*ContainerBuilder\) [writeConstBlkioIoMergedRecursive](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcWriteConstBlkioIoMergedRecursive.go#L10>)
-
-```go
-func (e *ContainerBuilder) writeConstBlkioIoMergedRecursive(file *os.File, stats *types.Stats) (tab bool, err error)
-```
-
-### func \(\*ContainerBuilder\) [writeConstBlkioIoQueuedRecursive](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcWriteConstBlkioIoQueuedRecursive.go#L10>)
-
-```go
-func (e *ContainerBuilder) writeConstBlkioIoQueuedRecursive(file *os.File, stats *types.Stats) (tab bool, err error)
-```
-
-### func \(\*ContainerBuilder\) [writeConstBlkioIoServiceBytesRecursive](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcWriteConstBlkioIoServiceBytesRecursive.go#L10>)
-
-```go
-func (e *ContainerBuilder) writeConstBlkioIoServiceBytesRecursive(file *os.File, stats *types.Stats) (tab bool, err error)
-```
-
-### func \(\*ContainerBuilder\) [writeConstBlkioIoServiceTimeRecursive](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcWriteConstBlkioIoServiceTimeRecursive.go#L10>)
-
-```go
-func (e *ContainerBuilder) writeConstBlkioIoServiceTimeRecursive(file *os.File, stats *types.Stats) (tab bool, err error)
-```
-
-### func \(\*ContainerBuilder\) [writeConstBlkioIoServicedRecursive](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcWriteConstBlkioIoServicedRecursive.go#L10>)
-
-```go
-func (e *ContainerBuilder) writeConstBlkioIoServicedRecursive(file *os.File, stats *types.Stats) (tab bool, err error)
-```
-
-### func \(\*ContainerBuilder\) [writeConstBlkioIoTimeRecursive](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcWriteConstBlkioIoTimeRecursive.go#L10>)
-
-```go
-func (e *ContainerBuilder) writeConstBlkioIoTimeRecursive(file *os.File, stats *types.Stats) (tab bool, err error)
-```
-
-### func \(\*ContainerBuilder\) [writeConstBlkioIoWaitTimeRecursive](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcWriteConstBlkioIoWaitTimeRecursive.go#L10>)
-
-```go
-func (e *ContainerBuilder) writeConstBlkioIoWaitTimeRecursive(file *os.File, stats *types.Stats) (tab bool, err error)
-```
-
-### func \(\*ContainerBuilder\) [writeConstBlkioSectorsRecursive](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcWriteConstBlkioSectorsRecursive.go#L10>)
-
-```go
-func (e *ContainerBuilder) writeConstBlkioSectorsRecursive(file *os.File, stats *types.Stats) (tab bool, err error)
-```
-
-### func \(\*ContainerBuilder\) [writeConstCommittedBytes](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcWriteConstCommittedBytes.go#L9>)
-
-```go
-func (e *ContainerBuilder) writeConstCommittedBytes(file *os.File) (tab bool, err error)
-```
-
-### func \(\*ContainerBuilder\) [writeConstCurrentNumberOfOidsInTheCGroup](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcWriteConstCurrentNumberOfOidsInTheCGroup.go#L9>)
-
-```go
-func (e *ContainerBuilder) writeConstCurrentNumberOfOidsInTheCGroup(file *os.File) (tab bool, err error)
-```
-
-### func \(\*ContainerBuilder\) [writeConstCurrentResCounterUsageForMemory](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcWriteConstCurrentResCounterUsageForMemory.go#L9>)
-
-```go
-func (e *ContainerBuilder) writeConstCurrentResCounterUsageForMemory(file *os.File) (tab bool, err error)
-```
-
-### func \(\*ContainerBuilder\) [writeConstFilterIntoLog](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcWriteConstFilterIntoLog.go#L10>)
-
-```go
-func (e *ContainerBuilder) writeConstFilterIntoLog(file *os.File, filter []LogFilter) (tab bool, err error)
-```
-
-### func \(\*ContainerBuilder\) [writeConstLimitOnTheNumberOfPidsInTheCGroup](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcWriteConstLimitOnTheNumberOfPidsInTheCGroup.go#L9>)
-
-```go
-func (e *ContainerBuilder) writeConstLimitOnTheNumberOfPidsInTheCGroup(file *os.File) (tab bool, err error)
-```
-
-### func \(\*ContainerBuilder\) [writeConstMaximumUsageEverRecorded](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcWriteConstMaximumUsageEverRecorded.go#L9>)
-
-```go
-func (e *ContainerBuilder) writeConstMaximumUsageEverRecorded(file *os.File) (tab bool, err error)
-```
-
-### func \(\*ContainerBuilder\) [writeConstMemoryLimit](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcWriteConstMemoryLimit.go#L9>)
-
-```go
-func (e *ContainerBuilder) writeConstMemoryLimit(file *os.File) (tab bool, err error)
-```
-
-### func \(\*ContainerBuilder\) [writeConstNumberOfPeriodsWhenTheContainerHitsItsThrottlingLimit](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcWriteConstNumberOfPeriodsWhenTheContainerHitsItsThrottlingLimit.go#L9>)
-
-```go
-func (e *ContainerBuilder) writeConstNumberOfPeriodsWhenTheContainerHitsItsThrottlingLimit(file *os.File) (tab bool, err error)
-```
-
-### func \(\*ContainerBuilder\) [writeConstNumberOfPeriodsWhenTheContainerPreCPUHitsItsThrottlingLimit](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcWriteConstNumberOfPeriodsWhenTheContainerPreCPUHitsItsThrottlingLimit.go#L9>)
-
-```go
-func (e *ContainerBuilder) writeConstNumberOfPeriodsWhenTheContainerPreCPUHitsItsThrottlingLimit(file *os.File) (tab bool, err error)
-```
-
-### func \(\*ContainerBuilder\) [writeConstNumberOfPeriodsWithPreCPUThrottlingActive](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcWriteConstNumberOfPeriodsWithPreCPUThrottlingActive.go#L9>)
-
-```go
-func (e *ContainerBuilder) writeConstNumberOfPeriodsWithPreCPUThrottlingActive(file *os.File) (tab bool, err error)
-```
-
-### func \(\*ContainerBuilder\) [writeConstNumberOfPeriodsWithThrottlingActive](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcWriteConstNumberOfPeriodsWithThrottlingActive.go#L9>)
-
-```go
-func (e *ContainerBuilder) writeConstNumberOfPeriodsWithThrottlingActive(file *os.File) (tab bool, err error)
-```
-
-### func \(\*ContainerBuilder\) [writeConstNumberOfTimesMemoryUsageHitsLimits](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcWriteConstNumberOfTimesMemoryUsageHitsLimits.go#L9>)
-
-```go
-func (e *ContainerBuilder) writeConstNumberOfTimesMemoryUsageHitsLimits(file *os.File) (tab bool, err error)
-```
-
-### func \(\*ContainerBuilder\) [writeConstOnlineCPUs](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcWriteConstOnlineCPUs.go#L9>)
-
-```go
-func (e *ContainerBuilder) writeConstOnlineCPUs(file *os.File) (tab bool, err error)
-```
-
-### func \(\*ContainerBuilder\) [writeConstOnlinePreCPUs](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcWriteConstOnlinePreCPUs.go#L9>)
-
-```go
-func (e *ContainerBuilder) writeConstOnlinePreCPUs(file *os.File) (tab bool, err error)
-```
-
-### func \(\*ContainerBuilder\) [writeConstPeakCommittedBytes](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcWriteConstPeakCommittedBytes.go#L9>)
-
-```go
-func (e *ContainerBuilder) writeConstPeakCommittedBytes(file *os.File) (tab bool, err error)
-```
-
-### func \(\*ContainerBuilder\) [writeConstPreCPUSystemUsage](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcWriteConstPreCPUSystemUsage.go#L9>)
-
-```go
-func (e *ContainerBuilder) writeConstPreCPUSystemUsage(file *os.File) (tab bool, err error)
-```
-
-### func \(\*ContainerBuilder\) [writeConstPrivateWorkingSet](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcWriteConstPrivateWorkingSet.go#L9>)
-
-```go
-func (e *ContainerBuilder) writeConstPrivateWorkingSet(file *os.File) (tab bool, err error)
-```
-
-### func \(\*ContainerBuilder\) [writeConstReadingTime](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcWriteConstReadingTime.go#L9>)
-
-```go
-func (e *ContainerBuilder) writeConstReadingTime(file *os.File) (tab bool, err error)
-```
-
-### func \(\*ContainerBuilder\) [writeConstSystemUsage](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcWriteConstSystemUsage.go#L9>)
-
-```go
-func (e *ContainerBuilder) writeConstSystemUsage(file *os.File) (tab bool, err error)
-```
-
-### func \(\*ContainerBuilder\) [writeConstTimeSpentByPreCPUTasksOfTheCGroupInKernelMode](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcWriteConstTimeSpentByPreCPUTasksOfTheCGroupInKernelMode.go#L9>)
-
-```go
-func (e *ContainerBuilder) writeConstTimeSpentByPreCPUTasksOfTheCGroupInKernelMode(file *os.File) (tab bool, err error)
-```
-
-### func \(\*ContainerBuilder\) [writeConstTimeSpentByPreCPUTasksOfTheCGroupInUserMode](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcWriteConstTimeSpentByPreCPUTasksOfTheCGroupInUserMode.go#L9>)
-
-```go
-func (e *ContainerBuilder) writeConstTimeSpentByPreCPUTasksOfTheCGroupInUserMode(file *os.File) (tab bool, err error)
-```
-
-### func \(\*ContainerBuilder\) [writeConstTimeSpentByTasksOfTheCGroupInKernelMode](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcWriteConstTimeSpentByTasksOfTheCGroupInKernelMode.go#L9>)
-
-```go
-func (e *ContainerBuilder) writeConstTimeSpentByTasksOfTheCGroupInKernelMode(file *os.File) (tab bool, err error)
-```
-
-### func \(\*ContainerBuilder\) [writeConstTimeSpentByTasksOfTheCGroupInUserMode](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcWriteConstTimeSpentByTasksOfTheCGroupInUserMode.go#L9>)
-
-```go
-func (e *ContainerBuilder) writeConstTimeSpentByTasksOfTheCGroupInUserMode(file *os.File) (tab bool, err error)
-```
-
-### func \(\*ContainerBuilder\) [writeConstTotalCPUTimeConsumed](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcWriteConstTotalCPUTimeConsumed.go#L9>)
-
-```go
-func (e *ContainerBuilder) writeConstTotalCPUTimeConsumed(file *os.File) (tab bool, err error)
-```
-
-### func \(\*ContainerBuilder\) [writeConstTotalCPUTimeConsumedPerCore](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcWriteConstTotalCPUTimeConsumedPerCore.go#L9>)
-
-```go
-func (e *ContainerBuilder) writeConstTotalCPUTimeConsumedPerCore(file *os.File) (tab bool, err error)
-```
-
-### func \(\*ContainerBuilder\) [writeConstTotalPreCPUTimeConsumed](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcWriteConstTotalPreCPUTimeConsumed.go#L9>)
-
-```go
-func (e *ContainerBuilder) writeConstTotalPreCPUTimeConsumed(file *os.File) (tab bool, err error)
-```
-
-### func \(\*ContainerBuilder\) [writeConstTotalPreCPUTimeConsumedPerCore](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcWriteConstTotalPreCPUTimeConsumedPerCore.go#L9>)
-
-```go
-func (e *ContainerBuilder) writeConstTotalPreCPUTimeConsumedPerCore(file *os.File) (tab bool, err error)
-```
-
-### func \(\*ContainerBuilder\) [writeContainerConstToFile](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcWriteContainerConstToFile.go#L10>)
-
-```go
-func (e *ContainerBuilder) writeContainerConstToFile(file *os.File, stats *types.Stats) (err error)
-```
-
-### func \(\*ContainerBuilder\) [writeContainerLabelToFile](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcWriteContainerLabelToFile.go#L10>)
-
-```go
-func (e *ContainerBuilder) writeContainerLabelToFile(file *os.File, stats *types.Stats) (err error)
-```
-
-### func \(\*ContainerBuilder\) [writeContainerLogToFile](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcWriteContainerLogToFile.go#L14>)
-
-```go
-func (e *ContainerBuilder) writeContainerLogToFile(path string, lineList [][]byte) (err error)
-```
-
-writeContainerLogToFile
-
-Português: Escreve um arquivo csv com dados capturados da saída padrão do container e dados estatísticos do container
-
-### func \(\*ContainerBuilder\) [writeContainerStatsToFile](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcWriteContainerStatsToFile.go#L10>)
-
-```go
-func (e *ContainerBuilder) writeContainerStatsToFile(file *os.File, stats *types.Stats, lineList *[][]byte) (err error)
-```
-
-### func \(\*ContainerBuilder\) [writeCurrentNumberOfOidsInTheCGroup](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcWriteCurrentNumberOfOidsInTheCGroup.go#L11>)
-
-```go
-func (e *ContainerBuilder) writeCurrentNumberOfOidsInTheCGroup(file *os.File, stats *types.Stats) (tab bool, err error)
-```
-
-### func \(\*ContainerBuilder\) [writeCurrentResCounterUsageForMemory](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcWriteCurrentResCounterUsageForMemory.go#L11>)
-
-```go
-func (e *ContainerBuilder) writeCurrentResCounterUsageForMemory(file *os.File, stats *types.Stats) (tab bool, err error)
-```
-
-### func \(\*ContainerBuilder\) [writeFilterIntoLog](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcWriteFilterIntoLog.go#L11>)
-
-```go
-func (e *ContainerBuilder) writeFilterIntoLog(file *os.File, filter []LogFilter, lineList *[][]byte) (tab bool, err error)
-```
-
-### func \(\*ContainerBuilder\) [writeLabelAggregatePreCPUTimeTheContainerWasThrottled](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcWriteLabelAggregatePreCPUTimeTheContainerWasThrottled.go#L9>)
-
-```go
-func (e *ContainerBuilder) writeLabelAggregatePreCPUTimeTheContainerWasThrottled(file *os.File) (tab bool, err error)
-```
-
-### func \(\*ContainerBuilder\) [writeLabelAggregateTimeTheContainerWasThrottledForInNanoseconds](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcWriteLabelAggregateTimeTheContainerWasThrottledForInNanoseconds.go#L9>)
-
-```go
-func (e *ContainerBuilder) writeLabelAggregateTimeTheContainerWasThrottledForInNanoseconds(file *os.File) (tab bool, err error)
-```
-
-### func \(\*ContainerBuilder\) [writeLabelBlkioIoMergedRecursive](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcWriteLabelBlkioIoMergedRecursive.go#L10>)
-
-```go
-func (e *ContainerBuilder) writeLabelBlkioIoMergedRecursive(file *os.File, stats *types.Stats) (tab bool, err error)
-```
-
-### func \(\*ContainerBuilder\) [writeLabelBlkioIoQueuedRecursive](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcWriteLabelBlkioIoQueuedRecursive.go#L10>)
-
-```go
-func (e *ContainerBuilder) writeLabelBlkioIoQueuedRecursive(file *os.File, stats *types.Stats) (tab bool, err error)
-```
-
-### func \(\*ContainerBuilder\) [writeLabelBlkioIoServiceBytesRecursive](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcWriteLabelBlkioIoServiceBytesRecursive.go#L10>)
-
-```go
-func (e *ContainerBuilder) writeLabelBlkioIoServiceBytesRecursive(file *os.File, stats *types.Stats) (tab bool, err error)
-```
-
-### func \(\*ContainerBuilder\) [writeLabelBlkioIoServiceTimeRecursive](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcWriteLabelBlkioIoServiceTimeRecursive.go#L10>)
-
-```go
-func (e *ContainerBuilder) writeLabelBlkioIoServiceTimeRecursive(file *os.File, stats *types.Stats) (tab bool, err error)
-```
-
-### func \(\*ContainerBuilder\) [writeLabelBlkioIoServicedRecursive](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcWriteLabelBlkioIoServicedRecursive.go#L10>)
-
-```go
-func (e *ContainerBuilder) writeLabelBlkioIoServicedRecursive(file *os.File, stats *types.Stats) (tab bool, err error)
-```
-
-### func \(\*ContainerBuilder\) [writeLabelBlkioIoTimeRecursive](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcWriteLabelBlkioIoTimeRecursive.go#L10>)
-
-```go
-func (e *ContainerBuilder) writeLabelBlkioIoTimeRecursive(file *os.File, stats *types.Stats) (tab bool, err error)
-```
-
-### func \(\*ContainerBuilder\) [writeLabelBlkioIoWaitTimeRecursive](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcWriteLabelBlkioIoWaitTimeRecursive.go#L10>)
-
-```go
-func (e *ContainerBuilder) writeLabelBlkioIoWaitTimeRecursive(file *os.File, stats *types.Stats) (tab bool, err error)
-```
-
-### func \(\*ContainerBuilder\) [writeLabelBlkioSectorsRecursive](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcWriteLabelBlkioSectorsRecursive.go#L10>)
-
-```go
-func (e *ContainerBuilder) writeLabelBlkioSectorsRecursive(file *os.File, stats *types.Stats) (tab bool, err error)
-```
-
-### func \(\*ContainerBuilder\) [writeLabelCommittedBytes](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcWriteLabelCommittedBytes.go#L9>)
-
-```go
-func (e *ContainerBuilder) writeLabelCommittedBytes(file *os.File) (tab bool, err error)
-```
-
-### func \(\*ContainerBuilder\) [writeLabelCurrentNumberOfOidsInTheCGroup](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcWriteLabelCurrentNumberOfOidsInTheCGroup.go#L9>)
-
-```go
-func (e *ContainerBuilder) writeLabelCurrentNumberOfOidsInTheCGroup(file *os.File) (tab bool, err error)
-```
-
-### func \(\*ContainerBuilder\) [writeLabelCurrentResCounterUsageForMemory](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcWriteLabelCurrentResCounterUsageForMemory.go#L9>)
-
-```go
-func (e *ContainerBuilder) writeLabelCurrentResCounterUsageForMemory(file *os.File) (tab bool, err error)
-```
-
-### func \(\*ContainerBuilder\) [writeLabelFilterIntoLog](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcWriteLabelFilterIntoLog.go#L10>)
-
-```go
-func (e *ContainerBuilder) writeLabelFilterIntoLog(file *os.File, filter []LogFilter) (tab bool, err error)
-```
-
-### func \(\*ContainerBuilder\) [writeLabelLimitOnTheNumberOfPidsInTheCGroup](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcWriteLabelLimitOnTheNumberOfPidsInTheCGroup.go#L9>)
-
-```go
-func (e *ContainerBuilder) writeLabelLimitOnTheNumberOfPidsInTheCGroup(file *os.File) (tab bool, err error)
-```
-
-### func \(\*ContainerBuilder\) [writeLabelMaximumUsageEverRecorded](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcWriteLabelMaximumUsageEverRecorded.go#L9>)
-
-```go
-func (e *ContainerBuilder) writeLabelMaximumUsageEverRecorded(file *os.File) (tab bool, err error)
-```
-
-### func \(\*ContainerBuilder\) [writeLabelMemoryLimit](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcWriteLabelMemoryLimit.go#L9>)
-
-```go
-func (e *ContainerBuilder) writeLabelMemoryLimit(file *os.File) (tab bool, err error)
-```
-
-### func \(\*ContainerBuilder\) [writeLabelNumberOfPeriodsWhenTheContainerHitsItsThrottlingLimit](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcWriteLabelNumberOfPeriodsWhenTheContainerHitsItsThrottlingLimit.go#L9>)
-
-```go
-func (e *ContainerBuilder) writeLabelNumberOfPeriodsWhenTheContainerHitsItsThrottlingLimit(file *os.File) (tab bool, err error)
-```
-
-### func \(\*ContainerBuilder\) [writeLabelNumberOfPeriodsWhenTheContainerPreCPUHitsItsThrottlingLimit](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcWriteLabelNumberOfPeriodsWhenTheContainerPreCPUHitsItsThrottlingLimit.go#L9>)
-
-```go
-func (e *ContainerBuilder) writeLabelNumberOfPeriodsWhenTheContainerPreCPUHitsItsThrottlingLimit(file *os.File) (tab bool, err error)
-```
-
-### func \(\*ContainerBuilder\) [writeLabelNumberOfPeriodsWithPreCPUThrottlingActive](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcWriteLabelNumberOfPeriodsWithPreCPUThrottlingActive.go#L9>)
-
-```go
-func (e *ContainerBuilder) writeLabelNumberOfPeriodsWithPreCPUThrottlingActive(file *os.File) (tab bool, err error)
-```
-
-### func \(\*ContainerBuilder\) [writeLabelNumberOfPeriodsWithThrottlingActive](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcWriteLabelNumberOfPeriodsWithThrottlingActive.go#L9>)
-
-```go
-func (e *ContainerBuilder) writeLabelNumberOfPeriodsWithThrottlingActive(file *os.File) (tab bool, err error)
-```
-
-### func \(\*ContainerBuilder\) [writeLabelNumberOfTimesMemoryUsageHitsLimits](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcWriteLabelNumberOfTimesMemoryUsageHitsLimits.go#L9>)
-
-```go
-func (e *ContainerBuilder) writeLabelNumberOfTimesMemoryUsageHitsLimits(file *os.File) (tab bool, err error)
-```
-
-### func \(\*ContainerBuilder\) [writeLabelOnlineCPUs](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcWriteLabelOnlineCPUs.go#L9>)
-
-```go
-func (e *ContainerBuilder) writeLabelOnlineCPUs(file *os.File) (tab bool, err error)
-```
-
-### func \(\*ContainerBuilder\) [writeLabelOnlinePreCPUs](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcWriteLabelOnlinePreCPUs.go#L9>)
-
-```go
-func (e *ContainerBuilder) writeLabelOnlinePreCPUs(file *os.File) (tab bool, err error)
-```
-
-### func \(\*ContainerBuilder\) [writeLabelPeakCommittedBytes](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcWriteLabelPeakCommittedBytes.go#L9>)
-
-```go
-func (e *ContainerBuilder) writeLabelPeakCommittedBytes(file *os.File) (tab bool, err error)
-```
-
-### func \(\*ContainerBuilder\) [writeLabelPreCPUSystemUsage](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcWriteLabelPreCPUSystemUsage.go#L9>)
-
-```go
-func (e *ContainerBuilder) writeLabelPreCPUSystemUsage(file *os.File) (tab bool, err error)
-```
-
-### func \(\*ContainerBuilder\) [writeLabelPrivateWorkingSet](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcWriteLabelPrivateWorkingSet.go#L9>)
-
-```go
-func (e *ContainerBuilder) writeLabelPrivateWorkingSet(file *os.File) (tab bool, err error)
-```
-
-### func \(\*ContainerBuilder\) [writeLabelReadingTime](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcWriteLabelReadingTime.go#L9>)
-
-```go
-func (e *ContainerBuilder) writeLabelReadingTime(file *os.File) (tab bool, err error)
-```
-
-### func \(\*ContainerBuilder\) [writeLabelSystemUsage](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcWriteLabelSystemUsage.go#L9>)
-
-```go
-func (e *ContainerBuilder) writeLabelSystemUsage(file *os.File) (tab bool, err error)
-```
-
-### func \(\*ContainerBuilder\) [writeLabelTimeSpentByPreCPUTasksOfTheCGroupInKernelMode](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcWriteLabelTimeSpentByPreCPUTasksOfTheCGroupInKernelMode.go#L9>)
-
-```go
-func (e *ContainerBuilder) writeLabelTimeSpentByPreCPUTasksOfTheCGroupInKernelMode(file *os.File) (tab bool, err error)
-```
-
-### func \(\*ContainerBuilder\) [writeLabelTimeSpentByPreCPUTasksOfTheCGroupInUserMode](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcWriteLabelTimeSpentByPreCPUTasksOfTheCGroupInUserMode.go#L9>)
-
-```go
-func (e *ContainerBuilder) writeLabelTimeSpentByPreCPUTasksOfTheCGroupInUserMode(file *os.File) (tab bool, err error)
-```
-
-### func \(\*ContainerBuilder\) [writeLabelTimeSpentByTasksOfTheCGroupInKernelMode](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcWriteLabelTimeSpentByTasksOfTheCGroupInKernelMode.go#L9>)
-
-```go
-func (e *ContainerBuilder) writeLabelTimeSpentByTasksOfTheCGroupInKernelMode(file *os.File) (tab bool, err error)
-```
-
-### func \(\*ContainerBuilder\) [writeLabelTimeSpentByTasksOfTheCGroupInUserMode](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcWriteLabelTimeSpentByTasksOfTheCGroupInUserMode.go#L9>)
-
-```go
-func (e *ContainerBuilder) writeLabelTimeSpentByTasksOfTheCGroupInUserMode(file *os.File) (tab bool, err error)
-```
-
-### func \(\*ContainerBuilder\) [writeLabelTotalCPUTimeConsumed](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcWriteLabelTotalCPUTimeConsumed.go#L9>)
-
-```go
-func (e *ContainerBuilder) writeLabelTotalCPUTimeConsumed(file *os.File) (tab bool, err error)
-```
-
-### func \(\*ContainerBuilder\) [writeLabelTotalCPUTimeConsumedPerCore](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcWriteLabelTotalCPUTimeConsumedPerCore.go#L10>)
-
-```go
-func (e *ContainerBuilder) writeLabelTotalCPUTimeConsumedPerCore(file *os.File) (tab bool, err error)
-```
-
-### func \(\*ContainerBuilder\) [writeLabelTotalPreCPUTimeConsumed](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcWriteLabelTotalPreCPUTimeConsumed.go#L9>)
-
-```go
-func (e *ContainerBuilder) writeLabelTotalPreCPUTimeConsumed(file *os.File) (tab bool, err error)
-```
-
-### func \(\*ContainerBuilder\) [writeLabelTotalPreCPUTimeConsumedPerCore](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcWriteLabelTotalPreCPUTimeConsumedPerCore.go#L10>)
-
-```go
-func (e *ContainerBuilder) writeLabelTotalPreCPUTimeConsumedPerCore(file *os.File) (tab bool, err error)
-```
-
-### func \(\*ContainerBuilder\) [writeLimitOnTheNumberOfPidsInTheCGroup](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcWriteLimitOnTheNumberOfPidsInTheCGroup.go#L11>)
-
-```go
-func (e *ContainerBuilder) writeLimitOnTheNumberOfPidsInTheCGroup(file *os.File, stats *types.Stats) (tab bool, err error)
-```
-
-### func \(\*ContainerBuilder\) [writeMaximumUsageEverRecorded](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcWriteMaximumUsageEverRecorded.go#L11>)
-
-```go
-func (e *ContainerBuilder) writeMaximumUsageEverRecorded(file *os.File, stats *types.Stats) (tab bool, err error)
-```
-
-### func \(\*ContainerBuilder\) [writeMemoryLimit](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcWriteMemoryLimit.go#L11>)
-
-```go
-func (e *ContainerBuilder) writeMemoryLimit(file *os.File, stats *types.Stats) (tab bool, err error)
-```
-
-### func \(\*ContainerBuilder\) [writeNumberOfPeriodsWhenTheContainerHitsItsThrottlingLimit](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcWriteNumberOfPeriodsWhenTheContainerHitsItsThrottlingLimit.go#L11>)
-
-```go
-func (e *ContainerBuilder) writeNumberOfPeriodsWhenTheContainerHitsItsThrottlingLimit(file *os.File, stats *types.Stats) (tab bool, err error)
-```
-
-### func \(\*ContainerBuilder\) [writeNumberOfPeriodsWhenTheContainerPreCPUHitsItsThrottlingLimit](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcWriteNumberOfPeriodsWhenTheContainerPreCPUHitsItsThrottlingLimit.go#L11>)
-
-```go
-func (e *ContainerBuilder) writeNumberOfPeriodsWhenTheContainerPreCPUHitsItsThrottlingLimit(file *os.File, stats *types.Stats) (tab bool, err error)
-```
-
-### func \(\*ContainerBuilder\) [writeNumberOfPeriodsWithPreCPUThrottlingActive](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcWriteNumberOfPeriodsWithPreCPUThrottlingActive.go#L11>)
-
-```go
-func (e *ContainerBuilder) writeNumberOfPeriodsWithPreCPUThrottlingActive(file *os.File, stats *types.Stats) (tab bool, err error)
-```
-
-### func \(\*ContainerBuilder\) [writeNumberOfPeriodsWithThrottlingActive](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcWriteNumberOfPeriodsWithThrottlingActive.go#L11>)
-
-```go
-func (e *ContainerBuilder) writeNumberOfPeriodsWithThrottlingActive(file *os.File, stats *types.Stats) (tab bool, err error)
-```
-
-### func \(\*ContainerBuilder\) [writeNumberOfTimesMemoryUsageHitsLimits](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcWriteNumberOfTimesMemoryUsageHitsLimits.go#L11>)
-
-```go
-func (e *ContainerBuilder) writeNumberOfTimesMemoryUsageHitsLimits(file *os.File, stats *types.Stats) (tab bool, err error)
-```
-
-### func \(\*ContainerBuilder\) [writeOnlineCPUs](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcWriteOnlineCPUs.go#L11>)
-
-```go
-func (e *ContainerBuilder) writeOnlineCPUs(file *os.File, stats *types.Stats) (tab bool, err error)
 ```
+Input:
+  value: searched text
 
-### func \(\*ContainerBuilder\) [writeOnlinePreCPUs](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcWriteOnlinePreCPUs.go#L11>)
-
-```go
-func (e *ContainerBuilder) writeOnlinePreCPUs(file *os.File, stats *types.Stats) (tab bool, err error)
-```
-
-### func \(\*ContainerBuilder\) [writePeakCommittedBytes](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcWritePeakCommittedBytes.go#L11>)
-
-```go
-func (e *ContainerBuilder) writePeakCommittedBytes(file *os.File, stats *types.Stats) (tab bool, err error)
-```
-
-### func \(\*ContainerBuilder\) [writePreCPUSystemUsage](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcWritePreCPUSystemUsage.go#L11>)
-
-```go
-func (e *ContainerBuilder) writePreCPUSystemUsage(file *os.File, stats *types.Stats) (tab bool, err error)
-```
-
-### func \(\*ContainerBuilder\) [writePrivateWorkingSet](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcWritePrivateWorkingSet.go#L11>)
-
-```go
-func (e *ContainerBuilder) writePrivateWorkingSet(file *os.File, stats *types.Stats) (tab bool, err error)
-```
-
-### func \(\*ContainerBuilder\) [writeReadingTime](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcWriteReadingTime.go#L10>)
-
-```go
-func (e *ContainerBuilder) writeReadingTime(file *os.File, stats *types.Stats) (tab bool, err error)
+Output:
+  dockerLogs: container's default output
+  err: standard error object
 ```
 
-### func \(\*ContainerBuilder\) [writeSystemUsage](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcWriteSystemUsage.go#L11>)
+Português: Espera pelo texto aparecer na saída padrão do container
 
-```go
-func (e *ContainerBuilder) writeSystemUsage(file *os.File, stats *types.Stats) (tab bool, err error)
 ```
-
-### func \(\*ContainerBuilder\) [writeTimeSpentByPreCPUTasksOfTheCGroupInKernelMode](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcWriteTimeSpentByPreCPUTasksOfTheCGroupInKernelMode.go#L11>)
+Entrada:
+  value: texto procurado
 
-```go
-func (e *ContainerBuilder) writeTimeSpentByPreCPUTasksOfTheCGroupInKernelMode(file *os.File, stats *types.Stats) (tab bool, err error)
+Saída:
+  dockerLogs: saída padrão do container
+  err: objeto de erro padrão
 ```
 
-### func \(\*ContainerBuilder\) [writeTimeSpentByPreCPUTasksOfTheCGroupInUserMode](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcWriteTimeSpentByPreCPUTasksOfTheCGroupInUserMode.go#L11>)
+### func \(\*ContainerBuilder\) [WaitForTextInContainerLogWithTimeout](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcWaitForTextInContainerLogWithTimeout.go#L34>)
 
 ```go
-func (e *ContainerBuilder) writeTimeSpentByPreCPUTasksOfTheCGroupInUserMode(file *os.File, stats *types.Stats) (tab bool, err error)
+func (e *ContainerBuilder) WaitForTextInContainerLogWithTimeout(value string, timeout time.Duration) (dockerLogs string, err error)
 ```
 
-### func \(\*ContainerBuilder\) [writeTimeSpentByTasksOfTheCGroupInKernelMode](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcWriteTimeSpentByTasksOfTheCGroupInKernelMode.go#L11>)
+#### WaitForTextInContainerLogWithTimeout
 
-```go
-func (e *ContainerBuilder) writeTimeSpentByTasksOfTheCGroupInKernelMode(file *os.File, stats *types.Stats) (tab bool, err error)
-```
+English:
 
-### func \(\*ContainerBuilder\) [writeTimeSpentByTasksOfTheCGroupInUserMode](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcWriteTimeSpentByTasksOfTheCGroupInUserMode.go#L11>)
+Wait for the text to appear in the container's default output
 
-```go
-func (e *ContainerBuilder) writeTimeSpentByTasksOfTheCGroupInUserMode(file *os.File, stats *types.Stats) (tab bool, err error)
 ```
+Input:
+  value: searched text
+  timeout: wait timeout
 
-### func \(\*ContainerBuilder\) [writeTotalCPUTimeConsumed](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcWriteTotalCPUTimeConsumed.go#L11>)
-
-```go
-func (e *ContainerBuilder) writeTotalCPUTimeConsumed(file *os.File, stats *types.Stats) (tab bool, err error)
+Output:
+  dockerLogs: container's default output
+  err: standard error object
 ```
 
-### func \(\*ContainerBuilder\) [writeTotalCPUTimeConsumedPerCore](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcWriteTotalCPUTimeConsumedPerCore.go#L11>)
-
-```go
-func (e *ContainerBuilder) writeTotalCPUTimeConsumedPerCore(file *os.File, stats *types.Stats) (tab bool, err error)
-```
+Português:
 
-### func \(\*ContainerBuilder\) [writeTotalPreCPUTimeConsumed](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcWriteTotalPreCPUTimeConsumed.go#L11>)
+Espera pelo texto aparecer na saída padrão do container
 
-```go
-func (e *ContainerBuilder) writeTotalPreCPUTimeConsumed(file *os.File, stats *types.Stats) (tab bool, err error)
 ```
+Entrada:
+  value: texto procurado
+  timeout: tempo limite de espera
 
-### func \(\*ContainerBuilder\) [writeTotalPreCPUTimeConsumedPerCore](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcWriteTotalPreCPUTimeConsumedPerCore.go#L11>)
-
-```go
-func (e *ContainerBuilder) writeTotalPreCPUTimeConsumedPerCore(file *os.File, stats *types.Stats) (tab bool, err error)
+Saída:
+  dockerLogs: saída padrão do container
+  err: objeto de erro padrão
 ```
 
 ## type [DockerfileAuto](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/typeDockerfileAuto.go#L211-L214>)
@@ -12629,12 +11586,6 @@ type Event struct {
 }
 ```
 
-### func \(\*Event\) [clear](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/typeEvent.go#L12>)
-
-```go
-func (e *Event) clear()
-```
-
 ## type [HealthConfig](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/typeHealthConfig.go#L12-L30>)
 
 ### HealthConfig
@@ -12727,14 +11678,7 @@ type NameAndId struct {
 
 ```go
 type NetworkChaos struct {
-    imageName     string
-    builder       *ContainerBuilder
-    overload      *ContainerBuilder
-    network       isolatedNetwork.ContainerBuilderNetworkInterface
-    containerName string
-    listenPort    int
-    outputPort    int
-    invert        bool
+    // contains filtered or unexported fields
 }
 ```
 
@@ -12968,12 +11912,6 @@ Nota: - A entrada network deve ser compatível com a interface
 func (e *NetworkChaos) SetPorts(listenPort, outputPort int, invert bool)
 ```
 
-### func \(\*NetworkChaos\) [imageExists](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/typeNetworkChaos.go#L165>)
-
-```go
-func (e *NetworkChaos) imageExists() (exists bool)
-```
-
 ## type [PidsStats](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/typePidsStats.go#L4-L10>)
 
 PidsStats contains the stats of a container's pids
@@ -12996,8 +11934,7 @@ type Restart struct {
     TimeToStart        Timers
     RestartProbability float64
     RestartLimit       int
-
-    minimumEventTime time.Time
+    // contains filtered or unexported fields
 }
 ```
 
@@ -13043,32 +11980,8 @@ type StorageStats struct {
 
 ```go
 type TestContainerLog struct {
-    data [][][]byte
+    // contains filtered or unexported fields
 }
-```
-
-### func \(\*TestContainerLog\) [fileToDataFormat](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcTestLogFile.go#L172>)
-
-```go
-func (e *TestContainerLog) fileToDataFormat(path string, t *testing.T) (problem pb.Problem)
-```
-
-### func \(TestContainerLog\) [findKeyIndex](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcTestLogFile.go#L226>)
-
-```go
-func (e TestContainerLog) findKeyIndex(key string, t *testing.T) (index int, problem pb.Problem)
-```
-
-### func \(\*TestContainerLog\) [makeTest](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcTestLogFile.go#L142>)
-
-```go
-func (e *TestContainerLog) makeTest(path string, listUnderTest *[]parserLog, t *testing.T) (problem pb.Problem)
-```
-
-### func \(TestContainerLog\) [proccessKeyList](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcTestLogFile.go#L247>)
-
-```go
-func (e TestContainerLog) proccessKeyList(listUnderTest *[]parserLog, t *testing.T) (problem pb.Problem)
 ```
 
 ## type [Theater](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/typeScene.go#L29-L32>)
@@ -13081,8 +11994,7 @@ Português: Teatro é a coleção de cenas
 
 ```go
 type Theater struct {
-    s   sync.Mutex
-    m   map[string]scene
+    // contains filtered or unexported fields
 }
 ```
 
@@ -13189,107 +12101,6 @@ type ThrottlingData struct {
 type Timers struct {
     Min time.Duration
     Max time.Duration
-}
-```
-
-## type [chaos](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/typeChaos.go#L14-L53>)
-
-chaos
-
-English:
-
-Object chaos manager
-
-Português:
-
-Objeto gerenciador de caos
-
-```go
-type chaos struct {
-    foundSuccess               bool
-    foundFail                  bool
-    filterToStart              []LogFilter
-    filterRestart              []LogFilter
-    filterSuccess              []LogFilter
-    filterFail                 []LogFilter
-    filterLog                  []LogFilter
-    sceneName                  string
-    logPath                    string
-    serviceStartedAt           time.Time
-    minimumTimeBeforeRestart   time.Duration
-    maximumTimeBeforeRestart   time.Duration
-    minimumTimeToStartChaos    time.Duration
-    maximumTimeToStartChaos    time.Duration
-    minimumTimeToPause         time.Duration
-    maximumTimeToPause         time.Duration
-    minimumTimeToUnpause       time.Duration
-    maximumTimeToUnpause       time.Duration
-    minimumTimeToRestart       time.Duration
-    maximumTimeToRestart       time.Duration
-    restartProbability         float64
-    restartChangeIpProbability float64
-    restartLimit               int
-    enableChaos                bool
-    event                      chan Event
-    monitorStop                chan struct{}
-    monitorRunning             bool
-    //containerStarted         bool
-    containerPaused          bool
-    containerStopped         bool
-    linear                   bool
-    chaosStarted             bool
-    chaosCanRestartContainer bool
-    //chaosCanRestartEnd       bool
-    eventNext time.Time
-
-    disableStopContainer  bool
-    disablePauseContainer bool
-}
-```
-
-## type [gitData](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/typeGitData.go#L8-L14>)
-
-gitData
-
-English: struct based on go\-git framework
-
-Português: Estrutura de dados baseada no framework go\-git
-
-```go
-type gitData struct {
-    url               string
-    sshPrivateKeyPath string
-    privateToke       string
-    user              string
-    password          string
-}
-```
-
-## type [parserLog](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcTestLogFile.go#L132-L136>)
-
-```go
-type parserLog struct {
-    Label string
-    Key   string
-    Rule  string
-}
-```
-
-## type [scene](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/typeScene.go#L16-L22>)
-
-scene
-
-English: Determines the maximum number of stopped and paused containers per scene\. The scene grants some control over the chaos in container testing\, preventing all containers in a scene from pausing or stopping at the same time\.
-
-Português: Determina os números máximos de containers parados e pausados por cena\. A cena garante algum controle sobre o caos no teste dos container\, impedindo que todos os containers de uma cena sejam pausando ou parados ao mesmo tempo\.
-
-```go
-type scene struct {
-    StopedContainers                   int
-    PausedContainers                   int
-    MaxStopedContainers                int
-    MaxPausedContainers                int
-    MaxTotalPausedAndStoppedContainers int
 }
 ```
 

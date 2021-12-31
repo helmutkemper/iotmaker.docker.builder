@@ -6,6 +6,17 @@ import (
 
 // StartMonitor
 //
+// English:
+//
+//   Enable a time.Ticker in order to gather performance information from the container in the form of
+//   a CSV log and manage chaos control, if it has been enabled.
+//
+// Note:
+//
+//   * This function is used in conjunction with the EnableChaosScene(), SetCsvLogPath() and
+//     StopMonitor() functions;
+//   * StopMonitor() Must be called at the end of the chaos test.
+//
 // Português:
 //
 //  Habilitar um time.Ticker com a finalidade de colher informações de desempenho do container na
@@ -13,16 +24,9 @@ import (
 //
 // Nota:
 //
-//   * Esta função é usada em conjunto com as funções EnableChaosScene() e SetCsvLogPath()
-//
-// English:
-//
-//   Enable a time.Ticker in order to gather performance information from the container in the form of
-//   a CSV log and manage chaos control, if it has been enabled.
-//
-// Nota:
-//
-//   * Esta função é usada em conjunto com as funções EnableChaosScene() e SetCsvLogPath()
+//   * Esta função é usada em conjunto com as funções EnableChaosScene(), SetCsvLogPath() e
+//     StopMonitor();
+//   * StopMonitor() Must be called at the end of the chaos test.
 func (e *ContainerBuilder) StartMonitor() {
 
 	var duration = time.NewTicker(2 * time.Second)
