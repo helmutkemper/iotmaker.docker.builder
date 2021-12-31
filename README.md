@@ -96,7 +96,7 @@ func TestCode(t *testing.T) {
 	}
 
 	// Create a network named cache_delete_after_test, subnet 10.0.0.0/16 e gatway 10.0.0.1
-	// Use the term "delete" to enable the function "dockerBuilder.GarbageCollector()", which will search for and remove
+	// Use the term "delete" to enable the function "dockerBuilder.SaGarbageCollector()", which will search for and remove
 	// all docker elements with the term "delete" contained in the name. For example, network, image, container and
 	// volumes.
 	err = netDocker.NetworkCreate("cache_delete_after_test", "10.0.0.0/16", "10.0.0.1")
@@ -114,7 +114,7 @@ func TestCode(t *testing.T) {
 	// Link container and network [optional] (next ip address is 10.0.0.2)
 	container.SetNetworkDocker(&netDocker)
 	// Set a container name.
-	// Use the term "delete" to enable the function "dockerBuilder.GarbageCollector()", which will search for and remove
+	// Use the term "delete" to enable the function "dockerBuilder.SaGarbageCollector()", which will search for and remove
 	// all docker elements with the term "delete" contained in the name. For example, network, image, container and
 	// volumes.
 	container.SetContainerName("container_delete_nats_after_test")
@@ -173,7 +173,7 @@ func TestCode(t *testing.T) {
 	}
 
 	// Create a network named cache_delete_after_test, subnet 10.0.0.0/16 e gatway 10.0.0.1
-	// Use the term "delete" to enable the function "dockerBuilder.GarbageCollector()", which will search for and remove
+	// Use the term "delete" to enable the function "dockerBuilder.SaGarbageCollector()", which will search for and remove
 	// all docker elements with the term "delete" contained in the name. For example, network, image, container and
 	// volumes.
 	err = netDocker.NetworkCreate("cache_delete_after_test", "10.0.0.0/16", "10.0.0.1")
@@ -196,12 +196,12 @@ func TestCode(t *testing.T) {
 	// named "cache:latest" and use this image as the basis for the test images.
 	container.SetCacheEnable(true)
 	// Determines the name of the image to be created during the test.
-	// Use the term "delete" to enable the function "dockerBuilder.GarbageCollector()", which will search for and remove
+	// Use the term "delete" to enable the function "dockerBuilder.SaGarbageCollector()", which will search for and remove
 	// all docker elements with the term "delete" contained in the name. For example, network, image, container and
 	// volumes.
 	container.SetImageName("data_rand_pod_image:latest")
 	// Determina o nome do container. Lembre-se que ele deve ser único.
-	// Use the term "delete" to enable the function "dockerBuilder.GarbageCollector()", which will search for and remove
+	// Use the term "delete" to enable the function "dockerBuilder.SaGarbageCollector()", which will search for and remove
 	// all docker elements with the term "delete" contained in the name. For example, network, image, container and
 	// volumes.
 	container.SetContainerName("delete_data_rand_pod_container")
@@ -289,7 +289,7 @@ func TestCache(t *testing.T) {
 	// Print the container's standard output to golang's standard output
 	container.SetPrintBuildOnStrOut()
 	// Determines the name of the image to be created during the test.
-	// Use the term "delete" to enable the function "dockerBuilder.GarbageCollector()", which will search for and remove
+	// Use the term "delete" to enable the function "dockerBuilder.SaGarbageCollector()", which will search for and remove
 	// all docker elements with the term "delete" contained in the name. For example, network, image, container and
 	// volumes.
 	container.SetImageName("cache:latest")
@@ -357,9 +357,9 @@ Para quem não tem prática em processo de build em duas etapas\, na primeira et
 - [Constants](<#constants>)
 - [Variables](<#variables>)
 - [func ConfigChaosScene(sceneName string, maxStopedContainers, maxPausedContainers, maxTotalPausedAndStoppedContainers int)](<#func-configchaosscene>)
-- [func GarbageCollector(names ...string)](<#func-garbagecollector>)
-- [func ImageMakeCache(projectPath, cacheName string, expirationDate time.Duration) (err error)](<#func-imagemakecache>)
-- [func ImageMakeCacheWithDefaultName(projectPath string, expirationDate time.Duration) (err error)](<#func-imagemakecachewithdefaultname>)
+- [func SaGarbageCollector(names ...string)](<#func-sagarbagecollector>)
+- [func SaImageMakeCache(projectPath, cacheName string, expirationDate time.Duration) (err error)](<#func-saimagemakecache>)
+- [func SaImageMakeCacheWithDefaultName(projectPath string, expirationDate time.Duration) (err error)](<#func-saimagemakecachewithdefaultname>)
 - [func init()](<#func-init>)
 - [type BlkioStatEntry](<#type-blkiostatentry>)
 - [type BlkioStats](<#type-blkiostats>)
@@ -369,9 +369,9 @@ Para quem não tem prática em processo de build em duas etapas\, na primeira et
   - [func (e *ContainerBuilder) AddFailMatchFlag(value string)](<#func-containerbuilder-addfailmatchflag>)
   - [func (e *ContainerBuilder) AddFailMatchFlagToFileLog(value, logDirectoryPath string) (err error)](<#func-containerbuilder-addfailmatchflagtofilelog>)
   - [func (e *ContainerBuilder) AddFileOrFolderToLinkBetweenConputerHostAndContainer(computerHostPath, insideContainerPath string) (err error)](<#func-containerbuilder-addfileorfoldertolinkbetweenconputerhostandcontainer>)
+  - [func (e *ContainerBuilder) AddFilterToCvsLog(label, match, filter string)](<#func-containerbuilder-addfiltertocvslog>)
+  - [func (e *ContainerBuilder) AddFilterToCvsLogWithReplace(label, match, filter, search, replace string)](<#func-containerbuilder-addfiltertocvslogwithreplace>)
   - [func (e *ContainerBuilder) AddFilterToFail(match, filter, search, replace string)](<#func-containerbuilder-addfiltertofail>)
-  - [func (e *ContainerBuilder) AddFilterToLog(label, match, filter string)](<#func-containerbuilder-addfiltertolog>)
-  - [func (e *ContainerBuilder) AddFilterToLogWithReplace(label, match, filter, search, replace string)](<#func-containerbuilder-addfiltertologwithreplace>)
   - [func (e *ContainerBuilder) AddFilterToRestartContainer(match, filter, search, replace string)](<#func-containerbuilder-addfiltertorestartcontainer>)
   - [func (e *ContainerBuilder) AddFilterToStartChaos(match, filter, search, replace string)](<#func-containerbuilder-addfiltertostartchaos>)
   - [func (e *ContainerBuilder) AddFilterToSuccess(match, filter, search, replace string)](<#func-containerbuilder-addfiltertosuccess>)
@@ -1247,7 +1247,7 @@ func main() {
 	// English: Deletes all docker elements with the term `delete` in the name.
 	//
 	// Português: Apaga todos os elementos docker com o termo `delete` no nome.
-	GarbageCollector()
+	SaGarbageCollector()
 
 	// English: Create a chaos scene named nats_chaos and control the number of containers stopped at the same time
 	//
@@ -1297,7 +1297,7 @@ func main() {
 	// English: Deletes all docker elements with the term `delete` in the name.
 	//
 	// Português: Apaga todos os elementos docker com o termo `delete` no nome.
-	GarbageCollector()
+	SaGarbageCollector()
 
 }
 
@@ -1445,13 +1445,13 @@ func mountNatsContainer(loop int, network *dockerNetwork.ContainerBuilderNetwork
 </p>
 </details>
 
-## func [GarbageCollector](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcGarbageCollector.go#L32>)
+## func [SaGarbageCollector](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcGarbageCollector.go#L32>)
 
 ```go
-func GarbageCollector(names ...string)
+func SaGarbageCollector(names ...string)
 ```
 
-### GarbageCollector
+### SaGarbageCollector
 
 English:
 
@@ -1479,13 +1479,13 @@ Entrada:
     "nats" no nome. [opcional]
 ```
 
-## func [ImageMakeCache](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcImageMakeCache.go#L70>)
+## func [SaImageMakeCache](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcImageMakeCache.go#L70>)
 
 ```go
-func ImageMakeCache(projectPath, cacheName string, expirationDate time.Duration) (err error)
+func SaImageMakeCache(projectPath, cacheName string, expirationDate time.Duration) (err error)
 ```
 
-### ImageMakeCache
+### SaImageMakeCache
 
 English:
 
@@ -1560,13 +1560,13 @@ Segunda opção:
   por exemplo, `FROM cache:latest`;
 ```
 
-## func [ImageMakeCacheWithDefaultName](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcImageMakeCacheWithDefaultName.go#L62>)
+## func [SaImageMakeCacheWithDefaultName](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcImageMakeCacheWithDefaultName.go#L62>)
 
 ```go
-func ImageMakeCacheWithDefaultName(projectPath string, expirationDate time.Duration) (err error)
+func SaImageMakeCacheWithDefaultName(projectPath string, expirationDate time.Duration) (err error)
 ```
 
-### ImageMakeCache
+### SaImageMakeCache
 
 English:
 
@@ -1890,112 +1890,47 @@ Entrada:
 <p>
 
 ```go
-package main
+{
 
-import (
-	"fmt"
-	"github.com/docker/docker/api/types"
-	"io/ioutil"
-	"log"
-	"os"
-	"time"
-)
-
-func main() {
-	ContainerBuilderAddFailMatchFlag()
-}
-
-func ContainerBuilderAddFailMatchFlag() {
 	var err error
 	var imageInspect types.ImageInspect
 
-	// English: Deletes all docker elements with the term `delete` in the name.
-	//
-	// Português: Apaga todos os elementos docker com o termo `delete` no nome.
-	// [optional/opcional]
-	GarbageCollector()
+	err = SaImageMakeCacheWithDefaultName("./example/cache/", 365*24*60*60*time.Second)
+	if err != nil {
+		fmt.Printf("error: %v", err.Error())
+		SaGarbageCollector()
+		return
+	}
+
+	SaGarbageCollector()
 
 	var container = ContainerBuilder{}
 
-	// English: print the standard output of the container
-	//
-	// Português: imprime a saída padrão do container
-	// [optional/opcional]
 	container.SetPrintBuildOnStrOut()
 
-	// English: If there is an image named `cache:latest`, it will be used as a base to create the container.
-	//
-	// Português: Caso exista uma imagem de nome `cache:latest`, ela será usada como base para criar o container.
-	// [optional/opcional]
 	container.SetCacheEnable(true)
 
-	// English: Mount a default dockerfile for golang where the `main.go` file and the `go.mod` file should be in the root folder
-	//
-	// Português: Monta um dockerfile padrão para o golang onde o arquivo `main.go` e o arquivo `go.mod` devem está na pasta raiz
-	// [optional/opcional]
 	container.MakeDefaultDockerfileForMe()
 
-	// English: Sets a validity time for the image, preventing the same image from being remade for a period of time.
-	// In some tests, the same image is created inside a loop, and adding an expiration date causes the same image to be used without having to redo the same image at each loop iteration.
-	//
-	// Português: Define uma tempo de validade para a imagem, evitando que a mesma imagem seja refeita durante um período de tempo.
-	// Em alguns testes, a mesma imagem é criada dentro de um laço, e adicionar uma data de validade faz a mesma imagem ser usada sem a necessidade de refazer a mesma imagem a cada interação do loop
-	// [optional/opcional]
 	container.SetImageExpirationTime(5 * time.Minute)
 
-	// English: Name of the new image to be created.
-	//
-	// Português: Nome da nova imagem a ser criada.
 	container.SetImageName("delete:latest")
 
-	// English: Golang project path to be turned into docker image
-	//
-	// Português: Caminho do projeto em Golang a ser transformado em imagem docker
 	container.SetBuildFolderPath("./test/bug")
 
-	// English: Defines the name of the docker container to be created.
-	//
-	// Português: Define o nome do container docker a ser criado.
 	container.SetContainerName("container_counter_delete_after_test")
 
-	// English: Defines the maximum amount of memory to be used by the docker container.
-	//
-	// Português: Define a quantidade máxima de memória a ser usada pelo container docker.
-	// [optional/opcional]
 	container.SetImageBuildOptionsMemory(100 * KMegaByte)
 
-	// English: Defines a log, in the form of a CSV file, of the container's performance, with indicators of memory consumption and access times. Note: The log format varies by platform, macos, windows, linux.
-	//
-	// Português: Define um log, na forma de arquivo CSV, de desempenho do container, com indicadores de consumo de memória e tempos de acesso. Nota: O formato do log varia de acordo com a plataforma, macos, windows, linux.
-	// [optional/opcional]
 	container.SetCsvLogPath("./test.counter.log.csv", true)
 
-	// English: Swaps the comma by tab, making the file compatible with floating-point numbers
-	//
-	// Português: Troca a virgula por tabulação, compatibilizando o arquivo com números de ponto flutuante
 	container.SetCsvFileValueSeparator("\t")
 
-	// English: Prints in the header of the file the name of the constant responsible for printing the column in the log.
-	//
-	// Português: Imprime no cabeçalho do arquivo o nome da constante responsável por imprimir a coluna no log.
-	// [optional/opcional]
 	container.SetCsvFileReader(true)
 
-	// English: Defines which columns to print in the log. To see all columns, set SetCsvFileRowsToPrint(KLogColumnAll) and SetCsvFileReader(true).
-	// Open the log file, define the columns to be printed in the log, and then use SetCsvFileRowsToPrint(KReadingTime | KCurrentNumberOfOidsInTheCGroup | KLimitOnTheNumberOfPidsInTheCGroup | ...)
-	//
-	// Português: Define quais colunas imprimir no log. Para vê todas as colunas, defina SetCsvFileRowsToPrint(KLogColumnAll) e SetCsvFileReader(true).
-	// Abra o arquivo de log, defina as colunas a serem impressas no log e em seguida, use SetCsvFileRowsToPrint(KReadingTime | KCurrentNumberOfOidsInTheCGroup | ...)
-	// [optional/opcional]
 	container.SetCsvFileRowsToPrint(KLogColumnAll)
 
-	// English: Sets a text search filter on the container's standard output and writes the text to the log defined by SetCsvLogPath()
-	// The container example prints a counter to standard output `log.Printf("counter: %.2f", counter)`. `label` adds the column name; `match` searches for text; `filter` applies a regular expression; `search` and `replace` do a replacement on top of the found value before writing to the log.
-	//
-	// Português: Define um filtro de busca por texto na saída padrão do container e escreve o texto no log definido por SetCsvLogPath()
-	// O container de exemplo imprime um contador na saída padrão `log.Printf("counter: %.2f", counter)`. `label` adiciona o nome da coluna; `match` procura pelo texto; `filter` aplica uma expressão regular; `search` e `replace` fazem uma substuição em cima do valor encontrado antes de escrever no log.
-	// [optional/opcional]
-	container.AddFilterToLogWithReplace(
+	container.AddFilterToCvsLogWithReplace(
 		"contador",
 		"counter",
 		"^.*?counter: (?P<valueToGet>[\\d\\.]+)",
@@ -2003,114 +1938,78 @@ func ContainerBuilderAddFailMatchFlag() {
 		",",
 	)
 
-	// English: Adds a failure indicator to the project. Failure indicator is a text searched for in the container's standard output and indicates something that should not have happened during the test.
-	//
-	// Português: Adiciona um indicador de falha ao projeto. Indicador de falha é um texto procurado na saída padrão do container e indica algo que não deveria ter acontecido durante o teste.
-	// [optional/opcional]
 	container.AddFailMatchFlag(
 		"counter: 40",
 	)
 
-	// English: Adds a log file write failure indicator to the project. Failure indicator is a text searched for in the container's standard output and indicates something that should not have happened during the test.
-	// Some critical failures can be monitored and when they happen, the container's standard output is filed in a `log.N.log` file, where N is an automatically incremented number.
-	//
-	// Português: Adiciona um indicador de falha com gravação de arquivo em log ao projeto. Indicador de falha é um texto procurado na saída padrão do container e indica algo que não deveria ter acontecido durante o teste.
-	// Algumas falhas críticas podem ser monitoradas e quando elas acontecem, a saída padrão do container é arquivada em um arquivo `log.N.log`, onde N é um número incrementado automaticamente.
-	// [optional/opcional]
 	err = container.AddFailMatchFlagToFileLog(
 		"bug:",
 		"./log1/log2/log3",
 	)
 	if err != nil {
 		fmt.Printf("error: %v", err.Error())
-		GarbageCollector()
+		SaGarbageCollector()
 		return
 	}
 
-	// English: Initializes the container manager object.
-	//
-	// Português: Inicializa o objeto gerenciador de container.
 	err = container.Init()
 	if err != nil {
 		fmt.Printf("error: %v", err.Error())
-		GarbageCollector()
+		SaGarbageCollector()
 		return
 	}
 
-	// English: Creates an image from a project folder.
-	//
-	// Português: Cria uma imagem a partir de uma pasta de projeto.
 	imageInspect, err = container.ImageBuildFromFolder()
 	if err != nil {
 		fmt.Printf("error: %v", err.Error())
-		GarbageCollector()
+		SaGarbageCollector()
 		return
 	}
 
 	fmt.Printf("image size: %v\n", container.SizeToString(imageInspect.Size))
 	fmt.Printf("image os: %v\n", imageInspect.Os)
 
-	// English: Creates and initializes the container based on the created image.
-	//
-	// Português: Cria e inicializa o container baseado na imagem criada.
 	err = container.ContainerBuildAndStartFromImage()
 	if err != nil {
 		log.Printf("error: %v", err.Error())
-		GarbageCollector()
+		SaGarbageCollector()
 		return
 	}
 
-	// English: Starts container monitoring at two second intervals. This functionality monitors the container's standard output and generates the log defined by the SetCsvLogPath() function.
-	//
-	// Português: Inicializa o monitoramento do container com intervalos de dois segundos. Esta funcionalidade monitora a saída padrão do container e gera o log definido pela função SetCsvLogPath().
-	// StartMonitor() é usado durante o teste de caos e na geração do log de desempenho do container.
-	// [optional/opcional]
 	container.StartMonitor()
 
-	// English: Gets the event channel inside the container.
-	//
-	// Português: Pega o canal de eventos dentro do container.
 	event := container.GetChaosEvent()
 
-	// English: Let the example run until a failure happens to terminate the test
-	//
-	// Português: Deixa o exemplo rodar até que uma falha aconteça para terminar o teste
-	var fail bool
 	for {
+		var pass = false
 		select {
 		case e := <-event:
-			if e.Fail == true {
+			if e.Done == true || e.Error == true || e.Fail == true {
+				pass = true
+
 				fmt.Printf("container name: %v\n", e.ContainerName)
 				fmt.Printf("done: %v\n", e.Done)
 				fmt.Printf("fail: %v\n", e.Fail)
 				fmt.Printf("error: %v\n", e.Error)
 
-				fail = e.Fail
+				break
 			}
 		}
 
-		if fail == true {
+		if pass == true {
 			break
 		}
 	}
 
-	// English: For container monitoring. Note: This function should be used to avoid trying to read a container that no longer exists, erased by the GarbageCollector() function.
-	//
-	// Português: Para o monitoramento do container. Nota: Esta função deve ser usada para evitar tentativa de leitura em um container que não existe mais, apagado pela função GarbageCollector().
-	// [optional/opcional]
 	_ = container.StopMonitor()
 
-	// English: Deletes all docker elements with the term `delete` in the name.
-	//
-	// Português: Apaga todos os elementos docker com o termo `delete` no nome.
-	// [optional/opcional]
-	GarbageCollector()
+	SaGarbageCollector()
 
 	var data []byte
 	data, err = ioutil.ReadFile("./log1/log2/log3/log.0.log")
 	if err != nil {
 		log.Printf("error: %v", err.Error())
-		GarbageCollector()
+		SaGarbageCollector()
 		return
 	}
 
@@ -2123,20 +2022,24 @@ func ContainerBuilderAddFailMatchFlag() {
 	_ = os.Remove("./log1/log2/")
 	_ = os.Remove("./log1/")
 
-	// Output:
-	// image size: 1.4 MB
-	// image os: linux
-	// container name: container_counter_delete_after_test
-	// done: false
-	// fail: true
-	// error: false
 }
+```
+
+#### Output
+
+```
+image size: 1.4 MB
+image os: linux
+container name: container_counter_delete_after_test
+done: false
+fail: true
+error: false
 ```
 
 </p>
 </details>
 
-### func \(\*ContainerBuilder\) [AddFailMatchFlagToFileLog](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcAddFailMatchFlagToFileLog.go#L39>)
+### func \(\*ContainerBuilder\) [AddFailMatchFlagToFileLog](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcAddFailMatchFlagToFileLog.go#L41>)
 
 ```go
 func (e *ContainerBuilder) AddFailMatchFlagToFileLog(value, logDirectoryPath string) (err error)
@@ -2152,7 +2055,7 @@ AddFailMatchFlag(), AddFailMatchFlagToFileLog(), AddFilterToFail()
 
 English:
 
-Error text searched for in the container's standard output\.
+Looks for error text in the container's standard output and saves it to a log file on the host computer
 
 ```
 Input:
@@ -2166,7 +2069,7 @@ Output:
 
 Português:
 
-Texto indicativo de erro procurado na saída padrão do container\.
+Procura por um texto indicativo de erro na saída padrão do container e o salva em um arquivo de log no computador hospedeiro
 
 ```
 Entrada:
@@ -2183,112 +2086,46 @@ Output:
 <p>
 
 ```go
-package main
-
-import (
-	"fmt"
-	"github.com/docker/docker/api/types"
-	"io/ioutil"
-	"log"
-	"os"
-	"time"
-)
-
-func main() {
-	ContainerBuilderAddFailMatchFlagToFileLog()
-}
-
-func ContainerBuilderAddFailMatchFlagToFileLog() {
+{
 	var err error
 	var imageInspect types.ImageInspect
 
-	// English: Deletes all docker elements with the term `delete` in the name.
-	//
-	// Português: Apaga todos os elementos docker com o termo `delete` no nome.
-	// [optional/opcional]
-	GarbageCollector()
+	err = SaImageMakeCacheWithDefaultName("./example/cache/", 365*24*60*60*time.Second)
+	if err != nil {
+		fmt.Printf("error: %v", err.Error())
+		SaGarbageCollector()
+		return
+	}
+
+	SaGarbageCollector()
 
 	var container = ContainerBuilder{}
 
-	// English: print the standard output of the container
-	//
-	// Português: imprime a saída padrão do container
-	// [optional/opcional]
 	container.SetPrintBuildOnStrOut()
 
-	// English: If there is an image named `cache:latest`, it will be used as a base to create the container.
-	//
-	// Português: Caso exista uma imagem de nome `cache:latest`, ela será usada como base para criar o container.
-	// [optional/opcional]
 	container.SetCacheEnable(true)
 
-	// English: Mount a default dockerfile for golang where the `main.go` file and the `go.mod` file should be in the root folder
-	//
-	// Português: Monta um dockerfile padrão para o golang onde o arquivo `main.go` e o arquivo `go.mod` devem está na pasta raiz
-	// [optional/opcional]
 	container.MakeDefaultDockerfileForMe()
 
-	// English: Sets a validity time for the image, preventing the same image from being remade for a period of time.
-	// In some tests, the same image is created inside a loop, and adding an expiration date causes the same image to be used without having to redo the same image at each loop iteration.
-	//
-	// Português: Define uma tempo de validade para a imagem, evitando que a mesma imagem seja refeita durante um período de tempo.
-	// Em alguns testes, a mesma imagem é criada dentro de um laço, e adicionar uma data de validade faz a mesma imagem ser usada sem a necessidade de refazer a mesma imagem a cada interação do loop
-	// [optional/opcional]
 	container.SetImageExpirationTime(5 * time.Minute)
 
-	// English: Name of the new image to be created.
-	//
-	// Português: Nome da nova imagem a ser criada.
 	container.SetImageName("delete:latest")
 
-	// English: Golang project path to be turned into docker image
-	//
-	// Português: Caminho do projeto em Golang a ser transformado em imagem docker
 	container.SetBuildFolderPath("./test/bug")
 
-	// English: Defines the name of the docker container to be created.
-	//
-	// Português: Define o nome do container docker a ser criado.
 	container.SetContainerName("container_counter_delete_after_test")
 
-	// English: Defines the maximum amount of memory to be used by the docker container.
-	//
-	// Português: Define a quantidade máxima de memória a ser usada pelo container docker.
-	// [optional/opcional]
 	container.SetImageBuildOptionsMemory(100 * KMegaByte)
 
-	// English: Defines a log, in the form of a CSV file, of the container's performance, with indicators of memory consumption and access times. Note: The log format varies by platform, macos, windows, linux.
-	//
-	// Português: Define um log, na forma de arquivo CSV, de desempenho do container, com indicadores de consumo de memória e tempos de acesso. Nota: O formato do log varia de acordo com a plataforma, macos, windows, linux.
-	// [optional/opcional]
 	container.SetCsvLogPath("./test.counter.log.csv", true)
 
-	// English: Swaps the comma by tab, making the file compatible with floating-point numbers
-	//
-	// Português: Troca a virgula por tabulação, compatibilizando o arquivo com números de ponto flutuante
 	container.SetCsvFileValueSeparator("\t")
 
-	// English: Prints in the header of the file the name of the constant responsible for printing the column in the log.
-	//
-	// Português: Imprime no cabeçalho do arquivo o nome da constante responsável por imprimir a coluna no log.
-	// [optional/opcional]
 	container.SetCsvFileReader(true)
 
-	// English: Defines which columns to print in the log. To see all columns, set SetCsvFileRowsToPrint(KLogColumnAll) and SetCsvFileReader(true).
-	// Open the log file, define the columns to be printed in the log, and then use SetCsvFileRowsToPrint(KReadingTime | KCurrentNumberOfOidsInTheCGroup | KLimitOnTheNumberOfPidsInTheCGroup | ...)
-	//
-	// Português: Define quais colunas imprimir no log. Para vê todas as colunas, defina SetCsvFileRowsToPrint(KLogColumnAll) e SetCsvFileReader(true).
-	// Abra o arquivo de log, defina as colunas a serem impressas no log e em seguida, use SetCsvFileRowsToPrint(KReadingTime | KCurrentNumberOfOidsInTheCGroup | ...)
-	// [optional/opcional]
 	container.SetCsvFileRowsToPrint(KLogColumnAll)
 
-	// English: Sets a text search filter on the container's standard output and writes the text to the log defined by SetCsvLogPath()
-	// The container example prints a counter to standard output `log.Printf("counter: %.2f", counter)`. `label` adds the column name; `match` searches for text; `filter` applies a regular expression; `search` and `replace` do a replacement on top of the found value before writing to the log.
-	//
-	// Português: Define um filtro de busca por texto na saída padrão do container e escreve o texto no log definido por SetCsvLogPath()
-	// O container de exemplo imprime um contador na saída padrão `log.Printf("counter: %.2f", counter)`. `label` adiciona o nome da coluna; `match` procura pelo texto; `filter` aplica uma expressão regular; `search` e `replace` fazem uma substuição em cima do valor encontrado antes de escrever no log.
-	// [optional/opcional]
-	container.AddFilterToLogWithReplace(
+	container.AddFilterToCvsLogWithReplace(
 		"contador",
 		"counter",
 		"^.*?counter: (?P<valueToGet>[\\d\\.]+)",
@@ -2296,114 +2133,78 @@ func ContainerBuilderAddFailMatchFlagToFileLog() {
 		",",
 	)
 
-	// English: Adds a failure indicator to the project. Failure indicator is a text searched for in the container's standard output and indicates something that should not have happened during the test.
-	//
-	// Português: Adiciona um indicador de falha ao projeto. Indicador de falha é um texto procurado na saída padrão do container e indica algo que não deveria ter acontecido durante o teste.
-	// [optional/opcional]
 	container.AddFailMatchFlag(
 		"counter: 40",
 	)
 
-	// English: Adds a log file write failure indicator to the project. Failure indicator is a text searched for in the container's standard output and indicates something that should not have happened during the test.
-	// Some critical failures can be monitored and when they happen, the container's standard output is filed in a `log.N.log` file, where N is an automatically incremented number.
-	//
-	// Português: Adiciona um indicador de falha com gravação de arquivo em log ao projeto. Indicador de falha é um texto procurado na saída padrão do container e indica algo que não deveria ter acontecido durante o teste.
-	// Algumas falhas críticas podem ser monitoradas e quando elas acontecem, a saída padrão do container é arquivada em um arquivo `log.N.log`, onde N é um número incrementado automaticamente.
-	// [optional/opcional]
 	err = container.AddFailMatchFlagToFileLog(
 		"bug:",
 		"./log1/log2/log3",
 	)
 	if err != nil {
 		fmt.Printf("error: %v", err.Error())
-		GarbageCollector()
+		SaGarbageCollector()
 		return
 	}
 
-	// English: Initializes the container manager object.
-	//
-	// Português: Inicializa o objeto gerenciador de container.
 	err = container.Init()
 	if err != nil {
 		fmt.Printf("error: %v", err.Error())
-		GarbageCollector()
+		SaGarbageCollector()
 		return
 	}
 
-	// English: Creates an image from a project folder.
-	//
-	// Português: Cria uma imagem a partir de uma pasta de projeto.
 	imageInspect, err = container.ImageBuildFromFolder()
 	if err != nil {
 		fmt.Printf("error: %v", err.Error())
-		GarbageCollector()
+		SaGarbageCollector()
 		return
 	}
 
 	fmt.Printf("image size: %v\n", container.SizeToString(imageInspect.Size))
 	fmt.Printf("image os: %v\n", imageInspect.Os)
 
-	// English: Creates and initializes the container based on the created image.
-	//
-	// Português: Cria e inicializa o container baseado na imagem criada.
 	err = container.ContainerBuildAndStartFromImage()
 	if err != nil {
 		log.Printf("error: %v", err.Error())
-		GarbageCollector()
+		SaGarbageCollector()
 		return
 	}
 
-	// English: Starts container monitoring at two second intervals. This functionality monitors the container's standard output and generates the log defined by the SetCsvLogPath() function.
-	//
-	// Português: Inicializa o monitoramento do container com intervalos de dois segundos. Esta funcionalidade monitora a saída padrão do container e gera o log definido pela função SetCsvLogPath().
-	// StartMonitor() é usado durante o teste de caos e na geração do log de desempenho do container.
-	// [optional/opcional]
 	container.StartMonitor()
 
-	// English: Gets the event channel inside the container.
-	//
-	// Português: Pega o canal de eventos dentro do container.
 	event := container.GetChaosEvent()
 
-	// English: Let the example run until a failure happens to terminate the test
-	//
-	// Português: Deixa o exemplo rodar até que uma falha aconteça para terminar o teste
-	var fail bool
 	for {
+		var pass = false
 		select {
 		case e := <-event:
-			if e.Fail == true {
+			if e.Done == true || e.Error == true || e.Fail == true {
+				pass = true
+
 				fmt.Printf("container name: %v\n", e.ContainerName)
 				fmt.Printf("done: %v\n", e.Done)
 				fmt.Printf("fail: %v\n", e.Fail)
 				fmt.Printf("error: %v\n", e.Error)
 
-				fail = e.Fail
+				break
 			}
 		}
 
-		if fail == true {
+		if pass == true {
 			break
 		}
 	}
 
-	// English: For container monitoring. Note: This function should be used to avoid trying to read a container that no longer exists, erased by the GarbageCollector() function.
-	//
-	// Português: Para o monitoramento do container. Nota: Esta função deve ser usada para evitar tentativa de leitura em um container que não existe mais, apagado pela função GarbageCollector().
-	// [optional/opcional]
 	_ = container.StopMonitor()
 
-	// English: Deletes all docker elements with the term `delete` in the name.
-	//
-	// Português: Apaga todos os elementos docker com o termo `delete` no nome.
-	// [optional/opcional]
-	GarbageCollector()
+	SaGarbageCollector()
 
 	var data []byte
 	data, err = ioutil.ReadFile("./log1/log2/log3/log.0.log")
 	if err != nil {
 		log.Printf("error: %v", err.Error())
-		GarbageCollector()
+		SaGarbageCollector()
 		return
 	}
 
@@ -2416,14 +2217,18 @@ func ContainerBuilderAddFailMatchFlagToFileLog() {
 	_ = os.Remove("./log1/log2/")
 	_ = os.Remove("./log1/")
 
-	// Output:
-	// image size: 1.4 MB
-	// image os: linux
-	// container name: container_counter_delete_after_test
-	// done: false
-	// fail: true
-	// error: false
 }
+```
+
+#### Output
+
+```
+image size: 1.4 MB
+image os: linux
+container name: container_counter_delete_after_test
+done: false
+fail: true
+error: false
 ```
 
 </p>
@@ -2467,85 +2272,41 @@ Output:
 <p>
 
 ```go
-package main
-
-import (
-	"fmt"
-	"github.com/helmutkemper/util"
-	"io/ioutil"
-	"log"
-	"net/http"
-	"time"
-)
-
-func main() {
-	AddFileOrFolderToLinkBetweenConputerHostAndContainer()
-}
-
-func AddFileOrFolderToLinkBetweenConputerHostAndContainer() {
+{
 
 	var err error
 
-	// English: Deletes all docker elements with the term `delete` in the name.
-	//
-	// Português: Apaga todos os elementos docker com o termo `delete` no nome.
-	// [optional/opcional]
-	GarbageCollector()
+	err = SaImageMakeCacheWithDefaultName("./example/cache/", 365*24*60*60*time.Second)
+	if err != nil {
+		fmt.Printf("error: %v", err.Error())
+		SaGarbageCollector()
+		return
+	}
+
+	SaGarbageCollector()
 
 	var container = ContainerBuilder{}
 
-	// English: print the standard output of the container
-	//
-	// Português: imprime a saída padrão do container
-	// [optional/opcional]
 	container.SetPrintBuildOnStrOut()
 
-	// English: Sets a validity time for the image, preventing the same image from being remade for a period of time.
-	// In some tests, the same image is created inside a loop, and adding an expiration date causes the same image to be used without having to redo the same image at each loop iteration.
-	//
-	// Português: Define uma tempo de validade para a imagem, evitando que a mesma imagem seja refeita durante um período de tempo.
-	// Em alguns testes, a mesma imagem é criada dentro de um laço, e adicionar uma data de validade faz a mesma imagem ser usada sem a necessidade de refazer a mesma imagem a cada interação do loop
-	// [optional/opcional]
 	container.SetImageExpirationTime(5 * time.Minute)
 
-	// English: Name of the new image to be created.
-	//
-	// Português: Nome da nova imagem a ser criada.
 	container.SetImageName("delete:latest")
 
-	// English: Defines the name of the docker container to be created.
-	//
-	// Português: Define o nome do container docker a ser criado.
 	container.SetContainerName("container_delete_server_after_test")
 
-	// English: git project to clone https://github.com/helmutkemper/iotmaker.docker.util.whaleAquarium.sample.git
-	//
-	// Português: repositório git a ser clonado https://github.com/helmutkemper/iotmaker.docker.util.whaleAquarium.sample.git
 	container.SetGitCloneToBuild("https://github.com/helmutkemper/iotmaker.docker.util.whaleAquarium.sample.git")
 
-	// English: See the functions: SetGitCloneToBuildWithUserPassworh(), SetGitCloneToBuildWithPrivateSshKey() and SetGitCloneToBuildWithPrivateToken()
-	//
-	// Português: Veja as funções: SetGitCloneToBuildWithUserPassworh(), SetGitCloneToBuildWithPrivateSshKey() e SetGitCloneToBuildWithPrivateToken()
-
-	// English: Set a waits for the text to appear in the standard container output to proceed [optional]
-	//
-	// Português: Define a espera pelo texto aguardado aparecer na saída padrão do container para prosseguir [opcional]
 	container.SetWaitStringWithTimeout(
 		"Stating server on port 3000",
 		10*time.Second,
 	)
 
-	// English: Change and open port 3000 to 3030
-	//
-	// Português: Mude e abra a porta 3000 para 3030
 	container.AddPortToChange(
 		"3000",
 		"3030",
 	)
 
-	// English: Replace container folder /static to host folder ./test/static
-	//
-	// Português: Substitua a pasta do container /static para a pasta da máquina ./test/static
 	err = container.AddFileOrFolderToLinkBetweenConputerHostAndContainer(
 		"./test/static",
 		"/static",
@@ -2556,20 +2317,12 @@ func AddFileOrFolderToLinkBetweenConputerHostAndContainer() {
 		panic(err)
 	}
 
-	// English: Initializes the container manager object.
-	//
-	// Português: Inicializa o objeto gerenciador de container.
 	err = container.Init()
 	if err != nil {
 		util.TraceToLog()
 		panic(err)
 	}
 
-	//todo: fazer o inspect
-
-	// English: Creates an image from a project server.
-	//
-	// Português: Cria uma imagem a partir do servidor com o projeto.
 	_, err = container.ImageBuildFromServer()
 	if err != nil {
 		util.TraceToLog()
@@ -2577,19 +2330,12 @@ func AddFileOrFolderToLinkBetweenConputerHostAndContainer() {
 		panic(err)
 	}
 
-	// English: Creates and initializes the container based on the created image.
-	//
-	// Português: Cria e inicializa o container baseado na imagem criada.
 	err = container.ContainerBuildAndStartFromImage()
 	if err != nil {
 		util.TraceToLog()
 		log.Printf("container.ContainerBuildAndStartFromImage().error: %v", err.Error())
 		panic(err)
 	}
-
-	// English: container "container_delete_server_after_test" running and ready for use on this code point on port 3030
-	//
-	// Português: container "container_delete_server_after_test" executando e pronto para uso nesse ponto do código na porta 3030
 
 	// English: Read server inside a container on address http://localhost:3030/
 	//
@@ -2610,26 +2356,275 @@ func AddFileOrFolderToLinkBetweenConputerHostAndContainer() {
 		panic(err)
 	}
 
-	// English: Print the output from get() function
-	//
-	// Português: Imprime a saída da função get()
 	fmt.Printf("%s", body)
 
-	// English: Deletes all docker elements with the term `delete` in the name.
-	//
-	// Português: Apaga todos os elementos docker com o termo `delete` no nome.
-	// [optional/opcional]
-	GarbageCollector()
+	SaGarbageCollector()
 
-	//Output:
-	//<html><body><p>C is life! Golang is a evolution of C</p></body></html>
 }
+```
+
+#### Output
+
+```
+<html><body><p>C is life! Golang is a evolution of C</p></body></html>
 ```
 
 </p>
 </details>
 
-### func \(\*ContainerBuilder\) [AddFilterToFail](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcAddFilterToFail.go#L34>)
+### func \(\*ContainerBuilder\) [AddFilterToCvsLog](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcAddFilterToCvsLog.go#L36>)
+
+```go
+func (e *ContainerBuilder) AddFilterToCvsLog(label, match, filter string)
+```
+
+#### AddFilterToCvsLog
+
+Similar:
+
+```
+AddFilterToCvsLogWithReplace(), AddFilterToCvsLog()
+```
+
+English:
+
+Adds a filter to search and convert a textual value to a column in the log file\.
+
+```
+Input:
+  label: Value to be placed in the log file column.
+  match: Simple text searched in the container's standard output to activate the filter
+  filter: Regular expression used to filter what goes into the log using the `valueToGet`
+    parameter.
+```
+
+Note:
+
+```
+* This function is used in conjunction with SetCsvLogPath(), StartMonitor(), StopMonitor().
+```
+
+Português:
+
+Adiciona um filtro para procurar e converter um valor textual em uma coluna no arquivo de log\.
+
+```
+Entrada:
+  label: Valor do rótulo a ser colocado na coluna do arquivo de log.
+  match: Texto simples procurado na saída padrão do container para ativar o filtro
+  filter: Expressão regular usada para filtrar o que vai para o log usando o parâmetro
+    `valueToGet`.
+```
+
+Nota:
+
+```
+* Esta função é usada em conjunto com SetCsvLogPath(), StartMonitor(), StopMonitor()
+```
+
+<details><summary>Example</summary>
+<p>
+
+```go
+{
+	var err error
+	var imageInspect types.ImageInspect
+
+	err = SaImageMakeCacheWithDefaultName("./example/cache/", 365*24*60*60*time.Second)
+	if err != nil {
+		fmt.Printf("error: %v", err.Error())
+		SaGarbageCollector()
+		return
+	}
+
+	SaGarbageCollector()
+
+	var container = ContainerBuilder{}
+
+	container.SetPrintBuildOnStrOut()
+
+	container.SetCacheEnable(true)
+
+	container.MakeDefaultDockerfileForMeWithInstallExtras()
+
+	container.SetImageName("delete:latest")
+
+	container.SetBuildFolderPath("./test/counter")
+
+	container.SetContainerName("container_counter_delete_after_test")
+
+	container.SetImageBuildOptionsMemory(100 * KMegaByte)
+
+	container.SetCsvFileReader(true)
+
+	container.SetCsvLogPath("./test.counter.log.csv", true)
+
+	container.AddFilterToCvsLogWithReplace(
+
+		"contador",
+
+		"counter",
+
+		"^.*?counter: (?P<valueToGet>[\\d\\.]+)",
+
+		"\\.",
+		":",
+	)
+
+	container.AddFilterToSuccess(
+
+		"done!",
+
+		"^.*?(?P<valueToGet>\\d+/\\d+/\\d+ \\d+:\\d+:\\d+ done!).*",
+
+		"(?P<date>\\d+/\\d+/\\d+)\\s+(?P<hour>\\d+:\\d+:\\d+)\\s+(?P<value>done!).*",
+		"${value}",
+	)
+
+	container.AddFilterToFail(
+
+		"counter: 40000000",
+
+		"^.*?(?P<valueToGet>\\d+/\\d+/\\d+ \\d+:\\d+:\\d+ counter: [\\d\\.]+).*",
+
+		"(?P<date>\\d+/\\d+/\\d+)\\s+(?P<hour>\\d+:\\d+:\\d+)\\s+counter:\\s+(?P<value>[\\d\\.]+).*",
+		"Test Fail! Counter Value: ${value} - Hour: ${hour} - Date: ${date}",
+	)
+
+	err = container.Init()
+	if err != nil {
+		fmt.Printf("error: %v", err.Error())
+		SaGarbageCollector()
+		return
+	}
+
+	imageInspect, err = container.ImageBuildFromFolder()
+	if err != nil {
+		fmt.Printf("error: %v", err.Error())
+		SaGarbageCollector()
+		return
+	}
+
+	fmt.Printf("image size: %v\n", container.SizeToString(imageInspect.Size))
+	fmt.Printf("image os: %v\n", imageInspect.Os)
+
+	err = container.ContainerBuildAndStartFromImage()
+	if err != nil {
+		log.Printf("error: %v", err.Error())
+		SaGarbageCollector()
+		return
+	}
+
+	container.StartMonitor()
+
+	event := container.GetChaosEvent()
+
+	for {
+		var pass = false
+		select {
+		case e := <-event:
+			if e.Done == true || e.Error == true || e.Fail == true {
+				pass = true
+
+				fmt.Printf("container name: %v\n", e.ContainerName)
+				fmt.Printf("done: %v\n", e.Done)
+				fmt.Printf("fail: %v\n", e.Fail)
+				fmt.Printf("error: %v\n", e.Error)
+				fmt.Printf("message: %v\n", e.Message)
+
+				break
+			}
+		}
+
+		if pass == true {
+			break
+		}
+	}
+
+	err = container.StopMonitor()
+	if err != nil {
+		log.Printf("error: %v", err.Error())
+		SaGarbageCollector()
+		return
+	}
+
+	SaGarbageCollector()
+
+}
+```
+
+#### Output
+
+```
+image size: 1.4 MB
+image os: linux
+container name: container_counter_delete_after_test
+done: true
+fail: false
+error: false
+message: done!
+```
+
+</p>
+</details>
+
+### func \(\*ContainerBuilder\) [AddFilterToCvsLogWithReplace](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcAddFilterToLogWithReplace.go#L42>)
+
+```go
+func (e *ContainerBuilder) AddFilterToCvsLogWithReplace(label, match, filter, search, replace string)
+```
+
+#### AddFilterToCvsLogWithReplace
+
+Similar:
+
+```
+AddFilterToCvsLogWithReplace(), AddFilterToCvsLog()
+```
+
+English:
+
+Adds a filter to search and convert a textual value to a column in the CSV log file\.
+
+```
+Input:
+  label: Value to be placed in the log file column.
+  match: Simple text searched in the container's standard output to activate the filter
+  filter: Regular expression used to filter what goes into the log using the `valueToGet`
+    parameter.
+  search: Regular expression used for search and replacement in the text found in the previous
+    step [optional].
+  replace: Regular expression replace element [optional].
+```
+
+Note:
+
+```
+* This function is used in conjunction with SetCsvLogPath(), StartMonitor(), StopMonitor().
+```
+
+Português:
+
+Adiciona um filtro para procurar e converter um valor textual em uma coluna no arquivo de log CSV\.
+
+```
+Entrada:
+  label: Valor do rótulo a ser colocado na coluna do arquivo de log.
+  match: Texto simples procurado na saída padrão do container para ativar o filtro
+  filter: Expressão regular usada para filtrar o que vai para o log usando o parâmetro
+    `valueToGet`.
+  search: Expressão regular usada para busca e substituição no texto encontrado na etapa anterior
+    [opcional].
+  replace: Elemento da troca da expressão regular [opcional].
+```
+
+Nota:
+
+```
+* Esta função é usada em conjunto com SetCsvLogPath(), StartMonitor(), StopMonitor()
+```
+
+### func \(\*ContainerBuilder\) [AddFilterToFail](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcAddFilterToFail.go#L36>)
 
 ```go
 func (e *ContainerBuilder) AddFilterToFail(match, filter, search, replace string)
@@ -2675,505 +2670,148 @@ Entrada:
 <p>
 
 ```go
-package main
+{
 
-import (
-	"fmt"
-	"github.com/docker/docker/api/types"
-	"log"
-)
-
-func main() {
-	AddFilterToFail()
-}
-
-func AddFilterToFail() {
 	var err error
 	var imageInspect types.ImageInspect
 
-	// English: Deletes all docker elements with the term `delete` in the name.
-	//
-	// Português: Apaga todos os elementos docker com o termo `delete` no nome.
-	GarbageCollector()
+	err = SaImageMakeCacheWithDefaultName("./example/cache/", 365*24*60*60*time.Second)
+	if err != nil {
+		fmt.Printf("error: %v", err.Error())
+		SaGarbageCollector()
+		return
+	}
+
+	SaGarbageCollector()
 
 	var container = ContainerBuilder{}
 
-	// English: print the standard output of the container
-	//
-	// Português: imprime a saída padrão do container
 	container.SetPrintBuildOnStrOut()
 
-	// English: If there is an image named `cache:latest`, it will be used as a base to create the container.
-	//
-	// Português: Caso exista uma imagem de nome `cache:latest`, ela será usada como base para criar o container.
 	container.SetCacheEnable(true)
 
-	// English: Mount a default dockerfile for golang where the `main.go` file and the `go.mod` file should be in the root folder
-	//
-	// Português: Monta um dockerfile padrão para o golang onde o arquivo `main.go` e o arquivo `go.mod` devem está na pasta raiz
 	container.MakeDefaultDockerfileForMe()
 
-	// English: Name of the new image to be created.
-	//
-	// Português: Nome da nova imagem a ser criada.
 	container.SetImageName("delete:latest")
 
-	// English: Defines the path where the golang code to be transformed into a docker image is located.
-	//
-	// Português: Define o caminho onde está o código golang a ser transformado em imagem docker.
 	container.SetBuildFolderPath("./test/counter")
 
-	// English: Defines the name of the docker container to be created.
-	//
-	// Português: Define o nome do container docker a ser criado.
 	container.SetContainerName("container_counter_delete_after_test")
 
-	// English: Defines the maximum amount of memory to be used by the docker container.
-	//
-	// Português: Define a quantidade máxima de memória a ser usada pelo container docker.
 	container.SetImageBuildOptionsMemory(100 * KMegaByte)
 
-	// English: Defines the log file path with container statistical data
-	//
-	// Português: Define o caminho do arquivo de log com dados estatísticos do container
 	container.SetCsvLogPath("./test.counter.log.csv", true)
 
-	// English: Determines the separator of the CSV file.
-	//
-	// Português: Determina o separador do arquivo CSV.
 	container.SetCsvFileValueSeparator("\t")
 
-	// English: Adds a search filter to the standard output of the container, to save the information in the log file
-	//
-	// Português: Adiciona um filtro de busca na saída padrão do container, para salvar a informação no arquivo de log
-	container.AddFilterToLogWithReplace(
-		// English: Label to be written to log file
-		//
-		// Português: Rótulo a ser escrito no arquivo de log
+	container.AddFilterToCvsLogWithReplace(
+
 		"contador",
 
-		// English: Simple text searched in the container's standard output to activate the filter
-		//
-		// Português: Texto simples procurado na saída padrão do container para ativar o filtro
 		"counter",
 
-		// English: Regular expression used to filter what goes into the log using the `valueToGet` parameter.
-		//
-		// Português: Expressão regular usada para filtrar o que vai para o log usando o parâmetro `valueToGet`.
 		"^.*?counter: (?P<valueToGet>[\\d\\.]+)",
 
-		// English: Regular expression used for search and replacement in the text found in the previous step [optional].
-		//
-		// Português: Expressão regular usada para busca e substituição no texto encontrado na etapa anterior [opcional].
 		"\\.",
 		",",
 	)
 
-	// English: Adds a filter to look for a value in the container's standard output indicating the success of the test.
-	//
-	// Português: Adiciona um filtro para procurar um valor na saída padrão do container indicando o sucesso do teste.
 	container.AddFilterToSuccess(
-		// English: Simple text searched in the container's standard output to activate the filter
-		//
-		// Português: Texto simples procurado na saída padrão do container para ativar o filtro
+
 		"done!",
 
-		// English: Regular expression used to filter what goes into the log using the `valueToGet` parameter.
-		//
-		// Português: Expressão regular usada para filtrar o que vai para o log usando o parâmetro `valueToGet`.
 		"^.*?(?P<valueToGet>\\d+/\\d+/\\d+ \\d+:\\d+:\\d+ done!).*",
 
-		// English: Regular expression used for search and replacement in the text found in the previous step [optional].
-		//
-		// Português: Expressão regular usada para busca e substituição no texto encontrado na etapa anterior [opcional].
 		"(?P<date>\\d+/\\d+/\\d+)\\s+(?P<hour>\\d+:\\d+:\\d+)\\s+(?P<value>done!).*",
 		"${value}",
 	)
 
-	// English: Adds a filter to look for a value in the container's standard output indicating the fail of the test.
-	//
-	// Português: Adiciona um filtro para procurar um valor na saída padrão do container indicando a falha do teste.
 	container.AddFilterToFail(
-		// English: Simple text searched in the container's standard output to activate the filter
-		//
-		// Português: Texto simples procurado na saída padrão do container para ativar o filtro
+
 		"counter: 40",
 
-		// English: Regular expression used to filter what goes into the log using the `valueToGet` parameter.
-		//
-		// Português: Expressão regular usada para filtrar o que vai para o log usando o parâmetro `valueToGet`.
 		"^.*?(?P<valueToGet>\\d+/\\d+/\\d+ \\d+:\\d+:\\d+ counter: [\\d\\.]+).*",
 
-		// English: Regular expression used for search and replacement in the text found in the previous step [optional].
-		//
-		// Português: Expressão regular usada para busca e substituição no texto encontrado na etapa anterior [opcional].
 		"(?P<date>\\d+/\\d+/\\d+)\\s+(?P<hour>\\d+:\\d+:\\d+)\\s+counter:\\s+(?P<value>[\\d\\.]+).*",
 		"Test Fail! Counter Value: ${value} - Hour: ${hour} - Date: ${date}",
 	)
 
-	// English: Initializes the container manager object.
-	//
-	// Português: Inicializa o objeto gerenciador de container.
 	err = container.Init()
 	if err != nil {
 		fmt.Printf("error: %v", err.Error())
-		GarbageCollector()
+		SaGarbageCollector()
 		return
 	}
 
-	// English: Creates an image from a project folder.
-	//
-	// Português: Cria uma imagem a partir de uma pasta de projeto.
 	imageInspect, err = container.ImageBuildFromFolder()
 	if err != nil {
 		fmt.Printf("error: %v", err.Error())
-		GarbageCollector()
+		SaGarbageCollector()
 		return
 	}
 
 	fmt.Printf("image size: %v\n", container.SizeToString(imageInspect.Size))
 	fmt.Printf("image os: %v\n", imageInspect.Os)
 
-	// English: Creates and initializes the container based on the created image.
-	//
-	// Português: Cria e inicializa o container baseado na imagem criada.
 	err = container.ContainerBuildAndStartFromImage()
 	if err != nil {
 		log.Printf("error: %v", err.Error())
-		GarbageCollector()
+		SaGarbageCollector()
 		return
 	}
 
-	// English: Starts container monitoring at two second intervals. This functionality generates the log and monitors the standard output of the container.
-	//
-	// Português: Inicializa o monitoramento do container com intervalos de dois segundos. Esta funcionalidade gera o log e monitora a saída padrão do container.
 	container.StartMonitor()
 
-	// English: Gets the event channel pointer inside the container.
-	//
-	// Português: Pega o ponteiro do canal de eventos dentro do container.
 	event := container.GetChaosEvent()
 
-	select {
-	case e := <-event:
-		fmt.Printf("container name: %v\n", e.ContainerName)
-		fmt.Printf("done: %v\n", e.Done)
-		fmt.Printf("fail: %v\n", e.Fail)
-		fmt.Printf("error: %v\n", e.Error)
-		fmt.Printf("message: %v\n", e.Message)
+	for {
+		var pass = false
+		select {
+		case e := <-event:
+			if e.Done == true || e.Error == true || e.Fail == true {
+				pass = true
+
+				fmt.Printf("container name: %v\n", e.ContainerName)
+				fmt.Printf("done: %v\n", e.Done)
+				fmt.Printf("fail: %v\n", e.Fail)
+				fmt.Printf("error: %v\n", e.Error)
+				fmt.Printf("message: %v\n", e.Message)
+
+				break
+			}
+		}
+
+		if pass == true {
+			break
+		}
 	}
 
-	// English: Stop container monitoring.
-	//
-	// Português: Para o monitoramento do container.
-	container.StopMonitor()
+	err = container.StopMonitor()
+	if err != nil {
+		log.Printf("error: %v", err.Error())
+		SaGarbageCollector()
+		return
+	}
 
-	// English: Deletes all docker elements with the term `delete` in the name.
-	//
-	// Português: Apaga todos os elementos docker com o termo `delete` no nome.
-	GarbageCollector()
+	SaGarbageCollector()
 
-	// Output:
-	// image size: 1.38 MB
-	// image os: linux
-	// container name: container_counter_delete_after_test
-	// done: true
-	// fail: false
-	// error: false
-	// message: done!
 }
+```
+
+#### Output
+
+```
+image size: 1.4 MB
+image os: linux
+container name: container_counter_delete_after_test
+done: true
+fail: false
+error: false
+message: done!
 ```
 
 </p>
 </details>
-
-### func \(\*ContainerBuilder\) [AddFilterToLog](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcAddFilterToLog.go#L36>)
-
-```go
-func (e *ContainerBuilder) AddFilterToLog(label, match, filter string)
-```
-
-#### AddFilterToLog
-
-Similar:
-
-```
-AddFilterToLogWithReplace(), AddFilterToLog()
-```
-
-English:
-
-Adds a filter to search and convert a textual value to a column in the log file\.
-
-```
-Input:
-  label: Value to be placed in the log file column.
-  match: Simple text searched in the container's standard output to activate the filter
-  filter: Regular expression used to filter what goes into the log using the `valueToGet`
-    parameter.
-```
-
-Note:
-
-```
-* This function is used in conjunction with SetCsvLogPath(), StartMonitor(), StopMonitor().
-```
-
-Português:
-
-Adiciona um filtro para procurar e converter um valor textual em uma coluna no arquivo de log\.
-
-```
-Entrada:
-  label: Valor do rótulo a ser colocado na coluna do arquivo de log.
-  match: Texto simples procurado na saída padrão do container para ativar o filtro
-  filter: Expressão regular usada para filtrar o que vai para o log usando o parâmetro
-    `valueToGet`.
-```
-
-Nota:
-
-```
-* Esta função é usada em conjunto com SetCsvLogPath(), StartMonitor(), StopMonitor()
-```
-
-<details><summary>Example</summary>
-<p>
-
-```go
-package main
-
-import (
-	"fmt"
-	"github.com/docker/docker/api/types"
-	"log"
-)
-
-func main() {
-	AddFilterToLog()
-}
-
-func AddFilterToLog() {
-	var err error
-	var imageInspect types.ImageInspect
-
-	// English: Deletes all docker elements with the term `delete` in the name.
-	// Português: Apaga todos os elementos docker com o termo `delete` no nome.
-	GarbageCollector()
-
-	var container = ContainerBuilder{}
-
-	// English: print the standard output of the container
-	// Português: imprime a saída padrão do container
-	container.SetPrintBuildOnStrOut()
-
-	// English: If there is an image named `cache:latest`, it will be used as a base to create the container.
-	// Português: Caso exista uma imagem de nome `cache:latest`, ela será usada como base para criar o container.
-	container.SetCacheEnable(true)
-
-	// English: Mount a default dockerfile for golang where the `main.go` file and the `go.mod` file should be in the root folder
-	// Português: Monta um dockerfile padrão para o golang onde o arquivo `main.go` e o arquivo `go.mod` devem está na pasta raiz
-	container.MakeDefaultDockerfileForMeWithInstallExtras()
-
-	// English: Name of the new image to be created.
-	// Português: Nome da nova imagem a ser criada.
-	container.SetImageName("delete:latest")
-
-	// English: Defines the path where the golang code to be transformed into a docker image is located.
-	// Português: Define o caminho onde está o código golang a ser transformado em imagem docker.
-	container.SetBuildFolderPath("./test/counter")
-	container.SetCsvFileReader(true)
-	// English: Defines the name of the docker container to be created.
-	// Português: Define o nome do container docker a ser criado.
-	container.SetContainerName("container_counter_delete_after_test")
-
-	// English: Defines the maximum amount of memory to be used by the docker container.
-	// Português: Define a quantidade máxima de memória a ser usada pelo container docker.
-	container.SetImageBuildOptionsMemory(100 * KMegaByte)
-
-	// English: Defines the log file path with container statistical data
-	// Português: Define o caminho do arquivo de log com dados estatísticos do container
-	container.SetCsvLogPath("./test.counter.log.csv", true)
-
-	// English: Adds a search filter to the standard output of the container, to save the information in the log file
-	// Português: Adiciona um filtro de busca na saída padrão do container, para salvar a informação no arquivo de log
-	container.AddFilterToLogWithReplace(
-		// English: Label to be written to log file
-		// Português: Rótulo a ser escrito no arquivo de log
-		"contador",
-
-		// English: Simple text searched in the container's standard output to activate the filter
-		// Português: Texto simples procurado na saída padrão do container para ativar o filtro
-		"counter",
-
-		// English: Regular expression used to filter what goes into the log using the `valueToGet` parameter.
-		// Português: Expressão regular usada para filtrar o que vai para o log usando o parâmetro `valueToGet`.
-		"^.*?counter: (?P<valueToGet>[\\d\\.]+)",
-
-		// English: Regular expression used for search and replacement in the text found in the previous step [optional].
-		// Português: Expressão regular usada para busca e substituição no texto encontrado na etapa anterior [opcional].
-		"\\.",
-		":",
-	)
-
-	// English: Adds a filter to look for a value in the container's standard output indicating the success of the test.
-	// Português: Adiciona um filtro para procurar um valor na saída padrão do container indicando o sucesso do teste.
-	container.AddFilterToSuccess(
-		// English: Simple text searched in the container's standard output to activate the filter
-		// Português: Texto simples procurado na saída padrão do container para ativar o filtro
-		"done!",
-
-		// English: Regular expression used to filter what goes into the log using the `valueToGet` parameter.
-		// Português: Expressão regular usada para filtrar o que vai para o log usando o parâmetro `valueToGet`.
-		"^.*?(?P<valueToGet>\\d+/\\d+/\\d+ \\d+:\\d+:\\d+ done!).*",
-
-		// English: Regular expression used for search and replacement in the text found in the previous step [optional].
-		// Português: Expressão regular usada para busca e substituição no texto encontrado na etapa anterior [opcional].
-		"(?P<date>\\d+/\\d+/\\d+)\\s+(?P<hour>\\d+:\\d+:\\d+)\\s+(?P<value>done!).*",
-		"${value}",
-	)
-
-	// English: Adds a filter to look for a value in the container's standard output indicating the fail of the test.
-	// Português: Adiciona um filtro para procurar um valor na saída padrão do container indicando a falha do teste.
-	container.AddFilterToFail(
-		// English: Simple text searched in the container's standard output to activate the filter
-		// Português: Texto simples procurado na saída padrão do container para ativar o filtro
-		"counter: 40",
-
-		// English: Regular expression used to filter what goes into the log using the `valueToGet` parameter.
-		// Português: Expressão regular usada para filtrar o que vai para o log usando o parâmetro `valueToGet`.
-		"^.*?(?P<valueToGet>\\d+/\\d+/\\d+ \\d+:\\d+:\\d+ counter: [\\d\\.]+).*",
-
-		// English: Regular expression used for search and replacement in the text found in the previous step [optional].
-		// Português: Expressão regular usada para busca e substituição no texto encontrado na etapa anterior [opcional].
-		"(?P<date>\\d+/\\d+/\\d+)\\s+(?P<hour>\\d+:\\d+:\\d+)\\s+counter:\\s+(?P<value>[\\d\\.]+).*",
-		"Test Fail! Counter Value: ${value} - Hour: ${hour} - Date: ${date}",
-	)
-
-	// English: Initializes the container manager object.
-	// Português: Inicializa o objeto gerenciador de container.
-	err = container.Init()
-	if err != nil {
-		fmt.Printf("error: %v", err.Error())
-		GarbageCollector()
-		return
-	}
-
-	// English: Creates an image from a project folder.
-	// Português: Cria uma imagem a partir de uma pasta de projeto.
-	imageInspect, err = container.ImageBuildFromFolder()
-	if err != nil {
-		fmt.Printf("error: %v", err.Error())
-		GarbageCollector()
-		return
-	}
-
-	fmt.Printf("image size: %v\n", container.SizeToString(imageInspect.Size))
-	fmt.Printf("image os: %v\n", imageInspect.Os)
-
-	// English: Creates and initializes the container based on the created image.
-	// Português: Cria e inicializa o container baseado na imagem criada.
-	err = container.ContainerBuildAndStartFromImage()
-	if err != nil {
-		log.Printf("error: %v", err.Error())
-		GarbageCollector()
-		return
-	}
-
-	// English: Starts container monitoring at two second intervals. This functionality generates the log and monitors the standard output of the container.
-	// Português: Inicializa o monitoramento do container com intervalos de dois segundos. Esta funcionalidade gera o log e monitora a saída padrão do container.
-	container.StartMonitor()
-
-	// English: Gets the event channel pointer inside the container.
-	// Português: Pega o ponteiro do canal de eventos dentro do container.
-	event := container.GetChaosEvent()
-
-	select {
-	case e := <-event:
-		fmt.Printf("container name: %v\n", e.ContainerName)
-		fmt.Printf("done: %v\n", e.Done)
-		fmt.Printf("fail: %v\n", e.Fail)
-		fmt.Printf("error: %v\n", e.Error)
-		fmt.Printf("message: %v\n", e.Message)
-	}
-
-	// English: Stop container monitoring.
-	// Português: Para o monitoramento do container.
-	container.StopMonitor()
-
-	// English: Deletes all docker elements with the term `delete` in the name.
-	// Português: Apaga todos os elementos docker com o termo `delete` no nome.
-	GarbageCollector()
-
-	// Output:
-	// image size: 1.38 MB
-	// image os: linux
-	// container name: container_counter_delete_after_test
-	// done: true
-	// fail: false
-	// error: false
-	// message: done!
-}
-```
-
-</p>
-</details>
-
-### func \(\*ContainerBuilder\) [AddFilterToLogWithReplace](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcAddFilterToLogWithReplace.go#L42>)
-
-```go
-func (e *ContainerBuilder) AddFilterToLogWithReplace(label, match, filter, search, replace string)
-```
-
-#### AddFilterToLogWithReplace
-
-Similar:
-
-```
-AddFilterToLogWithReplace(), AddFilterToLog()
-```
-
-English:
-
-Adds a filter to search and convert a textual value to a column in the CSV log file\.
-
-```
-Input:
-  label: Value to be placed in the log file column.
-  match: Simple text searched in the container's standard output to activate the filter
-  filter: Regular expression used to filter what goes into the log using the `valueToGet`
-    parameter.
-  search: Regular expression used for search and replacement in the text found in the previous
-    step [optional].
-  replace: Regular expression replace element [optional].
-```
-
-Note:
-
-```
-* This function is used in conjunction with SetCsvLogPath(), StartMonitor(), StopMonitor().
-```
-
-Português:
-
-Adiciona um filtro para procurar e converter um valor textual em uma coluna no arquivo de log CSV\.
-
-```
-Entrada:
-  label: Valor do rótulo a ser colocado na coluna do arquivo de log.
-  match: Texto simples procurado na saída padrão do container para ativar o filtro
-  filter: Expressão regular usada para filtrar o que vai para o log usando o parâmetro
-    `valueToGet`.
-  search: Expressão regular usada para busca e substituição no texto encontrado na etapa anterior
-    [opcional].
-  replace: Elemento da troca da expressão regular [opcional].
-```
-
-Nota:
-
-```
-* Esta função é usada em conjunto com SetCsvLogPath(), StartMonitor(), StopMonitor()
-```
 
 ### func \(\*ContainerBuilder\) [AddFilterToRestartContainer](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcAddFilterToRestartContainer.go#L50>)
 
@@ -3241,164 +2879,82 @@ Note:
 <p>
 
 ```go
-package main
+{
 
-import (
-	"fmt"
-	"github.com/docker/docker/api/types"
-	"log"
-	"time"
-)
-
-func main() {
-	AddFilterToRestartContainer()
-}
-
-func AddFilterToRestartContainer() {
 	var err error
 	var imageInspect types.ImageInspect
 
-	// English: Deletes all docker elements with the term `delete` in the name.
-	//
-	// Português: Apaga todos os elementos docker com o termo `delete` no nome.
-	GarbageCollector()
+	err = SaImageMakeCacheWithDefaultName("./example/cache/", 365*24*60*60*time.Second)
+	if err != nil {
+		fmt.Printf("error: %v", err.Error())
+		SaGarbageCollector()
+		return
+	}
+
+	SaGarbageCollector()
 
 	var container = ContainerBuilder{}
 
-	// English: print the standard output of the container
-	//
-	// Português: imprime a saída padrão do container
 	container.SetPrintBuildOnStrOut()
 
-	// English: If there is an image named `cache:latest`, it will be used as a base to create the container.
-	//
-	// Português: Caso exista uma imagem de nome `cache:latest`, ela será usada como base para criar o container.
 	container.SetCacheEnable(true)
 
-	// English: Mount a default dockerfile for golang where the `main.go` file and the `go.mod` file should be in the root folder
-	//
-	// Português: Monta um dockerfile padrão para o golang onde o arquivo `main.go` e o arquivo `go.mod` devem está na pasta raiz
 	container.MakeDefaultDockerfileForMe()
 
-	// English: Name of the new image to be created.
-	//
-	// Português: Nome da nova imagem a ser criada.
 	container.SetImageName("delete:latest")
 
-	// English: Defines the path where the golang code to be transformed into a docker image is located.
-	//
-	// Português: Define o caminho onde está o código golang a ser transformado em imagem docker.
 	container.SetBuildFolderPath("./test/chaos")
 
-	// English: Defines the name of the docker container to be created.
-	//
-	// Português: Define o nome do container docker a ser criado.
 	container.SetContainerName("container_counter_delete_after_test")
 
-	// English: Defines the maximum amount of memory to be used by the docker container.
-	//
-	// Português: Define a quantidade máxima de memória a ser usada pelo container docker.
 	container.SetImageBuildOptionsMemory(100 * KMegaByte)
 
-	// English: Defines the log file path with container statistical data
-	//
-	// Português: Define o caminho do arquivo de log com dados estatísticos do container
 	container.SetCsvLogPath("./test.counter.log.csv", true)
 
 	container.SetCsvFileValueSeparator("\t")
 
-	// English: Adds a search filter to the standard output of the container, to save the information in the log file
-	//
-	// Português: Adiciona um filtro de busca na saída padrão do container, para salvar a informação no arquivo de log
-	container.AddFilterToLogWithReplace(
-		// English: Label to be written to log file
-		//
-		// Português: Rótulo a ser escrito no arquivo de log
+	container.AddFilterToCvsLogWithReplace(
+
 		"contador",
 
-		// English: Simple text searched in the container's standard output to activate the filter
-		//
-		// Português: Texto simples procurado na saída padrão do container para ativar o filtro
 		"counter",
 
-		// English: Regular expression used to filter what goes into the log using the `valueToGet` parameter.
-		//
-		// Português: Expressão regular usada para filtrar o que vai para o log usando o parâmetro `valueToGet`.
 		"^.*?counter: (?P<valueToGet>[\\d\\.]+)",
 
-		// English: Regular expression used for search and replacement in the text found in the previous step [optional].
-		//
-		// Português: Expressão regular usada para busca e substituição no texto encontrado na etapa anterior [opcional].
 		"\\.",
 		",",
 	)
 
-	// English: Adds a filter to look for a value in the container's standard output indicating the possibility of restarting the container.
-	//
-	// Português: Adiciona um filtro para procurar um valor na saída padrão do container indicando a possibilidade de reiniciar o container.
 	container.AddFilterToRestartContainer(
-		// English: Simple text searched in the container's standard output to activate the filter
-		//
-		// Português: Texto simples procurado na saída padrão do container para ativar o filtro
+
 		"restart-me!",
 
-		// English: Regular expression used to filter what goes into the log using the `valueToGet` parameter.
-		//
-		// Português: Expressão regular usada para filtrar o que vai para o log usando o parâmetro `valueToGet`.
 		"^.*?(?P<valueToGet>restart-me!)",
 
-		// English: Regular expression used for search and replacement in the text found in the previous step [optional].
-		//
-		// Português: Expressão regular usada para busca e substituição no texto encontrado na etapa anterior [opcional].
 		"",
 		"",
 	)
 
-	// English: Adds a filter to look for a value in the container's standard output indicating the success of the test.
-	//
-	// Português: Adiciona um filtro para procurar um valor na saída padrão do container indicando o sucesso do teste.
 	container.AddFilterToSuccess(
-		// English: Simple text searched in the container's standard output to activate the filter
-		//
-		// Português: Texto simples procurado na saída padrão do container para ativar o filtro
+
 		"done!",
 
-		// English: Regular expression used to filter what goes into the log using the `valueToGet` parameter.
-		//
-		// Português: Expressão regular usada para filtrar o que vai para o log usando o parâmetro `valueToGet`.
 		"^.*?(?P<valueToGet>\\d+/\\d+/\\d+ \\d+:\\d+:\\d+ done!).*",
 
-		// English: Regular expression used for search and replacement in the text found in the previous step [optional].
-		//
-		// Português: Expressão regular usada para busca e substituição no texto encontrado na etapa anterior [opcional].
 		"(?P<date>\\d+/\\d+/\\d+)\\s+(?P<hour>\\d+:\\d+:\\d+)\\s+(?P<value>done!).*",
 		"${value}",
 	)
 
-	// English: Adds a filter to look for a value in the container's standard output indicating the fail of the test.
-	//
-	// Português: Adiciona um filtro para procurar um valor na saída padrão do container indicando a falha do teste.
 	container.AddFilterToFail(
-		// English: Simple text searched in the container's standard output to activate the filter
-		//
-		// Português: Texto simples procurado na saída padrão do container para ativar o filtro
+
 		"counter: 340",
 
-		// English: Regular expression used to filter what goes into the log using the `valueToGet` parameter.
-		//
-		// Português: Expressão regular usada para filtrar o que vai para o log usando o parâmetro `valueToGet`.
 		"^.*?(?P<valueToGet>\\d+/\\d+/\\d+ \\d+:\\d+:\\d+ counter: [\\d\\.]+).*",
 
-		// English: Regular expression used for search and replacement in the text found in the previous step [optional].
-		//
-		// Português: Expressão regular usada para busca e substituição no texto encontrado na etapa anterior [opcional].
 		"(?P<date>\\d+/\\d+/\\d+)\\s+(?P<hour>\\d+:\\d+:\\d+)\\s+counter:\\s+(?P<value>[\\d\\.]+).*",
 		"Test Fail! Counter Value: ${value} - Hour: ${hour} - Date: ${date}",
 	)
 
-	// English: Adds a filter to look for a value in the container's standard output releasing the chaos test to be started
-	//
-	// Português: Adiciona um filtro para procurar um valor na saída padrão do container liberando o início do teste de caos
 	container.AddFilterToStartChaos(
 		"chaos enable",
 		"chaos enable",
@@ -3406,112 +2962,92 @@ func AddFilterToRestartContainer() {
 		"",
 	)
 
-	// English: Defines the probability of the container restarting and changing the IP address in the process.
-	//
-	// Português: Define a probalidade do container reiniciar e mudar o endereço IP no processo.
 	container.SetRestartProbability(0.9, 1.0, 1)
 
-	// English: Defines a time window used to start chaos testing after container initialized
-	//
-	// Português: Define uma janela de tempo usada para começar o teste de caos depois do container inicializado
 	container.SetTimeToStartChaosOnChaosScene(2*time.Second, 5*time.Second)
 
-	// English: Sets a time window used to release container restart after the container has been initialized
-	//
-	// Português: Define uma janela de tempo usada para liberar o reinício do container depois do container ter sido inicializado
 	container.SetTimeBeforeStartChaosInThisContainerOnChaosScene(2*time.Second, 5*time.Second)
 
-	// English: Defines a time window used to pause the container
-	//
-	// Português: Define uma janela de tempo usada para pausar o container
 	container.SetTimeOnContainerPausedStateOnChaosScene(2*time.Second, 5*time.Second)
 
-	// English: Defines a time window used to unpause the container
-	//
-	// Português: Define uma janela de tempo usada para remover a pausa do container
 	container.SetTimeOnContainerUnpausedStateOnChaosScene(2*time.Second, 5*time.Second)
 
-	// English: Sets a time window used to restart the container after stopping
-	//
-	// Português: Define uma janela de tempo usada para reiniciar o container depois de parado
 	container.SetTimeToRestartThisContainerAfterStopEventOnChaosScene(2*time.Second, 5*time.Second)
 
-	// English: Enable chaos test
-	//
-	// Português: Habilita o teste de caos
 	container.EnableChaosScene(true)
 
-	// English: Initializes the container manager object.
-	//
-	// Português: Inicializa o objeto gerenciador de container.
 	err = container.Init()
 	if err != nil {
 		fmt.Printf("error: %v", err.Error())
-		GarbageCollector()
+		SaGarbageCollector()
 		return
 	}
 
-	// English: Creates an image from a project folder.
-	//
-	// Português: Cria uma imagem a partir de uma pasta de projeto.
 	imageInspect, err = container.ImageBuildFromFolder()
 	if err != nil {
 		fmt.Printf("error: %v", err.Error())
-		GarbageCollector()
+		SaGarbageCollector()
 		return
 	}
 
 	fmt.Printf("image size: %v\n", container.SizeToString(imageInspect.Size))
 	fmt.Printf("image os: %v\n", imageInspect.Os)
 
-	// English: Creates and initializes the container based on the created image.
-	//
-	// Português: Cria e inicializa o container baseado na imagem criada.
 	err = container.ContainerBuildAndStartFromImage()
 	if err != nil {
 		log.Printf("error: %v", err.Error())
-		GarbageCollector()
+		SaGarbageCollector()
 		return
 	}
 
-	// English: Starts container monitoring at two second intervals. This functionality generates the log and monitors the standard output of the container.
-	//
-	// Português: Inicializa o monitoramento do container com intervalos de dois segundos. Esta funcionalidade gera o log e monitora a saída padrão do container.
 	container.StartMonitor()
 
-	// English: Gets the event channel pointer inside the container.
-	//
-	// Português: Pega o ponteiro do canal de eventos dentro do container.
 	event := container.GetChaosEvent()
 
-	select {
-	case e := <-event:
-		fmt.Printf("container name: %v\n", e.ContainerName)
-		fmt.Printf("done: %v\n", e.Done)
-		fmt.Printf("fail: %v\n", e.Fail)
-		fmt.Printf("error: %v\n", e.Error)
-		fmt.Printf("message: %v\n", e.Message)
+	for {
+		var pass = false
+		select {
+		case e := <-event:
+			if e.Done == true || e.Error == true || e.Fail == true {
+				pass = true
+
+				fmt.Printf("container name: %v\n", e.ContainerName)
+				fmt.Printf("done: %v\n", e.Done)
+				fmt.Printf("fail: %v\n", e.Fail)
+				fmt.Printf("error: %v\n", e.Error)
+				fmt.Printf("message: %v\n", e.Message)
+
+				break
+			}
+		}
+
+		if pass == true {
+			break
+		}
 	}
 
-	// English: Stop container monitoring.
-	//
-	// Português: Para o monitoramento do container.
-	container.StopMonitor()
+	err = container.StopMonitor()
+	if err != nil {
+		log.Printf("error: %v", err.Error())
+		SaGarbageCollector()
+		return
+	}
 
-	// English: Deletes all docker elements with the term `delete` in the name.
-	//
-	// Português: Apaga todos os elementos docker com o termo `delete` no nome.
-	GarbageCollector()
+	SaGarbageCollector()
 
-	// Output:
-	// image size: 1.38 MB
-	// image os: linux
-	// container name: container_counter_delete_after_test
-	// done: true
-	// fail: false
-	// error: false
-	// message: done!
 }
+```
+
+#### Output
+
+```
+image size: 1.4 MB
+image os: linux
+container name: container_counter_delete_after_test
+done: true
+fail: false
+error: false
+message: done!
 ```
 
 </p>
@@ -3600,10 +3136,21 @@ func AddFilterToStartChaos() {
 	var err error
 	var imageInspect types.ImageInspect
 
+	// English: Mounts an image cache and makes imaging up to 5x faster
+	//
+	// Português: Monta uma imagem cache e deixa a criação de imagens até 5x mais rápida
+	// [optional/opcional]
+	err = SaImageMakeCacheWithDefaultName("./example/cache/", 365*24*60*60*time.Second)
+	if err != nil {
+		fmt.Printf("error: %v", err.Error())
+		SaGarbageCollector()
+		return
+	}
+
 	// English: Deletes all docker elements with the term `delete` in the name.
 	//
 	// Português: Apaga todos os elementos docker com o termo `delete` no nome.
-	GarbageCollector()
+	SaGarbageCollector()
 
 	var container = ContainerBuilder{}
 
@@ -3655,7 +3202,7 @@ func AddFilterToStartChaos() {
 	// English: Adds a search filter to the standard output of the container, to save the information in the log file
 	//
 	// Português: Adiciona um filtro de busca na saída padrão do container, para salvar a informação no arquivo de log
-	container.AddFilterToLogWithReplace(
+	container.AddFilterToCvsLogWithReplace(
 		// English: Label to be written to log file
 		//
 		// Português: Rótulo a ser escrito no arquivo de log
@@ -3792,7 +3339,7 @@ func AddFilterToStartChaos() {
 	err = container.Init()
 	if err != nil {
 		fmt.Printf("error: %v", err.Error())
-		GarbageCollector()
+		SaGarbageCollector()
 		return
 	}
 
@@ -3802,7 +3349,7 @@ func AddFilterToStartChaos() {
 	imageInspect, err = container.ImageBuildFromFolder()
 	if err != nil {
 		fmt.Printf("error: %v", err.Error())
-		GarbageCollector()
+		SaGarbageCollector()
 		return
 	}
 
@@ -3815,7 +3362,7 @@ func AddFilterToStartChaos() {
 	err = container.ContainerBuildAndStartFromImage()
 	if err != nil {
 		log.Printf("error: %v", err.Error())
-		GarbageCollector()
+		SaGarbageCollector()
 		return
 	}
 
@@ -3841,12 +3388,17 @@ func AddFilterToStartChaos() {
 	// English: Stop container monitoring.
 	//
 	// Português: Para o monitoramento do container.
-	container.StopMonitor()
+	err = container.StopMonitor()
+	if err != nil {
+		log.Printf("error: %v", err.Error())
+		SaGarbageCollector()
+		return
+	}
 
 	// English: Deletes all docker elements with the term `delete` in the name.
 	//
 	// Português: Apaga todos os elementos docker com o termo `delete` no nome.
-	GarbageCollector()
+	SaGarbageCollector()
 
 	// Output:
 	// image size: 1.38 MB
@@ -4021,47 +3573,26 @@ Nota:
 <p>
 
 ```go
-package main
+{
 
-import (
-	"fmt"
-	"github.com/helmutkemper/util"
-	"io/ioutil"
-	"log"
-	"net/http"
-	"time"
-)
-
-func main() {
-	AddPortToChange()
-}
-
-func AddPortToChange() {
 	var err error
 
-	GarbageCollector()
+	SaGarbageCollector()
 
 	var container = ContainerBuilder{}
 
-	// new image name delete:latest
+	container.SetPrintBuildOnStrOut()
+
 	container.SetImageName("delete:latest")
 
-	// container name container_delete_server_after_test
 	container.SetContainerName("container_delete_server_after_test")
 
-	// git project to clone https://github.com/helmutkemper/iotmaker.docker.util.whaleAquarium.sample.git
 	container.SetGitCloneToBuild("https://github.com/helmutkemper/iotmaker.docker.util.whaleAquarium.sample.git")
 
-	// see SetGitCloneToBuildWithUserPassworh(), SetGitCloneToBuildWithPrivateSshKey() and
-	// SetGitCloneToBuildWithPrivateToken()
-
-	// set a waits for the text to appear in the standard container output to proceed [optional]
 	container.SetWaitStringWithTimeout("Stating server on port 3000", 10*time.Second)
 
-	// change and open port 3000 to 3030
 	container.AddPortToChange("3000", "3030")
 
-	// replace container folder /static to host folder ./test/static
 	err = container.AddFileOrFolderToLinkBetweenConputerHostAndContainer("./test/static", "/static")
 	if err != nil {
 		log.Printf("container.AddFileOrFolderToLinkBetweenConputerHostAndContainer().error: %v", err.Error())
@@ -4069,16 +3600,12 @@ func AddPortToChange() {
 		panic(err)
 	}
 
-	// inicialize container object
 	err = container.Init()
 	if err != nil {
 		util.TraceToLog()
 		panic(err)
 	}
 
-	// todo: fazer o inspect
-
-	// builder new image from git project
 	_, err = container.ImageBuildFromServer()
 	if err != nil {
 		util.TraceToLog()
@@ -4086,7 +3613,6 @@ func AddPortToChange() {
 		panic(err)
 	}
 
-	// container build from image delete:latest
 	err = container.ContainerBuildAndStartFromImage()
 	if err != nil {
 		util.TraceToLog()
@@ -4094,9 +3620,9 @@ func AddPortToChange() {
 		panic(err)
 	}
 
-	// container "container_delete_server_after_test" running and ready for use on this code point on port 3030
-
-	// read server inside a container on address http://localhost:3030/
+	// English: read server inside a container on address http://localhost:3030/
+	//
+	// Português: lê o servidor dentro do container na porta http://localhost:3030/
 	var resp *http.Response
 	resp, err = http.Get("http://localhost:3030/")
 	if err != nil {
@@ -4113,14 +3639,17 @@ func AddPortToChange() {
 		panic(err)
 	}
 
-	// print output
 	fmt.Printf("%s", body)
 
-	GarbageCollector()
+	SaGarbageCollector()
 
-	// Output:
-	// <html><body><p>C is life! Golang is a evolution of C</p></body></html>
 }
+```
+
+#### Output
+
+```
+<html><body><p>C is life! Golang is a evolution of C</p></body></html>
 ```
 
 </p>
@@ -4222,7 +3751,7 @@ func AddPortToExpose() {
 	// English: Deletes all docker elements with the term `delete` in the name.
 	//
 	// Português: Apaga todos os elementos docker com o termo `delete` no nome.
-	GarbageCollector()
+	SaGarbageCollector()
 
 	var container = ContainerBuilder{}
 
@@ -4318,7 +3847,7 @@ func AddPortToExpose() {
 	// print output
 	fmt.Printf("%s", body)
 
-	GarbageCollector()
+	SaGarbageCollector()
 
 	// Output:
 	// <html><body><p>C is life! Golang is a evolution of C</p></body></html>
@@ -4572,7 +4101,7 @@ Saída:
 {
 	var err error
 
-	GarbageCollector()
+	SaGarbageCollector()
 
 	var container = ContainerBuilder{}
 
@@ -4632,7 +4161,7 @@ Saída:
 
 	fmt.Printf("%s", body)
 
-	GarbageCollector()
+	SaGarbageCollector()
 
 }
 ```
@@ -4763,19 +4292,19 @@ func main() {
 	//
 	// Português: Apaga todos os elementos docker com o termo `delete` no nome.
 	// [optional/opcional]
-	GarbageCollector()
+	SaGarbageCollector()
 
 	//err = buildGoLintImage()
 	if err != nil {
 		fmt.Printf("error: %v", err.Error())
-		GarbageCollector()
+		SaGarbageCollector()
 		return
 	}
 
 	err = builAlpineImage()
 	if err != nil {
 		fmt.Printf("error: %v", err.Error())
-		GarbageCollector()
+		SaGarbageCollector()
 		return
 	}
 
@@ -4812,7 +4341,7 @@ func buildGoLintImage() (err error) {
 	err = container.Init()
 	if err != nil {
 		fmt.Printf("error: %v", err.Error())
-		GarbageCollector()
+		SaGarbageCollector()
 		return
 	}
 
@@ -4822,7 +4351,7 @@ func buildGoLintImage() (err error) {
 	imageInspect, err = container.ImageBuildFromFolder()
 	if err != nil {
 		fmt.Printf("error: %v", err.Error())
-		GarbageCollector()
+		SaGarbageCollector()
 		return
 	}
 
@@ -4835,7 +4364,7 @@ func buildGoLintImage() (err error) {
 	err = container.ContainerBuildAndStartFromImage()
 	if err != nil {
 		log.Printf("error: %v", err.Error())
-		GarbageCollector()
+		SaGarbageCollector()
 		return
 	}
 
@@ -4846,7 +4375,7 @@ func buildGoLintImage() (err error) {
 	)
 	if err != nil {
 		log.Printf("error: %v", err.Error())
-		GarbageCollector()
+		SaGarbageCollector()
 		return
 	}
 
@@ -4854,7 +4383,7 @@ func buildGoLintImage() (err error) {
 	//
 	// Português: Apaga todos os elementos docker com o termo `delete` no nome.
 	// [optional/opcional]
-	GarbageCollector()
+	SaGarbageCollector()
 
 	fmt.Printf("file name: %v\n", copyResponse[0].Name)
 
@@ -4892,7 +4421,7 @@ func builAlpineImage() (err error) {
 	err = container.Init()
 	if err != nil {
 		fmt.Printf("error: %v", err.Error())
-		GarbageCollector()
+		SaGarbageCollector()
 		return
 	}
 
@@ -4902,7 +4431,7 @@ func builAlpineImage() (err error) {
 	imageInspect, err = container.ImageBuildFromFolder()
 	if err != nil {
 		fmt.Printf("error: %v", err.Error())
-		GarbageCollector()
+		SaGarbageCollector()
 		return
 	}
 
@@ -4915,7 +4444,7 @@ func builAlpineImage() (err error) {
 	err = container.ContainerBuildAndStartFromImage()
 	if err != nil {
 		log.Printf("error: %v", err.Error())
-		GarbageCollector()
+		SaGarbageCollector()
 		return
 	}
 
@@ -4926,7 +4455,7 @@ func builAlpineImage() (err error) {
 
 	if err != nil {
 		log.Printf("error: %v", err.Error())
-		GarbageCollector()
+		SaGarbageCollector()
 		return
 	}
 
@@ -4952,7 +4481,7 @@ func builAlpineImage() (err error) {
 	//
 	// Português: Apaga todos os elementos docker com o termo `delete` no nome.
 	// [optional/opcional]
-	GarbageCollector()
+	SaGarbageCollector()
 
 	return
 }
@@ -5690,7 +5219,7 @@ Saída:
 {
 	var err error
 
-	GarbageCollector()
+	SaGarbageCollector()
 
 	var container = ContainerBuilder{}
 
@@ -5731,7 +5260,7 @@ Saída:
 		panic(err)
 	}
 
-	GarbageCollector()
+	SaGarbageCollector()
 
 	err = container.ImageRemoveByName("nats:latest")
 	if err != nil {
@@ -7052,7 +6581,7 @@ func ImageBuildViewer(ch *chan iotmakerdocker.ContainerPullStatusSendToChannel) 
 func main() {
 	var err error
 
-	GarbageCollector()
+	SaGarbageCollector()
 
 	var container = ContainerBuilder{}
 	// new image name delete:latest
@@ -7117,7 +6646,7 @@ func main() {
 	// print output
 	fmt.Printf("%s", body)
 
-	GarbageCollector()
+	SaGarbageCollector()
 
 }
 ```
@@ -7433,7 +6962,7 @@ Nota:
 	var err error
 	var volumes []string
 
-	GarbageCollector()
+	SaGarbageCollector()
 
 	var container = ContainerBuilder{}
 
@@ -7460,7 +6989,7 @@ Nota:
 
 	fmt.Printf("%v", volumes[0])
 
-	GarbageCollector()
+	SaGarbageCollector()
 
 }
 ```
@@ -7507,7 +7036,7 @@ Saída:
 {
 	var err error
 
-	GarbageCollector()
+	SaGarbageCollector()
 
 	// create a network [optional]
 	var netDocker = dockerNetwork.ContainerBuilderNetwork{}
@@ -7552,7 +7081,7 @@ Saída:
 		panic(err)
 	}
 
-	GarbageCollector()
+	SaGarbageCollector()
 
 	err = container.ImageRemoveByName("nats:latest")
 	if err != nil {
@@ -7880,7 +7409,7 @@ Saída:
 	var err error
 	var imageInspect types.ImageInspect
 
-	GarbageCollector()
+	SaGarbageCollector()
 
 	var netDocker = &dockerNetwork.ContainerBuilderNetwork{}
 	err = netDocker.Init()
@@ -7916,14 +7445,14 @@ Saída:
 	err = container.Init()
 	if err != nil {
 		fmt.Printf("error: %v", err.Error())
-		GarbageCollector()
+		SaGarbageCollector()
 		return
 	}
 
 	imageInspect, err = container.ImageBuildFromFolder()
 	if err != nil {
 		fmt.Printf("error: %v", err.Error())
-		GarbageCollector()
+		SaGarbageCollector()
 		return
 	}
 
@@ -7933,7 +7462,7 @@ Saída:
 	err = container.ContainerBuildAndStartFromImage()
 	if err != nil {
 		log.Printf("error: %v", err.Error())
-		GarbageCollector()
+		SaGarbageCollector()
 		return
 	}
 
@@ -7941,7 +7470,7 @@ Saída:
 	containerInspect, err = container.ContainerInspect()
 	if err != nil {
 		log.Printf("error: %v", err.Error())
-		GarbageCollector()
+		SaGarbageCollector()
 		return
 	}
 
@@ -7950,34 +7479,34 @@ Saída:
 	err = container.ContainerStop()
 	if err != nil {
 		log.Printf("error: %v", err.Error())
-		GarbageCollector()
+		SaGarbageCollector()
 		return
 	}
 
 	err = container.NetworkChangeIp()
 	if err != nil {
 		log.Printf("error: %v", err.Error())
-		GarbageCollector()
+		SaGarbageCollector()
 		return
 	}
 
 	err = container.ContainerStart()
 	if err != nil {
 		log.Printf("error: %v", err.Error())
-		GarbageCollector()
+		SaGarbageCollector()
 		return
 	}
 
 	containerInspect, err = container.ContainerInspect()
 	if err != nil {
 		log.Printf("error: %v", err.Error())
-		GarbageCollector()
+		SaGarbageCollector()
 		return
 	}
 
 	fmt.Printf("IP: %v\n", containerInspect.Network.Networks["delete_after_test"].IPAddress)
 
-	GarbageCollector()
+	SaGarbageCollector()
 
 }
 ```
@@ -8380,6 +7909,91 @@ Entrada:
   value: nome do container
 ```
 
+<details><summary>Example</summary>
+<p>
+
+```go
+{
+	var err error
+
+	SaGarbageCollector()
+
+	var container = ContainerBuilder{}
+
+	container.SetPrintBuildOnStrOut()
+
+	container.SetImageName("delete:latest")
+
+	container.SetContainerName("container_delete_server_after_test")
+
+	container.SetGitCloneToBuild("https://github.com/helmutkemper/iotmaker.docker.util.whaleAquarium.sample.git")
+
+	container.SetWaitStringWithTimeout("Stating server on port 3000", 10*time.Second)
+
+	container.AddPortToChange("3000", "3030")
+
+	err = container.AddFileOrFolderToLinkBetweenConputerHostAndContainer("./test/static", "/static")
+	if err != nil {
+		log.Printf("container.AddFileOrFolderToLinkBetweenConputerHostAndContainer().error: %v", err.Error())
+		util.TraceToLog()
+		panic(err)
+	}
+
+	err = container.Init()
+	if err != nil {
+		util.TraceToLog()
+		panic(err)
+	}
+
+	_, err = container.ImageBuildFromServer()
+	if err != nil {
+		util.TraceToLog()
+		log.Printf("container.ImageBuildFromServer().error: %v", err.Error())
+		panic(err)
+	}
+
+	err = container.ContainerBuildAndStartFromImage()
+	if err != nil {
+		util.TraceToLog()
+		log.Printf("container.ContainerBuildAndStartFromImage().error: %v", err.Error())
+		panic(err)
+	}
+
+	// English: read server inside a container on address http://localhost:3030/
+	//
+	// Português: lê o servidor dentro do container na porta http://localhost:3030/
+	var resp *http.Response
+	resp, err = http.Get("http://localhost:3030/")
+	if err != nil {
+		util.TraceToLog()
+		log.Printf("http.Get().error: %v", err.Error())
+		panic(err)
+	}
+
+	var body []byte
+	body, err = ioutil.ReadAll(resp.Body)
+	if err != nil {
+		util.TraceToLog()
+		log.Printf("http.Get().error: %v", err.Error())
+		panic(err)
+	}
+
+	fmt.Printf("%s", body)
+
+	SaGarbageCollector()
+
+}
+```
+
+#### Output
+
+```
+<html><body><p>C is life! Golang is a evolution of C</p></body></html>
+```
+
+</p>
+</details>
+
 ### func \(\*ContainerBuilder\) [SetContainerRestartPolicyAlways](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetContainerRestartPolicyAlways.go#L18>)
 
 ```go
@@ -8460,7 +8074,7 @@ Português:
 
 define o terminal \(shell\) para executar o entrypoint
 
-### func \(\*ContainerBuilder\) [SetCsvFileReader](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetCsvFileReader.go#L21>)
+### func \(\*ContainerBuilder\) [SetCsvFileReader](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetCsvFileReader.go#L35>)
 
 ```go
 func (e *ContainerBuilder) SetCsvFileReader(value bool)
@@ -8478,6 +8092,15 @@ Input:
     in the header of the file.
 ```
 
+Nota:
+
+```
+* The constants printed in the first line of the file are used in the SetCsvFileRowsToPrint()
+  function. Simply separate the constants by pipe (|).
+  Example: container.SetCsvFileRowsToPrint( KLogColumnReadingTime
+           | KLogColumnCurrentNumberOfOidsInTheCGroup | ... )
+```
+
 Português:
 
 Imprime no cabeçalho do arquivo o nome da constante responsável por imprimir a coluna no log\.
@@ -8486,6 +8109,15 @@ Imprime no cabeçalho do arquivo o nome da constante responsável por imprimir a
 Entrada:
   value: true para imprimir no cabeçalho do arquivo o nome da constante responsável por imprimir
     a coluna no log.
+```
+
+Nota:
+
+```
+* As constantes impressas na primeira linha do arquivo são usadas na função
+  SetCsvFileRowsToPrint(). Basta separar as contantes por pipe (|).
+  Exemplo: container.SetCsvFileRowsToPrint( KLogColumnReadingTime
+           | KLogColumnCurrentNumberOfOidsInTheCGroup | ... )
 ```
 
 ### func \(\*ContainerBuilder\) [SetCsvFileRowSeparator](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetCsvFileRowSeparator.go#L32>)
@@ -8509,8 +8141,8 @@ Nota:
 
 ```
 * Esta função é usada em conjunto com as funções SetCsvLogPath(), StartMonitor(), StopMonitor(),
-  SetCsvFileRowSeparator(), SetCsvFileReader(), SetCsvFileRowsToPrint(), AddFilterToLog() e
-  AddFilterToLogWithReplace();
+  SetCsvFileRowSeparator(), SetCsvFileReader(), SetCsvFileRowsToPrint(), AddFilterToCvsLog() e
+  AddFilterToCvsLogWithReplace();
 * As colunas de dados preenchidos varia de acordo com o sistema operacional.
 ```
 
@@ -8527,8 +8159,8 @@ Nota:
 
 ```
 * Esta função é usada em conjunto com as funções SetCsvLogPath(), StartMonitor(), StopMonitor(),
-  SetCsvFileRowSeparator(), SetCsvFileReader(), SetCsvFileRowsToPrint(), AddFilterToLog() e
-  AddFilterToLogWithReplace();
+  SetCsvFileRowSeparator(), SetCsvFileReader(), SetCsvFileRowsToPrint(), AddFilterToCvsLog() e
+  AddFilterToCvsLogWithReplace();
 * As colunas de dados preenchidos varia de acordo com o sistema operacional.
 ```
 
@@ -8586,7 +8218,7 @@ Nota:
 {
 	var err error
 
-	GarbageCollector()
+	SaGarbageCollector()
 
 	var container = ContainerBuilder{}
 
@@ -8605,7 +8237,7 @@ Nota:
 	container.SetImageBuildOptionsMemory(100 * KMegaByte)
 
 	container.SetCsvLogPath("./test.counter.log.36.csv", true)
-	container.AddFilterToLog(
+	container.AddFilterToCvsLog(
 		"contador",
 		"counter",
 		"^.*?counter: (?P<valueToGet>[\\d\\.]+)",
@@ -8628,21 +8260,21 @@ Nota:
 	err = container.Init()
 	if err != nil {
 		fmt.Printf("error: %v", err.Error())
-		GarbageCollector()
+		SaGarbageCollector()
 		return
 	}
 
 	_, err = container.ImageBuildFromFolder()
 	if err != nil {
 		fmt.Printf("error: %v", err.Error())
-		GarbageCollector()
+		SaGarbageCollector()
 		return
 	}
 
 	err = container.ContainerBuildAndStartFromImage()
 	if err != nil {
 		log.Printf("error: %v", err.Error())
-		GarbageCollector()
+		SaGarbageCollector()
 		return
 	}
 
@@ -8675,11 +8307,11 @@ Nota:
 	err = container.StopMonitor()
 	if err != nil {
 		log.Printf("error: %v", err.Error())
-		GarbageCollector()
+		SaGarbageCollector()
 		return
 	}
 
-	GarbageCollector()
+	SaGarbageCollector()
 
 }
 ```
@@ -8717,8 +8349,8 @@ Note:
 
 ```
 * This function is used in conjunction with the SetCsvLogPath(), StartMonitor(), StopMonitor(),
-  SetCsvFileRowSeparator(), SetCsvFileReader(), SetCsvFileRowsToPrint(), AddFilterToLog() and
-  AddFilterToLogWithReplace() functions;
+  SetCsvFileRowSeparator(), SetCsvFileReader(), SetCsvFileRowsToPrint(), AddFilterToCvsLog() and
+  AddFilterToCvsLogWithReplace() functions;
 * The data columns populated varies by operating system.
 ```
 
@@ -8735,8 +8367,8 @@ Nota:
 
 ```
 * Esta função é usada em conjunto com as funções SetCsvLogPath(), StartMonitor(), StopMonitor(),
-  SetCsvFileRowSeparator(), SetCsvFileReader(), SetCsvFileRowsToPrint(), AddFilterToLog() e
-  AddFilterToLogWithReplace();
+  SetCsvFileRowSeparator(), SetCsvFileReader(), SetCsvFileRowsToPrint(), AddFilterToCvsLog() e
+  AddFilterToCvsLogWithReplace();
 * As colunas de dados preenchidos varia de acordo com o sistema operacional.
 ```
 
@@ -8764,8 +8396,8 @@ Note:
 ```
 * This function must be used in conjunction with the StartMonitor() and StopMonitor() functions;
 * The data columns populated varies by operating system;
-* See the SetCsvFileReader(), SetCsvFileRowsToPrint(), AddFilterToLog(),
-  AddFilterToLogWithReplace(), SetCsvFileValueSeparator() and SetCsvFileRowSeparator() functions
+* See the SetCsvFileReader(), SetCsvFileRowsToPrint(), AddFilterToCvsLog(),
+  AddFilterToCvsLogWithReplace(), SetCsvFileValueSeparator() and SetCsvFileRowSeparator() functions
   to change some log settings.
 ```
 
@@ -8784,8 +8416,8 @@ Nota:
 ```
 * Esta função deve ser usada em conjunto com as funções StartMonitor() e StopMonitor();
 * As colunas de dados preenchidos varia de acordo com o sistema operacional;
-* Veja as funções SetCsvFileReader(), SetCsvFileRowsToPrint(), AddFilterToLog(),
-  AddFilterToLogWithReplace(), SetCsvFileValueSeparator() e SetCsvFileRowSeparator() para alterar
+* Veja as funções SetCsvFileReader(), SetCsvFileRowsToPrint(), AddFilterToCvsLog(),
+  AddFilterToCvsLogWithReplace(), SetCsvFileValueSeparator() e SetCsvFileRowSeparator() para alterar
   algumas configurações do log.
 ```
 
@@ -8797,7 +8429,7 @@ Nota:
 	var err error
 	var imageInspect types.ImageInspect
 
-	GarbageCollector()
+	SaGarbageCollector()
 
 	var container = ContainerBuilder{}
 
@@ -8817,7 +8449,7 @@ Nota:
 
 	container.SetCsvLogPath("./test.counter.log.csv", true)
 	container.SetCsvFileValueSeparator("\t")
-	container.AddFilterToLogWithReplace(
+	container.AddFilterToCvsLogWithReplace(
 		"contador",
 		"counter",
 		"^.*?counter: (?P<valueToGet>[\\d\\.]+)",
@@ -8840,14 +8472,14 @@ Nota:
 	err = container.Init()
 	if err != nil {
 		fmt.Printf("error: %v", err.Error())
-		GarbageCollector()
+		SaGarbageCollector()
 		return
 	}
 
 	imageInspect, err = container.ImageBuildFromFolder()
 	if err != nil {
 		fmt.Printf("error: %v", err.Error())
-		GarbageCollector()
+		SaGarbageCollector()
 		return
 	}
 
@@ -8857,7 +8489,7 @@ Nota:
 	err = container.ContainerBuildAndStartFromImage()
 	if err != nil {
 		log.Printf("error: %v", err.Error())
-		GarbageCollector()
+		SaGarbageCollector()
 		return
 	}
 
@@ -8876,7 +8508,7 @@ Nota:
 
 	container.StopMonitor()
 
-	GarbageCollector()
+	SaGarbageCollector()
 
 }
 ```
@@ -8961,7 +8593,7 @@ value: slice de string contendo um variável de ambiente por chave
 {
 	var err error
 
-	GarbageCollector()
+	SaGarbageCollector()
 
 	var netDocker = dockerNetwork.ContainerBuilderNetwork{}
 	err = netDocker.Init()
@@ -9097,7 +8729,7 @@ Nota:
 {
 	var err error
 
-	GarbageCollector()
+	SaGarbageCollector()
 
 	var container = ContainerBuilder{}
 
@@ -9131,7 +8763,7 @@ Nota:
 		panic(err)
 	}
 
-	GarbageCollector()
+	SaGarbageCollector()
 
 }
 ```
@@ -9605,7 +9237,7 @@ this test only work on my acount \(sorry\)
 {
 	var err error
 
-	GarbageCollector()
+	SaGarbageCollector()
 
 	var container = ContainerBuilder{}
 	container.SetPrintBuildOnStrOut()
@@ -9665,7 +9297,7 @@ this test only work on my acount \(sorry\)
 
 	fmt.Printf("%s", body)
 
-	GarbageCollector()
+	SaGarbageCollector()
 
 }
 ```
@@ -10360,7 +9992,7 @@ Input:
 Note:
 
 ```
-* See ImageMakeCache(), SetCacheEnable(), MakeDefaultDockerfileForMe() and
+* See SaImageMakeCache(), SetCacheEnable(), MakeDefaultDockerfileForMe() and
   MakeDefaultDockerfileForMeWithInstallExtras() functions
 ```
 
@@ -10376,7 +10008,7 @@ Entrada:
 Nota:
 
 ```
-* Veja as funções ImageMakeCache(), SetCacheEnable(), MakeDefaultDockerfileForMe() e
+* Veja as funções SaImageMakeCache(), SetCacheEnable(), MakeDefaultDockerfileForMe() e
   MakeDefaultDockerfileForMeWithInstallExtras()
 ```
 
@@ -10455,6 +10087,92 @@ Entrada:
 Nota:
 
 \* o nome da imagem deve ter a tag de versão\. Ex\.: nome:latest
+
+<details><summary>Example</summary>
+<p>
+
+```go
+{
+
+	var err error
+
+	SaGarbageCollector()
+
+	var container = ContainerBuilder{}
+
+	container.SetPrintBuildOnStrOut()
+
+	container.SetImageName("delete:latest")
+
+	container.SetContainerName("container_delete_server_after_test")
+
+	container.SetGitCloneToBuild("https://github.com/helmutkemper/iotmaker.docker.util.whaleAquarium.sample.git")
+
+	container.SetWaitStringWithTimeout("Stating server on port 3000", 10*time.Second)
+
+	container.AddPortToChange("3000", "3030")
+
+	err = container.AddFileOrFolderToLinkBetweenConputerHostAndContainer("./test/static", "/static")
+	if err != nil {
+		log.Printf("container.AddFileOrFolderToLinkBetweenConputerHostAndContainer().error: %v", err.Error())
+		util.TraceToLog()
+		panic(err)
+	}
+
+	err = container.Init()
+	if err != nil {
+		util.TraceToLog()
+		panic(err)
+	}
+
+	_, err = container.ImageBuildFromServer()
+	if err != nil {
+		util.TraceToLog()
+		log.Printf("container.ImageBuildFromServer().error: %v", err.Error())
+		panic(err)
+	}
+
+	err = container.ContainerBuildAndStartFromImage()
+	if err != nil {
+		util.TraceToLog()
+		log.Printf("container.ContainerBuildAndStartFromImage().error: %v", err.Error())
+		panic(err)
+	}
+
+	// English: read server inside a container on address http://localhost:3030/
+	//
+	// Português: lê o servidor dentro do container na porta http://localhost:3030/
+	var resp *http.Response
+	resp, err = http.Get("http://localhost:3030/")
+	if err != nil {
+		util.TraceToLog()
+		log.Printf("http.Get().error: %v", err.Error())
+		panic(err)
+	}
+
+	var body []byte
+	body, err = ioutil.ReadAll(resp.Body)
+	if err != nil {
+		util.TraceToLog()
+		log.Printf("http.Get().error: %v", err.Error())
+		panic(err)
+	}
+
+	fmt.Printf("%s", body)
+
+	SaGarbageCollector()
+
+}
+```
+
+#### Output
+
+```
+<html><body><p>C is life! Golang is a evolution of C</p></body></html>
+```
+
+</p>
+</details>
 
 ### func \(\*ContainerBuilder\) [SetInspectInterval](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetInspectInterval.go#L32>)
 
@@ -10611,7 +10329,7 @@ Nota:
 		panic(err)
 	}
 
-	GarbageCollector()
+	SaGarbageCollector()
 
 }
 ```
@@ -11396,6 +11114,91 @@ Entrada:
   value: texto emitido na saída padrão informando por um evento esperado
   timeout: tempo máximo de espera
 ```
+
+<details><summary>Example</summary>
+<p>
+
+```go
+{
+	var err error
+
+	SaGarbageCollector()
+
+	var container = ContainerBuilder{}
+
+	container.SetPrintBuildOnStrOut()
+
+	container.SetImageName("delete:latest")
+
+	container.SetContainerName("container_delete_server_after_test")
+
+	container.SetGitCloneToBuild("https://github.com/helmutkemper/iotmaker.docker.util.whaleAquarium.sample.git")
+
+	container.SetWaitStringWithTimeout("Stating server on port 3000", 10*time.Second)
+
+	container.AddPortToChange("3000", "3030")
+
+	err = container.AddFileOrFolderToLinkBetweenConputerHostAndContainer("./test/static", "/static")
+	if err != nil {
+		log.Printf("container.AddFileOrFolderToLinkBetweenConputerHostAndContainer().error: %v", err.Error())
+		util.TraceToLog()
+		panic(err)
+	}
+
+	err = container.Init()
+	if err != nil {
+		util.TraceToLog()
+		panic(err)
+	}
+
+	_, err = container.ImageBuildFromServer()
+	if err != nil {
+		util.TraceToLog()
+		log.Printf("container.ImageBuildFromServer().error: %v", err.Error())
+		panic(err)
+	}
+
+	err = container.ContainerBuildAndStartFromImage()
+	if err != nil {
+		util.TraceToLog()
+		log.Printf("container.ContainerBuildAndStartFromImage().error: %v", err.Error())
+		panic(err)
+	}
+
+	// English: read server inside a container on address http://localhost:3030/
+	//
+	// Português: lê o servidor dentro do container na porta http://localhost:3030/
+	var resp *http.Response
+	resp, err = http.Get("http://localhost:3030/")
+	if err != nil {
+		util.TraceToLog()
+		log.Printf("http.Get().error: %v", err.Error())
+		panic(err)
+	}
+
+	var body []byte
+	body, err = ioutil.ReadAll(resp.Body)
+	if err != nil {
+		util.TraceToLog()
+		log.Printf("http.Get().error: %v", err.Error())
+		panic(err)
+	}
+
+	fmt.Printf("%s", body)
+
+	SaGarbageCollector()
+
+}
+```
+
+#### Output
+
+```
+<html><body><p>C is life! Golang is a evolution of C</p></body></html>
+```
+
+</p>
+</details>
 
 ### func \(\*ContainerBuilder\) [SizeToString](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSizeToString.go#L26>)
 
@@ -12992,7 +12795,7 @@ import (
 func main() {
 	var err error
 
-	GarbageCollector()
+	SaGarbageCollector()
 
 	var netDocker = &dockerNetwork.ContainerBuilderNetwork{}
 	err = netDocker.Init()
