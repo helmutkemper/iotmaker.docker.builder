@@ -4481,6 +4481,7 @@ import (
 	"fmt"
 	"github.com/docker/docker/api/types"
 	"log"
+	"os"
 )
 
 func main() {
@@ -4505,6 +4506,8 @@ func main() {
 		SaGarbageCollector()
 		return
 	}
+
+	_ = os.Remove("./example/golint/golangci-lint")
 
 }
 
@@ -4743,6 +4746,7 @@ import (
 	"fmt"
 	"github.com/docker/docker/api/types"
 	"log"
+	"os"
 )
 
 func main() {
@@ -4767,6 +4771,8 @@ func main() {
 		SaGarbageCollector()
 		return
 	}
+
+	_ = os.Remove("./example/golint/golangci-lint")
 
 }
 
