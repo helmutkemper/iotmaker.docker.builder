@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-func ExampleContainerBuilder_AddFilterToStartChaos() {
+func ExampleContainerBuilder_SetImageBuildOptionsMemory() {
 	var err error
 	var imageInspect types.ImageInspect
 
@@ -251,29 +251,13 @@ func ExampleContainerBuilder_AddFilterToStartChaos() {
 	// Português: Pega o ponteiro do canal de eventos dentro do container.
 	event := container.GetChaosEvent()
 
-	// English: Let the example run until a failure happens to terminate the test
-	//
-	// Português: Deixa o exemplo rodar até que uma falha aconteça para terminar o teste
-	for {
-		var pass = false
-		select {
-		case e := <-event:
-			if e.Done == true || e.Error == true || e.Fail == true {
-				pass = true
-
-				fmt.Printf("container name: %v\n", e.ContainerName)
-				fmt.Printf("done: %v\n", e.Done)
-				fmt.Printf("fail: %v\n", e.Fail)
-				fmt.Printf("error: %v\n", e.Error)
-				fmt.Printf("message: %v\n", e.Message)
-
-				break
-			}
-		}
-
-		if pass == true {
-			break
-		}
+	select {
+	case e := <-event:
+		fmt.Printf("container name: %v\n", e.ContainerName)
+		fmt.Printf("done: %v\n", e.Done)
+		fmt.Printf("fail: %v\n", e.Fail)
+		fmt.Printf("error: %v\n", e.Error)
+		fmt.Printf("message: %v\n", e.Message)
 	}
 
 	// English: Stop container monitoring.
@@ -292,7 +276,7 @@ func ExampleContainerBuilder_AddFilterToStartChaos() {
 	SaGarbageCollector()
 
 	// Output:
-	// image size: 1.4 MB
+	// image size: 1.38 MB
 	// image os: linux
 	// container name: container_counter_delete_after_test
 	// done: true

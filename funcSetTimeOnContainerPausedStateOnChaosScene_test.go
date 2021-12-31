@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-func ExampleContainerBuilder_AddFilterToStartChaos() {
+func ExampleContainerBuilder_SetTimeOnContainerPausedStateOnChaosScene() {
 	var err error
 	var imageInspect types.ImageInspect
 
