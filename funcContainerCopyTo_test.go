@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/docker/docker/api/types"
 	"log"
+	"os"
 )
 
 func ExampleContainerBuilder_ContainerCopyTo() {
@@ -28,6 +29,8 @@ func ExampleContainerBuilder_ContainerCopyTo() {
 		SaGarbageCollector()
 		return
 	}
+
+	_ = os.Remove("./example/golint/golangci-lint")
 
 	// Output:
 	// image size: 510.9 MB
