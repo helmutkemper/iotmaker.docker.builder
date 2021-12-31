@@ -6,7 +6,8 @@ import "time"
 //
 // English:
 //
-//  Defines the minimum and maximum waiting times before enabling the restart of containers in a chaos scenario
+//  Defines the minimum and maximum waiting times before enabling the restart of containers in a chaos
+//  scenario
 //
 //  The choice of time will be made randomly between the minimum and maximum values
 //
@@ -32,7 +33,8 @@ import "time"
 //
 // Português:
 //
-//  Define os tempos mínimo e máximos de espera antes de habilitar o reinício dos containers em um cenário de caos
+//  Define os tempos mínimo e máximos de espera antes de habilitar o reinício dos containers em um
+//  cenário de caos
 //
 //  A escolha do tempo será feita de forma aleatória entre os valores mínimo e máximo
 //

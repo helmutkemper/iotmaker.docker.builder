@@ -2,7 +2,11 @@ package iotmakerdockerbuilder
 
 // SetSshKnownHostsFile
 //
-// English: set a sseh knownhosts file
+// English:
+//
+//  Set a sseh knownhosts file
+//
+// Example:
 //
 //     var err error
 //     var usr *user.User
@@ -22,7 +26,11 @@ package iotmakerdockerbuilder
 //     var container = ContainerBuilder{}
 //     container.SetSshKnownHostsFile(string(file))
 //
-// Português: define o arquivo knownhosts do ssh
+// Português:
+//
+//  Define o arquivo knownhosts do ssh
+//
+// Exemplo:
 //
 //     var err error
 //     var usr *user.User

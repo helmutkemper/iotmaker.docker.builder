@@ -2,7 +2,11 @@ package iotmakerdockerbuilder
 
 // SetSshIdRsaFile
 //
-// English: Set a id_rsa file from shh
+// English:
+//
+//  Set a id_rsa file from shh
+//
+// Example:
 //
 //     var err error
 //     var usr *user.User
@@ -22,7 +26,11 @@ package iotmakerdockerbuilder
 //     var container = ContainerBuilder{}
 //     container.SetSshIdRsaFile(string(file))
 //
-// Português: Define o arquivo id_rsa do shh
+// Português:
+//
+//  Define o arquivo id_rsa do shh
+//
+// Exemplo:
 //
 //     var err error
 //     var usr *user.User

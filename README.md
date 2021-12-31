@@ -527,7 +527,7 @@ Para quem não tem prática em processo de build em duas etapas\, na primeira et
   - [func (e *ContainerBuilder) SetTimeToStartChaosOnChaosScene(min, max time.Duration)](<#func-containerbuilder-settimetostartchaosonchaosscene>)
   - [func (e *ContainerBuilder) SetWaitString(value string)](<#func-containerbuilder-setwaitstring>)
   - [func (e *ContainerBuilder) SetWaitStringWithTimeout(value string, timeout time.Duration)](<#func-containerbuilder-setwaitstringwithtimeout>)
-  - [func (e *ContainerBuilder) SizeToString(value int64) string](<#func-containerbuilder-sizetostring>)
+  - [func (e *ContainerBuilder) SizeToString(value int64) (size string)](<#func-containerbuilder-sizetostring>)
   - [func (e *ContainerBuilder) StartMonitor()](<#func-containerbuilder-startmonitor>)
   - [func (e *ContainerBuilder) StopMonitor() (err error)](<#func-containerbuilder-stopmonitor>)
   - [func (e ContainerBuilder) TestDockerInstall() (err error)](<#func-containerbuilder-testdockerinstall>)
@@ -10733,7 +10733,7 @@ Nota:
 https://docs.docker.com/engine/reference/builder/#onbuild
 ```
 
-### func \(\*ContainerBuilder\) [SetOpenAllContainersPorts](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetDoNotOpenContainersPorts.go#L18>)
+### func \(\*ContainerBuilder\) [SetOpenAllContainersPorts](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetOpenAllContainersPorts.go#L26>)
 
 ```go
 func (e *ContainerBuilder) SetOpenAllContainersPorts()
@@ -10741,25 +10741,33 @@ func (e *ContainerBuilder) SetOpenAllContainersPorts()
 
 #### SetOpenAllContainersPorts
 
-English: Automatically exposes all ports listed in the image used to generate the container
+English:
+
+Automatically exposes all ports listed in the image used to generate the container
+
+Note:
 
 ```
-Note: The ports exposed in the creation of the container can be defined by SetOpenAllContainersPorts(),
-AddPortToChange() and AddPortToExpose();
-By default, all doors are closed;
-The ImageListExposedPorts() function returns all ports defined in the image to be exposed.
+* The ports exposed in the creation of the container can be defined by
+  SetOpenAllContainersPorts(), AddPortToChange() and AddPortToExpose();
+* By default, all doors are closed;
+* The ImageListExposedPorts() function returns all ports defined in the image to be exposed.
 ```
 
-Português: Expõe automaticamente todas as portas listadas na imagem usada para gerar o container
+Português:
+
+Expõe automaticamente todas as portas listadas na imagem usada para gerar o container
+
+Nota:
 
 ```
-Nota: As portas expostas na criação do container pode ser definidas por SetOpenAllContainersPorts(),
-AddPortToChange() e AddPortToExpose();
-Por padrão, todas as portas ficam fechadas;
-A função ImageListExposedPorts() retorna todas as portas definidas na imagem para serem expostas.
+* As portas expostas na criação do container pode ser definidas por SetOpenAllContainersPorts(),
+  AddPortToChange() e AddPortToExpose();
+* Por padrão, todas as portas ficam fechadas;
+* A função ImageListExposedPorts() retorna todas as portas definidas na imagem para serem expostas.
 ```
 
-### func \(\*ContainerBuilder\) [SetPrintBuildOnStrOut](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetPrintBuildOnStrOut.go#L8>)
+### func \(\*ContainerBuilder\) [SetPrintBuildOnStrOut](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetPrintBuildOnStrOut.go#L13>)
 
 ```go
 func (e *ContainerBuilder) SetPrintBuildOnStrOut()
@@ -10767,11 +10775,15 @@ func (e *ContainerBuilder) SetPrintBuildOnStrOut()
 
 #### SetPrintBuildOnStrOut
 
-English: Prints the standard output used when building the image or the container to the standard output of the log\.
+English:
 
-Português: Imprime a saída padrão usada durante a construção da imagem ou do container no log\.
+Prints the standard output used when building the image or the container to the standard output of the log\.
 
-### func \(\*ContainerBuilder\) [SetPrivateRepositoryAutoConfig](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetPrivateRepositoryAutoConfig.go#L18>)
+Português:
+
+Imprime a saída padrão usada durante a construção da imagem ou do container no log\.
+
+### func \(\*ContainerBuilder\) [SetPrivateRepositoryAutoConfig](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetPrivateRepositoryAutoConfig.go#L28>)
 
 ```go
 func (e *ContainerBuilder) SetPrivateRepositoryAutoConfig() (err error)
@@ -10779,14 +10791,52 @@ func (e *ContainerBuilder) SetPrivateRepositoryAutoConfig() (err error)
 
 #### SetPrivateRepositoryAutoConfig
 
-English: Copies the ssh \~/\.ssh/id\_rsa file and the \~/\.gitconfig file to the SSH\_ID\_RSA\_FILE and GITCONFIG\_FILE variables\.
+English:
 
-Português: Copia o arquivo ssh \~/\.ssh/id\_rsa e o arquivo \~/\.gitconfig para as variáveis SSH\_ID\_RSA\_FILE e GITCONFIG\_FILE\.
+Copies the ssh \~/\.ssh/id\_rsa file and the \~/\.gitconfig file to the SSH\_ID\_RSA\_FILE and GITCONFIG\_FILE variables\.
 
-### func \(\*ContainerBuilder\) [SetRestartProbability](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetRestartProbability.go#L3>)
+```
+Output:
+  err: Standard error object
+```
+
+Português:
+
+Copia o arquivo ssh \~/\.ssh/id\_rsa e o arquivo \~/\.gitconfig para as variáveis SSH\_ID\_RSA\_FILE e GITCONFIG\_FILE\.
+
+```
+Saída:
+  err: Objeto de erro padrão
+```
+
+### func \(\*ContainerBuilder\) [SetRestartProbability](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetRestartProbability.go#L23>)
 
 ```go
 func (e *ContainerBuilder) SetRestartProbability(restartProbability, restartChangeIpProbability float64, limit int)
+```
+
+#### SetRestartProbability
+
+English:
+
+```
+Set the restart probability and the probability of changing the ip of the container when it restarts.
+
+Input:
+  restartProbability: Probability of restarting a container during the chaos test.
+  restartChangeIpProbability: Probability of changing the ip of the container when it restarts.
+  limit: Limit of how many times the container will restart.
+```
+
+Português:
+
+Define a probabilidade de reiniciar um container durante o teste de caos e a probabilidade de trocar o ip do container quando ele reiniciar\.
+
+```
+Entrada:
+  restartProbability: Probabilidade de reiniciar um container durante o teste de caos.
+  restartChangeIpProbability: Probabilidade de trocar o ip do container quando ele reiniciar.
+  limit: Limite de quantas vezes o container vai reiniciar.
 ```
 
 ### func \(\*ContainerBuilder\) [SetSceneNameOnChaosScene](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetSceneNameOnChaosScene.go#L48>)
@@ -10845,7 +10895,7 @@ Nota:
     [opcional] ContainerBuilder.ContainerSetDisabeStopOnChaosScene()
 ```
 
-### func \(\*ContainerBuilder\) [SetSshIdRsaFile](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetSshIdRsaFile.go#L44>)
+### func \(\*ContainerBuilder\) [SetSshIdRsaFile](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetSshIdRsaFile.go#L52>)
 
 ```go
 func (e *ContainerBuilder) SetSshIdRsaFile(value string)
@@ -10853,7 +10903,11 @@ func (e *ContainerBuilder) SetSshIdRsaFile(value string)
 
 #### SetSshIdRsaFile
 
-English: Set a id\_rsa file from shh
+English:
+
+Set a id\_rsa file from shh
+
+Example:
 
 ```
 var err error
@@ -10875,7 +10929,11 @@ var container = ContainerBuilder{}
 container.SetSshIdRsaFile(string(file))
 ```
 
-Português: Define o arquivo id\_rsa do shh
+Português:
+
+Define o arquivo id\_rsa do shh
+
+Exemplo:
 
 ```
 var err error
@@ -10897,7 +10955,7 @@ var container = ContainerBuilder{}
 container.SetSshIdRsaFile(string(file))
 ```
 
-### func \(\*ContainerBuilder\) [SetSshKnownHostsFile](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetSshKnownHostsFile.go#L44>)
+### func \(\*ContainerBuilder\) [SetSshKnownHostsFile](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetSshKnownHostsFile.go#L52>)
 
 ```go
 func (e *ContainerBuilder) SetSshKnownHostsFile(value string)
@@ -10905,7 +10963,11 @@ func (e *ContainerBuilder) SetSshKnownHostsFile(value string)
 
 #### SetSshKnownHostsFile
 
-English: set a sseh knownhosts file
+English:
+
+Set a sseh knownhosts file
+
+Example:
 
 ```
 var err error
@@ -10927,7 +10989,11 @@ var container = ContainerBuilder{}
 container.SetSshKnownHostsFile(string(file))
 ```
 
-Português: define o arquivo knownhosts do ssh
+Português:
+
+Define o arquivo knownhosts do ssh
+
+Exemplo:
 
 ```
 var err error
@@ -10949,7 +11015,7 @@ var container = ContainerBuilder{}
 container.SetSshKnownHostsFile(string(file))
 ```
 
-### func \(\*ContainerBuilder\) [SetTimeBeforeStartChaosInThisContainerOnChaosScene](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetTimeBeforeStartChaosInThisContainerOnChaosScene.go#L58>)
+### func \(\*ContainerBuilder\) [SetTimeBeforeStartChaosInThisContainerOnChaosScene](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetTimeBeforeStartChaosInThisContainerOnChaosScene.go#L60>)
 
 ```go
 func (e *ContainerBuilder) SetTimeBeforeStartChaosInThisContainerOnChaosScene(min, max time.Duration)
@@ -11209,7 +11275,7 @@ Nota:
     [opcional] ContainerBuilder.ContainerSetDisabeStopOnChaosScene()
 ```
 
-### func \(\*ContainerBuilder\) [SetTimeToStartChaosOnChaosScene](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetTimeToStartChaosOnChaosScene.go#L58>)
+### func \(\*ContainerBuilder\) [SetTimeToStartChaosOnChaosScene](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetTimeToStartChaosOnChaosScene.go#L64>)
 
 ```go
 func (e *ContainerBuilder) SetTimeToStartChaosOnChaosScene(min, max time.Duration)
@@ -11277,7 +11343,7 @@ Nota:
     [opcional] ContainerBuilder.ContainerSetDisabeStopOnChaosScene()
 ```
 
-### func \(\*ContainerBuilder\) [SetWaitString](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetWaitString.go#L14>)
+### func \(\*ContainerBuilder\) [SetWaitString](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetWaitString.go#L20>)
 
 ```go
 func (e *ContainerBuilder) SetWaitString(value string)
@@ -11285,19 +11351,25 @@ func (e *ContainerBuilder) SetWaitString(value string)
 
 #### SetWaitString
 
-English: Defines a text to be searched for in the container's default output and forces it to wait for the container to be considered ready\-to\-use
+English:
+
+Defines a text to be searched for in the container's default output and forces it to wait for the container to be considered ready\-to\-use
 
 ```
-value: searched text
+Input:
+  value: searched text
 ```
 
-Português: Define um texto a ser procurado na saída padrão do container e força a espera do mesmo para se considerar o container como pronto para uso
+Português:
+
+Define um texto a ser procurado na saída padrão do container e força a espera do mesmo para se considerar o container como pronto para uso
 
 ```
-value: texto procurado
+Entrada:
+  value: texto procurado
 ```
 
-### func \(\*ContainerBuilder\) [SetWaitStringWithTimeout](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetWaitStringWithTimeout.go#L20>)
+### func \(\*ContainerBuilder\) [SetWaitStringWithTimeout](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSetWaitStringWithTimeout.go#L26>)
 
 ```go
 func (e *ContainerBuilder) SetWaitStringWithTimeout(value string, timeout time.Duration)
@@ -11305,27 +11377,59 @@ func (e *ContainerBuilder) SetWaitStringWithTimeout(value string, timeout time.D
 
 #### SetWaitStringWithTimeout
 
-English: Defines a text to be searched for in the container's default output and forces it to wait for the container to be considered ready\-to\-use
+English:
+
+Defines a text to be searched for in the container's default output and forces it to wait for the container to be considered ready\-to\-use
 
 ```
-value: text emitted to default output reporting by an expected event
-timeout: maximum waiting time
+Input:
+  value: text emitted to default output reporting by an expected event
+  timeout: maximum waiting time
 ```
 
-Português: Define um texto a ser procurado na saída padrão do container e força a espera do mesmo para se considerar o container como pronto para uso
+Português:
+
+Define um texto a ser procurado na saída padrão do container e força a espera do mesmo para se considerar o container como pronto para uso
 
 ```
-value: texto emitido na saída padrão informando por um evento esperado
-timeout: tempo máximo de espera
+Entrada:
+  value: texto emitido na saída padrão informando por um evento esperado
+  timeout: tempo máximo de espera
 ```
 
-### func \(\*ContainerBuilder\) [SizeToString](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSizeToString.go#L5>)
+### func \(\*ContainerBuilder\) [SizeToString](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcSizeToString.go#L26>)
 
 ```go
-func (e *ContainerBuilder) SizeToString(value int64) string
+func (e *ContainerBuilder) SizeToString(value int64) (size string)
 ```
 
-### func \(\*ContainerBuilder\) [StartMonitor](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcStartMonitor.go#L18>)
+#### SizeToString
+
+Português:
+
+Formata um valor inteiro em uma string contendo o valor em Bytes\, KBytes\, MBytes e GBytes\.
+
+```
+Entrada:
+  value: valor inteiro representando um tamanho de memória
+
+Saída:
+  size: string contendo o valor em Bytes, KBytes, MBytes e GBytes
+```
+
+English:
+
+```
+Format an integer value into a string containing the value in Bytes, KBytes, MBytes and GBytes.
+
+Input:
+  value: integer value representing a memory size
+
+Output:
+  size: string containing the value in Bytes, KBytes, MBytes and GBytes
+```
+
+### func \(\*ContainerBuilder\) [StartMonitor](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcStartMonitor.go#L26>)
 
 ```go
 func (e *ContainerBuilder) StartMonitor()
@@ -11333,16 +11437,27 @@ func (e *ContainerBuilder) StartMonitor()
 
 #### StartMonitor
 
-Português: Habilitar um time\.Ticker com a finalidade de colher informações de desempenho do container na forma de um log CSV e gerencia o controle de caos\, caso o mesmo tenha sido habilitado\.
+Português:
+
+Habilitar um time\.Ticker com a finalidade de colher informações de desempenho do container na forma de um log CSV e gerencia o controle de caos\, caso o mesmo tenha sido habilitado\.
+
+Nota:
 
 ```
-Nota: - Esta função é usada em conjunto com as funções EnableChaosScene() e SetCsvLogPath()
+* Esta função é usada em conjunto com as funções EnableChaosScene() e SetCsvLogPath()
 ```
 
-English: Enable a time\.Ticker in order to gather performance information from the container in the form of a CSV log and manage chaos control\, if it has been enabled\.
+English:
 
 ```
-Nota: - Esta função é usada em conjunto com as funções EnableChaosScene() e SetCsvLogPath()
+Enable a time.Ticker in order to gather performance information from the container in the form of
+a CSV log and manage chaos control, if it has been enabled.
+```
+
+Nota:
+
+```
+* Esta função é usada em conjunto com as funções EnableChaosScene() e SetCsvLogPath()
 ```
 
 ### func \(\*ContainerBuilder\) [StopMonitor](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcStopMonitor.go#L3>)

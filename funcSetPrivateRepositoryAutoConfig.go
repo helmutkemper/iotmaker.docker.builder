@@ -10,11 +10,21 @@ import (
 
 // SetPrivateRepositoryAutoConfig
 //
-// English: Copies the ssh ~/.ssh/id_rsa file and the ~/.gitconfig file to the SSH_ID_RSA_FILE and GITCONFIG_FILE
-// variables.
+// English:
 //
-// Português: Copia o arquivo ssh ~/.ssh/id_rsa e o arquivo ~/.gitconfig para as variáveis SSH_ID_RSA_FILE e
-// GITCONFIG_FILE.
+//  Copies the ssh ~/.ssh/id_rsa file and the ~/.gitconfig file to the SSH_ID_RSA_FILE and
+//  GITCONFIG_FILE variables.
+//
+//   Output:
+//     err: Standard error object
+//
+// Português:
+//
+//  Copia o arquivo ssh ~/.ssh/id_rsa e o arquivo ~/.gitconfig para as variáveis SSH_ID_RSA_FILE e
+//  GITCONFIG_FILE.
+//
+//   Saída:
+//     err: Objeto de erro padrão
 func (e *ContainerBuilder) SetPrivateRepositoryAutoConfig() (err error) {
 	var userData *user.User
 	var fileData []byte
