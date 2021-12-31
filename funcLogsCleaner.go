@@ -6,16 +6,6 @@ import (
 
 // logsCleaner
 //
-// Português:
-//
-//   Limpa as linhas em branco da saída padrão do container
-//
-//    Entrada:
-//      logs: saída padrão do container
-//
-//    Saída:
-//      logsLine: Lista de linhas da saída padrão do container
-//
 // English:
 //
 //   Clear blank lines of the container's standard output
@@ -25,6 +15,16 @@ import (
 //
 //   Output:
 //     logsLine: List of lines of the container's standard output
+//
+// Português:
+//
+//   Limpa as linhas em branco da saída padrão do container
+//
+//    Entrada:
+//      logs: saída padrão do container
+//
+//    Saída:
+//      logsLine: Lista de linhas da saída padrão do container
 func (e *ContainerBuilder) logsCleaner(logs []byte) (logsLine [][]byte) {
 
 	size := len(logs)

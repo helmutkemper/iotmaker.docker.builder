@@ -11855,18 +11855,6 @@ func (e *ContainerBuilder) logsCleaner(logs []byte) (logsLine [][]byte)
 
 logsCleaner
 
-Português:
-
-```
-Limpa as linhas em branco da saída padrão do container
-
- Entrada:
-   logs: saída padrão do container
-
- Saída:
-   logsLine: Lista de linhas da saída padrão do container
-```
-
 English:
 
 ```
@@ -11877,6 +11865,18 @@ Input:
 
 Output:
   logsLine: List of lines of the container's standard output
+```
+
+Português:
+
+```
+Limpa as linhas em branco da saída padrão do container
+
+ Entrada:
+   logs: saída padrão do container
+
+ Saída:
+   logsLine: Lista de linhas da saída padrão do container
 ```
 
 ### func \(\*ContainerBuilder\) [logsSearchAndReplaceIntoText](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcLogsSearchAndReplaceIntoText.go#L13>)
