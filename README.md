@@ -4142,6 +4142,179 @@ Note:
   restarted after an unresponsive time.
 ```
 
+<details><summary>Example</summary>
+<p>
+
+```go
+{
+
+	var err error
+	var imageInspect types.ImageInspect
+
+	err = SaImageMakeCacheWithDefaultName("./example/cache/", 365*24*60*60*time.Second)
+	if err != nil {
+		fmt.Printf("error: %v", err.Error())
+		SaGarbageCollector()
+		return
+	}
+
+	SaGarbageCollector()
+
+	var container = ContainerBuilder{}
+
+	container.SetPrintBuildOnStrOut()
+
+	container.SetCacheEnable(true)
+
+	container.MakeDefaultDockerfileForMe()
+
+	container.SetImageName("delete:latest")
+
+	container.SetBuildFolderPath("./test/chaos")
+
+	container.SetContainerName("container_counter_delete_after_test")
+
+	container.SetImageBuildOptionsMemory(100 * KMegaByte)
+
+	container.SetCsvLogPath("./test.counter.log.csv", true)
+
+	container.SetCsvFileValueSeparator("\t")
+
+	container.AddFilterToCvsLogWithReplace(
+
+		"contador",
+
+		"counter",
+
+		"^.*?counter: (?P<valueToGet>[\\d\\.]+)",
+
+		"\\.",
+		",",
+	)
+
+	container.AddRestartMatchFlag(
+
+		"restart-me!",
+	)
+
+	container.AddFilterToSuccess(
+
+		"done!",
+
+		"^.*?(?P<valueToGet>\\d+/\\d+/\\d+ \\d+:\\d+:\\d+ done!).*",
+
+		"(?P<date>\\d+/\\d+/\\d+)\\s+(?P<hour>\\d+:\\d+:\\d+)\\s+(?P<value>done!).*",
+		"${value}",
+	)
+
+	container.AddFilterToFail(
+
+		"counter: 340",
+
+		"^.*?(?P<valueToGet>\\d+/\\d+/\\d+ \\d+:\\d+:\\d+ counter: [\\d\\.]+).*",
+
+		"(?P<date>\\d+/\\d+/\\d+)\\s+(?P<hour>\\d+:\\d+:\\d+)\\s+counter:\\s+(?P<value>[\\d\\.]+).*",
+		"Test Fail! Counter Value: ${value} - Hour: ${hour} - Date: ${date}",
+	)
+
+	container.AddFilterToStartChaos(
+		"chaos enable",
+		"chaos enable",
+		"",
+		"",
+	)
+
+	container.SetRestartProbability(0.9, 1.0, 1)
+
+	container.SetTimeToStartChaosOnChaosScene(2*time.Second, 5*time.Second)
+
+	container.SetTimeBeforeStartChaosInThisContainerOnChaosScene(2*time.Second, 5*time.Second)
+
+	container.SetTimeOnContainerPausedStateOnChaosScene(2*time.Second, 5*time.Second)
+
+	container.SetTimeOnContainerUnpausedStateOnChaosScene(2*time.Second, 5*time.Second)
+
+	container.SetTimeToRestartThisContainerAfterStopEventOnChaosScene(2*time.Second, 5*time.Second)
+
+	container.EnableChaosScene(true)
+
+	err = container.Init()
+	if err != nil {
+		fmt.Printf("error: %v", err.Error())
+		SaGarbageCollector()
+		return
+	}
+
+	imageInspect, err = container.ImageBuildFromFolder()
+	if err != nil {
+		fmt.Printf("error: %v", err.Error())
+		SaGarbageCollector()
+		return
+	}
+
+	fmt.Printf("image size: %v\n", container.SizeToString(imageInspect.Size))
+	fmt.Printf("image os: %v\n", imageInspect.Os)
+
+	err = container.ContainerBuildAndStartFromImage()
+	if err != nil {
+		log.Printf("error: %v", err.Error())
+		SaGarbageCollector()
+		return
+	}
+
+	container.StartMonitor()
+
+	event := container.GetChaosEvent()
+
+	for {
+		var pass = false
+		select {
+		case e := <-event:
+			if e.Done == true || e.Error == true || e.Fail == true {
+				pass = true
+
+				fmt.Printf("container name: %v\n", e.ContainerName)
+				fmt.Printf("done: %v\n", e.Done)
+				fmt.Printf("fail: %v\n", e.Fail)
+				fmt.Printf("error: %v\n", e.Error)
+				fmt.Printf("message: %v\n", e.Message)
+
+				break
+			}
+		}
+
+		if pass == true {
+			break
+		}
+	}
+
+	err = container.StopMonitor()
+	if err != nil {
+		log.Printf("error: %v", err.Error())
+		SaGarbageCollector()
+		return
+	}
+
+	SaGarbageCollector()
+
+}
+```
+
+#### Output
+
+```
+image size: 1.4 MB
+image os: linux
+container name: container_counter_delete_after_test
+done: true
+fail: false
+error: false
+message: done!
+```
+
+</p>
+</details>
+
 ### func \(\*ContainerBuilder\) [AddRestartMatchFlagToFileLog](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcAddRestartMatchFlagToFileLog.go#L51>)
 
 ```go
@@ -4198,6 +4371,187 @@ Nota:
   respondendo devido a sobrecarga, ou parado e reiniciado, simulando uma queda crítica, onde um
   microsserviço foi reinicializado depois de um tempo sem resposta.
 ```
+
+<details><summary>Example</summary>
+<p>
+
+```go
+{
+
+	var err error
+	var imageInspect types.ImageInspect
+
+	err = SaImageMakeCacheWithDefaultName("./example/cache/", 365*24*60*60*time.Second)
+	if err != nil {
+		fmt.Printf("error: %v", err.Error())
+		SaGarbageCollector()
+		return
+	}
+
+	SaGarbageCollector()
+
+	var container = ContainerBuilder{}
+
+	container.SetPrintBuildOnStrOut()
+
+	container.SetCacheEnable(true)
+
+	container.MakeDefaultDockerfileForMe()
+
+	container.SetImageName("delete:latest")
+
+	container.SetBuildFolderPath("./test/chaos")
+
+	container.SetContainerName("container_counter_delete_after_test")
+
+	container.SetImageBuildOptionsMemory(100 * KMegaByte)
+
+	container.SetCsvLogPath("./test.counter.log.csv", true)
+
+	container.SetCsvFileValueSeparator("\t")
+
+	container.AddFilterToCvsLogWithReplace(
+
+		"contador",
+
+		"counter",
+
+		"^.*?counter: (?P<valueToGet>[\\d\\.]+)",
+
+		"\\.",
+		",",
+	)
+
+	err = container.AddRestartMatchFlagToFileLog(
+
+		"restart-me!",
+
+		"./log1/log2/log3",
+	)
+	err = container.Init()
+	if err != nil {
+		fmt.Printf("error: %v", err.Error())
+		SaGarbageCollector()
+		return
+	}
+
+	container.AddFilterToSuccess(
+
+		"done!",
+
+		"^.*?(?P<valueToGet>\\d+/\\d+/\\d+ \\d+:\\d+:\\d+ done!).*",
+
+		"(?P<date>\\d+/\\d+/\\d+)\\s+(?P<hour>\\d+:\\d+:\\d+)\\s+(?P<value>done!).*",
+		"${value}",
+	)
+
+	container.AddFilterToFail(
+
+		"counter: 340",
+
+		"^.*?(?P<valueToGet>\\d+/\\d+/\\d+ \\d+:\\d+:\\d+ counter: [\\d\\.]+).*",
+
+		"(?P<date>\\d+/\\d+/\\d+)\\s+(?P<hour>\\d+:\\d+:\\d+)\\s+counter:\\s+(?P<value>[\\d\\.]+).*",
+		"Test Fail! Counter Value: ${value} - Hour: ${hour} - Date: ${date}",
+	)
+
+	container.AddFilterToStartChaos(
+		"chaos enable",
+		"chaos enable",
+		"",
+		"",
+	)
+
+	container.SetRestartProbability(0.9, 1.0, 1)
+
+	container.SetTimeToStartChaosOnChaosScene(2*time.Second, 5*time.Second)
+
+	container.SetTimeBeforeStartChaosInThisContainerOnChaosScene(2*time.Second, 5*time.Second)
+
+	container.SetTimeOnContainerPausedStateOnChaosScene(2*time.Second, 5*time.Second)
+
+	container.SetTimeOnContainerUnpausedStateOnChaosScene(2*time.Second, 5*time.Second)
+
+	container.SetTimeToRestartThisContainerAfterStopEventOnChaosScene(2*time.Second, 5*time.Second)
+
+	container.EnableChaosScene(true)
+
+	err = container.Init()
+	if err != nil {
+		fmt.Printf("error: %v", err.Error())
+		SaGarbageCollector()
+		return
+	}
+
+	imageInspect, err = container.ImageBuildFromFolder()
+	if err != nil {
+		fmt.Printf("error: %v", err.Error())
+		SaGarbageCollector()
+		return
+	}
+
+	fmt.Printf("image size: %v\n", container.SizeToString(imageInspect.Size))
+	fmt.Printf("image os: %v\n", imageInspect.Os)
+
+	err = container.ContainerBuildAndStartFromImage()
+	if err != nil {
+		log.Printf("error: %v", err.Error())
+		SaGarbageCollector()
+		return
+	}
+
+	container.StartMonitor()
+
+	event := container.GetChaosEvent()
+
+	for {
+		var pass = false
+		select {
+		case e := <-event:
+			if e.Done == true || e.Error == true || e.Fail == true {
+				pass = true
+
+				fmt.Printf("container name: %v\n", e.ContainerName)
+				fmt.Printf("done: %v\n", e.Done)
+				fmt.Printf("fail: %v\n", e.Fail)
+				fmt.Printf("error: %v\n", e.Error)
+				fmt.Printf("message: %v\n", e.Message)
+
+				break
+			}
+		}
+
+		if pass == true {
+			break
+		}
+	}
+
+	err = container.StopMonitor()
+	if err != nil {
+		log.Printf("error: %v", err.Error())
+		SaGarbageCollector()
+		return
+	}
+
+	SaGarbageCollector()
+
+}
+```
+
+#### Output
+
+```
+image size: 1.4 MB
+image os: linux
+container name: container_counter_delete_after_test
+done: true
+fail: false
+error: false
+message: done!
+```
+
+</p>
+</details>
 
 ### func \(\*ContainerBuilder\) [AddStartChaosMatchFlag](<https://github.com/helmutkemper/iotmaker.docker.builder/blob/main/funcAddStartChaosMatchFlag.go#L22>)
 
