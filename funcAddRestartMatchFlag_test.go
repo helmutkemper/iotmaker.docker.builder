@@ -7,9 +7,8 @@ import (
 	"time"
 )
 
-// example:padrão
+func ExampleContainerBuilder_AddRestartMatchFlag() {
 
-func ExampleContainerBuilder_AddFilterToStartChaos() {
 	var err error
 	var imageInspect types.ImageInspect
 
@@ -105,22 +104,11 @@ func ExampleContainerBuilder_AddFilterToStartChaos() {
 	// English: Adds a filter to look for a value in the container's standard output indicating the possibility of restarting the container.
 	//
 	// Português: Adiciona um filtro para procurar um valor na saída padrão do container indicando a possibilidade de reiniciar o container.
-	container.AddFilterToRestartContainer(
+	container.AddRestartMatchFlag(
 		// English: Simple text searched in the container's standard output to activate the filter
 		//
 		// Português: Texto simples procurado na saída padrão do container para ativar o filtro
 		"restart-me!",
-
-		// English: Regular expression used to filter what goes into the log using the `valueToGet` parameter.
-		//
-		// Português: Expressão regular usada para filtrar o que vai para o log usando o parâmetro `valueToGet`.
-		"^.*?(?P<valueToGet>restart-me!)",
-
-		// English: Regular expression used for search and replacement in the text found in the previous step [optional].
-		//
-		// Português: Expressão regular usada para busca e substituição no texto encontrado na etapa anterior [opcional].
-		"",
-		"",
 	)
 
 	// English: Adds a filter to look for a value in the container's standard output indicating the success of the test.

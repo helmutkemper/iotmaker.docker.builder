@@ -7,6 +7,8 @@ import (
 	"time"
 )
 
+// example:padrão
+
 func ExampleContainerBuilder_AddFilterToSuccess() {
 
 	var err error
@@ -70,6 +72,9 @@ func ExampleContainerBuilder_AddFilterToSuccess() {
 	// Português: Define o caminho do arquivo de log com dados estatísticos do container
 	container.SetCsvLogPath("./test.counter.log.csv", true)
 
+	// English: Defines the log file path with container statistical data
+	//
+	// Português: Define o separador usado no arquivo de log em formato CSV
 	container.SetCsvFileValueSeparator("\t")
 
 	// English: Adds a search filter to the standard output of the container, to save the information in the log file
