@@ -5,7 +5,7 @@ import (
 	"github.com/helmutkemper/util"
 )
 
-// TestDockerInstall
+// SaTestDockerInstall
 //
 // English:
 //
@@ -20,19 +20,14 @@ import (
 //
 //   Saída:
 //     err: Standard error object
-func (e ContainerBuilder) TestDockerInstall() (err error) {
-	e.dockerSys = iotmakerdocker.DockerSystem{}
-	err = e.dockerSys.Init()
+func SaTestDockerInstall() (err error) {
+	var dockerSys = iotmakerdocker.DockerSystem{}
+	err = dockerSys.Init()
 	if err != nil {
 		util.TraceToLog()
 		return
 	}
 
-	_, err = e.dockerSys.ImageList()
-	if err != nil {
-		util.TraceToLog()
-		return
-	}
-
+	_, err = dockerSys.ImageList()
 	return
 }
