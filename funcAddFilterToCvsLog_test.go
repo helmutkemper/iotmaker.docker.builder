@@ -84,25 +84,29 @@ func ExampleContainerBuilder_AddFilterToCvsLog() {
 	//
 	// Português: Adiciona um filtro de busca na saída padrão do container, para salvar a informação no arquivo de log
 	container.AddFilterToCvsLogWithReplace(
-		// English: Label to be written to log file
+		// English: Defines the column name
 		//
-		// Português: Rótulo a ser escrito no arquivo de log
+		// Português: Define o nome da coluna
 		"contador",
 
-		// English: Simple text searched in the container's standard output to activate the filter
+		// English: Defines the text to be searched
 		//
-		// Português: Texto simples procurado na saída padrão do container para ativar o filtro
+		// Português: Define o texto a ser procurado
 		"counter",
 
-		// English: Regular expression used to filter what goes into the log using the `valueToGet` parameter.
+		// English: Defines the regular expression to be applied on the found text
 		//
-		// Português: Expressão regular usada para filtrar o que vai para o log usando o parâmetro `valueToGet`.
+		// Português: Define a expressão regular a ser aplicada no texto encontrado
 		"^.*?counter: (?P<valueToGet>[\\d\\.]+)",
 
-		// English: Regular expression used for search and replacement in the text found in the previous step [optional].
+		// English: Defines the text to be replaced on the found text
 		//
-		// Português: Expressão regular usada para busca e substituição no texto encontrado na etapa anterior [opcional].
+		// Português: Define o texto a ser substituído no texto encontrado
 		"\\.",
+
+		// English: Defines the text to be written on replaced text
+		//
+		// Português: Define o texto a ser escrito no texto substituído
 		":",
 	)
 

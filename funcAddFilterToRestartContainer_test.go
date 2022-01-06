@@ -72,6 +72,9 @@ func ExampleContainerBuilder_AddFilterToRestartContainer() {
 	// Português: Define o caminho do arquivo de log com dados estatísticos do container
 	container.SetCsvLogPath("./test.counter.log.csv", true)
 
+	// English: Swaps the comma by tab, making the file compatible with floating-point numbers
+	//
+	// Português: Troca a virgula por tabulação, compatibilizando o arquivo com números de ponto flutuante
 	container.SetCsvFileValueSeparator("\t")
 
 	// English: Adds a search filter to the standard output of the container, to save the information in the log file

@@ -43,8 +43,9 @@ func AddPortToExpose() {
 	// Português: Define o nome do container docker a ser criado.
 	container.SetContainerName("container_delete_server_after_test")
 
-	//todo: documentar
-	// git project to clone https://github.com/helmutkemper/iotmaker.docker.util.whaleAquarium.sample.git
+	// English: git project to clone https://github.com/helmutkemper/iotmaker.docker.util.whaleAquarium.sample.git
+	//
+	// Português: repositório git a ser clonado https://github.com/helmutkemper/iotmaker.docker.util.whaleAquarium.sample.git
 	container.SetGitCloneToBuild("https://github.com/helmutkemper/iotmaker.docker.util.whaleAquarium.sample.git")
 
 	// see SetGitCloneToBuildWithUserPassworh(), SetGitCloneToBuildWithPrivateSshKey() and
@@ -55,7 +56,9 @@ func AddPortToExpose() {
 	// Português: Define a espera pelo texto aguardado aparecer na saída padrão do container para prosseguir [opcional]
 	container.SetWaitStringWithTimeout("Stating server on port 3000", 20*time.Second)
 
-	// open port 3000 [optional in this case: default code open all ports]
+	// English: open port 3000
+	//
+	// Português: abre porta 3000
 	container.AddPortToExpose("3000")
 
 	// English: Replace container folder /static to host folder ./test/static
@@ -77,7 +80,9 @@ func AddPortToExpose() {
 		panic(err)
 	}
 
-	// builder new image from git project
+	// English: builder new image from git project
+	//
+	// Português: monta a nova imagem a partir do projeto git
 	_, err = container.ImageBuildFromServer()
 	if err != nil {
 		util.TraceToLog()
@@ -85,7 +90,9 @@ func AddPortToExpose() {
 		panic(err)
 	}
 
-	// container build from image delete:latest
+	// English: Creates and initializes the container based on the created image.
+	//
+	// Português: Cria e inicializa o container baseado na imagem criada.
 	err = container.ContainerBuildAndStartFromImage()
 	if err != nil {
 		util.TraceToLog()
@@ -93,9 +100,13 @@ func AddPortToExpose() {
 		panic(err)
 	}
 
-	// container "container_delete_server_after_test" running and ready for use on this code point on port 3030
+	// English: container "container_delete_server_after_test" running and ready for use on this code point on port 3000
+	//
+	// Português: container "container_delete_server_after_test" executando e pronto para uso neste ponto de código na porta 3000
 
-	// read server inside a container on address http://localhost:3000/
+	// English: read server inside a container on address http://localhost:3030/
+	//
+	// Português: lê o servidor dentro do container na porta http://localhost:3030/
 	var resp *http.Response
 	resp, err = http.Get("http://localhost:3000/")
 	if err != nil {
@@ -115,6 +126,9 @@ func AddPortToExpose() {
 	// print output
 	fmt.Printf("%s", body)
 
+	// English: Deletes all docker elements with the term `delete` in the name.
+	//
+	// Português: Apaga todos os elementos docker com o termo `delete` no nome.
 	SaGarbageCollector()
 
 	// Output:

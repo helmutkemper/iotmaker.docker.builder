@@ -113,10 +113,29 @@ func ExampleContainerBuilder_AddFailMatchFlagToFileLog() {
 	// O container de exemplo imprime um contador na saída padrão `log.Printf("counter: %.2f", counter)`. `label` adiciona o nome da coluna; `match` procura pelo texto; `filter` aplica uma expressão regular; `search` e `replace` fazem uma substuição em cima do valor encontrado antes de escrever no log.
 	// [optional/opcional]
 	container.AddFilterToCvsLogWithReplace(
+		// English: Defines the column name
+		//
+		// Português: Define o nome da coluna
 		"contador",
+
+		// English: Defines the text to be searched
+		//
+		// Português: Define o texto a ser procurado
 		"counter",
+
+		// English: Defines the regular expression to be applied on the found text
+		//
+		// Português: Define a expressão regular a ser aplicada no texto encontrado
 		"^.*?counter: (?P<valueToGet>[\\d\\.]+)",
+
+		// English: Defines the text to be replaced on the found text
+		//
+		// Português: Define o texto a ser substituído no texto encontrado
 		"\\.",
+
+		// English: Defines the text to be written on replaced text
+		//
+		// Português: Define o texto a ser escrito no texto substituído
 		",",
 	)
 

@@ -110,8 +110,15 @@ func ExampleContainerBuilder_AddRestartMatchFlagToFileLog() {
 		// Português: Texto simples procurado na saída padrão do container para ativar o filtro
 		"restart-me!",
 
+		// English: Defines the path to the container standard output to be save as text file
+		//
+		// Português: Define o caminho onde a saída padrão do container será salva em formato de arquivo texto
 		"./log1/log2/log3",
 	)
+
+	// English: Initializes the container manager object.
+	//
+	// Português: Inicializa o objeto gerenciador de container.
 	err = container.Init()
 	if err != nil {
 		fmt.Printf("error: %v", err.Error())

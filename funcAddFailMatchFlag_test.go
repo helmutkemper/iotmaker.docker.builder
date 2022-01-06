@@ -114,10 +114,29 @@ func ExampleContainerBuilder_AddFailMatchFlag() {
 	// O container de exemplo imprime um contador na saída padrão `log.Printf("counter: %.2f", counter)`. `label` adiciona o nome da coluna; `match` procura pelo texto; `filter` aplica uma expressão regular; `search` e `replace` fazem uma substuição em cima do valor encontrado antes de escrever no log.
 	// [optional/opcional]
 	container.AddFilterToCvsLogWithReplace(
+		// English: Defines the column name
+		//
+		// Português: Define o nome da coluna
 		"contador",
+
+		// English: Defines the text to be searched
+		//
+		// Português: Define o texto a ser procurado
 		"counter",
+
+		// English: Defines the regular expression to be applied on the found text
+		//
+		// Português: Define a expressão regular a ser aplicada no texto encontrado
 		"^.*?counter: (?P<valueToGet>[\\d\\.]+)",
+
+		// English: Defines the text to be replaced on the found text
+		//
+		// Português: Define o texto a ser substituído no texto encontrado
 		"\\.",
+
+		// English: Defines the text to be written on replaced text
+		//
+		// Português: Define o texto a ser escrito no texto substituído
 		",",
 	)
 
@@ -126,6 +145,9 @@ func ExampleContainerBuilder_AddFailMatchFlag() {
 	// Português: Adiciona um indicador de falha ao projeto. Indicador de falha é um texto procurado na saída padrão do container e indica algo que não deveria ter acontecido durante o teste.
 	// [optional/opcional]
 	container.AddFailMatchFlag(
+		// English: Defines the text to be searched
+		//
+		// Português: Define o texto a ser procurado
 		"counter: 40",
 	)
 
@@ -136,7 +158,14 @@ func ExampleContainerBuilder_AddFailMatchFlag() {
 	// Algumas falhas críticas podem ser monitoradas e quando elas acontecem, a saída padrão do container é arquivada em um arquivo `log.N.log`, onde N é um número incrementado automaticamente.
 	// [optional/opcional]
 	err = container.AddFailMatchFlagToFileLog(
+		// English: Defines the text to be searched
+		//
+		// Português: Define o texto a ser procurado
 		"bug:",
+
+		// English: Defines the path to the container standard output to be save as text file
+		//
+		// Português: Define o caminho onde a saída padrão do container será salva em formato de arquivo texto
 		"./log1/log2/log3",
 	)
 	if err != nil {
