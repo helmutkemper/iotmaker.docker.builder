@@ -22,7 +22,6 @@ func (e *ContainerBuilder) writeFilterIntoLog(file *os.File, filter []LogFilter,
 				continue
 			}
 
-			var toFile []byte
 			if bytes.Contains((*lineList)[logLine], []byte(filter[filterLine].Match)) == true {
 				skipMatch[filterLine] = true
 
@@ -35,6 +34,7 @@ func (e *ContainerBuilder) writeFilterIntoLog(file *os.File, filter []LogFilter,
 					continue
 				}
 
+				var toFile []byte
 				toFile = re.ReplaceAll((*lineList)[logLine], []byte("${valueToGet}"))
 
 				if filter[filterLine].Search != "" {
@@ -52,13 +52,8 @@ func (e *ContainerBuilder) writeFilterIntoLog(file *os.File, filter []LogFilter,
 				lineToFile = append(lineToFile, toFile...)
 				lineToFile = append(lineToFile, []byte(e.csvValueSeparator)...)
 
-				tab = e.rowsToPrint&KLogColumnFilterLogComa != 0
-			} else {
-				lineToFile = append(lineToFile, toFile...)
-				lineToFile = append(lineToFile, []byte(e.csvValueSeparator)...)
-
-				tab = e.rowsToPrint&KLogColumnFilterLogComa != 0
 			}
+			tab = e.rowsToPrint&KLogColumnFilterLogComa != 0
 		}
 	}
 

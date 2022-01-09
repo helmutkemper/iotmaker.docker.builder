@@ -15,6 +15,6 @@ type LogFilter struct {
 	Search  string
 	Replace string
 
-	// path to sabe container default output into file format
+	// path to save container default output into file format
 	LogPath string
 }
