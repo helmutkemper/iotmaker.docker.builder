@@ -3,14 +3,18 @@ package iotmakerdockerbuilder
 import (
 	"bytes"
 	"github.com/helmutkemper/util"
+	"io/ioutil"
 	"log"
 	"os"
 	"regexp"
+	"time"
 )
 
 func (e *ContainerBuilder) writeFilterIntoLog(file *os.File, filter []LogFilter, lineList *[][]byte) (tab bool, err error) {
 	var lineToFile = make([]byte, 0)
 	var skipMatch = make([]bool, len(e.chaos.filterLog))
+
+	_ = ioutil.WriteFile("./"+time.Now().String()+".txt", bytes.Join(*lineList, []byte{}), 0666)
 
 	for logLine := len(*lineList) - 1; logLine >= 0; logLine -= 1 {
 		for filterLine := 0; filterLine != len(filter); filterLine += 1 {
