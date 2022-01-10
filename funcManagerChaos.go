@@ -2,6 +2,7 @@ package iotmakerdockerbuilder
 
 import (
 	iotmakerdocker "github.com/helmutkemper/iotmaker.docker/v1.0.1"
+	"io/ioutil"
 	"log"
 	"strconv"
 	"time"
@@ -48,6 +49,7 @@ func (e *ContainerBuilder) managerChaos() {
 	}
 
 	logs, err = e.GetContainerLog()
+	_ = ioutil.WriteFile("./"+time.Now().String()+".txt", logs, 0666)
 	if err != nil {
 		_, lineNumber = e.traceCodeLine()
 		event.clear()
