@@ -30,7 +30,7 @@ func (e *ContainerBuilder) logsCleaner(logs []byte) (logsLine [][]byte) {
 	size := len(logs)
 
 	// faz o log só lê a parte mais recente do mesmo
-	logs = logs[e.logsLastSize:]
+	//logs = logs[e.logsLastSize:]
 	e.logsLastSize = size
 
 	logs = bytes.ReplaceAll(logs, []byte("\r"), []byte(""))
