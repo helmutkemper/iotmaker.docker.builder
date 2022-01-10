@@ -13,9 +13,11 @@ import (
 )
 
 const (
-	KLogReadingTimeLabel  = "Reading time"
-	KLogReadingTimeValue  = "KReadingTime"
+	KLogReadingTimeLabel = "Reading time"
+	KLogReadingTimeValue = "KReadingTime"
+	//deixou de funcionar após atualização do docker
 	KLogReadingTimeRegexp = "\\d{4}-\\d{2}-\\d{2}\\s\\d{2}:\\d{2}:\\d{2}.\\d{4,}(\\s\\+\\d{4})?\\sUTC"
+	//KLogReadingTimeRegexp = "\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}.\\d{4,}Z\\s+\\d{4}/\\d{2}/\\d{2}\\s\\d{2}:\\d{2}:\\d{2}"
 
 	KLogCurrentNumberOfOidsInTheCGroupLabel  = "Linux specific stats - not populated on Windows. Current is the number of pids in the cgroup"
 	KLogCurrentNumberOfOidsInTheCGroupValue  = "KCurrentNumberOfOidsInTheCGroup"
@@ -235,7 +237,12 @@ func (e TestContainerLog) findKeyIndex(key string, t *testing.T) (index int, pro
 
 	var value []byte
 	var keyToBeFound = []byte(key)
+	log.Printf("key: %s", key)
+	log.Printf("e.data: %s", e.data)
+
 	for index, value = range e.data[kLogHeaderLine] {
+		log.Printf("index: %v", index)
+		log.Printf("value: %s", value)
 		if bytes.Equal(value, keyToBeFound) == true {
 			return
 		}
@@ -250,6 +257,7 @@ func (e TestContainerLog) proccessKeyList(listUnderTest *[]parserLog, t *testing
 	var err error
 
 	for _, test := range *listUnderTest {
+		log.Printf("test: %+v", test)
 		index, problem = e.findKeyIndex(test.Key, t)
 		if problem != nil {
 			var file, funcName string
@@ -263,7 +271,9 @@ func (e TestContainerLog) proccessKeyList(listUnderTest *[]parserLog, t *testing
 			return
 		}
 
-		if bytes.Equal(e.data[kLogHeaderLine][index], []byte(test.Key)) == false {
+		log.Printf("1: %s", e.data[kLogHeaderLine][index])
+		log.Printf("2: %s", test.Key)
+		if bytes.Equal(e.data[kLogHeaderLine][index], []byte(test.Label)) == false {
 			log.Printf("log file: %s", e.data[kLogHeaderLine][index])
 			log.Printf("key: %v", test.Key)
 			log.Printf("index: %v", index)
