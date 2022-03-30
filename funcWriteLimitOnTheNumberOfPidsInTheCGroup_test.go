@@ -4,7 +4,6 @@ import (
 	"fmt"
 	pb "github.com/helmutkemper/iotmaker.docker.problem"
 	"log"
-	"os"
 	"runtime"
 	"testing"
 )
@@ -139,7 +138,7 @@ func TestContainerBuilder_writeLimitOnTheNumberOfPidsInTheCGroup(t *testing.T) {
 		return
 	}
 
-	_ = os.Remove(logFile)
+	//_ = os.Remove(logFile)
 
 	SaGarbageCollector()
 }
