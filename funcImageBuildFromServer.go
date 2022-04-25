@@ -145,7 +145,7 @@ func (e *ContainerBuilder) ImageBuildFromServer() (inspect types.ImageInspect, e
 
 		var cacheID string
 		if e.enableCache == true {
-			cacheID, err = e.dockerSys.ImageFindIdByName("cache:latest")
+			cacheID, err = e.dockerSys.ImageFindIdByName(e.imageCacheName)
 			if err != nil && err.Error() != "image name not found" {
 				util.TraceToLog()
 				return

@@ -69,7 +69,7 @@
 // assim por diante.
 //
 // Uma vez criada a rede, basta usar o comando `container.SetNetworkDocker(&netDocker)` e a mesma será ligada a nova rede
-// de forma transperente.
+// de forma transparente.
 //
 // Caso queira trocar o IP de uma instância, para simular uma troca de IP aleatória, basta rodar o comando
 // `container.NetworkChangeIp()` e a instância terá o seu IP trocado para o próximo IP da lista.
@@ -95,7 +95,7 @@
 //			t.Fail()
 //		}
 //
-//		// Create a network named cache_delete_after_test, subnet 10.0.0.0/16 e gatway 10.0.0.1
+//		// Create a network named cache_delete_after_test, subnet 10.0.0.0/16 e gateway 10.0.0.1
 //		// Use the term "delete" to enable the function "dockerBuilder.SaGarbageCollector()", which will search for and remove
 //		// all docker elements with the term "delete" contained in the name. For example, network, image, container and
 //		// volumes.
@@ -120,7 +120,7 @@
 //		container.SetContainerName("container_delete_nats_after_test")
 //		// Set a waits for the text to appear in the standard container output to proceed [optional]
 //		container.SetWaitStringWithTimeout("Listening for route connections on 0.0.0.0:6222", 10*time.Second)
-//		// Inialize the container object
+//		// Initialize the container object
 //		err = container.Init()
 //		if err != nil {
 //			log.Printf("error: %v", err)
@@ -175,7 +175,7 @@
 //			t.Fail()
 //		}
 //
-//		// Create a network named cache_delete_after_test, subnet 10.0.0.0/16 e gatway 10.0.0.1
+//		// Create a network named cache_delete_after_test, subnet 10.0.0.0/16 e gateway 10.0.0.1
 //		// Use the term "delete" to enable the function "dockerBuilder.SaGarbageCollector()", which will search for and remove
 //		// all docker elements with the term "delete" contained in the name. For example, network, image, container and
 //		// volumes.
@@ -210,7 +210,7 @@
 //		container.SetContainerName("delete_data_rand_pod_container")
 //		// Determines the path of the folder where your project is located.
 //		container.SetBuildFolderPath("./project_folder")
-//		// Enables the creation of the "Dockerfile-oitmaker" file automatically, as long as the "main.go" and "go.mod" files
+//		// Enables the creation of the "Dockerfile-iotmaker" file automatically, as long as the "main.go" and "go.mod" files
 //		// are in the project root.
 //		container.MakeDefaultDockerfileForMe()
 //		// Defines a list of private repositories used in the project. Separate values by a comma.
@@ -227,19 +227,19 @@
 //		container.SetWaitStringWithTimeout("data rand container started", 10*time.Second)
 //		// It links a folder/file contained on the computer where the test runs and a folder/file contained in the container
 //		// [optional]
-//		err = container.AddFileOrFolderToLinkBetweenConputerHostAndContainer("./memory/container", "/containerMemory")
+//		err = container.AddFileOrFolderToLinkBetweenComputerHostAndContainer("./memory/container", "/containerMemory")
 //		if err != nil {
 //			log.Printf("error: %v", err)
 //			t.Fail()
 //		}
 //		// It links a folder/file contained on the computer where the test runs and a folder/file contained in the container
 //		// [optional]
-//		err = container.AddFileOrFolderToLinkBetweenConputerHostAndContainer("./memory/config", "/config")
+//		err = container.AddFileOrFolderToLinkBetweenComputerHostAndContainer("./memory/config", "/config")
 //		if err != nil {
 //			log.Printf("error: %v", err)
 //			t.Fail()
 //		}
-//		// Inialize the container object
+//		// Initialize the container object
 //		err = container.Init()
 //		if err != nil {
 //			log.Printf("error: %v", err)
@@ -266,7 +266,7 @@
 // pasta em imagem.
 //
 // Caso haja a necessidade de compartilhar conteúdo local com o container, o comando
-// `container.AddFileOrFolderToLinkBetweenConputerHostAndContainer("./memory/config", "/config")` fará a ligação entre
+// `container.AddFileOrFolderToLinkBetweenComputerHostAndContainer("./memory/config", "/config")` fará a ligação entre
 // pastas e arquivos no computador local com o container.
 //
 // Criando uma imagem de cache
@@ -301,7 +301,7 @@
 //		container.SetImageName("cache:latest")
 //		// Determines the path of the folder where your project is located.
 //		container.SetBuildFolderPath("./cache_folder")
-//		// Inialize the container object
+//		// Initialize the container object
 //		err = container.Init()
 //		if err != nil {
 //			log.Printf("error: %v", err)
@@ -349,7 +349,7 @@
 // Em seguida, devemos informar os repositórios privados com o comando
 // `container.SetGitPathPrivateRepository("github.com/user1,github.com/user2")`.
 //
-// Caso você tenha problema em baixar repositórios privados, adicione o cógido abaixo ao arquivo `~/.gitconfig`
+// Caso você tenha problema em baixar repositórios privados, adicione o código abaixo ao arquivo `~/.gitconfig`
 //
 //	[core]
 //					autocrlf = input
@@ -359,6 +359,6 @@
 //					insteadOf = https://
 //
 // Para quem não tem prática em processo de build em duas etapas, na primeira etapa é criada uma imagem grande com todas
-// as depend6encias e programas necessários para o processode construção do código. Porém, ao final do processo, apenas o
+// as dependências e programas necessários para o processador construção do código. Porém, ao final do processo, apenas o
 // binário gerado na primeira etapa é copiado para uma imagem nova, o que deixa a imagem final pequena.
 package iotmakerdockerbuilder

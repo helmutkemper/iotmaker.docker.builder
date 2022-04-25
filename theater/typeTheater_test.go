@@ -72,7 +72,7 @@ func TestTheater_WriteStatsCSV(t *testing.T) {
 	// define o limite de memória
 	container.SetImageBuildOptionsMemory(100 * builder.KMegaByte)
 
-	container.SetCsvLogPath("./counter.log.csv")
+	container.SetCsvLogPath("./counter.log.csv", true)
 	container.AddFilterToSuccess(
 		"done!",
 		"^.*?(?P<valueToGet>\\d+/\\d+/\\d+ \\d+:\\d+:\\d+ done!).*",
@@ -221,7 +221,7 @@ func TestTheater_AddContainers(t *testing.T) {
 	container.SetImageBuildOptionsMemory(100 * builder.KMegaByte)
 
 	// replace container folder /static to host folder ./test/static
-	err = container.AddFileOrFolderToLinkBetweenConputerHostAndContainer("../test/static", "/static")
+	err = container.AddFileOrFolderToLinkBetweenComputerHostAndContainer("../test/static", "/static")
 	if err != nil {
 		util.TraceToLog()
 		log.Printf("err: %v", err)

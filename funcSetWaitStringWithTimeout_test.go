@@ -58,9 +58,9 @@ func ExampleContainerBuilder_SetWaitStringWithTimeout() {
 	// English: replace container folder /static to host folder ./test/static
 	//
 	// Português: substitui a pasta do container /static pela pasta do host ./test/static
-	err = container.AddFileOrFolderToLinkBetweenConputerHostAndContainer("./test/static", "/static")
+	err = container.AddFileOrFolderToLinkBetweenComputerHostAndContainer("./test/static", "/static")
 	if err != nil {
-		log.Printf("container.AddFileOrFolderToLinkBetweenConputerHostAndContainer().error: %v", err.Error())
+		log.Printf("container.AddFileOrFolderToLinkBetweenComputerHostAndContainer().error: %v", err.Error())
 		util.TraceToLog()
 		panic(err)
 	}

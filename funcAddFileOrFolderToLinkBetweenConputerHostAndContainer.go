@@ -7,7 +7,7 @@ import (
 	"path/filepath"
 )
 
-// AddFileOrFolderToLinkBetweenConputerHostAndContainer
+// AddFileOrFolderToLinkBetweenComputerHostAndContainer
 //
 // English:
 //
@@ -30,7 +30,7 @@ import (
 //
 //   Output:
 //     err: Objeto de erro padrão.
-func (e *ContainerBuilder) AddFileOrFolderToLinkBetweenConputerHostAndContainer(computerHostPath, insideContainerPath string) (err error) {
+func (e *ContainerBuilder) AddFileOrFolderToLinkBetweenComputerHostAndContainer(computerHostPath, insideContainerPath string) (err error) {
 
 	if e.volumes == nil {
 		e.volumes = make([]mount.Mount, 0)

@@ -11,7 +11,7 @@ import (
 
 // example:padrão
 
-func ExampleContainerBuilder_AddFileOrFolderToLinkBetweenConputerHostAndContainer() {
+func ExampleContainerBuilder_AddFileOrFolderToLinkBetweenComputerHostAndContainer() {
 
 	var err error
 
@@ -63,9 +63,9 @@ func ExampleContainerBuilder_AddFileOrFolderToLinkBetweenConputerHostAndContaine
 	// Português: repositório git a ser clonado https://github.com/helmutkemper/iotmaker.docker.util.whaleAquarium.sample.git
 	container.SetGitCloneToBuild("https://github.com/helmutkemper/iotmaker.docker.util.whaleAquarium.sample.git")
 
-	// English: See the functions: SetGitCloneToBuildWithUserPassworh(), SetGitCloneToBuildWithPrivateSshKey() and SetGitCloneToBuildWithPrivateToken()
+	// English: See the functions: SetGitCloneToBuildWithUserPassword(), SetGitCloneToBuildWithPrivateSshKey() and SetGitCloneToBuildWithPrivateToken()
 	//
-	// Português: Veja as funções: SetGitCloneToBuildWithUserPassworh(), SetGitCloneToBuildWithPrivateSshKey() e SetGitCloneToBuildWithPrivateToken()
+	// Português: Veja as funções: SetGitCloneToBuildWithUserPassword(), SetGitCloneToBuildWithPrivateSshKey() e SetGitCloneToBuildWithPrivateToken()
 
 	// English: Set a waits for the text to appear in the standard container output to proceed [optional]
 	//
@@ -86,12 +86,12 @@ func ExampleContainerBuilder_AddFileOrFolderToLinkBetweenConputerHostAndContaine
 	// English: Replace container folder /static to host folder ./test/static
 	//
 	// Português: Substitua a pasta do container /static para a pasta da máquina ./test/static
-	err = container.AddFileOrFolderToLinkBetweenConputerHostAndContainer(
+	err = container.AddFileOrFolderToLinkBetweenComputerHostAndContainer(
 		"./test/static",
 		"/static",
 	)
 	if err != nil {
-		log.Printf("container.AddFileOrFolderToLinkBetweenConputerHostAndContainer().error: %v", err.Error())
+		log.Printf("container.AddFileOrFolderToLinkBetweenComputerHostAndContainer().error: %v", err.Error())
 		util.TraceToLog()
 		panic(err)
 	}

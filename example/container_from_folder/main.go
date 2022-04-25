@@ -20,7 +20,7 @@ func main() {
 	// change and open port 3000 to 3030
 	container.AddPortToExpose("3000")
 	// replace container folder /static to host folder ./test/static
-	err = container.AddFileOrFolderToLinkBetweenConputerHostAndContainer("../../test/static", "/static")
+	err = container.AddFileOrFolderToLinkBetweenComputerHostAndContainer("../../test/static", "/static")
 	if err != nil {
 		panic(err)
 	}

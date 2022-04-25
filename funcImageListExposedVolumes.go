@@ -16,7 +16,7 @@ import (
 //
 // Note:
 //
-//   * Use the AddFileOrFolderToLinkBetweenConputerHostAndContainer() function to link folders and
+//   * Use the AddFileOrFolderToLinkBetweenComputerHostAndContainer() function to link folders and
 //     files between the host computer and the container
 //
 // Português:
@@ -29,7 +29,7 @@ import (
 //
 // Nota:
 //
-//   * Use a função AddFileOrFolderToLinkBetweenConputerHostAndContainer() para vincular pastas e
+//   * Use a função AddFileOrFolderToLinkBetweenComputerHostAndContainer() para vincular pastas e
 //     arquivos entre o computador hospedeiro e o container
 func (e *ContainerBuilder) ImageListExposedVolumes() (list []string, err error) {
 
