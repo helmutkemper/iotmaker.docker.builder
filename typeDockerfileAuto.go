@@ -212,4 +212,5 @@ type DockerfileAuto interface {
 	MountDefaultDockerfile(args map[string]*string, changePorts []dockerfileGolang.ChangePort, openPorts []string, exposePorts []string, volumes []mount.Mount, installExtraPackages bool, useCache bool, imageCacheName string) (dockerfile string, err error)
 	Prayer()
 	SetFinalImageName(name string)
+	AddCopyToFinalImage(src, dst string)
 }
