@@ -560,8 +560,9 @@ github.com/hashicorp/mdns v1.0.0/go.mod h1:tL+uN++7HEJ6SQLQ2/p+z2pH24WQKWjBPkE0m
 github.com/hashicorp/memberlist v0.1.3/go.mod h1:ajVTdAv/9Im8oMAAj5G31PhhMCZJV2pPBoIllUwCN7I=
 github.com/hashicorp/serf v0.8.2/go.mod h1:6hOLApaqBFA1NXqRQAsxw9QxuDEvNxSQRwA/JwenrHc=
 github.com/helmutkemper/iotmaker.docker v1.0.19/go.mod h1:oIzVSczNdE8wGvCEM7L6FxqEIR7b6MvqUA1qfR61g/4=
-github.com/helmutkemper/iotmaker.docker v1.0.33 h1:Hw06mfcmfwDHpwpc7d8Q6odnyHceryP8Xh1caF7dnCs=
 github.com/helmutkemper/iotmaker.docker v1.0.33/go.mod h1:RTnScz1ootG3tOutGNUHza2LKEGjl7+LCDy5Ado/q+4=
+github.com/helmutkemper/iotmaker.docker v1.0.34 h1:5PVropmENb4vgxIKP3cO+f214QDpEsNTXs1WTisEJjc=
+github.com/helmutkemper/iotmaker.docker v1.0.34/go.mod h1:RTnScz1ootG3tOutGNUHza2LKEGjl7+LCDy5Ado/q+4=
 github.com/helmutkemper/iotmaker.docker.builder.golang.dockerfile v1.0.17 h1:1P7Lq/NZUyVln9Ady8CaCofJteMIHmTDNQ6hAwTuKFE=
 github.com/helmutkemper/iotmaker.docker.builder.golang.dockerfile v1.0.17/go.mod h1:HaUPkq2QsoEoH+paJEh9z3xB98ycsL13salsN+qu0FA=
 github.com/helmutkemper/iotmaker.docker.builder.network v0.0.0-20210517125645-e0b15cc3b594 h1:TdwsfUYbzhGMzK370DMEP3yfjsV6RRE2U/Xg7QauojE=
