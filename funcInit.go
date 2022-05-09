@@ -67,6 +67,10 @@ func (e *ContainerBuilder) Init() (err error) {
 		e.autoDockerfile = &dockerfileGolang.DockerfileGolang{}
 	}
 
+	for _, copyFile := range e.copyFile {
+		e.autoDockerfile.AddCopyToFinalImage(copyFile.Src, copyFile.Dst)
+	}
+
 	if e.environmentVar == nil {
 		e.environmentVar = make([]string, 0)
 	}

@@ -90,4 +90,6 @@ type ContainerBuilder struct {
 
 	buildOptions        types.ImageBuildOptions
 	imageExpirationTime time.Duration
+
+	copyFile []CopyFile
 }

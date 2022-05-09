@@ -12,5 +12,15 @@ package iotmakerdockerbuilder
 //
 //
 func (e *ContainerBuilder) DockerfileAddCopyToFinalImage(src, dst string) {
-	e.autoDockerfile.AddCopyToFinalImage(src, dst)
+	if e.copyFile == nil {
+		e.copyFile = make([]CopyFile, 0)
+	}
+
+	e.copyFile = append(
+		e.copyFile,
+		CopyFile{
+			Src: src,
+			Dst: dst,
+		},
+	)
 }
