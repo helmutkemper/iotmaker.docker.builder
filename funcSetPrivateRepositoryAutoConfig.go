@@ -39,7 +39,7 @@ func (e *ContainerBuilder) SetPrivateRepositoryAutoConfig() (err error) {
 
 	var filePathToRead = filepath.Join(userData.HomeDir, ".ssh", "id_ecdsa")
 	fileData, err = ioutil.ReadFile(filePathToRead)
-	if err != nil {
+	if err == nil {
 		e.contentIdEcdsaFile = string(fileData)
 		e.contentIdEcdsaFileWithScape = strings.ReplaceAll(e.contentIdRsaFile, `"`, `\"`)
 		pass = true
