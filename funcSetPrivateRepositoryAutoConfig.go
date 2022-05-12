@@ -35,7 +35,7 @@ func (e *ContainerBuilder) SetPrivateRepositoryAutoConfig() (err error) {
 		return
 	}
 
-	var filePathToRead = filepath.Join(userData.HomeDir, ".ssh", "id_rsa")
+	var filePathToRead = filepath.Join(userData.HomeDir, ".ssh", "id_ecdsa")
 	fileData, err = ioutil.ReadFile(filePathToRead)
 	if err != nil {
 		util.TraceToLog()

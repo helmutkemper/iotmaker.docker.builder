@@ -47,7 +47,7 @@ package iotmakerdockerbuilder
 //         panic(err)
 //       }
 //
-//       privateSSHKeyPath = filepath.Join(usr.HomeDir, ".shh", "id_rsa")
+//       privateSSHKeyPath = filepath.Join(usr.HomeDir, ".shh", "id_ecdsa")
 //       userGitConfigPath = filepath.Join(usr.HomeDir, ".gitconfig")
 //       file, err = ioutil.ReadFile(userGitConfigPath)
 //
@@ -99,7 +99,7 @@ package iotmakerdockerbuilder
 //         panic(err)
 //       }
 //
-//       privateSSHKeyPath = filepath.Join(usr.HomeDir, ".shh", "id_rsa")
+//       privateSSHKeyPath = filepath.Join(usr.HomeDir, ".shh", "id_ecdsa")
 //       userGitConfigPath = filepath.Join(usr.HomeDir, ".gitconfig")
 //       file, err = ioutil.ReadFile(userGitConfigPath)
 //

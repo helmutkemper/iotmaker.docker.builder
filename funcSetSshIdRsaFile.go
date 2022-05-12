@@ -17,7 +17,7 @@ package iotmakerdockerbuilder
 //       panic(err)
 //     }
 //
-//     path = filepath.Join(usr.HomeDir, ".ssh", "id_rsa")
+//     path = filepath.Join(usr.HomeDir, ".ssh", "id_ecdsa")
 //     file, err = ioutil.ReadFile(path)
 //     if err != nil {
 //       panic(err)
@@ -41,7 +41,7 @@ package iotmakerdockerbuilder
 //       panic(err)
 //     }
 //
-//     path = filepath.Join(usr.HomeDir, ".ssh", "id_rsa")
+//     path = filepath.Join(usr.HomeDir, ".ssh", "id_ecdsa")
 //     file, err = ioutil.ReadFile(path)
 //     if err != nil {
 //       panic(err)
