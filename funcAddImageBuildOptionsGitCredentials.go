@@ -35,6 +35,10 @@ func (e *ContainerBuilder) addImageBuildOptionsGitCredentials() (buildOptions ty
 		e.buildOptions.BuildArgs["SSH_ID_RSA_FILE"] = &e.contentIdRsaFile
 	}
 
+	if e.contentIdEcdsaFile != "" {
+		e.buildOptions.BuildArgs["SSH_ID_ECDSA_FILE"] = &e.contentIdEcdsaFile
+	}
+
 	if e.gitPathPrivateRepository != "" {
 		e.buildOptions.BuildArgs["GIT_PRIVATE_REPO"] = &e.gitPathPrivateRepository
 	}

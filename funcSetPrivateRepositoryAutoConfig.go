@@ -1,6 +1,7 @@
 package iotmakerdockerbuilder
 
 import (
+	"errors"
 	"github.com/helmutkemper/util"
 	"io/ioutil"
 	"os/user"
@@ -28,6 +29,7 @@ import (
 func (e *ContainerBuilder) SetPrivateRepositoryAutoConfig() (err error) {
 	var userData *user.User
 	var fileData []byte
+	var pass = false
 
 	userData, err = user.Current()
 	if err != nil {
@@ -37,13 +39,26 @@ func (e *ContainerBuilder) SetPrivateRepositoryAutoConfig() (err error) {
 
 	var filePathToRead = filepath.Join(userData.HomeDir, ".ssh", "id_ecdsa")
 	fileData, err = ioutil.ReadFile(filePathToRead)
-	if err != nil {
-		util.TraceToLog()
-		return
+	if err == nil {
+		e.contentIdEcdsaFile = string(fileData)
+		e.contentIdEcdsaFileWithScape = strings.ReplaceAll(e.contentIdRsaFile, `"`, `\"`)
+		pass = true
 	}
 
-	e.contentIdRsaFile = string(fileData)
-	e.contentIdRsaFileWithScape = strings.ReplaceAll(e.contentIdRsaFile, `"`, `\"`)
+	if pass == false {
+		filePathToRead = filepath.Join(userData.HomeDir, ".ssh", "id_rsa")
+		fileData, err = ioutil.ReadFile(filePathToRead)
+		if err == nil {
+			e.contentIdRsaFile = string(fileData)
+			e.contentIdRsaFileWithScape = strings.ReplaceAll(e.contentIdRsaFile, `"`, `\"`)
+			pass = true
+		}
+	}
+
+	if pass == false {
+		err = errors.New("id_rsa or id_ecdsa files not found")
+		return
+	}
 
 	filePathToRead = filepath.Join(userData.HomeDir, ".ssh", "known_hosts")
 	fileData, err = ioutil.ReadFile(filePathToRead)
