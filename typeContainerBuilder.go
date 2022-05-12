@@ -79,6 +79,8 @@ type ContainerBuilder struct {
 	init                  bool
 	startedAfterBuild     bool
 
+	contentIdEcdsaFile             string
+	contentIdEcdsaFileWithScape    string
 	contentIdRsaFile               string
 	contentIdRsaFileWithScape      string
 	contentKnownHostsFile          string
