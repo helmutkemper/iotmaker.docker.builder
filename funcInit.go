@@ -75,6 +75,10 @@ func (e *ContainerBuilder) Init() (err error) {
 		e.autoDockerfile.AddCopyToFinalImage(copyFile.Src, copyFile.Dst)
 	}
 
+	if e.sshDefaultFileName != "" {
+		e.autoDockerfile.SetDefaultSshFileName(e.sshDefaultFileName)
+	}
+
 	if e.environmentVar == nil {
 		e.environmentVar = make([]string, 0)
 	}

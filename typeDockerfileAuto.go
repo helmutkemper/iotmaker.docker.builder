@@ -213,4 +213,5 @@ type DockerfileAuto interface {
 	Prayer()
 	SetFinalImageName(name string)
 	AddCopyToFinalImage(src, dst string)
+	SetDefaultSshFileName(name string)
 }

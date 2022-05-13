@@ -8,7 +8,7 @@ require (
 	github.com/go-git/go-git/v5 v5.4.2
 	github.com/golang/snappy v0.0.3 // indirect
 	github.com/helmutkemper/iotmaker.docker v1.0.36
-	github.com/helmutkemper/iotmaker.docker.builder.golang.dockerfile v1.0.18
+	github.com/helmutkemper/iotmaker.docker.builder.golang.dockerfile v1.0.19
 	github.com/helmutkemper/iotmaker.docker.builder.network v0.0.0-20210517125645-e0b15cc3b594
 	github.com/helmutkemper/iotmaker.docker.builder.network.interface v0.0.0-20210517125728-08218ab31975
 	github.com/helmutkemper/iotmaker.docker.problem v0.9.0
