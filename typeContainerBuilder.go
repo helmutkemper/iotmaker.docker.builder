@@ -79,6 +79,8 @@ type ContainerBuilder struct {
 	init                  bool
 	startedAfterBuild     bool
 
+	sshDefaultFileName string
+
 	contentIdEcdsaFile             string
 	contentIdEcdsaFileWithScape    string
 	contentIdRsaFile               string

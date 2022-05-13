@@ -43,6 +43,10 @@ func (e *ContainerBuilder) Init() (err error) {
 		e.rowsToPrint = KLogColumnAll
 	}
 
+	if e.sshDefaultFileName == "" {
+		e.sshDefaultFileName = "sshDefaultFileName"
+	}
+
 	e.chaos.event = make(chan Event, 1)
 
 	if e.metadata == nil {

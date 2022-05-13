@@ -18,6 +18,9 @@ import (
 //   Output:
 //     err: Standard error object
 //
+//   Notes:
+//     * For change ssh key file name, use SetSshKeyFileName() function.
+//
 // Português:
 //
 //  Copia o arquivo ssh ~/.ssh/id_rsa e o arquivo ~/.gitconfig para as variáveis SSH_ID_RSA_FILE e
@@ -25,20 +28,29 @@ import (
 //
 //   Saída:
 //     err: Objeto de erro padrão
+//
+//   Notas:
+//     * Para mudar o nome do arquivo ssh usado como chave, use a função SetSshKeyFileName().
 func (e *ContainerBuilder) SetPrivateRepositoryAutoConfig() (err error) {
 	var userData *user.User
 	var fileData []byte
+	var filePathToRead string
 
 	userData, err = user.Current()
 	if err != nil {
-		util.TraceToLog()
 		return
 	}
 
-	var filePathToRead = filepath.Join(userData.HomeDir, ".ssh", "id_ecdsa")
+	if e.sshDefaultFileName == "" {
+		e.sshDefaultFileName, err = e.GetSshKeyFileName(userData.HomeDir)
+		if err != nil {
+			return
+		}
+	}
+
+	filePathToRead = filepath.Join(userData.HomeDir, ".ssh", e.sshDefaultFileName)
 	fileData, err = ioutil.ReadFile(filePathToRead)
 	if err != nil {
-		util.TraceToLog()
 		return
 	}
 

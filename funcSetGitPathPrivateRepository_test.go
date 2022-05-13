@@ -12,9 +12,9 @@ import (
 // this test only work on my acount (sorry)
 func ExampleContainerBuilder_SetGitPathPrivateRepository() {
 	var err error
-	
+
 	SaGarbageCollector()
-	
+
 	var container = ContainerBuilder{}
 	container.SetPrintBuildOnStrOut()
 	container.SetGitPathPrivateRepository("github.com/helmutkemper")
@@ -38,27 +38,27 @@ func ExampleContainerBuilder_SetGitPathPrivateRepository() {
 	if err != nil {
 		panic(err)
 	}
-	
+
 	// inicialize container object
 	err = container.Init()
 	if err != nil {
 		panic(err)
 	}
-	
+
 	// builder new image from git project
 	_, err = container.ImageBuildFromServer()
 	if err != nil {
 		panic(err)
 	}
-	
+
 	// build a new container from image
 	err = container.ContainerBuildAndStartFromImage()
 	if err != nil {
 		panic(err)
 	}
-	
+
 	// At this point, the container is ready for use on port 3030
-	
+
 	// read server inside a container on address http://localhost:3030/
 	var resp *http.Response
 	resp, err = http.Get("http://localhost:3030/")
@@ -67,7 +67,7 @@ func ExampleContainerBuilder_SetGitPathPrivateRepository() {
 		log.Printf("http.Get().error: %v", err.Error())
 		panic(err)
 	}
-	
+
 	var body []byte
 	body, err = ioutil.ReadAll(resp.Body)
 	if err != nil {
@@ -75,12 +75,12 @@ func ExampleContainerBuilder_SetGitPathPrivateRepository() {
 		log.Printf("http.Get().error: %v", err.Error())
 		panic(err)
 	}
-	
+
 	// print output
 	fmt.Printf("%s", body)
-	
+
 	SaGarbageCollector()
-	
+
 	// Output:
 	// <html><body><p>C is life! Golang is a evolution of C</p></body></html>
 }
