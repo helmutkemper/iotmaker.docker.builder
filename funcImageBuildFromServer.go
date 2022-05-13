@@ -12,6 +12,7 @@ import (
 	"io/ioutil"
 	"log"
 	"os"
+	"path"
 	"path/filepath"
 	"strings"
 )
@@ -127,7 +128,7 @@ func (e *ContainerBuilder) ImageBuildFromServer() (inspect types.ImageInspect, e
 			return
 		}
 
-		err = ioutil.WriteFile(file.Dst, data, fs.ModePerm)
+		err = ioutil.WriteFile(path.Join(tmpDirPath, file.Dst), data, fs.ModePerm)
 		if err != nil {
 			return
 		}
