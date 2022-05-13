@@ -120,6 +120,19 @@ func (e *ContainerBuilder) ImageBuildFromServer() (inspect types.ImageInspect, e
 		return
 	}
 
+	var data []byte
+	for _, file := range e.addFileToServerBeforeBuild {
+		data, err = ioutil.ReadFile(file.Src)
+		if err != nil {
+			return
+		}
+
+		err = ioutil.WriteFile(file.Dst, data, fs.ModePerm)
+		if err != nil {
+			return
+		}
+	}
+
 	if e.makeDefaultDockerfile == true {
 		var dockerfile string
 		var fileList []fs.FileInfo
@@ -253,4 +266,12 @@ func (e *ContainerBuilder) ReplaceDockerfileFromServer(filePath string) (err err
 
 	e.replaceDockerfile = string(data)
 	return
+}
+
+func (e *ContainerBuilder) AddFileToServerBeforeBuild(dst, src string) {
+	if e.addFileToServerBeforeBuild == nil {
+		e.addFileToServerBeforeBuild = make([]CopyFile, 0)
+	}
+
+	e.addFileToServerBeforeBuild = append(e.addFileToServerBeforeBuild, CopyFile{Dst: dst, Src: src})
 }

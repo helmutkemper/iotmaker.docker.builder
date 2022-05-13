@@ -74,7 +74,8 @@ type ContainerBuilder struct {
 	containerConfig         container.Config
 	restartPolicy           iotmakerdocker.RestartPolicy
 
-	replaceDockerfile string
+	replaceDockerfile          string
+	addFileToServerBeforeBuild []CopyFile
 
 	makeDefaultDockerfile bool
 	printBuildOutput      bool
