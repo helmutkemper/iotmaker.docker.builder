@@ -173,6 +173,13 @@ func (e *ContainerBuilder) ImageBuildFromServer() (inspect types.ImageInspect, e
 			util.TraceToLog()
 			return
 		}
+	} else if e.replaceDockerfile != "" {
+		var dockerfilePath = filepath.Join(tmpDirPath, "Dockerfile-iotmaker")
+		err = ioutil.WriteFile(dockerfilePath, []byte(e.replaceDockerfile), os.ModePerm)
+		if err != nil {
+			util.TraceToLog()
+			return
+		}
 	}
 
 	if e.printBuildOutput == true {
@@ -233,5 +240,17 @@ func (e *ContainerBuilder) ImageBuildFromServer() (inspect types.ImageInspect, e
 		return
 	}
 
+	return
+}
+
+func (e *ContainerBuilder) ReplaceDockerfileFromServer(filePath string) (err error) {
+	var data []byte
+	data, err = ioutil.ReadFile(filePath)
+	if err != nil {
+		util.TraceToLog()
+		return
+	}
+
+	e.replaceDockerfile = string(data)
 	return
 }
