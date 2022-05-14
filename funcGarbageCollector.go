@@ -46,11 +46,7 @@ func SaGarbageCollector(names ...string) {
 
 	var re = regexp.MustCompile("\\w+_\\w+")
 	var list []NameAndId
-	list, err = garbageCollector.ContainerFindIdByNameContains("_")
-	if err != nil {
-		util.TraceToLog()
-		return
-	}
+	list, _ = garbageCollector.ContainerFindIdByNameContains("_")
 
 	var dockerSys iotmakerdocker.DockerSystem
 	err = dockerSys.Init()
