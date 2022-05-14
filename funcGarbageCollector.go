@@ -1,7 +1,10 @@
 package iotmakerdockerbuilder
 
 import (
+	"github.com/docker/docker/api/types"
+	iotmakerdocker "github.com/helmutkemper/iotmaker.docker/v1.0.1"
 	"github.com/helmutkemper/util"
+	"regexp"
 )
 
 // SaGarbageCollector
@@ -39,6 +42,34 @@ func SaGarbageCollector(names ...string) {
 	if err != nil {
 		util.TraceToLog()
 		return
+	}
+
+	var re = regexp.MustCompile("\\w+_\\w+")
+	var list []NameAndId
+	list, err = garbageCollector.ContainerFindIdByNameContains("_")
+	if err != nil {
+		util.TraceToLog()
+		return
+	}
+
+	var dockerSys iotmakerdocker.DockerSystem
+	err = dockerSys.Init()
+	if err != nil {
+		return
+	}
+
+	var inspect types.ContainerJSON
+	for _, container := range list {
+		if re.Match([]byte(container.Name)) == true {
+			inspect, err = dockerSys.ContainerInspect(container.ID)
+			if err != nil {
+				return
+			}
+
+			if inspect.State != nil && inspect.State.ExitCode != 0 {
+				_ = dockerSys.ContainerRemove(container.ID, true, false, false)
+			}
+		}
 	}
 
 	// set the term "delete" to garbage collector
