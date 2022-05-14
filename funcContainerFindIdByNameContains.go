@@ -2,7 +2,6 @@ package iotmakerdockerbuilder
 
 import (
 	iotmakerdocker "github.com/helmutkemper/iotmaker.docker/v1.0.1"
-	"github.com/helmutkemper/util"
 )
 
 // ContainerFindIdByNameContains
@@ -38,18 +37,16 @@ func (e *ContainerBuilder) ContainerFindIdByNameContains(containsName string) (l
 	e.dockerSys = iotmakerdocker.DockerSystem{}
 	err = e.dockerSys.Init()
 	if err != nil {
-		util.TraceToLog()
 		return
 	}
 
-	var recevedLis []iotmakerdocker.NameAndId
-	recevedLis, err = e.dockerSys.ContainerFindIdByNameContains(containsName)
+	var receivedLis []iotmakerdocker.NameAndId
+	receivedLis, err = e.dockerSys.ContainerFindIdByNameContains(containsName)
 	if err != nil {
-		util.TraceToLog()
 		return
 	}
 
-	for _, elementInList := range recevedLis {
+	for _, elementInList := range receivedLis {
 		list = append(list, NameAndId(elementInList))
 	}
 
