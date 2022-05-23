@@ -99,7 +99,7 @@ func ExampleContainerBuilder_SetCsvLogPath() {
 	SaGarbageCollector()
 
 	// Output:
-	// image size: 1.38 MB
+	// image size: 1.4 MB
 	// image os: linux
 	// container name: container_counter_delete_after_test
 	// done: true

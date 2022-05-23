@@ -25,5 +25,5 @@ func ExampleContainerBuilder_GetSshKeyFileName() {
 	fmt.Printf("name: %v", fileName)
 
 	// Output:
-	// id_ecdsa
+	// name: id_ecdsa
 }

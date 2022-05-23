@@ -23,9 +23,9 @@ func ExampleContainerBuilder_ContainerBuildAndStartFromImage() {
 	container.SetContainerName("container_delete_server_after_test")
 
 	// git project to clone https://github.com/helmutkemper/iotmaker.docker.util.whaleAquarium.sample.git
-	container.SetGitCloneToBuild("https://github.com/helmutkemper/iotmaker.docker.util.whaleAquarium.sample.git")
+	container.SetGitCloneToBuild("https://github.com/helmutkemper/iotmaker.docker.builder.public.example.git")
 
-	// see SetGitCloneToBuildWithUserPassworh(), SetGitCloneToBuildWithPrivateSshKey() and
+	// see SetGitCloneToBuildWithUserPassword(), SetGitCloneToBuildWithPrivateSshKey() and
 	// SetGitCloneToBuildWithPrivateToken()
 
 	// set a waits for the text to appear in the standard container output to proceed [optional]

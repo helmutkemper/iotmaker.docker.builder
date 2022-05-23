@@ -23,7 +23,7 @@ func ExampleContainerBuilder_ContainerCopyFrom() {
 		return
 	}
 
-	err = builAlpineImageCopyFromExample()
+	err = buildAlpineImageCopyFromExample()
 	if err != nil {
 		fmt.Printf("error: %v", err.Error())
 		SaGarbageCollector()
@@ -120,7 +120,7 @@ func buildGoLintImageCopyFromExample() (err error) {
 	return
 }
 
-func builAlpineImageCopyFromExample() (err error) {
+func buildAlpineImageCopyFromExample() (err error) {
 	var imageInspect types.ImageInspect
 	var container = ContainerBuilder{}
 
@@ -190,20 +190,20 @@ func builAlpineImageCopyFromExample() (err error) {
 	}
 
 	var exitCode int
-	var runing bool
+	var running bool
 	var stdOutput []byte
 	var stdError []byte
-	exitCode, runing, stdOutput, stdError, err = container.ContainerExecCommand([]string{"ls", "-l"})
+	exitCode, running, stdOutput, stdError, err = container.ContainerExecCommand([]string{"ls", "-l"})
 
 	log.Printf("exitCode: %v", exitCode)
-	log.Printf("runing: %v", runing)
+	log.Printf("running: %v", running)
 	log.Printf("stdOutput: %v", string(stdOutput))
 	log.Printf("stdError: %v", string(stdError))
 
-	exitCode, runing, stdOutput, stdError, err = container.ContainerExecCommand([]string{"./golangci-lint"})
+	exitCode, running, stdOutput, stdError, err = container.ContainerExecCommand([]string{"./golangci-lint"})
 
 	log.Printf("exitCode: %v", exitCode)
-	log.Printf("runing: %v", runing)
+	log.Printf("running: %v", running)
 	log.Printf("stdOutput: %v", string(stdOutput))
 	log.Printf("stdError: %v", string(stdError))
 

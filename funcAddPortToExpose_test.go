@@ -10,10 +10,6 @@ import (
 )
 
 func ExampleContainerBuilder_AddPortToExpose() {
-	AddPortToExpose()
-}
-
-func AddPortToExpose() {
 	var err error
 
 	// English: Deletes all docker elements with the term `delete` in the name.
@@ -46,7 +42,7 @@ func AddPortToExpose() {
 	// English: git project to clone https://github.com/helmutkemper/iotmaker.docker.util.whaleAquarium.sample.git
 	//
 	// Português: repositório git a ser clonado https://github.com/helmutkemper/iotmaker.docker.util.whaleAquarium.sample.git
-	container.SetGitCloneToBuild("https://github.com/helmutkemper/iotmaker.docker.util.whaleAquarium.sample.git")
+	container.SetGitCloneToBuild("https://github.com/helmutkemper/iotmaker.docker.builder.public.example.git")
 
 	// see SetGitCloneToBuildWithUserPassworh(), SetGitCloneToBuildWithPrivateSshKey() and
 	// SetGitCloneToBuildWithPrivateToken()

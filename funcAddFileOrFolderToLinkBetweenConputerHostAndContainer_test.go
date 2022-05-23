@@ -61,7 +61,7 @@ func ExampleContainerBuilder_AddFileOrFolderToLinkBetweenComputerHostAndContaine
 	// English: git project to clone https://github.com/helmutkemper/iotmaker.docker.util.whaleAquarium.sample.git
 	//
 	// Português: repositório git a ser clonado https://github.com/helmutkemper/iotmaker.docker.util.whaleAquarium.sample.git
-	container.SetGitCloneToBuild("https://github.com/helmutkemper/iotmaker.docker.util.whaleAquarium.sample.git")
+	container.SetGitCloneToBuild("https://github.com/helmutkemper/iotmaker.docker.builder.public.example.git")
 
 	// English: See the functions: SetGitCloneToBuildWithUserPassword(), SetGitCloneToBuildWithPrivateSshKey() and SetGitCloneToBuildWithPrivateToken()
 	//

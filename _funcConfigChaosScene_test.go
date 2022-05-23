@@ -7,6 +7,7 @@ import (
 	"github.com/helmutkemper/util"
 	"strconv"
 	"time"
+	"github.com/nats-io/go-nats"
 )
 
 func ExampleConfigChaosScene() {

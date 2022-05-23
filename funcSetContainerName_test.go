@@ -37,7 +37,7 @@ func ExampleContainerBuilder_SetContainerName() {
 	// English: Project to be cloned from github
 	//
 	// Português: Projeto para ser clonado do github
-	container.SetGitCloneToBuild("https://github.com/helmutkemper/iotmaker.docker.util.whaleAquarium.sample.git")
+	container.SetGitCloneToBuild("https://github.com/helmutkemper/iotmaker.docker.builder.public.example.git")
 
 	// English: See SetGitCloneToBuildWithUserPassworh(), SetGitCloneToBuildWithPrivateSshKey() and
 	// SetGitCloneToBuildWithPrivateToken()

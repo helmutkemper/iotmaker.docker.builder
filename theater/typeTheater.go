@@ -664,7 +664,7 @@ func (e *Theater) manager() {
 	var line []byte
 	var found bool
 	var timeToNextEvent time.Duration
-	var probality float64
+	var probability float64
 	var lineNumber int
 	var event Event
 
@@ -672,7 +672,7 @@ func (e *Theater) manager() {
 
 	for _, container := range e.sceneBuilding {
 
-		probality = e.getProbalityNumber()
+		probability = e.getProbalityNumber()
 
 		inspect, err = container.Docker.ContainerInspect()
 		if err != nil {
@@ -887,7 +887,7 @@ func (e *Theater) manager() {
 				timeToNextEvent = e.selectBetweenMaxAndMin(container.Chaos.TimeToPause.Max, container.Chaos.TimeToPause.Min)
 				container.eventNext = time.Now().Add(timeToNextEvent)
 
-			} else if restartEnable == true && container.caosCanRestart == true && container.Chaos.Restart != nil && container.Chaos.Restart.RestartProbability >= probality && container.Chaos.Restart.RestartLimit > 0 {
+			} else if restartEnable == true && container.caosCanRestart == true && container.Chaos.Restart != nil && container.Chaos.Restart.RestartProbability >= probability && container.Chaos.Restart.RestartLimit > 0 {
 
 				log.Printf("stop()")
 				container.containerStopped = true
