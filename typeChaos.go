@@ -18,6 +18,7 @@ type chaos struct {
 	filterRestart              []LogFilter
 	filterSuccess              []LogFilter
 	filterFail                 []LogFilter
+	filterMonitor              []LogFilter
 	filterLog                  []LogFilter
 	sceneName                  string
 	logPath                    string

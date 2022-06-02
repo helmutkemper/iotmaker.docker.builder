@@ -17,4 +17,7 @@ type LogFilter struct {
 
 	// path to save container default output into file format
 	LogPath string
+
+	// tamanho do log quando o último evento ocorreu, para que o mesmo evento não seja capturado indefinidamente
+	size int
 }

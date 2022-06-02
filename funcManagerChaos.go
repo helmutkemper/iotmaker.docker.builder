@@ -19,7 +19,7 @@ func (e *ContainerBuilder) managerChaos() {
 	var line []byte
 	var found bool
 	var timeToNextEvent time.Duration
-	var probality float64
+	var probability float64
 	var lineNumber int
 	var event Event
 
@@ -27,7 +27,7 @@ func (e *ContainerBuilder) managerChaos() {
 
 	// English: Probability of container restart
 	// Português: Probabilidade do container reiniciar
-	probality = e.getProbalityNumber()
+	probability = e.getProbalityNumber()
 
 	inspect, err = e.ContainerInspect()
 	if err != nil {
@@ -48,7 +48,6 @@ func (e *ContainerBuilder) managerChaos() {
 	}
 
 	logs, err = e.GetContainerLog()
-
 	if err != nil {
 		_, lineNumber = e.traceCodeLine()
 		event.clear()
@@ -83,6 +82,8 @@ func (e *ContainerBuilder) managerChaos() {
 	if e.chaos.foundSuccess == true {
 		event.Message = string(line)
 	} else {
+		e.logsSearchAndReplaceIntoText(&logs, lineList, e.chaos.filterMonitor)
+
 		line, e.chaos.foundFail = e.logsSearchAndReplaceIntoText(&logs, lineList, e.chaos.filterFail)
 		if e.chaos.foundFail == true {
 			event.Message = string(line)
@@ -197,8 +198,8 @@ func (e *ContainerBuilder) managerChaos() {
 			log.Printf("%v: start()", e.containerName)
 			e.chaos.containerStopped = false
 
-			probality = e.getProbalityNumber()
-			if e.network != nil && e.chaos.restartChangeIpProbability > 0.0 && e.chaos.restartChangeIpProbability >= probality {
+			probability = e.getProbalityNumber()
+			if e.network != nil && e.chaos.restartChangeIpProbability > 0.0 && e.chaos.restartChangeIpProbability >= probability {
 				err = e.NetworkChangeIp()
 				if err != nil {
 					_, lineNumber = e.traceCodeLine()
@@ -232,7 +233,7 @@ func (e *ContainerBuilder) managerChaos() {
 			timeToNextEvent = e.selectBetweenMaxAndMin(e.chaos.maximumTimeToPause, e.chaos.minimumTimeToPause)
 			e.chaos.eventNext = time.Now().Add(timeToNextEvent)
 
-		} else if e.chaos.chaosCanRestartContainer == true && e.chaos.restartProbability != 0.0 && e.chaos.restartProbability >= probality && e.chaos.restartLimit > 0 {
+		} else if e.chaos.chaosCanRestartContainer == true && e.chaos.restartProbability != 0.0 && e.chaos.restartProbability >= probability && e.chaos.restartLimit > 0 {
 
 			if e.chaos.disableStopContainer == true || theater.SetContainerStopped(e.chaos.sceneName) == true {
 				return
