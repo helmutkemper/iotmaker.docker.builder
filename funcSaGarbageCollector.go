@@ -54,6 +54,10 @@ func SaGarbageCollector(names ...string) {
 		return
 	}
 
+	for _, nameContains := range names {
+		_ = garbageCollector.RemoveAllByNameContains(nameContains)
+	}
+
 	var inspect types.ContainerJSON
 	for _, container := range list {
 		if re.Match([]byte(container.Name)) == true {
@@ -73,9 +77,5 @@ func SaGarbageCollector(names ...string) {
 	if err != nil {
 		util.TraceToLog()
 		return
-	}
-
-	for _, nameContains := range names {
-		_ = garbageCollector.RemoveAllByNameContains(nameContains)
 	}
 }
