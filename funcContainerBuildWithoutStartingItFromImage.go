@@ -14,17 +14,17 @@ import (
 //
 // English:
 //
-//  Transforms an image downloaded by ImagePull() or created by ImageBuildFromFolder() into a container
+//	Transforms an image downloaded by ImagePull() or created by ImageBuildFromFolder() into a container
 //
-//   Output:
-//     err: Default object error from golang
+//	 Output:
+//	   err: Default object error from golang
 //
 // Português:
 //
-//  Transforma uma imagem baixada por ImagePull() ou criada por ImageBuildFromFolder() em container
+//	Transforma uma imagem baixada por ImagePull() ou criada por ImageBuildFromFolder() em container
 //
-//   Saída:
-//     err: Objeto padrão de erro golang
+//	 Saída:
+//	   err: Objeto padrão de erro golang
 func (e *ContainerBuilder) ContainerBuildWithoutStartingItFromImage() (err error) {
 	err = e.verifyImageName()
 	if err != nil {
@@ -79,11 +79,13 @@ func (e *ContainerBuilder) ContainerBuildWithoutStartingItFromImage() (err error
 				}
 			}
 
-			if pass == false {
-				err = errors.New("port " + portToOpen + " not found in image port list. port list: " + originalImagePortlistAsString)
-				util.TraceToLog()
-				return
-			}
+			//todo: comentado - nem sempre funciona verificar - início
+			//if pass == false {
+			//	err = errors.New("port " + portToOpen + " not found in image port list. port list: " + originalImagePortlistAsString)
+			//	util.TraceToLog()
+			//	return
+			//}
+			//todo: comentado - nem sempre funciona verificar - fim
 
 			port, err = nat.NewPort("tcp", portToOpen)
 			if err != nil {
