@@ -1,7 +1,6 @@
 package iotmakerdockerbuilder
 
 import (
-	"errors"
 	"github.com/docker/docker/api/types/network"
 	"github.com/docker/go-connections/nat"
 	iotmakerdocker "github.com/helmutkemper/iotmaker.docker/v1.0.1"
@@ -72,12 +71,12 @@ func (e *ContainerBuilder) ContainerBuildWithoutStartingItFromImage() (err error
 		var port nat.Port
 		for _, portToOpen := range e.openPorts {
 			//var pass = false
-			for _, portToVerify := range originalImagePortlist {
-				if portToVerify.Port() == portToOpen {
-					//pass = true
-					break
-				}
-			}
+			//for _, portToVerify := range originalImagePortlist {
+			//	if portToVerify.Port() == portToOpen {
+			//		//pass = true
+			//		break
+			//	}
+			//}
 
 			//comentado - nem sempre funciona verificar - início
 			//if pass == false {
@@ -106,19 +105,19 @@ func (e *ContainerBuilder) ContainerBuildWithoutStartingItFromImage() (err error
 				return
 			}
 
-			var pass = false
-			for _, portToVerify := range originalImagePortlist {
-				if portToVerify.Port() == newPortLinkMap.OldPort {
-					pass = true
-					break
-				}
-			}
-
-			if pass == false {
-				err = errors.New("port " + newPortLinkMap.OldPort + " not found in image port list. port list: " + originalImagePortlistAsString)
-				util.TraceToLog()
-				return
-			}
+			//var pass = false
+			//for _, portToVerify := range originalImagePortlist {
+			//	if portToVerify.Port() == newPortLinkMap.OldPort {
+			//		pass = true
+			//		break
+			//	}
+			//}
+			//
+			//if pass == false {
+			//	err = errors.New("port " + newPortLinkMap.OldPort + " not found in image port list. port list: " + originalImagePortlistAsString)
+			//	util.TraceToLog()
+			//	return
+			//}
 
 			newPort, err = nat.NewPort("tcp", newPortLinkMap.NewPort)
 			if err != nil {
