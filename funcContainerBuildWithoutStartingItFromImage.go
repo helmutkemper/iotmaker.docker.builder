@@ -71,21 +71,21 @@ func (e *ContainerBuilder) ContainerBuildWithoutStartingItFromImage() (err error
 	} else if e.openPorts != nil {
 		var port nat.Port
 		for _, portToOpen := range e.openPorts {
-			var pass = false
+			//var pass = false
 			for _, portToVerify := range originalImagePortlist {
 				if portToVerify.Port() == portToOpen {
-					pass = true
+					//pass = true
 					break
 				}
 			}
 
-			//todo: comentado - nem sempre funciona verificar - início
+			//comentado - nem sempre funciona verificar - início
 			//if pass == false {
 			//	err = errors.New("port " + portToOpen + " not found in image port list. port list: " + originalImagePortlistAsString)
 			//	util.TraceToLog()
 			//	return
 			//}
-			//todo: comentado - nem sempre funciona verificar - fim
+			//comentado - nem sempre funciona verificar - fim
 
 			port, err = nat.NewPort("tcp", portToOpen)
 			if err != nil {
