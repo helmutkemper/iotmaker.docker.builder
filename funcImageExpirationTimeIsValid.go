@@ -28,5 +28,5 @@ func (e *ContainerBuilder) imageExpirationTimeIsValid() (valid bool) {
 		return
 	}
 
-	return !e.GetImageCreatedTime().Add(e.GetImageExpirationTime()).After(time.Now())
+	return e.GetImageCreatedTime().Add(e.GetImageExpirationTime()).After(time.Now())
 }

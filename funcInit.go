@@ -12,25 +12,25 @@ import (
 //
 // English:
 //
-//  Initializes the object.
+//	Initializes the object.
 //
-//   Output:
-//     err: Standard error object
+//	 Output:
+//	   err: Standard error object
 //
 // Note:
 //
-//   * Should be called only after all settings have been configured
+//   - Should be called only after all settings have been configured
 //
 // Português:
 //
-//  Inicializa o objeto.
+//	Inicializa o objeto.
 //
-//   Saída:
-//     err: Objeto de erro padrão
+//	 Saída:
+//	   err: Objeto de erro padrão
 //
 // Nota:
 //
-//   * Deve ser chamado apenas depois de toas as configurações serem definidas
+//   - Deve ser chamado apenas depois de toas as configurações serem definidas
 func (e *ContainerBuilder) Init() (err error) {
 	e.init = true
 
@@ -63,6 +63,11 @@ func (e *ContainerBuilder) Init() (err error) {
 
 	if e.imageCacheName == "" {
 		e.imageCacheName = "cache:latest"
+	}
+
+	id, _ := e.ImageFindIdByName(e.imageCacheName)
+	if id == "" {
+		e.enableCache = false
 	}
 
 	e.restartPolicy = iotmakerdocker.KRestartPolicyNo
