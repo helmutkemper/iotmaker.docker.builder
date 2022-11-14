@@ -15,3 +15,6 @@
 # vendor/
 
 *.csv
+
+./test/data/db/
+./test/data/configdb/

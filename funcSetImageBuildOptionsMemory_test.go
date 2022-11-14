@@ -251,13 +251,24 @@ func ExampleContainerBuilder_SetImageBuildOptionsMemory() {
 	// Português: Pega o ponteiro do canal de eventos dentro do container.
 	event := container.GetChaosEvent()
 
-	select {
-	case e := <-event:
-		fmt.Printf("container name: %v\n", e.ContainerName)
-		fmt.Printf("done: %v\n", e.Done)
-		fmt.Printf("fail: %v\n", e.Fail)
-		fmt.Printf("error: %v\n", e.Error)
-		fmt.Printf("message: %v\n", e.Message)
+	for {
+		e := <-event
+
+		if e.Error || e.Fail {
+			fmt.Printf("container name: %v\n", e.ContainerName)
+			log.Printf("Error: %v", e.Message)
+			return
+		}
+		if e.Done || e.Error || e.Fail {
+
+			fmt.Printf("container name: %v\n", e.ContainerName)
+			fmt.Printf("done: %v\n", e.Done)
+			fmt.Printf("fail: %v\n", e.Fail)
+			fmt.Printf("error: %v\n", e.Error)
+			fmt.Printf("message: %v\n", e.Message)
+
+			break
+		}
 	}
 
 	// English: Stop container monitoring.
@@ -276,7 +287,7 @@ func ExampleContainerBuilder_SetImageBuildOptionsMemory() {
 	SaGarbageCollector()
 
 	// Output:
-	// image size: 1.38 MB
+	// image size: 1.4 MB
 	// image os: linux
 	// container name: container_counter_delete_after_test
 	// done: true

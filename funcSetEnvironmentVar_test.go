@@ -40,7 +40,7 @@ func ExampleContainerBuilder_SetEnvironmentVar() {
 		},
 	)
 	// set a MongoDB data dir to ./test/data
-	//err = mongoDocker.AddFileOrFolderToLinkBetweenComputerHostAndContainer("./test/data", "/data")
+	err = mongoDocker.AddFileOrFolderToLinkBetweenComputerHostAndContainer("./test/data", "/data")
 	if err != nil {
 		panic(err)
 	}

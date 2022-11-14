@@ -8,6 +8,8 @@ import (
 func ExampleContainerBuilder_SetNetworkDocker() {
 	var err error
 
+	SaGarbageCollector()
+
 	var netDocker = dockerNetwork.ContainerBuilderNetwork{}
 	err = netDocker.Init()
 	if err != nil {
@@ -47,6 +49,11 @@ func ExampleContainerBuilder_SetNetworkDocker() {
 
 	// inicialize the object before sets
 	err = mongoDocker.Init()
+	if err != nil {
+		panic(err)
+	}
+
+	err = mongoDocker.ImagePull()
 	if err != nil {
 		panic(err)
 	}

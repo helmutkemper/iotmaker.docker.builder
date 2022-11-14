@@ -1,6 +1,6 @@
 # (en) first stage of the process
 # (pt) primeira etapa do processo
-FROM golang:1.17-alpine as builder
+FROM cache:latest as builder
 #
 #
 # (en) Add open ssl to alpine

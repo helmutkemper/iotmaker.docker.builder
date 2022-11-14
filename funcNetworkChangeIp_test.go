@@ -140,7 +140,7 @@ func ExampleContainerBuilder_NetworkChangeIp() {
 	SaGarbageCollector()
 
 	// Output:
-	// image size: 1.4 MB
+	// image size: 1.3 MB
 	// image os: linux
 	// IP: 10.0.0.2
 	// IP: 10.0.0.3

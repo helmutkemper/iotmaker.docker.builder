@@ -2,7 +2,7 @@
 # English: first stage of the process
 #
 # Português: primeira etapa do processo
-FROM golang:1.16-alpine as builder
+FROM golang:1.17-alpine as builder
 #
 # English: creates the .ssh directory within the root directory
 #
