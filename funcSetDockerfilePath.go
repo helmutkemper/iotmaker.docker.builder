@@ -1,9 +1,5 @@
 package iotmakerdockerbuilder
 
-import (
-	"os"
-)
-
 // SetDockerfilePath
 //
 // English:
@@ -14,12 +10,6 @@ import (
 //
 // Define um arquivo Dockerfile para construir a imagem.
 func (e *ContainerBuilder) SetDockerfilePath(path string) (err error) {
-	var data []byte
-	data, err = os.ReadFile(path)
-	if err != nil {
-		return err
-	}
-
-	e.buildOptions.Dockerfile = string(data)
+	e.buildOptions.Dockerfile = path
 	return
 }
